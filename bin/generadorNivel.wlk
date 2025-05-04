@@ -1,0 +1,2 @@
+object generadorNivel{} // ESTO GENERARIA LOS MAPAS DIBUJANDO LOS OBJECTOS 
+                        // EN UN ARRAY POR CADA UNO DE LOS ELEMENTOS
