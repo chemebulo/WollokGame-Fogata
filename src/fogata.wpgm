@@ -1,0 +1,41 @@
+import wollok.game.*
+import mapa.*
+import direccion.*
+import protagonista.*
+import videojuego.*
+
+
+
+program Fogata {
+	
+    videojuego.tablero()
+
+    videojuego.controles()
+
+    videojuego.iniciar()
+
+    
+
+   
+
+    
+
+	game.start()
+
+}
+
+
+
+
+    // game.boardGround("fondo.png")
+    //CONTROLES
+	/*
+	keyboard.w().onPressDo({protagonista.mover(arriba)})
+    keyboard.a().onPressDo({protagonista.mover(izquierda)})
+    keyboard.s().onPressDo({protagonista.mover(abajo)})
+    keyboard.d().onPressDo({protagonista.mover(derecha)})
+    */
+
+	
+	
+
