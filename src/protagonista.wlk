@@ -72,16 +72,6 @@ object protagonista{
 }
 
 
-
-object puerta{
-
-    var property position = game.at(6,8)
-
-    method image() = "puerta.png"
-
-    
-}
-
 object celda{
     method estaVacia(position) = game.getObjectsIn(position).isEmpty()
 }
