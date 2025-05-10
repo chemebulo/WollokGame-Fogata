@@ -1,94 +1,70 @@
 import wollok.game.*
 import direccion.*
+import enemigos.*
+import estado.*
 
 object protagonista{
+    // ############################################## ATRIBUTOS ############################################## //
 
-    var property position = game.at(7,7)
-    var image = "prota-100.png"
+    var property position = game.at(6,4)
+    var property vida = 10
+    var property daño = 1
+    var property image = "protagonista-abajo.png"
  
-    const property objetosColision = #{amiga} //set de cosas que el prota no puede atravesar
+    const property objetosConColision = #{amiga}
 
-    //const property objetosParaInteractuar = #{puerta} de momento se descarta
+   // ########################################## MOVIMIENTO GENERAL ######################################### //
 
-    method image()= image
-
-    method image(_image){image=_image}
-
-    
-
-   //--------------MOVIMIENTO-------------------
     method mover(direccion){
-        
-        self.validarMover(direccion)
-        self.cambiarImagen(direccion)
-        position = direccion.siguientePosicion(position)
-        
-        
+        self.validarSiEstaVivo()
+        self.validarSiPuedeMover(direccion)
+        self.moverAl(direccion)
     }
-    method validarMover(direccion){ 
+
+    method validarSiEstaVivo(){
+        if (not self.estaVivo()) { self.error("Estoy muerto") }
+    }
+
+    method validarSiPuedeMover(direccion){ 
         const posicionAMover = direccion.siguientePosicion(position)
 
-        if(not self.puedoMover(posicionAMover)){ 
-            self.error("No puedo atravesar objetos o salir del mapa")
-        }
+        if(not self.puedoMover(posicionAMover)){ self.error("No puedo atravesar objetos o salir del mapa") }
     }
 
-    method puedoMover(posicionAMover){
-        /*
-            *Verifica si la posicion a la que quiero mover sigue dentro del tablero 
-            o si en esa posicion hay un objeto que no puedo atravesar
-        */
-        return 
-             (self.posSigueEnTablero(posicionAMover))  and 
-              not self.colisionareConAlgo(posicionAMover)
-    }
-    //--- -----verificacion si sale del tablero si se mueve a la posicion dada-----------
-
-
-     method posSigueEnTablero(posicionAMover){
-        return posicionAMover.x().between(0, game.width() - 1) and 
-                    posicionAMover.y().between(0, game.height() - 1) 
-    } 
-    //-----------verifico si colisionare con algo---------
-
-    method colisionareConAlgo(posicionAMover){
-         
-        const colisiones = self.posicionesColision()
-        return colisiones.contains(posicionAMover)
+    method moverAl(direccion){
+        position = direccion.siguientePosicion(position)
+        self.cambiarImagen(direccion)
     }
 
-   method posicionesColision(){
-       return objetosColision.map({cosa => cosa.position()})
-   }
+    // ####################################### MOVIMIENTO - COLISIONES ####################################### // 
     
-  
-  
+    method puedoMover(posicionAMover) = self.estaDentroDelTablero(posicionAMover) and
+                                        not self.colisionoConAlgoEn(posicionAMover)
 
-  method cambiarImagen(direccion){
-    self.image( "prota-"+direccion.toString()+".png")
-  }
-  
+    method estaDentroDelTablero(posicionAMover) = posicionAMover.x().between(0, game.width()  - 1) and 
+                                                  posicionAMover.y().between(0, game.height() - 1) 
+    
+    method colisionoConAlgoEn(posicionAMover) = self.posicionesDeObjetosConColision().contains(posicionAMover)
 
+    method posicionesDeObjetosConColision() = objetosConColision.map({cosa => cosa.position()})
+    
+    method cambiarImagen(direccion){ self.image( "protagonista-"+direccion.toString()+".png") }
+
+    method estaVivo() = self.vida() > 0
+
+    // ############################################# INTERACCIÓN ############################################# // 
+
+    method interaccion(visual) {
+        // Por ahora nada...
+    }
 }
-
 
 object celda{
     method estaVacia(position) = game.getObjectsIn(position).isEmpty()
 }
 
-
-
-
-
 object amiga{
     var property position = game.at(1,4)
 
     method image() = "amiga.png"
-}
-
-class Lobos {}
-object lobo inherits Lobos {
-    var property position = game.at(1,2)
-
-    method image() = "lobo.png"
 }

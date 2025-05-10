@@ -1,10 +1,7 @@
 import wollok.game.*
-
 import direccion.*
 import protagonista.*
 import videojuego.*
-
-
 
 program Fogata {
 	
@@ -14,21 +11,5 @@ program Fogata {
 
     videojuego.iniciar()
 
-    
-
-   
-
-    
-
 	game.start()
-
 }
-
-
-
-
-    
-
-	
-	
-
