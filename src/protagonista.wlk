@@ -1,7 +1,10 @@
+import escenarios.*
 import wollok.game.*
 import direccion.*
+import videojuego.*
+
 import enemigos.*
-import estado.*
+//import estado.*
 
 object protagonista{
     // ############################################## ATRIBUTOS ############################################## //
@@ -9,7 +12,16 @@ object protagonista{
     var property position = game.at(6,4)
     var property vida = 10
     var property daño = 1
-    var property image = "protagonista-abajo.png"
+   
+
+
+
+
+    
+    const property vg = videojuego
+    
+    var property image = "prota-100.png"
+
  
     const property objetosConColision = #{amiga}
 
@@ -48,7 +60,10 @@ object protagonista{
 
     method posicionesDeObjetosConColision() = objetosConColision.map({cosa => cosa.position()})
     
-    method cambiarImagen(direccion){ self.image( "protagonista-"+direccion.toString()+".png") }
+    method cambiarImagen(direccion){ 
+        self.image("protagonista-"+direccion.toString()+".png") 
+    }
+
 
     method estaVivo() = self.vida() > 0
 

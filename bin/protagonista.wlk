@@ -1,3 +1,4 @@
+import escenarios.*
 import wollok.game.*
 import direccion.*
 
@@ -80,6 +81,16 @@ object puerta{
     method image() = "puerta.png"
 
     
+    
+      
+
+    
+}
+
+object puerta2{
+    var property position = game.at(5,3)
+
+    method image() = "puerta2.png"
 }
 
 object celda{

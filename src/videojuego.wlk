@@ -7,15 +7,20 @@ object videojuego{
 
     var property escenario = escenarioInicial
 
-    method iniciar(){
+    
+
+    
+    method iniciar(){ 
         escenario.puestaEnEscena()
     }
 
-    method cambiarEscenario(nuevoEscenario){
+    method cambiarEscenario(escenarioNuevo){ // cambia a otro escenario
         escenario.limpiar()
-        escenario = nuevoEscenario
-        self.iniciar()
+        self.escenario(escenarioNuevo)
+        escenario.puestaEnEscena()
+        
     }
+   
 
     // ############################### TABLERO ###############################
     

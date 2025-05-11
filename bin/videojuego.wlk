@@ -16,16 +16,22 @@ object videojuego{
 
     var property escenario = escenarioInicial
 
-    method iniciar(){
+    var puertaActual = escenario.puerta()
+
+    
+    method iniciar(){ 
         escenario.puestaEnEscena()
     }
 
-    method cambiarEscenario(nuevoEscenario){
+    method cambiarEscenario(escenarioNuevo){ // cambia a otro escenario
         escenario.limpiar()
-        escenario = nuevoEscenario
-        self.iniciar()
+        self.escenario(escenarioNuevo)
+        escenario.puestaEnEscena()
+        
     }
 
+    
+    
     //----------tablero------------------
     method tablero(){
         game.width(13)
@@ -42,6 +48,7 @@ object videojuego{
         keyboard.s().onPressDo({protagonista.mover(abajo)})
         keyboard.d().onPressDo({protagonista.mover(derecha)})
 
+        
         
     }
 
