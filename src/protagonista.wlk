@@ -68,3 +68,7 @@ object amiga{
 
     method image() = "amiga.png"
 }
+
+object fogata{}
+
+object carpa {}
