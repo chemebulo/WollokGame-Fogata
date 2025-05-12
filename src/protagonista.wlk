@@ -4,6 +4,7 @@ import direccion.*
 import videojuego.*
 
 import enemigos.*
+import dialogos.*
 //import estado.*
 
 object protagonista{
@@ -12,18 +13,28 @@ object protagonista{
     var property position = game.at(6,4)
     var property vida = 10
     var property daño = 1
-   
 
+    //********************** VARIABLES PARA CONVERSACION ***********************************//
+
+    
+    var property conversacionNPC = new Dictionary()
+    var property npcActual = amiga // depende el escenario hablara con amiga o guardabosques
+    var property estadoConversacion = 1
+    var property conversadorActual = self
+    var property codUltimoDialogo = 0
+
+    //**************************************************************************************//
 
 
 
     
     const property vg = videojuego
     
-    var property image = "prota-100.png"
+    var property image = "protagonista-abajo.png"
 
  
-    const property objetosConColision = #{amiga}
+    var property objetosColision = #{amiga}
+
 
    // ########################################## MOVIMIENTO GENERAL ######################################### //
 
@@ -58,7 +69,7 @@ object protagonista{
     
     method colisionoConAlgoEn(posicionAMover) = self.posicionesDeObjetosConColision().contains(posicionAMover)
 
-    method posicionesDeObjetosConColision() = objetosConColision.map({cosa => cosa.position()})
+    method posicionesDeObjetosConColision() = objetosColision.map({cosa => cosa.position()})
     
     method cambiarImagen(direccion){ 
         self.image("protagonista-"+direccion.toString()+".png") 
@@ -67,21 +78,77 @@ object protagonista{
 
     method estaVivo() = self.vida() > 0
 
+
+    method objetosColision(_objetosColision){ 
+        objetosColision = _objetosColision
+        }
     // ############################################# INTERACCIÓN ############################################# // 
 
     method interaccion(visual) {
         // Por ahora nada...
     }
-}
 
-object celda{
-    method estaVacia(position) = game.getObjectsIn(position).isEmpty()
+
+    // ############################################ DIALOGOS NPC ###########################################
+
+    method interactuarNPC(){
+        if (self.estaAlLadoDe(npcActual)){
+            self.conversar()
+        }
+    }
+    method estaAlLadoDe(npc){
+        return (self.xPos() - (npc.xPos())).abs() == 1 //estoy exactamente a 1 celda del npc
+    }
+
+    method conversar(){
+
+        
+        if(not self.esDialogoFinal()){
+        
+        
+        game.say(conversadorActual,conversacionNPC.get(estadoConversacion))
+
+        self.cambiarConversador()
+        estadoConversacion = estadoConversacion + 1 // AVANZA LA CONVERSACION
+            
+            
+        }
+        else {
+           
+            game.say(conversadorActual, conversacionNPC.get(estadoConversacion)) // si la conversacion termina siempre se dira el ultimo dialogo
+        }
+    }
+
+    method cambiarConversador(){
+        if (estadoConversacion == 0 || estadoConversacion.even()){
+            conversadorActual = self
+        }
+        else{
+            conversadorActual = npcActual
+        }
+    }
+
+    
+
+    method esDialogoFinal() = estadoConversacion == self.codUltimoDialogo()
+
+    
+    method xPos(){
+        return self.position().x()
+    }
+
+
+    
 }
 
 object amiga{
     var property position = game.at(2,4)
 
     method image() = "amiga.png"
+
+    method xPos(){
+        return self.position().x()
+    }
 }
 
 object fogata{

@@ -1,5 +1,3 @@
-
-
 import wollok.game.*
 import direccion.*
 import protagonista.*

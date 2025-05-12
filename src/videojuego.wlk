@@ -37,5 +37,7 @@ object videojuego{
         keyboard.a().onPressDo({protagonista.mover(izquierda)})
         keyboard.s().onPressDo({protagonista.mover(abajo)})
         keyboard.d().onPressDo({protagonista.mover(derecha)})
+
+        
     }
 }
