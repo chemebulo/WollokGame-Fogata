@@ -79,11 +79,20 @@ object celda{
 }
 
 object amiga{
-    var property position = game.at(1,4)
+    var property position = game.at(2,4)
 
     method image() = "amiga.png"
 }
 
-object fogata{}
+object fogata{
+    var property image = "fogata.png"
 
-object carpa {}
+    method position() = game.at(3,4)
+}
+
+object carpa {
+
+    var property carpa = "carpa.png"
+
+    method position() = game.at(6,4)
+}

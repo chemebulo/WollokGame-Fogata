@@ -6,12 +6,13 @@ import protagonista.*
 import videojuego.*
 import enemigos.*
 import puertas.*
+import direccion.*
 
 object escenarioInicial{
 
 
     const pj = protagonista
-    const puertaNorte = new PuertaAbierta (image = "puerta.png", ubicacion = norte, irHacia = escenarioBifurcacion)
+    const puertaNorte = new PuertaAbierta (image = "puerta.png", position = norte, irHacia = escenarioBifurcacion)
 
     const visualesEnEscena = [amiga,fogata,carpa, puertaNorte]
 
