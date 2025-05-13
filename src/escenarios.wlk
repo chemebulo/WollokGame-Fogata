@@ -5,6 +5,7 @@ import enemigos.*
 import puertas.*
 import direccion.*
 import dialogos.*
+import elementos.*
 
 
 object escenarioInicial{

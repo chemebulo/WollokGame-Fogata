@@ -2,6 +2,7 @@ import wollok.game.*
 import protagonista.*
 import direccion.*
 import estado.*
+import elementos.*
 
 class Lobo{
     // ############################################## ATRIBUTOS ############################################## //
