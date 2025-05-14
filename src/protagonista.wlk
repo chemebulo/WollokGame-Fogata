@@ -5,6 +5,7 @@ import videojuego.*
 
 import enemigos.*
 import dialogos.*
+import elementos.*
 //import estado.*
 
 object protagonista{
@@ -75,21 +76,19 @@ object protagonista{
         self.image("protagonista-"+direccion.toString()+".png") 
     }
 
-
-    method estaVivo() = self.vida() > 0
-
-
     method objetosColision(_objetosColision){ 
         objetosColision = _objetosColision
         }
-    // ############################################# INTERACCIÓN ############################################# // 
+    // ####################### INTERACCIÓN CON ENEMIGOS U OBJETOS############################################# // 
+
+     method estaVivo() = self.vida() > 0
 
     method interaccion(visual) {
         // Por ahora nada...
     }
 
 
-    // ############################################ DIALOGOS NPC ###########################################
+    // ############################################ DIALOGOS NPC ############################################# //
 
     method interactuarNPC(){
         if (self.estaAlLadoDe(npcActual)){
@@ -119,8 +118,8 @@ object protagonista{
         }
     }
 
-    method cambiarConversador(){
-        if (estadoConversacion == 0 || estadoConversacion.even()){
+    method cambiarConversador(){ // cambiar todo esto a un ESTADO
+        if (self.esTurnoDelProtagonista()){
             conversadorActual = self
         }
         else{
@@ -128,38 +127,13 @@ object protagonista{
         }
     }
 
-    
+    method esTurnoDelProtagonista() = estadoConversacion == 0 || estadoConversacion.even()
 
     method esDialogoFinal() = estadoConversacion == self.codUltimoDialogo()
 
-    
-    method xPos(){
-        return self.position().x()
-    }
-
-
-    
-}
-
-object amiga{
-    var property position = game.at(2,4)
-
-    method image() = "amiga.png"
-
     method xPos(){
         return self.position().x()
     }
 }
 
-object fogata{
-    var property image = "fogata.png"
 
-    method position() = game.at(3,4)
-}
-
-object carpa {
-
-    var property carpa = "carpa.png"
-
-    method position() = game.at(6,4)
-}
