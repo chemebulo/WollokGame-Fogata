@@ -2,9 +2,12 @@
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+-Maldonado, Benjamin
+-Jerochim, Maximiliano
+-Mamani, Rocio Belen
+-Sanchez, Matias Pablo Jesus
+
+
 
 ## Capturas
 
@@ -17,6 +20,7 @@
 
 ## Otros
 
-- Curso/Facultad
+- Curso    : Programacion con Objetos I 
+- Facultad : Universidad Nacional de Quilmes
 - Versión de wollok
 - Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
