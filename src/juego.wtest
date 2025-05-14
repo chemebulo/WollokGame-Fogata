@@ -1,0 +1,8 @@
+import fogata.*
+
+describe "testeos"{
+    test "1"{
+        assert.that(true)
+    }
+
+}
