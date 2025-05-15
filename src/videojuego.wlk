@@ -28,6 +28,7 @@ object videojuego{
         game.width(13)
         game.height(9)
 	    game.cellSize(100)
+        game.boardGround("fondo.png")
     }
 
     // ############################## CONTROLES ##############################

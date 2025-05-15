@@ -2,18 +2,20 @@ import escenarios.*
 import wollok.game.*
 import direccion.*
 import videojuego.*
-
 import enemigos.*
 import dialogos.*
 import elementos.*
 //import estado.*
 
+
 object protagonista{
     // ############################################## ATRIBUTOS ############################################## //
 
-    var property position = game.at(6,4)
+    var property position = game.at(0,0)
     var property vida = 10
     var property daño = 1
+    const property vg = videojuego
+    var property image = "protagonista-abajo.png"
 
     //********************** VARIABLES PARA CONVERSACION ***********************************//
 
@@ -24,64 +26,79 @@ object protagonista{
     var property conversadorActual = self
     var property codUltimoDialogo = 0
 
-    //**************************************************************************************//
+
+   // ######################################### ESTADO #################################################
 
 
+    method validarSiEstaVivo(){ 
+        if (not self.estaVivo()) { self.error("Estoy muerto") }
+    }
 
-    
-    const property vg = videojuego
-    
-    var property image = "protagonista-abajo.png"
-
- 
-    var property objetosColision = #{amiga}
-
+     method estaVivo() = self.vida() > 0
 
    // ########################################## MOVIMIENTO GENERAL ######################################### //
 
     method mover(direccion){
-        self.validarSiEstaVivo()
-        self.validarSiPuedeMover(direccion)
-        self.moverAl(direccion)
+        self.validarSiEstaVivo() 
+        if(self.puedoMover(direccion)){
+            self.moverHacia(direccion)
+        }
     }
 
-    method validarSiEstaVivo(){
-        if (not self.estaVivo()) { self.error("Estoy muerto") }
-    }
-
-    method validarSiPuedeMover(direccion){ 
-        const posicionAMover = direccion.siguientePosicion(position)
-
-        if(not self.puedoMover(posicionAMover)){ self.error("No puedo atravesar objetos o salir del mapa") }
-    }
-
-    method moverAl(direccion){
+     method moverHacia(direccion){
         position = direccion.siguientePosicion(position)
         self.cambiarImagen(direccion)
     }
 
-    // ####################################### MOVIMIENTO - COLISIONES ####################################### // 
+    // ####################################### COMPROBAR MOVIMIENTO ####################################### // 
     
-    method puedoMover(posicionAMover) = self.estaDentroDelTablero(posicionAMover) and
-                                        not self.colisionoConAlgoEn(posicionAMover)
+    method puedoMover(direccion) {
+        const posicionAMover = direccion.siguientePosicion(position)
 
-    method estaDentroDelTablero(posicionAMover) = posicionAMover.x().between(0, game.width()  - 1) and 
-                                                  posicionAMover.y().between(0, game.height() - 1) 
-    
-    method colisionoConAlgoEn(posicionAMover) = self.posicionesDeObjetosConColision().contains(posicionAMover)
+        return self.estaDentroDelTablero(posicionAMover) and
+                 not self.hayObstaculos(posicionAMover)
+    }
 
-    method posicionesDeObjetosConColision() = objetosColision.map({cosa => cosa.position()})
     
+
+    method estaDentroDelTablero(posicionAMover) = self.existeX(posicionAMover.x()) and self.existeY(posicionAMover.y())
+    
+                                                
+	method existeX(x){
+        const anchoJuego = game.width()
+		return self.enLimite(x, anchoJuego)
+		
+	} 
+
+	method existeY(y){
+        const altoJuego = game.height()
+		return self.enLimite(y, altoJuego)
+		
+	}                                                                                              
+    
+    method enLimite(coord, max){
+		return coord.between(0, max - 1) 
+	}
+ 
+    
+    method hayObstaculos(posicion) {
+        return not self.objetosEnPosicion(posicion).all({visual => visual.esAtravesable()})
+    }
+
+    method objetosEnPosicion(posicion){
+        return game.getObjectsIn(posicion).copyWithout(self)
+    }
+
+
+
     method cambiarImagen(direccion){ 
         self.image("protagonista-"+direccion.toString()+".png") 
     }
 
-    method objetosColision(_objetosColision){ 
-        objetosColision = _objetosColision
-        }
+  
+
     // ####################### INTERACCIÓN CON ENEMIGOS U OBJETOS############################################# // 
 
-     method estaVivo() = self.vida() > 0
 
     method interaccion(visual) {
         // Por ahora nada...
@@ -89,6 +106,9 @@ object protagonista{
 
 
     // ############################################ DIALOGOS NPC ############################################# //
+
+    /*   esto va a cambiarse a futuro a un objeto distinto quitando responsabilidad al protagonista, 
+        es prototipo de momento*/
 
     method interactuarNPC(){
         if (self.estaAlLadoDe(npcActual)){
@@ -134,6 +154,14 @@ object protagonista{
     method xPos(){
         return self.position().x()
     }
-}
 
+
+    //############ PARA TESTEAR #################
+
+    method mover(direccion,cantidad){
+        (1 .. cantidad).forEach({n => self.mover(direccion)})
+    }
+    //###########################################
+
+}
 

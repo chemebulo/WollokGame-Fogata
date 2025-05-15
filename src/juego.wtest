@@ -1,8 +1,157 @@
 import fogata.*
+import protagonista.*
+import elementos.*
+import direccion.*
+import wollok.game.*
 
-describe "testeos"{
-    test "1"{
-        assert.that(true)
+
+describe "Movimiento del personaje"{
+
+    
+    method initialize(){
+        game.width(7)
+        game.height(7)
+        game.cellSize(100)
+
+        protagonista.position(game.at(0,0))
+        game.addVisual(protagonista)
+    }
+
+    test "El personaje parte de la posicion (0,0) hacia la posicion (2,0) sin problemas"{
+        
+        protagonista.mover(derecha,2)
+
+        assert.equals(game.at(2,0),protagonista.position())
+        
+    }
+    test "El personaje se mueve 2 celdas arriba, 2 celdas a la derecha y la posicion coincide"{
+
+        protagonista.mover(arriba,2)
+        protagonista.mover(derecha,2)
+
+        assert.equals(game.at(2,2),protagonista.position())
+    }
+
+    test "El personaje se mueve 2 celdas a la derecha,3 arriba y 4 a la izquierda, pero no sale del tablero"{
+       
+        protagonista.mover(derecha,2)
+        protagonista.mover(arriba,3)
+        protagonista.mover(izquierda,4)
+
+        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+    }
+    test"El personaje no sale del tablero por el Oeste"{
+
+        protagonista.mover(izquierda, 10)
+        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+    }
+
+
+    test"El personaje no sale del tablero por el Norte"{
+
+        protagonista.mover(arriba, 20)
+        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+    }
+    test"El personaje no sale del tablero por el Este"{
+        protagonista.mover(derecha,20)
+
+        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+    }
+    test"El personaje no sale del tablero por el Sur"{
+        protagonista.mover(abajo,20)
+
+        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+    }
+
+    test "El personaje se mueve 3 a la derecha, 3 a la izquierda y queda en el mismo lugar"{
+          protagonista.mover(derecha,3)
+          protagonista.mover(izquierda,3)
+
+          assert.equals(game.at(0,0),protagonista.position())
+
     }
 
 }
+describe "Movimiento del personaje con colisiones"{
+
+    method initialize(){
+    
+        game.width(20)
+        game.height(20)
+        game.cellSize(100)
+
+        amiga.position (game.at(5,0))
+        fogata.position(game.at(2,2))
+        carpa.position(game.at(5,5))
+        protagonista.position(game.at(0,0))
+
+        game.addVisual(amiga)
+        game.addVisual(fogata)
+        game.addVisual(carpa)
+        game.addVisual(protagonista)
+    }
+    test "el personaje se mueve 7 pasos hacia la derecha pero no puede atravesar a la amiga y queda a la izquierda de su amiga"{
+
+       assert.equals(game.at(5,0),amiga.position())
+      
+       protagonista.mover(derecha,7)
+
+        assert.equals(game.at(4,0),protagonista.position())
+    }
+    test "el personaje se mueve a la posicion (7,0) realizando un rodeo a la amiga en la posicion (5,0) "{
+
+        protagonista.mover(derecha, 7)
+        assert.equals(game.at(4,0), protagonista.position())
+
+        protagonista.mover(arriba)
+        protagonista.mover(derecha,2)
+        protagonista.mover(abajo)
+
+        assert.equals(game.at(6,0), protagonista.position())
+
+        protagonista.mover(derecha)
+        assert.equals(game.at(7,0), protagonista.position())
+    }
+    test "el personaje(0,0) se posiciona a la izquierda de la carpa(5,5) pero antes esquiva la fogata (2,2)"{
+
+        assert.equals(game.at(0,0),protagonista.position()) 
+        assert.equals(game.at(5,5),carpa.position())
+        assert.equals(game.at(2,2),fogata.position())
+        
+        protagonista.mover(arriba,2)
+        protagonista.mover(derecha,4)// solo da 2 pasos,no atraviesa la fogata
+
+        assert.equals(game.at(1,2),protagonista.position()) // estoy a la izquierda de la fogata
+
+        //doy rodeo a la fogata 
+        protagonista.mover(arriba,3)
+        protagonista.mover(derecha,10) // solo da 4 pasos, no atraviesa carpa
+
+        assert.equals(game.at(4,5),protagonista.position()) // estoy a la izquierda de la carpa
+
+    }
+    test "el personaje (0,0) va hasta la izquierda de la carpa, luego va hasta la derecha de la fogata(2,2) y vuelve a su posicion inicial"{
+        assert.equals(game.at(0,0),protagonista.position()) 
+        assert.equals(game.at(5,5),carpa.position())
+        assert.equals(game.at(2,2),fogata.position())
+
+        protagonista.mover(derecha,4)
+        protagonista.mover(arriba,5)
+        protagonista.mover(derecha)//no atravieso la carpa
+
+        assert.equals(game.at(4,5),protagonista.position()) //estoy a la izquierda de carpa
+        
+        protagonista.mover(abajo,3)
+        protagonista.mover(izquierda,4)  //no atravieso la fogata
+
+        assert.equals(game.at(3,2),protagonista.position()) // estoy a la derecha de fogata
+        
+        protagonista.mover(abajo,2)
+        protagonista.mover(izquierda,3)
+
+        assert.equals(game.at(0,0),protagonista.position())
+    }
+}
+
+
+    

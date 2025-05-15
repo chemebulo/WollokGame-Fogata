@@ -1,22 +1,41 @@
-object amiga{
+
+
+class Visual{
+    method esAtravesable(){
+        return true
+    }
+
+    
+}
+
+object amiga inherits Visual{
     var property position = game.at(2,4)
 
     method image() = "amiga.png"
 
-    method xPos(){
+    method xPos(){ 
         return self.position().x()
     }
+
+    override method esAtravesable() = false
+
+    
 }
 
-object fogata{
-    var property image = "fogata.png"
+object fogata inherits Visual{
+    method image() = "fogata.png"
 
-    method position() = game.at(3,4)
+    var  property position = game.at(6,4)
+
+    override method esAtravesable() = false
 }
 
-object carpa {
+object carpa inherits Visual{
 
-    var property carpa = "carpa.png"
+    method image() = "carpa.png"
 
-    method position() = game.at(6,4)
+    var  property position = game.at(2,2)
+
+    override method esAtravesable() = false
+     
 }

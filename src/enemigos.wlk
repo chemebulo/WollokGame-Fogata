@@ -4,7 +4,7 @@ import direccion.*
 import estado.*
 import elementos.*
 
-class Lobo{
+class Lobo inherits Visual{
     // ############################################## ATRIBUTOS ############################################## //
 
     var property position = game.at(6,0)

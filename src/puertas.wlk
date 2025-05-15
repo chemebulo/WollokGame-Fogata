@@ -3,11 +3,14 @@ import escenarios.*
 import videojuego.*
 import protagonista.*
 import direccion.*
+import elementos.*
 
-class Puerta {
+class Puerta inherits Visual{
     var property image = "puerta.png" 
     var property position = game.origin() 
     var property irHacia 
+
+    
 
 }
 

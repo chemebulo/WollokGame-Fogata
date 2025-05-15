@@ -21,19 +21,19 @@ object escenarioInicial{
 
     const puertaNorte = new PuertaAbierta (image = "puerta.png", position = norte.ubicacion(), irHacia = escenarioBifurcacion)
 
-    const visualesEnEscena = #{amiga, puertaNorte}
+    const visualesEnEscena = [amiga,fogata, carpa,puertaNorte,pj]
 
-    const noColisionar =#{amiga} // el personaje no atraviesa estos objetos
+    
 
     method puestaEnEscena(){
-        self.configurarProtagonista(noColisionar) // actualiza las posiciones de  los objetos que no se pueden colisionar
+        
         
         self.configurarConversacion()  // SI HAY UN NPC CON EL QUE DIALOGAR AGREGAR ESTO EN PUESTA EN ESCENA DEL ESCENARIO  
         
         self.agregarVisuales()
-        game.addVisualCharacter(protagonista)
+        
 
-        game.onCollideDo(pj, {objeto => objeto.interacion()})
+        game.onCollideDo(pj, {objeto => objeto.interaccion()})
         /*
             game.onTick...en caso de que hagan falta eventos
         */
@@ -46,13 +46,7 @@ object escenarioInicial{
 
         //#####################################################################################################
     }
-    
-    method configurarProtagonista(objetos){
-        pj.objetosColision(objetos)
-    }
-    /*
-        se necesita un metodo que configure la ubicacion de todos los visuales
-    */
+   
 
     method agregarVisuales(){
         visualesEnEscena.forEach({visual => game.addVisual(visual)})
