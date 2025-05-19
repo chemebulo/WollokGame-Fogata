@@ -97,7 +97,7 @@ object protagonista{
 
   
 
-    // ####################### INTERACCIÓN CON ENEMIGOS U OBJETOS############################################# // 
+    // ################################# INTERACCIÓN CON ENEMIGOS U OBJETOS ################################## // 
 
 
     method interaccion(visual) {
@@ -120,20 +120,13 @@ object protagonista{
     }
 
     method conversar(){
-
-        
         if(not self.esDialogoFinal()){
-        
-        
-        game.say(conversadorActual,conversacionNPC.get(estadoConversacion))
+            game.say(conversadorActual,conversacionNPC.get(estadoConversacion))
 
-        self.cambiarConversador()
-        estadoConversacion = estadoConversacion + 1 // AVANZA LA CONVERSACION
+            self.cambiarConversador()
             
-            
-        }
-        else {
-           
+            estadoConversacion = estadoConversacion + 1 // AVANZA LA CONVERSACION
+        } else {
             game.say(conversadorActual, conversacionNPC.get(estadoConversacion)) // si la conversacion termina siempre se dira el ultimo dialogo
         }
     }
@@ -164,4 +157,3 @@ object protagonista{
     //###########################################
 
 }
-

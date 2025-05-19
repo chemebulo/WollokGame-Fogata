@@ -90,3 +90,8 @@ class Lobo inherits Visual{
         game.say(visual, "¡Perdi 2 de vida!")
     }
 }
+
+/*
+    NUEVOS REQUERIMIENTOS:
+    Implementar objeto l en escenario Manager
+*/
