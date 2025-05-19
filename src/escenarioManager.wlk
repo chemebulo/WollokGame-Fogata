@@ -73,6 +73,7 @@ class Escenario{ // cada escenario del archivo escenario.wlk heredara de esta cl
         
         fondo.visualizarFondo(fondoEscenario)
         self.configurarConversacion()
+        self.configurarPuertas()
         /*
         ... todas las configuraciones 
         */
@@ -91,6 +92,8 @@ class Escenario{ // cada escenario del archivo escenario.wlk heredara de esta cl
             })
         })
     }
+
+    method configurarPuertas() // implementar
 
     method colisiones(){
          game.onCollideDo(protagonista, {objeto => objeto.interacion()})
