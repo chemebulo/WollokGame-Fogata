@@ -13,3 +13,8 @@ la posicion a mover si son atravesables. Si alguno es atravesable no puede mover
 *se agrego a las clases Puerta y Lobo la herencia de la clase Visual sobrrescribiendo el metodo esAtravesble()
 *Ya no lanza una excepcion si no pude atravesar, directamente no se mueve a la nueva posicion
 *se agrego archivo para testear movimiento y movimiento con colisiones
+
+-actualizacion, 20/5
+
+Se cambia completamente la logica de los Escenarios y se implementa el escenarioInicial como ejemplo
+Se agrega archivo de instruccion de escenarios

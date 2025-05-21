@@ -17,8 +17,6 @@ object z inherits Elemento{ // protagonista
 }
 
 
-   
-    
 object f inherits Elemento{ //fogata
 
     override method construir(posicion){
@@ -42,48 +40,33 @@ object g inherits Elemento{ // guardabosques.No implementado, no usar
     override method construir(posicion){}
 }
 
-// ###################### NIVEL #########################
+object a inherits Elemento{
+    override method construir(posicion){
+        amiga.position(posicion)
+    }
+}
 
 
-
-class Escenario{ // cada escenario del archivo escenario.wlk heredara de esta clase
-        /*
-            "Como implementar por cada escenario":
-                * fondoEscenario, esta variable sera el fondo del escenario, tiene que tener las medidas del tablero
-                * tablero() devuelve la matriz que se va a dibujar con las medidas del tablero
-                *puestaEnEscena:
-                    *configurar el estado actual del protagonista
-                    *settear la ubicacion de las puertas (deben ir a los escenarios siguientes o lanzar mensaje de que no se puede volver)
-                    *configurar si hay interaccion con los npc
-                    *configurar los oncollide,when Collide o colisiones con enemigos y puertas 
-                    *agregar eventos y configurarlos si lo hubiera
-                    *dibujarTablero() a partir del llamado a tablero() dibuja el tablero. Véase ejemplo en escenarioInicial
-
-
-                * limpiar() remueve todos los visuales para el proximo escenario.este metodo solo se llama cuando se interactua con las puertas
-        */
-
-    const  fondoEscenario // la imagen que va a ser de fondo del escenarop: debe tener el tamaño del tablero
+class Escenario{ 
+ 
+    const gestorFondo =  fondo    
+  
     const mapa
-    // se dibuja a el tablero como la matriz: const mapa : [...].reverse(), véase ejemplo en escenarioInicial
-                     
+    const fondoEscenario
+    const visualesEnEscena
+    const ost
+
+    method puestaEnEscena(){ // los que no se usan, sobreescribir el metodo en cada escenario  quitar los llamados a funciones
+         ost.shouldLoop(true)
+         ost.play()
+         self.dibujarFondo()
+         self.configurarPuertas()
+         self.configurarConversacion()
+         self.dibujarTablero()
+         self.agregarVisualesEscena()
+         self.colisionesYEventos()
+    }
     
-
-    method puestaEnEscena(){
-        
-        fondo.visualizarFondo(fondoEscenario)
-        self.configurarConversacion()
-        self.configurarPuertas()
-        /*
-        ... todas las configuraciones 
-        */
-        // se llama dibujarTablero()
-        self.dibujarTablero()
-        self.agregarVisualesEscena()
-        self.colisiones()
-        
-    }  
-
     method dibujarTablero() {
          (0 .. game.width() - 1).forEach({x =>  
             (0 .. game.height() - 1).forEach( {y => 
@@ -93,22 +76,40 @@ class Escenario{ // cada escenario del archivo escenario.wlk heredara de esta cl
         })
     }
 
-    method configurarPuertas() // implementar
+    method dibujarFondo(){
+        gestorFondo.visualizarFondo(fondoEscenario)
+    }
+   
+   method colisionesYEventos(){
+       self.colisiones()
+       self.eventosIniciar()
+   }
+
+    method configurarPuertas(){} // implementar
 
     method colisiones(){
-         game.onCollideDo(protagonista, {objeto => objeto.interacion()})
+         game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
     }
 
-    method eventos(){}//sobreescribir metodo si hay eventos
+    method eventosIniciar(){}//sobreescribir metodo si hay eventos,usar los Tick
 
-    method agregarVisualesEscena() 
-    // en agregar VisualesEscena se agregan todos los visuales, el protagonista debe quedar ultimo,testear como quedan los lobos en escena
+    method eventosFinalizar(){} // si hay eventos sobreescribir y remover los Tick
+
+    method agregarVisualesEscena(){
+        visualesEnEscena.forEach({v => game.addVisual(v)})
+    } 
 
     method configurarConversacion(){} // solo sobreescribir si hay conversacion
 
     method limpiar(){
-        game.clear()
-        //si hay ticket de evento sobreescribir, usar super() y agregar removeTick
+        game.removeVisual(fondo)
+        self.limpiarVisualesEnEscena()
+        ost.stop()
+       // game.clear() // agregada,borrar si ya no sirve
+        
+    }
+    method limpiarVisualesEnEscena(){
+        visualesEnEscena.forEach({v=> game.removeVisual(v)})
     }
 
 }
@@ -118,7 +119,7 @@ class Escenario{ // cada escenario del archivo escenario.wlk heredara de esta cl
 
 object fondo{
     /*
-        INV. REP : La imagen tiene el tamaño del tablero
+        INV. REP : La imagen tiene el tamaño del tablero 1300px(ancho) x 900px(alto)
     */
     var property position = game.at(0,0)
     var property image = ""
@@ -128,4 +129,7 @@ object fondo{
         image = fondoEscenario
         game.addVisual(self)    
     }
+
+    method esAtravesable() = true
+    method interaccion(){}
 }

@@ -40,9 +40,11 @@ class PuertaCerrada inherits Puerta {
         (se les setearia irHacia a un escenario para cada lugar, a veces ya no se podra 
          entrar al granero o cabaña dependiendo la historia)
 
-  * En escenario.wlk implementar en seccion "ELEMENTOS PARA CONSTRUIR EL MAPA " los objetos : 
-              *pAo,pAn,pAe,pAs (las puertas ABIERTAS con las 4 direcciones)
-              *pCo,pCn,pCe,pCs (las puertas CERRADAS con las 4 direcciones)
-              *puertas genericas 
+  Todos estos objetos deben instanciarse al principio del archivo escenarios
+  .Decidir si se dibujan en la matriz(implementar todos los objetos en escenarioMaganer) o si no se dibujan en la matriz
+  y solo se agregan como visuales, pero NO SE PUEDE dibujar nada en la posicion que tendrian en la matriz
+
+  En algunos escenarios hay conversaciones o cosas para hacer, buscar la forma de que de momento
+  las puertas esten cerradas hasta que se cumpla lo que ocurre en el mapa
                                                
 */ 

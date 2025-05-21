@@ -1,0 +1,35 @@
+INSTRUCCIONES PARA CREACION DE ESCENARIOS
+
+*En archivo escenario, instanciar las vriables de todas las puertas genericas que usara el juego,
+véase requerimientos en puertas.wlk
+
+
+
+*Crear un objeto escenario_nombre que herede de Escenario()
+*Dentro de Escenario inicializar las constantes mapa,fondo escenario y visualesEnEscena,ost
+    -mapa=  variable creada para los mapas(véase archivo escenarios_mapas.wlk)
+    -fondoEscenario = una imagen,formato png de 1300px(ancho) x 900px(alto) sera el fondo del escenario actual
+    (véase ejemplo en escenarioInicial).
+    -visualesEnEscena= una lista con los visuales en escena, primero deben ir los elementos no atravesables, luego las puertas,
+    luego el protagonista.Los enemigos se instanciaran en la matriz
+    (véase ejemplo en escenario Inicial)
+    ost= game.sound("nombre_archivo.mp3") guardarlos en assets
+
+
+
+*Si hay conversacion con NPC en el escenario, crear las variables necesarias
+y sobreescribir el método configurarConversacion (véase ejemplo en escenario inicial)
+(a futuro se refactorizara los dialogos).
+
+*sobreescribir el metodo configurarPuertas() setteando la variable irHacia de 
+las puertas que tendra el escenario,SOLO DEBEN SETTEARSE las ubicaciones de las puertas(en caso de estar abiertas)
+o los mensajes(en caso de estar cerradas) que se van a agregar al escenario. No es necesario dibujarlas en la matriz,solo agregarlas
+a la lista de VisualesEnEscena (instrucciones en escenarios_mapas.wlk). De momento es asi pero habra que ver si hay cambios de diseño
+
+
+
+
+
+
+* si hay evento (tick )sobreescribir el metodo eventosIniciar()
+*si hay colisiones a contemplar sobreescribir metodo colisiones()

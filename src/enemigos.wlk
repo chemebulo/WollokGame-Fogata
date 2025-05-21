@@ -93,5 +93,7 @@ class Lobo inherits Visual{
 
 /*
     NUEVOS REQUERIMIENTOS:
-    Implementar objeto l en escenario Manager
+    implementar esAtravesable() 
+    Implementar objeto l en escenario Manager para los lobos agresivos y otro objeto para lobos pasivo(deben instanciarse directamente
+    en la matriz). Ver ejemplo en el juego de pepita con los alpistes y manzanas
 */

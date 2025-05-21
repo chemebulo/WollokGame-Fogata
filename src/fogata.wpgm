@@ -11,6 +11,9 @@ program Fogata {
     videojuego.controles()
 
     videojuego.iniciar()
-
+    
     game.start()
+
 }
+
+
