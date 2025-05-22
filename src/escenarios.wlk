@@ -67,7 +67,10 @@ object escenarioPrologo inherits Escenario(fondoEscenario="",mapa=[],visualesEnE
     }
 }
 */
-object inicioJuego inherits Escenario(fondoEscenario="inicio-v1.png",mapa=mapa_inicioJuego,visualesEnEscena=[],ost=game.sound("inicio_v1.mp3")){
+object inicioJuego inherits Escenario(fondoEscenario="inicio-v1.png",
+                                      mapa=mapa_inicioJuego,
+                                      visualesEnEscena=[],
+                                      ost=game.sound("inicio_v1.mp3")){
 
     override method puestaEnEscena(){
          ost.shouldLoop(true)
@@ -85,8 +88,10 @@ object inicioJuego inherits Escenario(fondoEscenario="inicio-v1.png",mapa=mapa_i
 }
    
 
-object escenarioInicial  inherits Escenario(fondoEscenario="fondo-escenario-inicial.png",mapa=mapa_escenarioInicial,
-                                             visualesEnEscena = [amiga,carpa,fogata,puertaNorte,protagonista],ost=game.sound("musica-escenarioInicial-v1.mp3" ) ){
+object escenarioInicial  inherits Escenario(fondoEscenario="fondo-escenario-inicial.png",
+                                            mapa=mapa_escenarioInicial,
+                                            visualesEnEscena = [amiga,carpa,fogata,puertaNorte,protagonista],
+                                            ost=game.sound("musica-escenarioInicial-v1.mp3" ) ){
 
     //##################################DIALOGO CON LOS NPC ###################################
     // solo usar si hay en el escenario un npc con el que interactuar
@@ -124,7 +129,25 @@ object escenarioEntrarACabaña{}
 // #################################
 // implementar a gusto y usar este escenario para 
 // testear a futuro las funcionalidades
-object escenarioTEST{}
+object escenarioTEST inherits Escenario(mapa=mapa_escenarioTest,
+                                        fondoEscenario="fondo-escenarioTEST.png",
+                                        visualesEnEscena=[carpa,amiga,protagonista,puertaOeste],
+                                        ost=game.sound("musica-escenarioInicial.mp3")){
+
+    override method puestaEnEscena(){
+        ost.shouldLoop(true)
+         ost.play()
+         self.dibujarFondo()
+         self.configurarPuertas()
+         self.dibujarTablero()
+         self.agregarVisualesEscena()
+    }
+
+    override method configurarPuertas(){
+        puertaOeste.irHacia(escenarioInicial)
+    }
+
+}
 // #################################
 
 
@@ -198,3 +221,5 @@ object escenarioTEST{}
     
     
 }*/
+
+
