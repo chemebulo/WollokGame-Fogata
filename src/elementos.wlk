@@ -15,7 +15,7 @@ object amiga inherits Visual{
 }
 
 object fogata inherits Visual{
-    method image() = "fogata.png"
+    method image() = "fogata-apagada.png"
 
     var property position = game.at(3,4)
 
