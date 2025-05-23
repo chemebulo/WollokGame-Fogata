@@ -5,7 +5,7 @@ import videojuego.*
 import escenarios.*
 
 program Fogata {
-	
+	game.clear()
     videojuego.tablero()
 
     videojuego.controles()
