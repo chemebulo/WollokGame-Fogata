@@ -8,7 +8,7 @@ import visualesDiapositivas.*
 object videojuego{
    
     var property escenario = inicioJuego
-    const gestorDiapositiva = diapositiva
+    const gestorDiapositiva = diapositivasInicio
     var estoyEnPrologo= true
     //var property numDiapositiva = 1
     const ostInicioJuego = game.sound("inicio-v1.png")
@@ -79,7 +79,7 @@ object videojuego{
             DIAPOSITIVAS DEL VIDEOJUEGO 
 ######################################################*/
 
-object diapositiva{
+object diapositivasInicio{ // podria ser una clase y usarse para distintos puntos del juego
 
     const juego = videojuego
   
