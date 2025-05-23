@@ -23,50 +23,7 @@ const puertaEsteCerrada = new PuertaCerrada (image="puerta.png",position=este.ub
 const puertaSurCerrada = new PuertaCerrada  (image="puerta.png",position =sur.ubicacion(), mensaje="Esta cerrada por ahora",irHacia=escenarioInicial)
 
 
-//############################## DIAPOSITIVAS PARA INICIO JUEGO
- /*   const d0 = new Diapositiva(image="diapositiva1.png")
-    const d1 = new Diapositiva(image="diapositiva2.png")
-    const d2 = new Diapositiva(image="diapositiva3.png")
-    const d3 = new Diapositiva(image="diapositiva4.png")*/
-//##############################
 
-
-//############### ESCENARIOS PARA TODO EL JUEGO #########################
-/*
-object escenarioPrologo inherits Escenario(fondoEscenario="",mapa=[],visualesEnEscena=[d0,d1,d2,d3],ost=game.sound("inicio_v1.mp3")){
-    const vs = videojuego
-    
-    const numDiapositivas = 4
-    method numDiapositivas() =numDiapositivas
-    
-    override method puestaEnEscena(){
-       ost.shouldLoop(true)
-       ost.play()
-       game.addVisual(d0)
-       visualesEnEscena.remove(d0)
-    }
-
-    method cambiarDiapositiva(){
-        game.addVisual(visualesEnEscena.first())
-        visualesEnEscena.remove(visualesEnEscena.first())
-        vs.numDiapositiva(vs.numDiapositiva()+1)
-        
-    }
-   
-    
-    
-    override method limpiar(){
-        ost.stop()
-        game.removeVisual(d0)
-        game.removeVisual(d1)
-        game.removeVisual(d2)
-        game.removeVisual(d3)
-
-
-        videojuego.cambiarEscenario(escenarioInicial)
-    }
-}
-*/
 object inicioJuego inherits Escenario(fondoEscenario="inicio-v2.png",
                                       mapa=mapa_inicioJuego,
                                       visualesEnEscena=[],
@@ -82,7 +39,7 @@ object inicioJuego inherits Escenario(fondoEscenario="inicio-v2.png",
         ost.stop()
         game.removeVisual(fondo)
        
-        //videojuego.cambiarEscenario(escenarioPrologo)
+        
         
     }
 }
