@@ -10,7 +10,7 @@ object videojuego{
     var property escenario = inicioJuego
     const gestorDiapositiva = diapositiva
     var estoyEnPrologo= true
-    var property numDiapositiva = 1
+    //var property numDiapositiva = 1
     const ostInicioJuego = game.sound("inicio-v1.png")
     
 
@@ -56,18 +56,10 @@ object videojuego{
     //########## inicio de juego con diapositivas ################
 
     method iniciarJuego(){
-        /*if(inicio){
-            if(diapositiva.finalizoFlujo(numDiapositiva)){
-                self.culminarPrologoEIniciarJuego()
-            }
-            else{
-                self.continuarFlujoDiapositivas()
-            }
-        }*/
+       
         if(estoyEnPrologo){
                  gestorDiapositiva.gestionarDiapositivas()
        }
-        
     }
 
     method culminarPrologoEIniciarJuego(){
@@ -77,32 +69,27 @@ object videojuego{
             presiono f y rompera todo el juego. Debo pensar en un mejor diseño
         */
         gestorDiapositiva.removerTodo()
-        estoyEnPrologo=false
+        estoyEnPrologo=false // evita que al pulsar f ejecute el gestor dediapositivas , una vez iniciado el juego
         ostInicioJuego.stop()
         self.cambiarEscenario(escenarioInicial)
     }
-    /*
-
-    method continuarFlujoDiapositivas(){
-            diapositiva.dibujarDiapositiva()
-            numDiapositiva +=1
-    }*/
-
-    
 }
- 
+        
+/*######################################################
+            DIAPOSITIVAS DEL VIDEOJUEGO 
+######################################################*/
 
 object diapositiva{
 
     const juego = videojuego
-    var estadoDiapositiva = true
+  
 
     const d0 = new Diapositiva(image="diapo-1.png")
     const d1 = new Diapositiva(image="diapo-2.png")
     const d2 = new Diapositiva(image="diapo-3.png")
     const d3 = new Diapositiva(image="diapo-4.png")
     const d4 = new Diapositiva(image="diapo-5.png")
-const d5 = new Diapositiva(image="diapo-6.png")
+    const d5 = new Diapositiva(image="diapo-6.png")
     const d6 = new Diapositiva(image="diapo-7.png")
     const d7 = new Diapositiva(image="diapo-8.png")
     const d8 = new Diapositiva(image="diapo-9.png")
@@ -111,55 +98,67 @@ const d5 = new Diapositiva(image="diapo-6.png")
 
    
 
-    const guardar = #{d0,d1,d2,d3,d4,d5,d6,d7,d8,d9}
-    const dibujos = [d0,d1,d2,d3,d4,d5,d6,d7,d8,d9]
-
-    method dibujarDiapositiva(){
-        game.addVisual(dibujos.first())
-        dibujos.remove(dibujos.first())
-    }
- 
-    method ultimaDiapositiva() = 10
-
-    method finalizoFlujo(){
-        return juego.numDiapositiva()>self.ultimaDiapositiva()
-    }
-
-    method removerTodo(){
-        /*
-            Cuando dibujo as diapositivas, voy borrando la referencia en la colecccion de dibujos
-            dibujos queda vacio por ende debo borrar manualmente las diapositivas
-        */
-        guardar.forEach({d=>game.removeVisual(d)})
-        //guardar.forEach({d=> d=null})
-    }
+   const pelicula = [d0,d1,d2,d3,d4,d5,d6,d7,d8,d9]
+   const iteradorDiapos = new IteradorDiapositiva(listaAIterar = pelicula.copy())
 
     method gestionarDiapositivas(){
-        if(self.finalizoFlujo()){
+        
+        if(iteradorDiapos.terminoPelicula()){
             juego.culminarPrologoEIniciarJuego()
         }
         else{
+           iteradorDiapos.procesarDiapositivas()
+         }
+ }
+           
+    method ultimaDiapositiva() = pelicula.size() 
             
-            self.dibujarDiapositiva()
-            self.numDiapositivaAumentar()
-        }
+    method removerTodo(){
+       pelicula.forEach({d=>game.removeVisual(d)})
     }
-
-    method culminarPrologoEIniciarJuego(){
-        self.removerTodo()
-        estadoDiapositiva=false
-        juego.cambiarEscenario(escenarioInicial)
-    }
-
-    method numDiapositivaAumentar(){
-        const aumento = juego.numDiapositiva() +1
-        juego.numDiapositiva(aumento)
-    }
-
-   /* method continuarFlujoDiapositivas(){
-            diapositiva.dibujarDiapositiva()
-            numDiapositiva +=1
-    }*/
 }
+            
+        
+class IteradorDiapositiva{
+    /*
+        Al dibujar una diapositiva, se dibuja el primer elemento de una lista y lo borra de la lista.
+        Al pedir devuelta que dibuje una diapo, dibujaria el segundo, y asi hasta que quede la lista  vacia
+        El problema es cuando luego tengo que remover los visuales de cada diapositiva cuando termina la presentacion,
+        ya que se perdio la referencia de los visuales(quedo vacia la lista)
+        Debido a este problema se crea la Clase Iterador De Diapositivas que funciona similar a los iteradores
+        vistos en Estructuras de Datos (trabaja sobre una copia de la lista )
+    */
+    const listaAIterar 
+
+        method procesarDiapositivas(){
+                self.dibujarYActualizar(self.elementoAProcesar())
+        }
+          
+        method terminoPelicula() = listaAIterar.isEmpty()
+           
+        method dibujarYActualizar(elem){
+            game.addVisual(elem)
+            listaAIterar.remove(elem)
+        }
+
+        method elementoAProcesar() = listaAIterar.first()
+}
+
+
+       
+        
+       
+
+
+
+    
+  
+ 
+
+  
+
+
+
+    
             
            

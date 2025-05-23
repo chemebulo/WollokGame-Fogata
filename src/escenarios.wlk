@@ -33,7 +33,7 @@ object inicioJuego inherits Escenario(fondoEscenario="inicio-v2.png",
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
-         self.dibujarTablero()
+         //self.dibujarTablero()
     }
     override method limpiar(){
         ost.stop()
