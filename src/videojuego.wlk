@@ -115,7 +115,11 @@ object diapositivasInicio{ // podria ser una clase y usarse para distintos punto
             
     method removerTodo(){
        pelicula.forEach({d=>game.removeVisual(d)})
+       pelicula.clear() // deja vacia la lista para liberar recursos
+       
     }
+
+   
 }
             
         
@@ -142,6 +146,8 @@ class IteradorDiapositiva{
         }
 
         method elementoAProcesar() = listaAIterar.first()
+
+        
 }
 
 
