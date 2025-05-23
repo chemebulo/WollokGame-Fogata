@@ -67,7 +67,7 @@ object escenarioPrologo inherits Escenario(fondoEscenario="",mapa=[],visualesEnE
     }
 }
 */
-object inicioJuego inherits Escenario(fondoEscenario="inicio-v1.png",
+object inicioJuego inherits Escenario(fondoEscenario="inicio-v2.png",
                                       mapa=mapa_inicioJuego,
                                       visualesEnEscena=[],
                                       ost=game.sound("inicio_v1.mp3")){
