@@ -1,36 +1,30 @@
 import wollok.game.*
 import protagonista.*
 import elementos.*
+import enemigos.*
 
 //##############ELEMENTOS PARA CONSTRUIR EL MAPA #############
-class Elemento{
-    method construir(posicion){}
+class Elemento{ //REFERENCIAS A LOS DISTINTOS VISUALES APRA SETTEARSUS POSICIONES EN LAS MATRIZ O INSTANCIARLOS
+    const visual = null
+    method construir(position){
+        visual.position(position)
+    }
 }
 
 
 object _ inherits Elemento{
+    override method construir(position){} //por las dudas
 }
-object z inherits Elemento{ // protagonista
-    override method construir(posicion){
-        protagonista.position(posicion)
-    }
-}
+object z inherits Elemento(visual=protagonista){} 
 
+object f inherits Elemento(visual=fogata){}
 
-object f inherits Elemento{ //fogata
+object c inherits Elemento(visual=carpa){}
 
-    override method construir(_position){
-        fogata.position(_position)
-    }
-}
-
-object c inherits Elemento{ //carpa
-    override method construir(_position){
-        carpa.position(_position)
-    }
-}
-
-object l inherits Elemento{ //lobo IMPLEMENTAR!!
+object a inherits Elemento(visual=amiga){}
+   
+// IMPLEMENTAR...
+object l inherits Elemento(){  //LOBO implementar 
     override method construir(posicion){
         
     }
@@ -40,11 +34,8 @@ object g inherits Elemento{ // guardabosques.No implementado, no usar
     override method construir(_position){}
 }
 
-object a inherits Elemento{
-    override method construir(_position){
-        amiga.position(_position)
-    }
-}
+
+
 
 
 class Escenario{ 
