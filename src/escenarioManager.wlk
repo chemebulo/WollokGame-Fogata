@@ -19,14 +19,14 @@ object z inherits Elemento{ // protagonista
 
 object f inherits Elemento{ //fogata
 
-    override method construir(posicion){
-        fogata.position(posicion)
+    override method construir(_position){
+        fogata.position(_position)
     }
 }
 
 object c inherits Elemento{ //carpa
-    override method construir(posicion){
-        carpa.position(posicion)
+    override method construir(_position){
+        carpa.position(_position)
     }
 }
 
@@ -37,12 +37,12 @@ object l inherits Elemento{ //lobo IMPLEMENTAR!!
 }
 
 object g inherits Elemento{ // guardabosques.No implementado, no usar
-    override method construir(posicion){}
+    override method construir(_position){}
 }
 
 object a inherits Elemento{
-    override method construir(posicion){
-        amiga.position(posicion)
+    override method construir(_position){
+        amiga.position(_position)
     }
 }
 
@@ -53,7 +53,7 @@ class Escenario{
   
     const mapa
     const fondoEscenario
-    const visualesEnEscena
+    const visualesEnEscena 
     const ost
 
     method puestaEnEscena(){ // los que no se usan, sobreescribir el metodo en cada escenario  quitar los llamados a funciones
