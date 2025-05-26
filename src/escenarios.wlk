@@ -42,6 +42,7 @@ object inicioJuego inherits Escenario(fondoEscenario   = "inicio-v2.png",
         ost.stop()
         game.removeVisual(fondo)
     }
+    
 }
 
 // ######################################### ESCENARIO: escenarioInicial #########################################

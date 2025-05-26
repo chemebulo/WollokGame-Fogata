@@ -48,9 +48,9 @@ class Escenario{
        self.eventosIniciar()
    }
 
-    method configurarPuertas(){ // Implementar.
+    method configurarPuertas(){}// Implementar.
 
-    } 
+    
 
     method colisiones(){
          game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
