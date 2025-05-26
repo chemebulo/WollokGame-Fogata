@@ -41,13 +41,13 @@ object g inherits Elemento{ // guardabosques.No implementado, no usar
 class Escenario{ 
  
     const gestorFondo =  fondo    
-  
+    const eventos = []
     const mapa
     const fondoEscenario
     const visualesEnEscena 
     const ost
 
-    method puestaEnEscena(){ // los que no se usan, sobreescribir el metodo en cada escenario  quitar los llamados a funciones
+    method puestaEnEscena(){ 
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
@@ -82,9 +82,13 @@ class Escenario{
          game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
     }
 
-    method eventosIniciar(){}//sobreescribir metodo si hay eventos,usar los Tick
+    method eventosIniciar(){
 
-    method eventosFinalizar(){} // si hay eventos sobreescribir y remover los Tick
+    }
+
+    method eventosFinalizar(){
+        eventos.forEach({evento => game.removeTickEvent(evento)})
+    } 
 
     method agregarVisualesEscena(){
         visualesEnEscena.forEach({v => game.addVisual(v)})
@@ -96,7 +100,8 @@ class Escenario{
         game.removeVisual(fondo)
         self.limpiarVisualesEnEscena()
         ost.stop()
-       // game.clear() // agregada,borrar si ya no sirve
+        self.eventosFinalizar()
+       
         
     }
     method limpiarVisualesEnEscena(){

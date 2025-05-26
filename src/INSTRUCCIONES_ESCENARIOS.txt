@@ -1,35 +1,66 @@
 INSTRUCCIONES PARA CREACION DE ESCENARIOS
-
-*En archivo escenario, instanciar las vriables de todas las puertas genericas que usara el juego,
-véase requerimientos en puertas.wlk
+IMPORTANTE: No es necesario saber la implementacion de Escenario, solo seguir las instruccciones(pensarlo como una interfaz)
 
 
-
+En archivo escenarios.wlk
 *Crear un objeto escenario_nombre que herede de Escenario()
+
 *Dentro de Escenario inicializar las constantes mapa,fondo escenario y visualesEnEscena,ost
-    -mapa=  variable creada para los mapas(véase archivo escenarios_mapas.wlk)
+    -mapa=  variable creada para los mapas( crear en escenarios_mapas.wlk ,  utilizar "mapa_nombre_escenario" como standar del nombre)
     -fondoEscenario = una imagen,formato png de 1300px(ancho) x 900px(alto) sera el fondo del escenario actual
-    (véase ejemplo en escenarioInicial).
-    -visualesEnEscena= una lista con los visuales en escena, primero deben ir los elementos no atravesables, luego las puertas,
-    luego el protagonista.Los enemigos se instanciaran en la matriz
-    (véase ejemplo en escenario Inicial)
-    ost= game.sound("nombre_archivo.mp3") guardarlos en assets
+    -visualesEnEscena= una lista con los visuales en escena.Primero deben ir los objetos noa travesables, luego las puertas,luego el protagonista 
+    y luego los enemigos sobre el protagonista. Ejemplo [amiga,fogata,puertaNorte,protagonista,lobo1,lobo2....]
+    
+    ost= game.sound("nombre_archivo.mp3") // el ost que tendra el escenario actual, debe estar en assets
+
+    Ejemplo: object escenarioInicial inherits Escenario(fondoEscenario=... ,
+                                                        mapa=...,
+                                                        visualesEnEscena=[...]
+                                                        ost= ...) {}
+
+    IMPORTANTE: Si hay eventos en el juego(tick), agregar a la instancia eventos = ["nombre_evento_1"","nombre_evento_2",...]   
+    Ejemplo :  object escenarioInicial inherits Escenario(fondoEscenario=... ,
+                                                        mapa=...,
+                                                        visualesEnEscena=[...]
+                                                        ost= ...,
+                                                        eventos = [...])   //instrucciones para eventos al final                                               
 
 
 
-*Si hay conversacion con NPC en el escenario, crear las variables necesarias
-y sobreescribir el método configurarConversacion (véase ejemplo en escenario inicial)
-(a futuro se refactorizara los dialogos).
+*Si hay conversacion con NPC en el escenario:
+    sobreescribir el metodo configurarConversacion() y agregar las variables necesarias (véase ejemplo en escenario Inicial) //se refactoriza a futuro
 
-*sobreescribir el metodo configurarPuertas() setteando la variable irHacia de 
-las puertas que tendra el escenario,SOLO DEBEN SETTEARSE las ubicaciones de las puertas(en caso de estar abiertas)
-o los mensajes(en caso de estar cerradas) que se van a agregar al escenario. No es necesario dibujarlas en la matriz,solo agregarlas
+
+*sobreescribir el metodo configurarPuertas() setteando hacia donde iran las puertas en el escenario actual
+    Ejemplo, si en visualesEnEscena esta puertaNorte:
+        override method configurarPuertas(){
+            puertaNorte.irHacia(nombre_escenario_a_ir)
+        }
+
+En las puertas que tendra el escenario,SOLO DEBEN SETTEARSE las ubicaciones de las puertas(en caso de estar abiertas)
+o los mensajes(en caso de estar cerradas) que se van a agregar al escenario(estan en visuales en escena). 
+No es necesario dibujarlas en la matriz(no dibujar nada ahi),solo agregarlas
 a la lista de VisualesEnEscena (instrucciones en escenarios_mapas.wlk). De momento es asi pero habra que ver si hay cambios de diseño
 
 
 
 
+* si hay  evento(tick): sobreescribir el metodo eventosIniciar() 
+IMPORTANTE: Los nombres de eventos deben ser iguales a los de la lista, ya que el propio escenario se encarga de
+eliminarlos despues cuando se cambia a otro escenario
+Ejemplo
+    override method eventosIniciar(){ // implementar manualmente los eventos
+        game.onTick(...,evento1,...)
+        game.onTick(...,evento2,...)
+        game.onTick(...,evento3,...)
+    }
 
 
-* si hay evento (tick )sobreescribir el metodo eventosIniciar()
-*si hay colisiones a contemplar sobreescribir metodo colisiones()
+
+
+   
+
+
+
+
+
