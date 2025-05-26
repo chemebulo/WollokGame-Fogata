@@ -2,16 +2,19 @@ import wollok.game.*
 import protagonista.*
 import direccion.*
 import estado.*
-import elementos.*
+import visualesExtra.*
+
+object lobo inherits Lobo {
+}
 
 class Lobo inherits Visual{
     // ############################################## ATRIBUTOS ############################################## //
 
     var property position = game.at(6,0)
-    var property presa = protagonista
-    var property vida = 3
-    var property daño = 2
-    var property image = "lobo-derecha.png"
+    var property presa    = protagonista
+    var property vida     = 3
+    var property daño     = 2
+    var property image    = "lobo-derecha.png"
 
     const property objetosConColision = #{amiga}
 
@@ -66,6 +69,8 @@ class Lobo inherits Visual{
     method colisionoConAlgoEn(posicionAMover) = self.posicionesDeObjetosConColision().contains(posicionAMover)
 
     method posicionesDeObjetosConColision() = objetosConColision.map({cosa => cosa.position()})
+
+    override method esAtravesable() = true
 
     // ####################################### MOVIMIENTO - AUXILIARES ####################################### //
 

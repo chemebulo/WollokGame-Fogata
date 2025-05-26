@@ -48,6 +48,8 @@ object ejeX{
     method segundaDir() = izquierda
 }
 
+// ##############################################################################################
+
 object ejeY{
     method estaEnElMismoEjeQue(primeraVis, segundaVis) {
         return primeraVis.position().y() == segundaVis.position().y()
@@ -70,30 +72,29 @@ object ejeY{
     method segundaDir() = abajo
 }
 
-
-/////////////////////////////// DIRECCIONES PARA PUERTAS ///////////////////////////////
+// ################################# DIRECCIONES PARA PUERTAS ##################################
 
 object norte {
-  method ubicacion (){
-    return game.at(6,8)
-  }
+    method ubicacion (){
+      return game.at(6,8)
+    }
 }
 
 object sur {
-  method ubicacion (){
-    return game.at(6,0)
-  }
+    method ubicacion (){
+      return game.at(6,0)
+    }
 }
 
 object este {
-  method ubicacion (){
-    return game.at(12,4)
-  }
+    method ubicacion (){
+      return game.at(12,4)
+    }
 }
 object oeste {
-  method ubicacion (){
-    return game.at(0,4)
-  }
+    method ubicacion (){
+      return game.at(0,4)
+    }
 }
 
 // Probar si funciona:

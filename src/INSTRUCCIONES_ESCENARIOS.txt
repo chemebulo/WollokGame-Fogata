@@ -1,6 +1,6 @@
 INSTRUCCIONES PARA CREACION DE ESCENARIOS
-IMPORTANTE: No es necesario saber la implementacion de Escenario, solo seguir las instruccciones(pensarlo como una interfaz)
 
+IMPORTANTE: No es necesario saber la implementacion de Escenario, solo seguir las instruccciones(pensarlo como una interfaz)
 
 En archivo escenarios.wlk
 *Crear un objeto escenario_nombre que herede de Escenario()

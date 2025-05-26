@@ -4,31 +4,27 @@ import direccion.*
 import videojuego.*
 import enemigos.*
 import dialogos.*
-import elementos.*
+import visualesExtra.*
 //import estado.*
 
-
 object protagonista{
-    // ############################################## ATRIBUTOS ############################################## //
+    // ################################################ ATRIBUTOS ################################################
 
     var property position = game.at(0,0)
-    var property vida = 10
-    var property daño = 1
-    const property vg = videojuego
-    var property image = "protagonista-abajo.png"
+    var property vida     = 10
+    var property daño     = 1
+    const property vg     = videojuego
+    var property image    = "protagonista-abajo.png"
 
-    //********************** VARIABLES PARA CONVERSACION ***********************************//
-
+    // ####################################### VARIABLES PARA CONVERSACION #######################################
     
-    var property conversacionNPC = new Dictionary()
-    var property npcActual = amiga // depende el escenario hablara con amiga o guardabosques
+    var property conversacionNPC    = new Dictionary()
+    var property npcActual          = amiga // Depende del escenario hablar con amiga o guardabosques.
     var property estadoConversacion = 1
-    var property conversadorActual = self
-    var property codUltimoDialogo = 0
+    var property conversadorActual  = self
+    var property codUltimoDialogo   = 0
 
-
-   // ######################################### ESTADO #################################################
-
+   // ################################################## ESTADO ##################################################
 
     method validarSiEstaVivo(){ 
         if (not self.estaVivo()) { self.error("Estoy muerto") }
@@ -36,7 +32,7 @@ object protagonista{
 
      method estaVivo() = self.vida() > 0
 
-   // ########################################## MOVIMIENTO GENERAL ######################################### //
+   // ############################################ MOVIMIENTO GENERAL ############################################
 
     method mover(direccion){
         self.validarSiEstaVivo() 
@@ -50,37 +46,30 @@ object protagonista{
         self.cambiarImagen(direccion)
     }
 
-    // ####################################### COMPROBAR MOVIMIENTO ####################################### // 
+    // ########################################### COMPROBAR MOVIMIENTO ########################################## 
     
     method puedoMover(direccion) {
         const posicionAMover = direccion.siguientePosicion(position)
 
-        return self.estaDentroDelTablero(posicionAMover) and
-                 not self.hayObstaculos(posicionAMover)
+        return self.estaDentroDelTablero(posicionAMover) and not self.hayObstaculos(posicionAMover)
     }
 
-    
-
     method estaDentroDelTablero(posicionAMover) = self.existeX(posicionAMover.x()) and self.existeY(posicionAMover.y())
-    
                                                 
 	method existeX(x){
         const anchoJuego = game.width()
 		return self.enLimite(x, anchoJuego)
-		
 	} 
 
 	method existeY(y){
         const altoJuego = game.height()
 		return self.enLimite(y, altoJuego)
-		
 	}                                                                                              
     
     method enLimite(coord, max){
 		return coord.between(0, max - 1) 
 	}
  
-    
     method hayObstaculos(posicion) {
         return not self.objetosEnPosicion(posicion).all({visual => visual.esAtravesable()})
     }
@@ -89,34 +78,26 @@ object protagonista{
         return game.getObjectsIn(posicion).copyWithout(self)
     }
 
-
-
     method cambiarImagen(direccion){ 
-        self.image("protagonista-"+direccion.toString()+".png") 
+        self.image("protagonista-" + direccion.toString() + ".png") 
     }
 
-  
-
-    // ################################# INTERACCIÓN CON ENEMIGOS U OBJETOS ################################## // 
-
+    // #################################### INTERACCIÓN CON ENEMIGOS U OBJETOS ################################### 
 
     method interaccion(visual) {
         // Por ahora nada...
     }
 
+    // ############################################## DIALOGOS NPC ###############################################
 
-    // ############################################ DIALOGOS NPC ############################################# //
-
-    /*   esto va a cambiarse a futuro a un objeto distinto quitando responsabilidad al protagonista, 
-        es prototipo de momento*/
+    // Esto va a cambiarse a futuro a un objeto distinto quitando responsabilidad al protagonista, es prototipo de momento.
 
     method interactuarNPC(){
-        if (self.estaAlLadoDe(npcActual)){
-            self.conversar()
-        }
+        if (self.estaAlLadoDe(npcActual)){self.conversar()}
     }
+
     method estaAlLadoDe(npc){
-        return (self.xPos() - (npc.xPos())).abs() == 1 //estoy exactamente a 1 celda del npc
+        return (self.xPos() - (npc.xPos())).abs() == 1 // Estoy exactamente a 1 celda del NPC.
     }
 
     method conversar(){
@@ -125,17 +106,16 @@ object protagonista{
 
             self.cambiarConversador()
             
-            estadoConversacion = estadoConversacion + 1 // AVANZA LA CONVERSACION
+            estadoConversacion = estadoConversacion + 1 // Avanza la conversación.
         } else {
-            game.say(conversadorActual, conversacionNPC.get(estadoConversacion)) // si la conversacion termina siempre se dira el ultimo dialogo
+            game.say(conversadorActual, conversacionNPC.get(estadoConversacion)) // Si la conversación termina siempre se dirá el último diálogo.
         }
     }
 
-    method cambiarConversador(){ // cambiar todo esto a un ESTADO
+    method cambiarConversador(){ // Cambiar todo esto a un ESTADO.
         if (self.esTurnoDelProtagonista()){
             conversadorActual = self
-        }
-        else{
+        } else{
             conversadorActual = npcActual
         }
     }
@@ -144,16 +124,11 @@ object protagonista{
 
     method esDialogoFinal() = estadoConversacion == self.codUltimoDialogo()
 
-    method xPos(){
-        return self.position().x()
-    }
+    method xPos() = self.position().x()
 
-
-    //############ PARA TESTEAR #################
+    // ############################################### PARA TESTEAR ###############################################
 
     method mover(direccion,cantidad){
         (1 .. cantidad).forEach({n => self.mover(direccion)})
     }
-    //###########################################
-
 }

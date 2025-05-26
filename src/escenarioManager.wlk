@@ -1,45 +1,13 @@
 import wollok.game.*
 import protagonista.*
-import elementos.*
+import visualesExtra.*
 import enemigos.*
 
-//##############ELEMENTOS PARA CONSTRUIR EL MAPA #############
-class Elemento{ //REFERENCIAS A LOS DISTINTOS VISUALES APRA SETTEARSUS POSICIONES EN LAS MATRIZ O INSTANCIARLOS
-    const visual = null
-    method construir(position){
-        visual.position(position)
-    }
-}
-
-
-object _ inherits Elemento{
-    override method construir(position){} //por las dudas
-}
-object z inherits Elemento(visual=protagonista){} 
-
-object f inherits Elemento(visual=fogata){}
-
-object c inherits Elemento(visual=carpa){}
-
-object a inherits Elemento(visual=amiga){}
-   
-// IMPLEMENTAR...
-object l inherits Elemento(){  //LOBO implementar 
-    override method construir(posicion){
-        
-    }
-}
-
-object g inherits Elemento{ // guardabosques.No implementado, no usar
-    override method construir(_position){}
-}
-
-
-
-
+// #############################################################################################################################
 
 class Escenario{ 
- 
+
+    const gestorFondo = fondo    
     const gestorFondo =  fondo    
     const eventos = []
     const mapa
@@ -48,6 +16,7 @@ class Escenario{
     const ost
 
     method puestaEnEscena(){ 
+
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
@@ -76,46 +45,50 @@ class Escenario{
        self.eventosIniciar()
    }
 
-    method configurarPuertas(){} // implementar
+    method configurarPuertas(){ // Implementar.
+
+    } 
 
     method colisiones(){
          game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
     }
 
-    method eventosIniciar(){
 
-    }
+    method eventosIniciar(){ // Sobreescribir metodo si hay eventos,usar los Tick.
+
+    } 
 
     method eventosFinalizar(){
         eventos.forEach({evento => game.removeTickEvent(evento)})
+
     } 
 
     method agregarVisualesEscena(){
         visualesEnEscena.forEach({v => game.addVisual(v)})
     } 
 
-    method configurarConversacion(){} // solo sobreescribir si hay conversacion
+    method configurarConversacion(){ // Solo sobreescribir si hay conversacion.
+
+    }
 
     method limpiar(){
         game.removeVisual(fondo)
         self.limpiarVisualesEnEscena()
         ost.stop()
         self.eventosFinalizar()
-       
-        
-    }
-    method limpiarVisualesEnEscena(){
-        visualesEnEscena.forEach({v=> game.removeVisual(v)})
     }
 
+    method limpiarVisualesEnEscena(){
+        visualesEnEscena.forEach({v => game.removeVisual(v)})
+    }
 }
 
-
-
+// #############################################################################################################################
 
 object fondo{
-    /*
-        INV. REP : La imagen tiene el tamaño del tablero 1300px(ancho) x 900px(alto)
+    /* 
+        INVARIANTE DE REPRESENTACIÓN: 
+            * La imagen tiene el tamaño del tablero 1300px(ancho) x 900px(alto).
     */
     var property position = game.at(0,0)
     var property image = ""
@@ -127,5 +100,6 @@ object fondo{
     }
 
     method esAtravesable() = true
+
     method interaccion(){}
 }

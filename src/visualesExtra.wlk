@@ -4,6 +4,8 @@ class Visual{
     }
 }
 
+// ###########################################################
+
 object amiga inherits Visual{
     method image() = "amiga.png"
 
@@ -14,6 +16,8 @@ object amiga inherits Visual{
     method xPos() = self.position().x()
 }
 
+// ###########################################################
+
 object fogata inherits Visual{
     method image() = "fogata-apagada.png"
 
@@ -21,6 +25,8 @@ object fogata inherits Visual{
 
     override method esAtravesable() = false
 }
+
+// ###########################################################
 
 object carpa inherits Visual{
     var property image = "carpa.png"
