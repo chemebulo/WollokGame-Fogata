@@ -6,7 +6,11 @@ import enemigos.*
 // #############################################################################################################################
 
 class Escenario{ 
-
+    /*
+        INV .REP: En eventos, cada evento de la lista se llama EXACTAMENTE IGUAL que los eventos que se implementan en eventos Iniciar,
+        véase ejemplo en ISSUE en github
+    
+    */
     const gestorFondo = fondo     
     const eventos = []
     const mapa

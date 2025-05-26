@@ -72,8 +72,9 @@ object escenarioInicial  inherits Escenario(fondoEscenario   = "fondo-escenario-
 
 object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png",
                                                mapa             = mapa_escenarioBifurcacion,
-                                               visualesEnEscena = [puertaNorte, puertaOeste, puertaEste, protagonista],
-                                               ost              = game.sound("musica-escenarioInicial-v1.mp3")){
+                                               visualesEnEscena = [puertaNorte, puertaOeste, puertaEste, protagonista,lobo],
+                                               ost              = game.sound("musica-escenarioInicial-v1.mp3"),
+                                               eventos= ["Lobo persigue al personaje"]){
 
     override method configurarPuertas(){
         puertaNorte.irHacia(escenarioInicial)
@@ -83,10 +84,6 @@ object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenar
 
     override method eventosIniciar() {
         game.onTick(800, "Lobo persigue al personaje", {lobo.perseguirAPresaYAtacar()})
-    }
-
-    override method eventosFinalizar() {
-        game.removeTickEvent("Lobo persigue al personaje")
     }
 }
 
