@@ -7,8 +7,7 @@ import enemigos.*
 
 class Escenario{ 
 
-    const gestorFondo = fondo    
-    const gestorFondo =  fondo    
+    const gestorFondo = fondo     
     const eventos = []
     const mapa
     const fondoEscenario
