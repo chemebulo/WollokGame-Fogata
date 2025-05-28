@@ -14,4 +14,4 @@ program Fogata {
     videojuego.iniciar()
     
     game.start()
-}
+} 

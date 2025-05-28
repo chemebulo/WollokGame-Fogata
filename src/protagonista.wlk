@@ -18,12 +18,10 @@ object protagonista{
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
-    var property conversacionNPC    = new Dictionary()
-    var property npcActual          = amiga // Depende del escenario hablar con amiga o guardabosques.
-    var property estadoConversacion = 1
+    var  conversacionNPC = []
+    var property npcActual          = null 
     var property conversadorActual  = self
-    var property codUltimoDialogo   = 0
-
+  
    // ################################################## ESTADO ##################################################
 
     method validarSiEstaVivo(){ 
@@ -90,9 +88,10 @@ object protagonista{
 
     // ############################################## DIALOGOS NPC ###############################################
 
-    // Esto va a cambiarse a futuro a un objeto distinto quitando responsabilidad al protagonista, es prototipo de momento.
+  
 
     method interactuarNPC(){
+      
         if (self.estaAlLadoDe(npcActual)){self.conversar()}
     }
 
@@ -100,29 +99,32 @@ object protagonista{
         return (self.xPos() - (npc.xPos())).abs() == 1 // Estoy exactamente a 1 celda del NPC.
     }
 
-    method conversar(){
-        if(not self.esDialogoFinal()){
-            game.say(conversadorActual,conversacionNPC.get(estadoConversacion))
-
-            self.cambiarConversador()
-            
-            estadoConversacion = estadoConversacion + 1 // Avanza la conversación.
-        } else {
-            game.say(conversadorActual, conversacionNPC.get(estadoConversacion)) // Si la conversación termina siempre se dirá el último diálogo.
-        }
+    method conversar() {
+    if(not self.esDialogoFinal()){
+        game.say(conversadorActual,self.dialogoActual())
+        conversacionNPC.remove(self.dialogoActual())
+        self.cambiarConversador()
+    }
     }
 
-    method cambiarConversador(){ // Cambiar todo esto a un ESTADO.
-        if (self.esTurnoDelProtagonista()){
-            conversadorActual = self
-        } else{
-            conversadorActual = npcActual
-        }
+    method dialogoActual() = conversacionNPC.first()
+
+    method esDialogoFinal() = conversacionNPC.isEmpty()
+
+    method cambiarConversador(){ 
+       
+        if (self.esMiTurnoDeHablar()){conversadorActual = self}else {conversadorActual = npcActual}
     }
 
-    method esTurnoDelProtagonista() = estadoConversacion == 0 || estadoConversacion.even()
+    method esMiTurnoDeHablar() = conversacionNPC.size().even()
+    
+    method conversacionNPC(_conversacionNPC){conversacionNPC=_conversacionNPC}
 
-    method esDialogoFinal() = estadoConversacion == self.codUltimoDialogo()
+    method resetearDialogo(){
+        conversacionNPC= []
+    
+        conversadorActual=self
+    }
 
     method xPos() = self.position().x()
 
@@ -131,4 +133,10 @@ object protagonista{
     method mover(direccion,cantidad){
         (1 .. cantidad).forEach({n => self.mover(direccion)})
     }
+
 }
+
+
+
+
+

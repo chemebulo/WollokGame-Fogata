@@ -11,12 +11,14 @@ class Escenario{
         véase ejemplo en ISSUE en github
     
     */
+    const pj = protagonista
     const gestorFondo = fondo     
     const eventos = []
     const mapa
     const fondoEscenario
     const visualesEnEscena 
     const ost
+    var dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
 
     method puestaEnEscena(){ 
 
@@ -53,7 +55,7 @@ class Escenario{
     
 
     method colisiones(){
-         game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
+         game.onCollideDo(pj, {objeto => objeto.interaccion()})
     }
 
 
@@ -72,6 +74,12 @@ class Escenario{
 
     method configurarConversacion(){ 
 
+        if(not dialogo.isEmpty()){
+            pj.npcActual(dialogo.first())
+            dialogo.remove(dialogo.first())
+            pj.conversacionNPC(dialogo.first())
+        }
+
     }
 
     method limpiar(){
@@ -79,6 +87,8 @@ class Escenario{
         self.limpiarVisualesEnEscena()
         ost.stop()
         self.eventosFinalizar()
+        pj.resetearDialogo()
+        dialogo = []
     }
 
     method limpiarVisualesEnEscena(){

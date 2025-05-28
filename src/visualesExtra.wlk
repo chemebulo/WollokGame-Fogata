@@ -7,6 +7,8 @@ class Visual{
 // ###########################################################
 
 object amiga inherits Visual{
+    var property dialogo = []
+
     method image() = "amiga.png"
 
     var property position = game.at(2,4)
@@ -14,6 +16,8 @@ object amiga inherits Visual{
     override method esAtravesable() = false
 
     method xPos() = self.position().x()
+
+   
 }
 
 // ###########################################################

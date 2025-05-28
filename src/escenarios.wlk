@@ -11,6 +11,7 @@ import escenarios_mapas.*
 import visualesDiapositivas.*
 import eventos.*
 
+
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
 
 const puertaNorte = new PuertaAbierta(image = "puerta.png", position = norte.ubicacion(), irHacia = escenarioInicial)    
@@ -32,17 +33,7 @@ object inicioJuego inherits Escenario(fondoEscenario   = "inicio-v2.png",
                                       visualesEnEscena = [],
                                       ost              = game.sound("inicio_v1.mp3")){
 
-    /*override method puestaEnEscena(){
-         ost.shouldLoop(true)
-         ost.play()
-         self.dibujarFondo()
-        
-    }*/
-    
-    /*override method limpiar(){
-        ost.stop()
-        game.removeVisual(fondo)
-    }*/
+
     
 }
 
@@ -51,22 +42,16 @@ object inicioJuego inherits Escenario(fondoEscenario   = "inicio-v2.png",
 object escenarioInicial  inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png",
                                             mapa             = mapa_escenarioInicial,
                                             visualesEnEscena = [amiga, carpa, fogata, puertaNorte, protagonista],
-                                            ost              = game.sound("musica-escenarioInicial-v1.mp3")){
+                                            ost              = game.sound("musica-escenarioInicial-v1.mp3"),
+                                            dialogo = dialogoEscenarioInicial){
+                                      
+ 
 
-    // Solo usar si en el escenario hay un NCP con el que interactuar. Esto a fututo se tendría que refactorizar...
-    const npc           = amiga 
-    const dialogoNPC    = amigaConversacion.inicializar()
-    const ultimoDialogo = amigaConversacion.dialogoFinal()
 
     override method configurarPuertas(){
         puertaNorte.irHacia(escenarioBifurcacion)
     }
-
-    override method configurarConversacion(){
-        protagonista.npcActual(npc)
-        protagonista.conversacionNPC(dialogoNPC)
-        protagonista.codUltimoDialogo(ultimoDialogo)
-    }
+  
 } 
 
 
@@ -103,20 +88,8 @@ object escenarioEntrarACabaña{}
 object escenarioTEST inherits Escenario(mapa             = mapa_escenarioTest,
                                         fondoEscenario   = "fondo-escenarioTEST.png",
                                         visualesEnEscena = [carpa, amiga, protagonista, puertaOeste],
-                                        ost              = game.sound("musica-escenarioInicial.mp3")){
-
-
-    // Implementar a gusto y usar este escenario para testear a futuro las funcionalidades.
-    override method puestaEnEscena(){
-        ost.shouldLoop(true)
-         ost.play()
-         self.dibujarFondo()
-         self.configurarPuertas()
-         self.dibujarTablero()
-         self.agregarVisualesEscena()
-    }
-
-   
+                                        ost              = game.sound("musica-escenarioInicial.mp3"),
+                                        dialogo = dialogoEscenarioTest){
 
 
     override method configurarPuertas(){
