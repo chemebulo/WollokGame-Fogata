@@ -9,6 +9,7 @@ import visualesExtra.amiga
                                      donde npcActual: es el npc con el que hablara, el npc debe estar en la lista de visualesEnEscena,
                                      el npc entiende xPos(), véase ejemplo en amiga
                                      dialogoActual = una lista con string de dialogos
+                                     *el dialogo que recibe el escenario es SI O SI la lista[npcActual,dialogo]
 
 */
 // ---------- DIALOGO ESCENARIO INICIAL -------

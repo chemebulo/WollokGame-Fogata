@@ -5,39 +5,25 @@ IMPORTANTE: No es necesario saber la implementacion de Escenario, solo seguir la
 En archivo escenarios.wlk
 *Crear un objeto escenario_nombre que herede de Escenario()
 
-*Dentro de Escenario inicializar las constantes mapa,fondo escenario y visualesEnEscena,ost
-    -mapa=  variable creada para los mapas( crear en escenarios_mapas.wlk ,  utilizar "mapa_nombre_escenario" como standar del nombre)
-    -fondoEscenario = una imagen,formato png de 1300px(ancho) x 900px(alto) sera el fondo del escenario actual
-    -visualesEnEscena= una lista con los visuales en escena.Primero deben ir los objetos noa travesables, luego las puertas,luego el protagonista 
-    y luego los enemigos sobre el protagonista. Ejemplo [amiga,fogata,puertaNorte,protagonista,lobo1,lobo2....]
-    
-    ost= game.sound("nombre_archivo.mp3") // el ost que tendra el escenario actual, debe estar en assets
+*En archivo configuradorEscenario.wlk generar el configurador del fondo,mapa,ost,eventos,dialogos,etc respetando la nomenclatura,
+instrucciones en configuradorEscenarios
 
-    Ejemplo: object escenarioInicial inherits Escenario(fondoEscenario=... ,
-                                                        mapa=...,
-                                                        visualesEnEscena=[...]
-                                                        ost= ...) {}
+*el escenario creado debe quedar de estaForma:
 
-    IMPORTANTE: Si hay eventos en el juego(tick), agregar a la instancia eventos = [evento]   // instancia creada en eventos.wlk
-    Ejemplo :  object escenarioInicial inherits Escenario(fondoEscenario=... ,
-                                                        mapa=...,
-                                                        visualesEnEscena=[...]
-                                                        ost= ...,
-                                                        eventos = [...])   //instrucciones para eventos al final     
-    IMPORTANTE : Si hay dialogo en el juego, agregar el dialogo en la lista dialogo del escenario, implementarlo en dialogos.wlk
-    Ejemplo: object escenarioInicial inherits Escenario(..., dialogo= dialogoEscenarioInicial)                                                                                                    
+object escenarioEjemplo inherits (configuracionActual = configuracion){
+
+    override method configurarPuertas(){
+            ...
+            aqui se setean los las ubicaciones a las puertas,
+            si se va a un escenario que ya se visito, en una etapa distinta del juego,
+            se debe setear si o si la nueva confuguracion, en caso de que haya dialogo, el dialogo se reiniciaria
+            y quedaria inconsistente(a futuro se arreglara)
+            ...
+    }
+}
+                                                                                          
 
 
-
-*Si hay conversacion con NPC en el escenario:
-    sobreescribir el metodo configurarConversacion() y agregar las variables necesarias (véase ejemplo en escenario Inicial) //se refactoriza a futuro
-
-
-*sobreescribir el metodo configurarPuertas() setteando hacia donde iran las puertas en el escenario actual
-    Ejemplo, si en visualesEnEscena esta puertaNorte:
-        override method configurarPuertas(){
-            puertaNorte.irHacia(nombre_escenario_a_ir)
-        }
 
 En las puertas que tendra el escenario,SOLO DEBEN SETTEARSE las ubicaciones de las puertas(en caso de estar abiertas)
 o los mensajes(en caso de estar cerradas) que se van a agregar al escenario(estan en visuales en escena). 
@@ -52,8 +38,6 @@ EVENTOS:
 *Agregar a la lista de eventos la instancia
 
 *El propio escenario se encarga de iniciar y finalizar los eventos, no es necesario sobreescribir los metodos de eventos
-
-
 
 
 DIALOGOS: instrucciones en dialogos.wlk

@@ -10,6 +10,7 @@ import escenarioManager.*
 import escenarios_mapas.*
 import visualesDiapositivas.*
 import eventos.*
+import configuradorEscenarios.*
 
 
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
@@ -28,40 +29,21 @@ const puertaSurCerrada   = new PuertaCerrada(image = "puerta.png", position = su
 
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
-object inicioJuego inherits Escenario(fondoEscenario   = "inicio-v2.png",
-                                      mapa             = mapa_inicioJuego,
-                                      visualesEnEscena = [],
-                                      ost              = game.sound("inicio_v1.mp3")){
-
-
-    
+object inicioJuego inherits Escenario(configuracionActual = confg_inicioJuego){
 }
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
-object escenarioInicial  inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png",
-                                            mapa             = mapa_escenarioInicial,
-                                            visualesEnEscena = [amiga, carpa, fogata, puertaNorte, protagonista],
-                                            ost              = game.sound("musica-escenarioInicial-v1.mp3"),
-                                            dialogo = dialogoEscenarioInicial){
+object escenarioInicial  inherits Escenario(configuracionActual = confg_EscenarioInicial){
                                       
- 
-
-
     override method configurarPuertas(){
         puertaNorte.irHacia(escenarioBifurcacion)
     }
-  
 } 
-
 
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
-object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png",
-                                               mapa             = mapa_escenarioBifurcacion,
-                                               visualesEnEscena = [puertaNorte, puertaOeste, puertaEste, protagonista,lobo],
-                                               ost              = game.sound("musica-escenarioInicial-v1.mp3"),
-                                               eventos= [persecucionLobo]){
+object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escenarioBifurcacion){
 
     override method configurarPuertas(){
         puertaNorte.irHacia(escenarioInicial)
@@ -85,15 +67,11 @@ object escenarioEntrarACabaña{}
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
 
-object escenarioTEST inherits Escenario(mapa             = mapa_escenarioTest,
-                                        fondoEscenario   = "fondo-escenarioTEST.png",
-                                        visualesEnEscena = [carpa, amiga, protagonista, puertaOeste],
-                                        ost              = game.sound("musica-escenarioInicial.mp3"),
-                                        dialogo = dialogoEscenarioTest){
+object escenarioTEST inherits Escenario(configuracionActual = confg_escenarioTEST){
 
 
     override method configurarPuertas(){
-        puertaOeste.irHacia(escenarioInicial)
+        puertaOeste.irHacia(escenarioBifurcacion)
     }
 }
 

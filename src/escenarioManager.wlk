@@ -13,15 +13,16 @@ class Escenario{
     */
     const pj = protagonista
     const gestorFondo = fondo     
-    const eventos = []
-    const mapa
-    const fondoEscenario
-    const visualesEnEscena 
-    const ost
-    var dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
+    var property eventos = []
+    var property mapa = []
+    var property fondoEscenario = ""
+    var property visualesEnEscena = []
+    var property ost = game.sound("")
+    var property dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
+    var property configuracionActual = {} // Un bloque en configuradorEscenarios.wlk
 
     method puestaEnEscena(){ 
-
+        self.configurar()
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
@@ -41,6 +42,9 @@ class Escenario{
         })
     }
 
+    method configurar(){
+        configuracionActual.apply(self)
+    }
     method dibujarFondo(){
         gestorFondo.visualizarFondo(fondoEscenario)
     }
@@ -75,20 +79,26 @@ class Escenario{
     method configurarConversacion(){ 
 
         if(not dialogo.isEmpty()){
-            pj.npcActual(dialogo.first())
-            dialogo.remove(dialogo.first())
-            pj.conversacionNPC(dialogo.first())
+            
+            pj.npcActual(self.npcEscenario())
+            pj.conversacionNPC(self.dialogoActual())
+         
         }
 
     }
+    method dialogoActual() = dialogo.last().copy()
+
+    method npcEscenario() = dialogo.first()
 
     method limpiar(){
         game.removeVisual(fondo)
         self.limpiarVisualesEnEscena()
         ost.stop()
         self.eventosFinalizar()
-        pj.resetearDialogo()
-        dialogo = []
+       // pj.resetearDialogo()
+     
+     
+      
     }
 
     method limpiarVisualesEnEscena(){
