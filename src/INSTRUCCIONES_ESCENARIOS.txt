@@ -23,7 +23,9 @@ En archivo escenarios.wlk
                                                         mapa=...,
                                                         visualesEnEscena=[...]
                                                         ost= ...,
-                                                        eventos = [...])   //instrucciones para eventos al final                                               
+                                                        eventos = [...])   //instrucciones para eventos al final     
+    IMPORTANTE : Si hay dialogo en el juego, agregar el dialogo en la lista dialogo del escenario, implementarlo en dialogos.wlk
+    Ejemplo: object escenarioInicial inherits Escenario(..., dialogo= dialogoEscenarioInicial)                                                                                                    
 
 
 
@@ -54,7 +56,7 @@ EVENTOS:
 
 
 
-
+DIALOGOS: instrucciones en dialogos.wlk
    
 
 
