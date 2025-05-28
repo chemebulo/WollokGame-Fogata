@@ -122,11 +122,11 @@ object protagonista{
 
     method resetearDialogo(){
         conversacionNPC= []
-    
         conversadorActual=self
     }
-
+    
     method xPos() = self.position().x()
+
 
     // ############################################### PARA TESTEAR ###############################################
 
