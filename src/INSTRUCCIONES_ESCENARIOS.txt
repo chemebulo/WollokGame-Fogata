@@ -18,7 +18,7 @@ En archivo escenarios.wlk
                                                         visualesEnEscena=[...]
                                                         ost= ...) {}
 
-    IMPORTANTE: Si hay eventos en el juego(tick), agregar a la instancia eventos = ["nombre_evento_1"","nombre_evento_2",...]   
+    IMPORTANTE: Si hay eventos en el juego(tick), agregar a la instancia eventos = [evento]   // instancia creada en eventos.wlk
     Ejemplo :  object escenarioInicial inherits Escenario(fondoEscenario=... ,
                                                         mapa=...,
                                                         visualesEnEscena=[...]
@@ -45,15 +45,12 @@ a la lista de VisualesEnEscena (instrucciones en escenarios_mapas.wlk). De momen
 
 
 
-* si hay  evento(tick): sobreescribir el metodo eventosIniciar() 
-IMPORTANTE: Los nombres de eventos deben ser iguales a los de la lista, ya que el propio escenario se encarga de
-eliminarlos despues cuando se cambia a otro escenario
-Ejemplo
-    override method eventosIniciar(){ // implementar manualmente los eventos
-        game.onTick(...,evento1,...)
-        game.onTick(...,evento2,...)
-        game.onTick(...,evento3,...)
-    }
+EVENTOS:
+*Crear instancia de Evento en archivo eventos.wlk
+*Agregar a la lista de eventos la instancia
+
+*El propio escenario se encarga de iniciar y finalizar los eventos, no es necesario sobreescribir los metodos de eventos
+
 
 
 

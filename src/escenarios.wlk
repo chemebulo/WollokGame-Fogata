@@ -9,6 +9,7 @@ import visualesExtra.*
 import escenarioManager.*
 import escenarios_mapas.*
 import visualesDiapositivas.*
+import eventos.*
 
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
 
@@ -31,17 +32,17 @@ object inicioJuego inherits Escenario(fondoEscenario   = "inicio-v2.png",
                                       visualesEnEscena = [],
                                       ost              = game.sound("inicio_v1.mp3")){
 
-    override method puestaEnEscena(){
+    /*override method puestaEnEscena(){
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
-         //self.dibujarTablero()
-    }
+        
+    }*/
     
-    override method limpiar(){
+    /*override method limpiar(){
         ost.stop()
         game.removeVisual(fondo)
-    }
+    }*/
     
 }
 
@@ -75,7 +76,7 @@ object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenar
                                                mapa             = mapa_escenarioBifurcacion,
                                                visualesEnEscena = [puertaNorte, puertaOeste, puertaEste, protagonista,lobo],
                                                ost              = game.sound("musica-escenarioInicial-v1.mp3"),
-                                               eventos= ["Lobo persigue al personaje"]){
+                                               eventos= [persecucionLobo]){
 
     override method configurarPuertas(){
         puertaNorte.irHacia(escenarioInicial)
@@ -83,9 +84,7 @@ object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenar
         puertaEste.irHacia(escenarioTEST)
     }
 
-    override method eventosIniciar() {
-        game.onTick(800, "Lobo persigue al personaje", {lobo.perseguirAPresaYAtacar()})
-    }
+    
 }
 
 

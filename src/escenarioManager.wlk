@@ -48,7 +48,7 @@ class Escenario{
        self.eventosIniciar()
    }
 
-    method configurarPuertas(){}// Implementar.
+    method configurarPuertas(){}
 
     
 
@@ -57,12 +57,12 @@ class Escenario{
     }
 
 
-    method eventosIniciar(){ // Sobreescribir metodo si hay eventos,usar los Tick.
-
+    method eventosIniciar(){ 
+        eventos.forEach({evento =>evento.iniciarEvento()})
     } 
 
     method eventosFinalizar(){
-        eventos.forEach({evento => game.removeTickEvent(evento)})
+        eventos.forEach({evento => game.removeTickEvent(evento.nombreEvento())})
 
     } 
 
@@ -70,7 +70,7 @@ class Escenario{
         visualesEnEscena.forEach({v => game.addVisual(v)})
     } 
 
-    method configurarConversacion(){ // Solo sobreescribir si hay conversacion.
+    method configurarConversacion(){ 
 
     }
 
