@@ -4,101 +4,103 @@ import direccion.*
 import estado.*
 import visualesExtra.*
 
-object lobo inherits Lobo {
-}
-
 class Lobo inherits Visual{
     // ############################################## ATRIBUTOS ############################################## //
 
     var property position = game.at(6,0)
-    var property presa    = protagonista
-    var property vida     = 3
-    var property daño     = 2
     var property image    = "lobo-derecha.png"
-
-    const property objetosConColision = #{amiga}
+    var property vida     = 3
+    const property presa  = protagonista
+    const property daño   = 2
 
     // ########################################## MOVIMIENTO GENERAL ######################################### //
 
-    method perseguirAPresaYAtacar(){
+    method perseguirAPresa(){
         self.validarSiEstaVivo()
-        self.interaccionSiEstaSobreLaPresa()
-        self.validarSiNecesitaMover()
-        self.moverHaciaLaPresa()
+        self.moverSiEsNecesario()
     }
 
     method validarSiEstaVivo(){
-        if (not self.estaVivo()) { self.error("Estoy muerto") }
+        if (not self.estaVivo())   { self.error("Estoy muerto") }
     }
 
-    method validarSiNecesitaMover(){
-        if (self.estaSobrePresa()) { self.error("") }
+    method moverSiEsNecesario(){
+        if (not self.estaSobrePresa()) { self.moverHaciaLaPresa() }
     }
 
     method moverHaciaLaPresa(){
-        if (self.estaEnElEjeYPuedeMoverAlEje(ejeX, ejeY)) { self.actualizarEnEje(ejeY) } else 
-        if (self.estaEnElEjeYPuedeMoverAlEje(ejeY, ejeX)) { self.actualizarEnEje(ejeX) } else 
-                                                          { self.actualizarEnEjeYEnEje(ejeY, ejeX) }
+        if (self.estaEnElEjeYPuedeMoverAlEje(ejeX, ejeY)) { self.moverEnEje(ejeY) } else 
+        if (self.estaEnElEjeYPuedeMoverAlEje(ejeY, ejeX)) { self.moverEnEje(ejeX) } else 
+                                                          { self.moverEnEjeYEnEje(ejeY, ejeX) }
     }
 
-    method actualizarEnEje(eje){
+    method moverEnEje(eje){
         const primeraDireccion = eje.primeraDir()
         const segundaDireccion = eje.segundaDir()
 
-        if (self.tieneQueAumentarEnEje(eje)) { self.actualizarHacia(primeraDireccion) } else
-                                             { self.actualizarHacia(segundaDireccion) }
+        if (self.tieneQueAumentarEnEje(eje)) { self.moverHacia(primeraDireccion) } else
+                                             { self.moverHacia(segundaDireccion) }
     }
 
-    method actualizarEnEjeYEnEje(primerEje, segundoEje){
-        self.actualizarEnEje(primerEje)
-        self.actualizarEnEje(segundoEje)
+    method moverEnEjeYEnEje(primerEje, segundoEje){
+        self.moverEnEje(primerEje)
+        self.moverEnEje(segundoEje)
     }
 
-    method actualizarHacia(direccion){
+    method moverHacia(direccion){
         position = direccion.siguientePosicion(position)
         self.cambiarImagen(direccion)
     }
 
     // ####################################### MOVIMIENTO - COLISIONES ####################################### // 
 
-    method estaEnElEjeYPuedeMoverAlEje(primerEje, segundoEje) = primerEje.estaEnElMismoEjeQue(self, presa) and 
-                                                                segundoEje.puedeMoverEnEje(self)
+    method puedoMover(posicionAMover) {
+        return self.estaVivo() && not self.hayObstaculos(posicionAMover)
+    }
     
-    method puedoMover(posicionAMover) = self.estaVivo() && not self.colisionoConAlgoEn(posicionAMover)
+    method hayObstaculos(posicion) {
+        return not self.objetosEnPosicion(posicion).all({visual => visual.esAtravesable()})
+    }
 
-    method colisionoConAlgoEn(posicionAMover) = self.posicionesDeObjetosConColision().contains(posicionAMover)
-
-    method posicionesDeObjetosConColision() = objetosConColision.map({cosa => cosa.position()})
-
-    override method esAtravesable() = true
+    method objetosEnPosicion(posicion){
+        return game.getObjectsIn(posicion).copyWithout(presa)
+    }
 
     // ####################################### MOVIMIENTO - AUXILIARES ####################################### //
+
+    method estaEnElEjeYPuedeMoverAlEje(primerEje, segundoEje) = primerEje.estaEnElMismoEjeQue(self, presa) and 
+                                                                segundoEje.puedeMoverEnEje(self)
 
     method estaSobrePresa() = position == presa.position()
 
     method tieneQueAumentarEnEje(eje) = eje.tieneQueAumentarConRespectoA(self, presa)
 
-    method cambiarImagen(direccion){ self.image("lobo-"+direccion.toString()+".png") } 
+    method cambiarImagen(direccion){self.image("lobo-"+direccion.toString()+".png")} 
 
     method estaVivo() = self.vida() > 0
 
     // ############################################# INTERACCIÓN ############################################# // 
     
-    method interaccionSiEstaSobreLaPresa() {
-        if (self.estaSobrePresa() and presa.estaVivo()) { self.interaccion(presa) }
+    method interaccion() {
+        self.validarPresa()
+        self.atacarPresa()
     }
-    
-    method interaccion(visual) {
-        const vidaDespuesDelAtaque = visual.vida() - self.daño()
-        
-        visual.vida(vidaDespuesDelAtaque)
-        game.say(visual, "¡Perdi 2 de vida!")
+
+    method validarPresa() {
+        if(not presa.estaVivo()){
+            self.error("Estoy muerto")
+        }
+    }
+
+    method atacarPresa() {
+        presa.vida(presa.vida() - self.daño())
+        game.say(presa, "¡Perdi 2 de vida!")
     }
 }
 
-/*
-    NUEVOS REQUERIMIENTOS:
-    implementar esAtravesable() 
-    Implementar objeto l en escenario Manager para los lobos agresivos y otro objeto para lobos pasivo(deben instanciarse directamente
-    en la matriz). Ver ejemplo en el juego de pepita con los alpistes y manzanas
-*/
+object loboAgresivo inherits Lobo {
+}
+
+object loboPasivo inherits Lobo {
+    override method interaccion() {}
+}

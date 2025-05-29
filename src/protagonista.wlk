@@ -11,10 +11,10 @@ object protagonista{
     // ################################################ ATRIBUTOS ################################################
 
     var property position = game.at(0,0)
-    var property vida     = 10
-    var property daño     = 1
-    const property vg     = videojuego
     var property image    = "protagonista-abajo.png"
+    var property vida     = 10
+    const property daño   = 1
+    const property vg     = videojuego
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     

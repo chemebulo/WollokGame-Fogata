@@ -43,7 +43,15 @@ object escenarioInicial  inherits Escenario(configuracionActual = confg_Escenari
 
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
+/*
+object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png",
+                                               mapa             = mapa_escenarioBifurcacion,
+                                               visualesEnEscena = [puertaNorte, puertaOeste, puertaEste, amiga, protagonista,loboAgresivo, loboPasivo],
+                                               ost              = game.sound("musica-escenarioInicial-v1.mp3"),
+                                               eventos= ["Lobo persigue al personaje"]){
+
 object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escenarioBifurcacion){
+*/
 
     override method configurarPuertas(){
         puertaNorte.irHacia(escenarioInicial)
@@ -51,7 +59,14 @@ object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escen
         puertaEste.irHacia(escenarioTEST)
     }
 
-    
+/*
+    override method eventosIniciar() {
+        game.onTick(800, "Lobo agresivo persigue al personaje", {loboAgresivo.perseguirAPresa()})
+        game.onTick(2500, "Lobo pasivo persigue al personaje", {loboPasivo.perseguirAPresa()})
+    }
+
+  */  
+
 }
 
 
@@ -67,7 +82,9 @@ object escenarioEntrarACabaña{}
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
 
+
 object escenarioTEST inherits Escenario(configuracionActual = confg_escenarioTEST){
+
 
 
     override method configurarPuertas(){
@@ -75,6 +92,4 @@ object escenarioTEST inherits Escenario(configuracionActual = confg_escenarioTES
     }
 }
 
-
 // ##############################################################################################################
-
