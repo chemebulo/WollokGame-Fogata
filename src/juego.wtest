@@ -3,6 +3,7 @@ import protagonista.*
 import visualesExtra.*
 import direccion.*
 import wollok.game.*
+import gestorColisiones.*
 
 describe "Movimiento del personaje"{
     
@@ -32,27 +33,27 @@ describe "Movimiento del personaje"{
         protagonista.mover(arriba,3)
         protagonista.mover(izquierda,4)
 
-        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
     }
 
     test"El personaje no sale del tablero por el Oeste."{
         protagonista.mover(izquierda, 10)
-        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
     }
 
     test"El personaje no sale del tablero por el Norte."{
         protagonista.mover(arriba, 20)
-        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
     }
 
     test"El personaje no sale del tablero por el Este."{
         protagonista.mover(derecha,20)
-        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
     }
 
     test"El personaje no sale del tablero por el Sur."{
         protagonista.mover(abajo,20)
-        assert.that(protagonista.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
     }
 
     test "El personaje se mueve 3 a la derecha, 3 a la izquierda y queda en el mismo lugar."{

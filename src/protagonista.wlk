@@ -5,7 +5,7 @@ import videojuego.*
 import enemigos.*
 import dialogos.*
 import visualesExtra.*
-//import estado.*
+import gestorColisiones.*
 
 object protagonista{
     // ################################################ ATRIBUTOS ################################################
@@ -15,6 +15,10 @@ object protagonista{
     var property vida     = 10
     const property daño   = 1
     const property vg     = videojuego
+
+    var property image    = "protagonista-abajo.png"
+    const colisionesGestor = gestorDeColisiones //verifica si estoy dentro del tablero y los objetos que no puedo atravesar
+
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
@@ -49,32 +53,8 @@ object protagonista{
     method puedoMover(direccion) {
         const posicionAMover = direccion.siguientePosicion(position)
 
-        return self.estaDentroDelTablero(posicionAMover) and not self.hayObstaculos(posicionAMover)
-    }
-
-    method hayObstaculos(posicion) {
-        return not self.objetosEnPosicion(posicion).all({visual => visual.esAtravesable()})
-    }
-    method objetosEnPosicion(posicion){
-        return game.getObjectsIn(posicion).copyWithout(self)
-    }
-    
-    method estaDentroDelTablero(posicionAMover) = self.existeX(posicionAMover.x()) and self.existeY(posicionAMover.y())
-                                                
-	method existeX(x){
-        const anchoJuego = game.width()
-		return self.enLimite(x, anchoJuego)
-	} 
-
-	method existeY(y){
-        const altoJuego = game.height()
-		return self.enLimite(y, altoJuego)
-	}                                                                                              
-    
-    method enLimite(coord, max){
-		return coord.between(0, max - 1) 
-	}
- 
+        return colisionesGestor.estaDentroDelTablero(posicionAMover) and not colisionesGestor.hayObstaculosEn(posicionAMover,self)
+     
 
 
     method cambiarImagen(direccion){ 
