@@ -44,14 +44,14 @@ object escenarioInicial  inherits Escenario(configuracionActual = confg_Escenari
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
 /*
-object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png",
+object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png"
                                                mapa             = mapa_escenarioBifurcacion,
                                                visualesEnEscena = [puertaNorte, puertaOeste, puertaEste, amiga, protagonista,loboAgresivo, loboPasivo],
                                                ost              = game.sound("musica-escenarioInicial-v1.mp3"),
                                                eventos= ["Lobo persigue al personaje"]){
-
-object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escenarioBifurcacion){
 */
+object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escenarioBifurcacion){
+
 
     override method configurEscenarioSiguiente(){
         puertaNorte.irHacia(escenarioInicial)
