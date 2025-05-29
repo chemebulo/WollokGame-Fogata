@@ -16,7 +16,7 @@ object protagonista{
     const property daño   = 1
     const property vg     = videojuego
 
-    var property image    = "protagonista-abajo.png"
+    
     const colisionesGestor = gestorDeColisiones //verifica si estoy dentro del tablero y los objetos que no puedo atravesar
 
 
@@ -54,7 +54,7 @@ object protagonista{
         const posicionAMover = direccion.siguientePosicion(position)
 
         return colisionesGestor.estaDentroDelTablero(posicionAMover) and not colisionesGestor.hayObstaculosEn(posicionAMover,self)
-     
+    }
 
 
     method cambiarImagen(direccion){ 

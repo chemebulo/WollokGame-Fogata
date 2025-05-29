@@ -142,3 +142,4 @@ describe "Movimiento del personaje con colisiones:"{
         assert.equals(game.at(0,0),protagonista.position())
     }
 }
+
