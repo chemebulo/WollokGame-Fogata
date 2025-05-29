@@ -36,7 +36,7 @@ object inicioJuego inherits Escenario(configuracionActual = confg_inicioJuego){
 
 object escenarioInicial  inherits Escenario(configuracionActual = confg_EscenarioInicial){
                                       
-    override method configurarPuertas(){
+    override method configurEscenarioSiguiente(){
         puertaNorte.irHacia(escenarioBifurcacion)
     }
 } 
@@ -53,7 +53,7 @@ object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenar
 object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escenarioBifurcacion){
 */
 
-    override method configurarPuertas(){
+    override method configurEscenarioSiguiente(){
         puertaNorte.irHacia(escenarioInicial)
         puertaOeste.irHacia(escenarioTEST)
         puertaEste.irHacia(escenarioTEST)
@@ -87,7 +87,8 @@ object escenarioTEST inherits Escenario(configuracionActual = confg_escenarioTES
 
 
 
-    override method configurarPuertas(){
+    override method configurEscenarioSiguiente(){
+
         puertaOeste.irHacia(escenarioBifurcacion)
     }
 }

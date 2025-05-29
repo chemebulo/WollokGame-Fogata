@@ -52,6 +52,13 @@ object protagonista{
         return self.estaDentroDelTablero(posicionAMover) and not self.hayObstaculos(posicionAMover)
     }
 
+    method hayObstaculos(posicion) {
+        return not self.objetosEnPosicion(posicion).all({visual => visual.esAtravesable()})
+    }
+    method objetosEnPosicion(posicion){
+        return game.getObjectsIn(posicion).copyWithout(self)
+    }
+    
     method estaDentroDelTablero(posicionAMover) = self.existeX(posicionAMover.x()) and self.existeY(posicionAMover.y())
                                                 
 	method existeX(x){
@@ -68,13 +75,7 @@ object protagonista{
 		return coord.between(0, max - 1) 
 	}
  
-    method hayObstaculos(posicion) {
-        return not self.objetosEnPosicion(posicion).all({visual => visual.esAtravesable()})
-    }
 
-    method objetosEnPosicion(posicion){
-        return game.getObjectsIn(posicion).copyWithout(self)
-    }
 
     method cambiarImagen(direccion){ 
         self.image("protagonista-" + direccion.toString() + ".png") 

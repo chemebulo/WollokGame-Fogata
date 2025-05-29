@@ -26,7 +26,7 @@ class Escenario{
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
-         self.configurarPuertas()
+         self.configurEscenarioSiguiente()
          self.configurarConversacion()
          self.dibujarTablero()
          self.agregarVisualesEscena()
@@ -54,7 +54,7 @@ class Escenario{
        self.eventosIniciar()
    }
 
-    method configurarPuertas(){}
+    method configurEscenarioSiguiente(){}
 
     
 
@@ -64,7 +64,9 @@ class Escenario{
 
 
     method eventosIniciar(){ 
+        if(not eventos.isEmpty()){
         eventos.forEach({evento =>evento.iniciarEvento()})
+        }
     } 
 
     method eventosFinalizar(){
@@ -84,6 +86,7 @@ class Escenario{
             pj.conversacionNPC(self.dialogoActual())
          
         }
+        
 
     }
     method dialogoActual() = dialogo.last().copy()
@@ -95,7 +98,7 @@ class Escenario{
         self.limpiarVisualesEnEscena()
         ost.stop()
         self.eventosFinalizar()
-       // pj.resetearDialogo()
+     
      
      
       
