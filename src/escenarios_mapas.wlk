@@ -77,6 +77,9 @@ object a inherits Elemento(visual=amiga){}
    
 
 // #####################################################################
+ //                    ENEMIGOS
+// #####################################################################
+
 
 object la inherits Elemento(visual=loboAgresivo){  // Lobo -> Implementar. 
 
@@ -85,8 +88,15 @@ object la inherits Elemento(visual=loboAgresivo){  // Lobo -> Implementar.
 object lp inherits Elemento(visual=loboPasivo){
 
 }
+//Otros lobos: implementar en enemigos.wlk
+/*
+object la2 inherits Elemento(visual=loboAgresivo2){  // Lobo -> Implementar. 
 
+}
+object la3 inherits Elemento(visual=loboAgresivo3){  // Lobo -> Implementar. 
 
+}
+*/
 // #####################################################################
 
 object g inherits Elemento{ // Guardabosques -> No implementado, no usar.

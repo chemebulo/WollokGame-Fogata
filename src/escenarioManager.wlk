@@ -20,6 +20,7 @@ class Escenario{
     var property ost = game.sound("")
     var property dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
     var property configuracionActual = {} // Un bloque en configuradorEscenarios.wlk
+    const reposicionEventos = #{"evento1","evento2","evento3","evento4","evento5","evento6","evento7"}
 
     method puestaEnEscena(){ 
         self.configurar()
@@ -65,14 +66,19 @@ class Escenario{
 
     method eventosIniciar(){ 
         if(not eventos.isEmpty()){
-        eventos.forEach({evento =>evento.iniciarEvento()})
+         eventos.forEach({evento =>evento.iniciarEventos()})
         }
     } 
 
     method eventosFinalizar(){
-        eventos.forEach({evento => game.removeTickEvent(evento.nombreEvento())})
-
+        if(not eventos.isEmpty()){
+       
+          eventos.forEach({ev => ev.reponer(reposicionEventos); ev.finalizarEventos()})
+         
     } 
+    }
+
+    
 
     method agregarVisualesEscena(){
         visualesEnEscena.forEach({v => game.addVisual(v)})
