@@ -32,9 +32,9 @@ const confg_EscenarioInicial = {e => e.fondoEscenario("fondo-escenario-inicial.p
 
 const confg_escenarioBifurcacion = {e => e.fondoEscenario("fondo-escenario-inicial.png");           
                                       e.mapa(mapa_escenarioBifurcacion);
-                                      e.visualesEnEscena( [puertaNorte, puertaOeste, puertaEste, protagonista,lobo]);
+                                      e.visualesEnEscena( [puertaNorte, puertaOeste, puertaEste, protagonista,loboAgresivo]);
                                       e.ost(game.sound("musica-escenarioInicial-v1.mp3"));
-                                      e.eventos([persecucionLobo])}
+                                      e.eventos([persecucionLoboAgresivo])}
                                        
 
 

@@ -17,8 +17,8 @@ class PersecucionLobo{
 }
 
 
-const persecucionLobo = new PersecucionLobo(
-                                      animal = lobo,
+const persecucionLoboAgresivo = new PersecucionLobo(
+                                      animal = loboAgresivo,
                                       nombreEvento= "Lobo persigue al personaje", 
                                       tiempo = 800
                                       )
