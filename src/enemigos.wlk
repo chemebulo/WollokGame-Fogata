@@ -74,7 +74,7 @@ object loboAgresivo inherits Lobo {
 object loboPasivo inherits Lobo {
 
     override method atacarPresa() {}
-}
+
 
     override method interaccion() {}
 }
