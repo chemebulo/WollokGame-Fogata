@@ -101,6 +101,7 @@ class Lobo inherits Visual{
 object loboAgresivo inherits Lobo {
 }
 
+
 object loboPasivo inherits Lobo {
     override method interaccion() {}
 }

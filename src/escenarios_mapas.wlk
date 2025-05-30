@@ -85,6 +85,7 @@ object la inherits Elemento(visual=loboAgresivo){  // Lobo -> Implementar.
 
 }
 
+
 object lp inherits Elemento(visual=loboPasivo){
 
 }
@@ -141,10 +142,10 @@ const mapa_escenarioInicial =
 const mapa_escenarioBifurcacion =
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,la,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,la,_,_,_,_,_,_],
-        [_,_,lp,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,a,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,z,_,_,_,_,_,_],

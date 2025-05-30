@@ -9,14 +9,14 @@ object videojuego{
     const ostInicioJuego    = game.sound("inicio-v1.png")
     var property escenario  = inicioJuego
     var estoyEnPrologo      = true
-    //var property numDiapositiva = 1
+   
     
     method iniciar(){ 
         ostInicioJuego.play()
         escenario.puestaEnEscena()
     }
 
-    method cambiarEscenario(escenarioNuevo){ // Cambia a otro escenario.
+    method cambiarEscenario(escenarioNuevo){ 
         escenario.limpiar()
         self.escenario(escenarioNuevo)
         escenario.puestaEnEscena()
