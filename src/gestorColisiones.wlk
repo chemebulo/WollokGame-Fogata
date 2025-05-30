@@ -6,11 +6,11 @@ object gestorDeColisiones{
         *estaDentroDelTablero(posicionAMover)
         
     */
-    method hayObstaculosEn(posicion,visualActual){
-
-    return not self.objetosEnPosicion(posicion,visualActual).all({visual => visual.esAtravesable()})
+    method hayObstaculosEn(posicion, visualActual){
+        return not self.objetosEnPosicion(posicion, visualActual).all({visual => visual.esAtravesable()})
     }
-    method objetosEnPosicion(posicion,visual){
+    
+    method objetosEnPosicion(posicion, visual){
         return game.getObjectsIn(posicion).copyWithout(visual)
     }
 
@@ -31,4 +31,6 @@ object gestorDeColisiones{
     method enLimite(coord, max){
 		return coord.between(0, max - 1) 
 	}
+
+    method puedeMoverHacia(posicionAMover, visual) = not self.hayObstaculosEn(posicionAMover, visual)
 }

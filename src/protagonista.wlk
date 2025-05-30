@@ -7,7 +7,7 @@ import dialogos.*
 import visualesExtra.*
 import gestorColisiones.*
 
-object protagonista{
+object protagonista inherits Visual{
     // ################################################ ATRIBUTOS ################################################
 
     var property position = game.at(0,0)
@@ -15,10 +15,8 @@ object protagonista{
     var property vida     = 10
     const property daño   = 1
     const property vg     = videojuego
-
     
-    const colisionesGestor = gestorDeColisiones //verifica si estoy dentro del tablero y los objetos que no puedo atravesar
-
+    const colisionesGestor = gestorDeColisiones // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
@@ -56,7 +54,6 @@ object protagonista{
         return colisionesGestor.estaDentroDelTablero(posicionAMover) and not colisionesGestor.hayObstaculosEn(posicionAMover,self)
     }
 
-
     method cambiarImagen(direccion){ 
         self.image("protagonista-" + direccion.toString() + ".png") 
     }
@@ -67,12 +64,15 @@ object protagonista{
         // Por ahora nada...
     }
 
+    method atacadoPor(visual) {
+        self.validarSiEstaVivo()
+        self.vida(vida - visual.daño())
+        game.say(self, "Mi vida es "+vida+"")
+    }
+
     // ############################################## DIALOGOS NPC ###############################################
 
-  
-
     method interactuarNPC(){
-      
         if (self.estaAlLadoDe(npcActual)){self.conversar()}
     }
 
@@ -85,7 +85,7 @@ object protagonista{
         game.say(conversadorActual,self.dialogoActual())
         conversacionNPC.remove(self.dialogoActual())
         self.cambiarConversador()
-    }
+        }
     }
 
     method dialogoActual() = conversacionNPC.first()
@@ -93,31 +93,23 @@ object protagonista{
     method esDialogoFinal() = conversacionNPC.isEmpty()
 
     method cambiarConversador(){ 
-       
-        if (self.esMiTurnoDeHablar()){conversadorActual = self}else {conversadorActual = npcActual}
+        if (self.esMiTurnoDeHablar()){conversadorActual = self} else {conversadorActual = npcActual}
     }
 
     method esMiTurnoDeHablar() = conversacionNPC.size().even()
     
-    method conversacionNPC(_conversacionNPC){conversacionNPC=_conversacionNPC}
+    method conversacionNPC(_conversacionNPC){ conversacionNPC = _conversacionNPC }
 
     method resetearDialogo(){
-        conversacionNPC= []
-        conversadorActual=self
+        conversacionNPC = []
+        conversadorActual = self
     }
     
     method xPos() = self.position().x()
-
 
     // ############################################### PARA TESTEAR ###############################################
 
     method mover(direccion,cantidad){
         (1 .. cantidad).forEach({n => self.mover(direccion)})
     }
-
 }
-
-
-
-
-

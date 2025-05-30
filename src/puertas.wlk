@@ -21,7 +21,6 @@ class PuertaAbierta inherits Puerta  {
     }
 }
 
-
 // ###############################################################################################
 
 class PuertaCerrada inherits Puerta {
@@ -31,7 +30,6 @@ class PuertaCerrada inherits Puerta {
       game.say(protagonista, mensaje)
     }
 }
-
 
 // ###############################################################################################
 

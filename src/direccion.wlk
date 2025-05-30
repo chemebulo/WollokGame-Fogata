@@ -1,6 +1,7 @@
 import wollok.game.*
 import protagonista.*
 import enemigos.*
+import gestorColisiones.*
 
 object arriba{
     method siguientePosicion(position){
@@ -26,50 +27,50 @@ object izquierda{
     }
 }
 
-object ejeX{
-    method estaEnElMismoEjeQue(visual1, visual2){
-        return visual1.position().x() == visual2.position().x()
-    }
-
-    method tieneQueAumentarConRespectoA(visual1, visual2) {
-        return visual1.position().x() < visual2.position().x()
-    }
-
-    method puedeMoverEnEje(visual){
-        const primeraDireccion = self.primeraDir()
-        const segundaDireccion = self.segundaDir()
-
-        return visual.puedoMover(primeraDireccion.siguientePosicion(visual.position())) and 
-               visual.puedoMover(segundaDireccion.siguientePosicion(visual.position()))
-    }
-
-    method primeraDir() = derecha
-
-    method segundaDir() = izquierda
-}
-
 // ##############################################################################################
 
-object ejeY{
-    method estaEnElMismoEjeQue(primeraVis, segundaVis) {
-        return primeraVis.position().y() == segundaVis.position().y()
+class Eje{
+    method estanEnElMismoEje(primeraVis, segundaVis) {
+        return self.positionDeEnElEje(primeraVis) == self.positionDeEnElEje(segundaVis)
     }
 
-    method tieneQueAumentarConRespectoA(primeraVis, segundaVis) {
-        return primeraVis.position().y() < segundaVis.position().y()
+    method necesitaAcercarseA(primeraVis, segundaVis) {
+        return self.positionDeEnElEje(primeraVis) < self.positionDeEnElEje(segundaVis) 
     }
 
-    method puedeMoverEnEje(visual){
-        const primeraDireccion = self.primeraDir()
-        const segundaDireccion = self.segundaDir()
+    method puedeMoverEnEjeHacia(primeraVis, segundaVis){
+        const nuevaPosicionPrimeraDireccion = self.primeraDir().siguientePosicion(primeraVis.position())
+        const nuevaPosicionSegundaDireccion = self.segundaDir().siguientePosicion(primeraVis.position())
 
-        return visual.puedoMover(primeraDireccion.siguientePosicion(visual.position())) and 
-               visual.puedoMover(segundaDireccion.siguientePosicion(visual.position()))
+        return gestorDeColisiones.puedeMoverHacia(nuevaPosicionPrimeraDireccion, segundaVis) and 
+               gestorDeColisiones.puedeMoverHacia(nuevaPosicionSegundaDireccion, segundaVis)
     }
 
-    method primeraDir() = arriba
+    method mismoEjeEntreYPuedeMoverA(primeraVis, segundaVis, eje) {
+        return self.estanEnElMismoEje(primeraVis, segundaVis) and eje.puedeMoverEnEjeHacia(primeraVis, segundaVis)
+    }
 
-    method segundaDir() = abajo
+    method positionDeEnElEje(visual)
+
+    method primeraDir()
+
+    method segundaDir()
+}
+
+object ejeX inherits Eje{
+    override method positionDeEnElEje(visual) = visual.position().x()
+
+    override method primeraDir() = derecha
+
+    override method segundaDir() = izquierda
+}
+
+object ejeY inherits Eje{
+    override method positionDeEnElEje(visual) = visual.position().y()
+
+    override method primeraDir() = arriba
+
+    override method segundaDir() = abajo
 }
 
 // ################################# DIRECCIONES PARA PUERTAS ##################################
@@ -96,9 +97,3 @@ object oeste {
       return game.at(0,4)
     }
 }
-
-// Probar si funciona:
-// const norte = game.at(6,8)
-// const sur   = game.at(6,0)
-// const este  = game.at(12,4)
-// const oeste = game.at(0,4)

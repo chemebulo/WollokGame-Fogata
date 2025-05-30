@@ -72,7 +72,26 @@ object persecucionLobo inherits EventoMultiple( visualesEvento=[loboAgresivo] ){
      override method orden(visual) {visual.perseguirAPresa()}
     
 }  
+
+object persecucionLoboAgresivo {}
+object persecucionLoboPasivo{}
+  /* 
+
+const persecucionLoboAgresivo = new PersecucionLobo(
+                                     visualQueRealizaEvento=loboAgresivo,
+                                      nombreEvento= "Lobo persigue al personaje", 
+                                      tiempo = 800
+                                      )
+
+const persecucionLoboPasivo = new PersecucionLobo(
+                                     visualQueRealizaEvento=loboPasivo,
+                                      nombreEvento= "Lobo persigue al personaje", 
+                                      tiempo = 2000
+                                      )
+
+*/
  
+
 //######################################################
         //EVENTOS UNICOS
 //######################################################

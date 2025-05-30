@@ -1,3 +1,4 @@
+import src.gestorColisiones.*
 import wollok.game.*
 import protagonista.*
 import direccion.*
@@ -11,35 +12,27 @@ class Lobo inherits Visual{
     var property image    = "lobo-derecha.png"
     var property vida     = 3
     const property presa  = protagonista
-    const property daño   = 2
+    const property daño   = 1
 
     // ########################################## MOVIMIENTO GENERAL ######################################### //
 
     method perseguirAPresa(){
-        self.validarSiEstaVivo()
-        self.moverSiEsNecesario()
+        self.perseguirYAtacarPresa()
     }
 
-    method validarSiEstaVivo(){
-        if (not self.estaVivo())   { self.error("Estoy muerto") }
-    }
-
-    method moverSiEsNecesario(){
-        if (not self.estaSobrePresa()) { self.moverHaciaLaPresa() }
+    method perseguirYAtacarPresa(){
+        if (not self.estaSobrePresa() and self.estaVivo()) { self.moverHaciaLaPresa() } else { self.atacarPresa() }
     }
 
     method moverHaciaLaPresa(){
-        if (self.estaEnElEjeYPuedeMoverAlEje(ejeX, ejeY)) { self.moverEnEje(ejeY) } else 
-        if (self.estaEnElEjeYPuedeMoverAlEje(ejeY, ejeX)) { self.moverEnEje(ejeX) } else 
-                                                          { self.moverEnEjeYEnEje(ejeY, ejeX) }
+        if (ejeX.mismoEjeEntreYPuedeMoverA(self, presa, ejeY)) { self.moverEnEje(ejeY) } else 
+        if (ejeY.mismoEjeEntreYPuedeMoverA(self, presa, ejeX)) { self.moverEnEje(ejeX) } else 
+                                                               { self.moverEnEjeYEnEje(ejeY, ejeX) }
     }
 
     method moverEnEje(eje){
-        const primeraDireccion = eje.primeraDir()
-        const segundaDireccion = eje.segundaDir()
-
-        if (self.tieneQueAumentarEnEje(eje)) { self.moverHacia(primeraDireccion) } else
-                                             { self.moverHacia(segundaDireccion) }
+        if (eje.necesitaAcercarseA(self, presa)) { self.moverHacia(eje.primeraDir()) } else
+                                                 { self.moverHacia(eje.segundaDir()) }
     }
 
     method moverEnEjeYEnEje(primerEje, segundoEje){
@@ -54,56 +47,37 @@ class Lobo inherits Visual{
 
     // ####################################### MOVIMIENTO - COLISIONES ####################################### // 
 
-    method puedoMover(posicionAMover) {
-        return self.estaVivo() && not self.hayObstaculos(posicionAMover)
-    }
-    
-    method hayObstaculos(posicion) {
-        return not self.objetosEnPosicion(posicion).all({visual => visual.esAtravesable()})
-    }
-
-    method objetosEnPosicion(posicion){
-        return game.getObjectsIn(posicion).copyWithout(presa)
-    }
+    override method esAtravesable() = false
 
     // ####################################### MOVIMIENTO - AUXILIARES ####################################### //
 
-    method estaEnElEjeYPuedeMoverAlEje(primerEje, segundoEje) = primerEje.estaEnElMismoEjeQue(self, presa) and 
-                                                                segundoEje.puedeMoverEnEje(self)
-
     method estaSobrePresa() = position == presa.position()
 
-    method tieneQueAumentarEnEje(eje) = eje.tieneQueAumentarConRespectoA(self, presa)
-
-    method cambiarImagen(direccion){self.image("lobo-"+direccion.toString()+".png")} 
+    method cambiarImagen(direccion){ self.image("lobo-"+direccion.toString()+".png") } 
 
     method estaVivo() = self.vida() > 0
 
     // ############################################# INTERACCIÓN ############################################# // 
     
-    method interaccion() {
-        self.validarPresa()
-        self.atacarPresa()
-    }
+    method interaccion() {}
 
-    method validarPresa() {
-        if(not presa.estaVivo()){
-            self.error("Estoy muerto")
-        }
-    }
-
-    method atacarPresa() {
-        presa.vida(presa.vida() - self.daño())
-        game.say(presa, "¡Perdi 2 de vida!")
-    }
+    method atacarPresa()
 }
 
 object loboAgresivo inherits Lobo {
+    override method atacarPresa() {
+        game.schedule(1000, {presa.atacadoPor(self)})
+    } 
 }
 
 
 object loboPasivo inherits Lobo {
+
+    override method atacarPresa() {}
+}
+
     override method interaccion() {}
 }
+
 
 
