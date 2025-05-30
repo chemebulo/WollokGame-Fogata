@@ -13,6 +13,8 @@ class Lobo inherits Visual{
     var property vida     = 3
     const property presa  = protagonista
     const property daño   = 1
+    const ejePrimero = ejeX
+    const ejeSegundo = ejeY
 
     // ########################################## MOVIMIENTO GENERAL ######################################### //
 
@@ -25,19 +27,19 @@ class Lobo inherits Visual{
     }
 
     method moverHaciaLaPresa(){
-        if (ejeX.mismoEjeEntreYPuedeMoverA(self, presa, ejeY)) { self.moverEnEje(ejeY) } else 
-        if (ejeY.mismoEjeEntreYPuedeMoverA(self, presa, ejeX)) { self.moverEnEje(ejeX) } else 
-                                                               { self.moverEnEjeYEnEje(ejeY, ejeX) }
+        if (ejePrimero.mismoEjeEntreYPuedeMoverA(self, presa, ejeSegundo)) { self.moverEn(ejeSegundo) } else 
+        if (ejeSegundo.mismoEjeEntreYPuedeMoverA(self, presa, ejePrimero)) { self.moverEn(ejePrimero) } else 
+                                                                           { self.moverEnY(ejeSegundo, ejePrimero) }
     }
 
-    method moverEnEje(eje){
+    method moverEn(eje){
         if (eje.necesitaAcercarseA(self, presa)) { self.moverHacia(eje.primeraDir()) } else
                                                  { self.moverHacia(eje.segundaDir()) }
     }
 
-    method moverEnEjeYEnEje(primerEje, segundoEje){
-        self.moverEnEje(primerEje)
-        self.moverEnEje(segundoEje)
+    method moverEnY(segundoEje, primerEje){
+        self.moverEn(segundoEje)
+        self.moverEn(primerEje)
     }
 
     method moverHacia(direccion){
@@ -70,14 +72,8 @@ object loboAgresivo inherits Lobo {
     } 
 }
 
-
 object loboPasivo inherits Lobo {
-
     override method atacarPresa() {}
-
 
     override method interaccion() {}
 }
-
-
-
