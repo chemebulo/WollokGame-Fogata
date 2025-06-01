@@ -27,7 +27,7 @@ class Escenario{
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
-         self.configurEscenarioSiguiente()
+         self.configurarEscenarioSiguiente()
          self.configurarConversacion()
          self.dibujarTablero()
          self.agregarVisualesEscena()
@@ -55,7 +55,7 @@ class Escenario{
        self.eventosIniciar()
    }
 
-    method configurEscenarioSiguiente(){}
+    method configurarEscenarioSiguiente(){}
 
     
 
@@ -105,7 +105,7 @@ class Escenario{
         self.limpiarVisualesEnEscena()
         ost.stop()
         self.eventosFinalizar()
-     
+        pj.resetearDialogo()
      
      
       

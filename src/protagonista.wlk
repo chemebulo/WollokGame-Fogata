@@ -20,7 +20,7 @@ object protagonista inherits Visual{
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
-    var  conversacionNPC = []
+    var  property conversacionNPC = []
     var property npcActual          = null 
     var property conversadorActual  = self
   

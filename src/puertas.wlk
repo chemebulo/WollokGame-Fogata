@@ -11,6 +11,7 @@ class Puerta inherits Visual{
     var property image = "puerta.png" 
     var property position = game.origin() 
     var property irHacia 
+    override method esAtravesable() = true
 }
 
 // ###############################################################################################

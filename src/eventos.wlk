@@ -1,5 +1,7 @@
 import enemigos.*
 import protagonista.*
+import visualesExtra.*
+import guardabosques.*
 
 class EventoMultiple{
     /*
@@ -102,4 +104,13 @@ object personajeHabla inherits EventoUnico(sujetoUnico=protagonista){
       override method nombreEvento() = "Hablar"
  
      override method ordenUnica(visual) {game.say(visual,"Hola, estoy hablando por un evento")}
+}
+
+object recojerLeña inherits EventoUnico(sujetoUnico= guardabosques){
+    override method tiempo() = 800
+    override method nombreEvento() = "Recojer leña"
+
+    override method ordenUnica(visual){
+        visual.comprobarDialogo()
+    }
 }

@@ -5,6 +5,7 @@ import escenarios.*
 import escenarios_mapas.*
 import enemigos.*
 import eventos.*
+import guardabosques.*
 /*
 TEMPLATE CONFIGURADORES:
 const confg_escenarioNombre = {e => e.fondoEscenario();           
@@ -32,13 +33,38 @@ const confg_EscenarioInicial = {e => e.fondoEscenario("fondo-escenario-inicial.p
 
 const confg_escenarioBifurcacion = {e => e.fondoEscenario("fondo-escenario-inicial.png");       // borrar luego    
                                       e.mapa(mapa_escenarioBifurcacion);
-                                      e.visualesEnEscena( [puertaNorte, puertaOeste, puertaEste, protagonista,loboAgresivo, loboPasivo]);
+                                      e.visualesEnEscena( [ puertaEste, protagonista]);
                                       e.ost(game.sound("musica-escenarioInicial-v1.mp3"));
-                                      e.eventos([persecucionLoboAgresivo, persecucionLoboPasivo])}
+                                     // e.eventos([persecucionLoboAgresivo, persecucionLoboPasivo])} de momento comentado para no romper
+                                     e.eventos([])}
+
+const confg_escenarioBifurcacion_v2 = {e => e.fondoEscenario("fondo-escenario-inicial.png");         
+                                      e.mapa(mapa_escenarioBifurcacion_v2);
+                                      e.visualesEnEscena( [ protagonista,loboAgresivo]);
+                                      e.ost(game.sound("lobos-atacan.mp3"));
+                                      e.eventos([persecucionLobo])}
 
                                        
 
+const  confg_escenarioCabañaInicial ={ e => e.fondoEscenario("cabaña.png");           
+                                      e.mapa(mapa_cabañaInicial);
+                                      e.visualesEnEscena([guardabosques,protagonista] );
+                                      e.ost(game.sound("cabaña.mp3"));
+                                      e.dialogo(dialogoEnCabaña);
+                                      e.eventos([recojerLeña])}
 
+
+const confg_escenarioEntradaCabaña = {e => e.fondoEscenario("fondo-escenario-inicial.png");           
+                                      e.mapa(mapa_entradaCabaña);
+                                      e.visualesEnEscena([cabaña,protagonista,puertaEntradaCabaña] );
+                                      e.ost(game.sound("musica-escenarioInicial-v1.mp3"));
+                                     }
+
+const confg_escenarioEntradaCabaña_v2 = {e => e.fondoEscenario("fondo-escenario-inicial.png");           
+                                      e.mapa(mapa_entradaCabaña_v2);
+                                      e.visualesEnEscena([cabaña,protagonista,puertaOeste] );
+                                      e.ost(game.sound("musica-escenarioInicial-v1.mp3"));
+                                     }
 
 
 //-----------DEJAR ABAJO DE TODO ---------

@@ -19,6 +19,8 @@ const puertaNorte = new PuertaAbierta(image = "puerta.png", position = norte.ubi
 const puertaOeste = new PuertaAbierta(image = "puerta.png", position = oeste.ubicacion(), irHacia = escenarioInicial)
 const puertaEste  = new PuertaAbierta(image = "puerta.png", position = este.ubicacion() , irHacia = escenarioInicial)
 const puertaSur   = new PuertaAbierta(image = "puerta.png", position = sur.ubicacion()  , irHacia = escenarioInicial)
+
+const puertaEntradaCabaña = new PuertaAbierta(image = "puerta.png", irHacia= escenarioCabañaInicial)
   
 const puertaNorteCerrada = new PuertaCerrada(image = "puerta.png", position = sur.ubicacion()  , mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
 const puertaOesteCerrada = new PuertaCerrada(image = "puerta.png", position = oeste.ubicacion(), mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
@@ -36,7 +38,7 @@ object inicioJuego inherits Escenario(configuracionActual = confg_inicioJuego){
 
 object escenarioInicial  inherits Escenario(configuracionActual = confg_EscenarioInicial){
                                       
-    override method configurEscenarioSiguiente(){
+    override method configurarEscenarioSiguiente(){
         puertaNorte.irHacia(escenarioBifurcacion)
     }
 } 
@@ -53,31 +55,53 @@ object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenar
 object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escenarioBifurcacion){
 
 
-    override method configurEscenarioSiguiente(){
-        puertaNorte.irHacia(escenarioInicial)
-        puertaOeste.irHacia(escenarioTEST)
-        puertaEste.irHacia(escenarioTEST)
+    override method configurarEscenarioSiguiente(){
+        
+        puertaEste.irHacia(escenarioEntradaCabaña)
     }
-
-/*
-    override method eventosIniciar() {
-        game.onTick(800, "Lobo agresivo persigue al personaje", {loboAgresivo.perseguirAPresa()})
-        game.onTick(2500, "Lobo pasivo persigue al personaje", {loboPasivo.perseguirAPresa()})
-    }
-
-  */  
-
 }
+
+object escenarioBifurcacion_v2 inherits Escenario(configuracionActual = confg_escenarioBifurcacion_v2){
+    override method configurarEscenarioSiguiente(){
+        puertaOeste.irHacia(escenarioTEST)
+    }
+}
+
+
+
 
 
 // ######################################### ESCENARIO: escenarioGalpon #########################################
 
 object escenarioGalpon{}
 
+object escenarioEntradaCabaña inherits Escenario(configuracionActual = confg_escenarioEntradaCabaña){
+
+    override method configurarEscenarioSiguiente(){
+        puertaEntradaCabaña.irHacia(escenarioCabañaInicial)
+    }
+}
+
+object escenarioEntradaCabaña_v2 inherits Escenario(configuracionActual = confg_escenarioEntradaCabaña_v2){
+
+    override method configurarEscenarioSiguiente(){
+        puertaOeste.irHacia(escenarioBifurcacion_v2)
+    }
+}
+
 
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
-object escenarioEntrarACabaña{}
+object escenarioCabañaInicial inherits Escenario (configuracionActual= confg_escenarioCabañaInicial){
+    override method configurarEscenarioSiguiente(){
+        puertaOeste.irHacia(escenarioInicial)
+    }
+
+    override method limpiar(){
+        super()
+        game.removeVisual(puertaOeste)
+    }
+}
 
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
@@ -87,9 +111,9 @@ object escenarioTEST inherits Escenario(configuracionActual = confg_escenarioTES
 
 
 
-    override method configurEscenarioSiguiente(){
+    override method configurarEscenarioSiguiente(){
 
-        puertaOeste.irHacia(escenarioBifurcacion)
+        puertaOeste.irHacia(escenarioCabañaInicial)
     }
 }
 

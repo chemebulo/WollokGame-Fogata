@@ -1,5 +1,5 @@
 import visualesExtra.amiga
-
+import guardabosques.*
 
 
 /*
@@ -22,3 +22,6 @@ const dialogoEscenarioInicial = [amiga,dialogoAmiga]
 const dialogoTEST = ["Hola de nuevo","Ya habiamos hablado","Enloqueci verdad?","Si, ya vete"]
 const dialogoEscenarioTest = [amiga,dialogoTEST]
 //--------------------------------------------
+
+const dialogoCabaña = ["Hola señor guardabosques","Hola protagonista","Me da un poco de leña?","Claro tome"]
+const dialogoEnCabaña = [guardabosques, dialogoCabaña]

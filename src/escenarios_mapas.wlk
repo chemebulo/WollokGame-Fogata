@@ -4,6 +4,8 @@ import enemigos.*
 import puertas.*
 import visualesExtra.*
 import escenarioManager.*
+import guardabosques.*
+import escenarios.*
 /*
     USAR ESTAS MEDIDAS PARA TODOS LOS ESCENARIOS:
         * 9 listas     -> Formando el alto del escenario.
@@ -23,18 +25,19 @@ import escenarioManager.*
           Es importante sobreescribir el método configurarPuertas() con los requerimientos del escenario actual.
 
     [
-        [_,_,_,_,_,_,N,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [N,_,_,_,_,_,_,_,_,_,_,_,N],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,N,_,_,_,_,_,_]
-     
-    ].reverse()
 
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
+
+    ].reverse() 
+    
     nombres de variables recomendados = mapa_nombreEscenario
 */
 
@@ -100,12 +103,26 @@ object la3 inherits Elemento(visual=loboAgresivo3){  // Lobo -> Implementar.
 */
 // #####################################################################
 
-object g inherits Elemento{ // Guardabosques -> No implementado, no usar.
-    override method construir(_position){}
+object g inherits Elemento(visual=guardabosques){ // Guardabosques -> No implementado, no usar.
+    
 }
 
+object ca inherits Elemento(visual= cabaña){}
+
+object le inherits Elemento(visual=leña){}
 
 // ################################################################################
+// PUERTAS 
+object po inherits Elemento(visual=puertaOeste){}
+
+object pn inherits Elemento(visual=puertaNorte){}
+
+object pe inherits Elemento(visual=puertaEste){}
+
+object ps inherits Elemento(visual=puertaSur){}
+
+object pec inherits Elemento(visual= puertaEntradaCabaña){}
+//###########################################################
 
 const mapa_inicioJuego =
     [
@@ -142,11 +159,11 @@ const mapa_escenarioInicial =
 const mapa_escenarioBifurcacion =
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,la,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,a,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,z,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_]
@@ -168,3 +185,66 @@ const mapa_escenarioTest =
         [_,_,_,_,_,_,_,_,_,_,_,_,_]
      
     ].reverse()
+
+
+const mapa_entradaCabaña = 
+[
+    
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ ,z  , _ , _ , _ ,ca ,pec, _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
+
+    ].reverse() 
+
+const mapa_entradaCabaña_v2 = 
+[
+    
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [po , _ , _ , _ , _ , z , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
+
+    ].reverse()     
+
+
+const mapa_cabañaInicial = 
+   [
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,le,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,po,z,_,_,_,_,g,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_]
+     
+    ].reverse()    
+
+
+const mapa_escenarioBifurcacion_v2 =     
+
+    [
+
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ ,la , _ , _ , _ , _ , _ , _ , _ , _ , z , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
+
+    ].reverse() 
