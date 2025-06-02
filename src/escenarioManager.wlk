@@ -21,6 +21,7 @@ class Escenario{
     var property dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
     var property confgActual = {} // Un bloque en configuradorEscenarios.wlk
     var property confgEscSiguiente = {}
+    const gestorEvento = gestorDeEventos
 
     method puestaEnEscena(){ 
         self.configurar()
@@ -65,15 +66,13 @@ class Escenario{
 
 
     method eventosIniciar(){ 
-        if(not eventos.isEmpty()){
-         eventos.forEach({ev =>ev.iniciarEvento()})
-        }
+       
+        gestorEvento.gestionar(eventos.isEmpty(),{eventos.forEach({ev =>ev.iniciarEvento()})} )
     } 
 
     method eventosFinalizar(){
-        if(not eventos.isEmpty()){
-           eventos.forEach({ev => ev.finalizarEvento()})        
-        } 
+       
+        gestorEvento.gestionar(eventos.isEmpty(),{ eventos.forEach({ev => ev.finalizarEvento()})} )
     }
 
     
@@ -136,4 +135,14 @@ object fondo{
     method esAtravesable() = true
 
     method interaccion(){}
+}
+
+object gestorDeEventos {
+
+    method gestionar(condicion, bloque){
+        if(not condicion){
+            bloque.apply()
+        }
+    }
+
 }
