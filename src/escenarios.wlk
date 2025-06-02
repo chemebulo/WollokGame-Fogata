@@ -10,7 +10,8 @@ import escenarioManager.*
 import escenarios_mapas.*
 import visualesDiapositivas.*
 import eventos.*
-import configuradorEscenarios.*
+import confgEscenarios.*
+import confgEscSig.*
 
 
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
@@ -28,93 +29,52 @@ const puertaEsteCerrada  = new PuertaCerrada(image = "puerta.png", position = es
 const puertaSurCerrada   = new PuertaCerrada(image = "puerta.png", position = sur.ubicacion()  , mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
 
 // ####################################################################################################################################################################
-
+/*                                         ESCENARIOS PARA TODO EL JUEGO:
+    TEMPLATE escenario:
+    const nombre_escenario = new Escenario (confgActual = ...       ,    // implementar en confEscenarios.wlk
+                                            confgEscSiguiente = ... ,    // implementar confgEscSig.wlk
+                                            fondoEscenario =  ...)      //  imagen de 1300px * 900px
+*/
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
-object inicioJuego inherits Escenario(configuracionActual = confg_inicioJuego){
-}
+const inicioJuego = new Escenario(confgActual = confg_inicioJuego,
+                                  fondoEscenario= "inicio-v2.png")
+
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
-object escenarioInicial  inherits Escenario(configuracionActual = confg_EscenarioInicial){
-                                      
-    override method configurarEscenarioSiguiente(){
-        puertaNorte.irHacia(escenarioBifurcacion)
-    }
-} 
+const escenarioInicial = new Escenario(confgActual = confg_EscenarioInicial,
+                                       confgEscSiguiente = confg_escSig_escenarioInicial,
+                                       fondoEscenario = "fondo-escenario-inicial.png")
+ 
 
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
-/*
-object escenarioBifurcacion inherits Escenario(fondoEscenario   = "fondo-escenario-inicial.png"
-                                               mapa             = mapa_escenarioBifurcacion,
-                                               visualesEnEscena = [puertaNorte, puertaOeste, puertaEste, amiga, protagonista,loboAgresivo, loboPasivo],
-                                               ost              = game.sound("musica-escenarioInicial-v1.mp3"),
-                                               eventos= ["Lobo persigue al personaje"]){
-*/
-object escenarioBifurcacion inherits Escenario(configuracionActual = confg_escenarioBifurcacion){
+
+const escenarioBifurcacion = new Escenario(confgActual = confg_escenarioBifurcacion,
+                                           confgEscSiguiente= confg_escSig_escenarioBifurcacion_v1,
+                                           fondoEscenario= "fondo-escenario-inicial.png")
+ 
 
 
-    override method configurarEscenarioSiguiente(){
-        
-        puertaEste.irHacia(escenarioEntradaCabaña)
-    }
-}
-
-object escenarioBifurcacion_v2 inherits Escenario(configuracionActual = confg_escenarioBifurcacion_v2){
-    override method configurarEscenarioSiguiente(){
-        puertaOeste.irHacia(escenarioTEST)
-    }
-}
-
-
-
-
-
-// ######################################### ESCENARIO: escenarioGalpon #########################################
-
-object escenarioGalpon{}
-
-object escenarioEntradaCabaña inherits Escenario(configuracionActual = confg_escenarioEntradaCabaña){
-
-    override method configurarEscenarioSiguiente(){
-        puertaEntradaCabaña.irHacia(escenarioCabañaInicial)
-    }
-}
-
-object escenarioEntradaCabaña_v2 inherits Escenario(configuracionActual = confg_escenarioEntradaCabaña_v2){
-
-    override method configurarEscenarioSiguiente(){
-        puertaOeste.irHacia(escenarioBifurcacion_v2)
-    }
-}
-
+const escenarioEntradaCabaña = new Escenario(confgActual = confg_escenarioEntradaCabaña,
+                                             confgEscSiguiente= confg_escSig_escenarioEntradaCabaña_v1,
+                                             fondoEscenario = "fondo-escenario-inicial.png")
+  
 
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
-object escenarioCabañaInicial inherits Escenario (configuracionActual= confg_escenarioCabañaInicial){
-    override method configurarEscenarioSiguiente(){
-        puertaOeste.irHacia(escenarioInicial)
-    }
-
-    override method limpiar(){
-        super()
-        game.removeVisual(puertaOeste)
-    }
-}
-
+const escenarioCabañaInicial = new Escenario (confgActual= confg_escenarioCabañaInicial,
+                                              confgEscSiguiente= confg_escSig_escenarioCabañaInicial,
+                                              fondoEscenario ="cabaña.png")
+    
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
 
 
-object escenarioTEST inherits Escenario(configuracionActual = confg_escenarioTEST){
+const escenarioTEST = new Escenario(confgActual = confg_escenarioTEST,
+                                    confgEscSiguiente= confg_escSig_TEST,
+                                    fondoEscenario = "fondo-escenarioTEST.png")
 
-
-
-    override method configurarEscenarioSiguiente(){
-
-        puertaOeste.irHacia(escenarioCabañaInicial)
-    }
-}
 
 // ##############################################################################################################

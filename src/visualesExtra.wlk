@@ -1,5 +1,7 @@
 import protagonista.*
 import escenarios.*
+import confgEscSig.*
+import confgEscenarios.*
 
 class Visual{
     method esAtravesable(){
@@ -52,8 +54,10 @@ object leña inherits Visual{
     method interaccion() {
         game.removeVisual(self)
         game.addVisual(puertaOeste)
-        puertaOeste.irHacia(escenarioEntradaCabaña_v2)
+        puertaOeste.irHacia(escenarioEntradaCabaña)
         game.say(protagonista,"Gracias por la leña señor")
+        escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
+        escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)
     }
 }
 

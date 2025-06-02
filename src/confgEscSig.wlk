@@ -1,0 +1,32 @@
+import escenarios.*
+import confgEscenarios.*
+/*
+ CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
+    *tipo: bloque
+    En el bloque se debe escribir
+    el setter del irHacia de TODAS LAS PUERTAS delescenario
+    si se vuelve a un escenario anterior...se deben settear tanto el confgEscSiguiente como el confgActual
+    si un escenario tiene dinstintos configuradores, respetar nomenclatura y escribir al final v1,v2,v3 
+
+*/
+
+const confg_escSig_escenarioInicial = { puertaNorte.irHacia(escenarioBifurcacion)}
+
+const confg_escSig_escenarioBifurcacion_v1 = {puertaEste.irHacia(escenarioEntradaCabaña)}
+
+const confg_escSig_escenarioBifurcacion_v2 = {puertaOeste.irHacia(escenarioTEST)}
+
+const confg_escSig_escenarioEntradaCabaña_v1 = {puertaEntradaCabaña.irHacia(escenarioCabañaInicial)}
+
+const confg_escSig_escenarioEntradaCabaña_v2 = {game.removeVisual(puertaOeste); 
+                                                puertaOeste.irHacia(escenarioBifurcacion);
+                                                escenarioBifurcacion.confgEscSiguiente(confg_escSig_escenarioBifurcacion_v2);
+                                                escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v2)}
+
+
+const confg_escSig_escenarioCabañaInicial = {puertaOeste.irHacia(escenarioEntradaCabaña);
+                                             escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
+                                             escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)}
+
+
+const confg_escSig_TEST = {puertaOeste.irHacia(escenarioCabañaInicial)}

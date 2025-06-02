@@ -19,15 +19,15 @@ class Escenario{
     var property visualesEnEscena = []
     var property ost = game.sound("")
     var property dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
-    var property configuracionActual = {} // Un bloque en configuradorEscenarios.wlk
-   // const reposicionEventos = #{"evento1","evento2","evento3","evento4","evento5","evento6","evento7"}
+    var property confgActual = {} // Un bloque en configuradorEscenarios.wlk
+    var property confgEscSiguiente = {}
 
     method puestaEnEscena(){ 
         self.configurar()
+         self.configurarEscenarioSiguiente()
          ost.shouldLoop(true)
          ost.play()
          self.dibujarFondo()
-         self.configurarEscenarioSiguiente()
          self.configurarConversacion()
          self.dibujarTablero()
          self.agregarVisualesEscena()
@@ -44,7 +44,7 @@ class Escenario{
     }
 
     method configurar(){
-        configuracionActual.apply(self)
+        confgActual.apply(self)
     }
     method dibujarFondo(){
         gestorFondo.visualizarFondo(fondoEscenario)
@@ -55,9 +55,9 @@ class Escenario{
        self.eventosIniciar()
    }
 
-    method configurarEscenarioSiguiente(){}
-
-    
+    method configurarEscenarioSiguiente(){
+        confgEscSiguiente.apply()
+    }
 
     method colisiones(){
          game.onCollideDo(pj, {objeto => objeto.interaccion()})
@@ -72,11 +72,8 @@ class Escenario{
 
     method eventosFinalizar(){
         if(not eventos.isEmpty()){
-       
-          //eventos.forEach({ev => ev.reponer(reposicionEventos); ev.finalizarEventos()})
-          eventos.forEach({ev => ev.finalizarEvento()})
-         
-    } 
+           eventos.forEach({ev => ev.finalizarEvento()})        
+        } 
     }
 
     
@@ -106,13 +103,17 @@ class Escenario{
         ost.stop()
         self.eventosFinalizar()
         pj.resetearDialogo()
-     
-     
-      
-    }
+        self.resetearEventosyDialogos() // evita tener que settear en los configuradores que los dialogos 
+                                        // y eventos esten vacios, sino quedan los dialogos y eventos del escenario anterior
+     }
 
     method limpiarVisualesEnEscena(){
         visualesEnEscena.forEach({v => game.removeVisual(v)})
+    }
+
+    method resetearEventosyDialogos(){
+        dialogo = []
+        eventos = []
     }
 }
 
