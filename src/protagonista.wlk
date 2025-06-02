@@ -27,7 +27,7 @@ object protagonista inherits Visual{
    // ################################################## ESTADO ##################################################
 
     method validarSiEstaVivo(){ 
-        if (not self.estaVivo()) { self.error("Estoy muerto") }
+        if (not self.estaVivo()) { vg.finalizarJuego()}
     }
 
      method estaVivo() = self.vida() > 0

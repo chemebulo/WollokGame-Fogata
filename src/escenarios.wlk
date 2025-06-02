@@ -28,53 +28,57 @@ const puertaOesteCerrada = new PuertaCerrada(image = "puerta.png", position = oe
 const puertaEsteCerrada  = new PuertaCerrada(image = "puerta.png", position = este.ubicacion() , mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
 const puertaSurCerrada   = new PuertaCerrada(image = "puerta.png", position = sur.ubicacion()  , mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
 
+
+// CONSTRUCTOR DE ESCENARIOS
+object esc{
+    method construir (confg_esc,confg_esc_sig,fondoEsc){
+        return new Escenario(confgActual = confg_esc,
+                             confgEscSiguiente = confg_esc_sig,
+                             fondoEscenario = fondoEsc)
+    }
+}
+
 // ####################################################################################################################################################################
 /*                                         ESCENARIOS PARA TODO EL JUEGO:
     TEMPLATE escenario:
-    const nombre_escenario = new Escenario (confgActual = ...       ,    // implementar en confEscenarios.wlk
-                                            confgEscSiguiente = ... ,    // implementar confgEscSig.wlk
-                                            fondoEscenario =  ...)      //  imagen de 1300px * 900px
+    const nombre_escenario = esc.construir(@param,    //configurador implementado en confgEscenarios.wlk
+                                           @param,    //configurador implementado en confgEsSig.wlk
+                                           @param     // imagen de 1300px * 900 px
+                                           )    
+IMPORTANTE!!!
+Cuando de un escenario se va a otro escenario que ya se visito (donde ocurre una etapa distinta del juego), 
+se debe settear los dos primeros parametros al escenario al que se ira dentro del configuradorEscenarioSiguiente
+del escenarioActual
 */
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
-const inicioJuego = new Escenario(confgActual = confg_inicioJuego,
-                                  fondoEscenario= "inicio-v2.png")
-
+const inicioJuego = esc.construir(confg_inicioJuego,{},"inicio-v2.png")
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
-const escenarioInicial = new Escenario(confgActual = confg_EscenarioInicial,
-                                       confgEscSiguiente = confg_escSig_escenarioInicial,
-                                       fondoEscenario = "fondo-escenario-inicial.png")
- 
-
+const escenarioInicial = esc.construir(confg_EscenarioInicial,
+                                       confg_escSig_escenarioInicial, 
+                                       "fondo-escenario-inicial.png")
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
 
-const escenarioBifurcacion = new Escenario(confgActual = confg_escenarioBifurcacion,
-                                           confgEscSiguiente= confg_escSig_escenarioBifurcacion_v1,
-                                           fondoEscenario= "fondo-escenario-inicial.png")
- 
+const escenarioBifurcacion = esc.construir(confg_escenarioBifurcacion,
+                                           confg_escSig_escenarioBifurcacion_v1,
+                                            "fondo-escenario-inicial.png")
 
-
-const escenarioEntradaCabaña = new Escenario(confgActual = confg_escenarioEntradaCabaña,
-                                             confgEscSiguiente= confg_escSig_escenarioEntradaCabaña_v1,
-                                             fondoEscenario = "fondo-escenario-inicial.png")
-  
-
+const escenarioEntradaCabaña = esc.construir(confg_escenarioEntradaCabaña,
+                                            confg_escSig_escenarioEntradaCabaña_v1,
+                                            "fondo-escenario-inicial.png" )
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
-const escenarioCabañaInicial = new Escenario (confgActual= confg_escenarioCabañaInicial,
-                                              confgEscSiguiente= confg_escSig_escenarioCabañaInicial,
-                                              fondoEscenario ="cabaña.png")
-    
+ const escenarioCabañaInicial = esc.construir(confg_escenarioCabañaInicial,
+                                              confg_escSig_escenarioCabañaInicial,
+                                              "cabaña.png")   
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
 
 
-const escenarioTEST = new Escenario(confgActual = confg_escenarioTEST,
-                                    confgEscSiguiente= confg_escSig_TEST,
-                                    fondoEscenario = "fondo-escenarioTEST.png")
-
+const escenarioTEST = esc.construir(confg_escenarioTEST,
+                                    confg_escSig_TEST,"fondoEscenarioTEST")
 
 // ##############################################################################################################

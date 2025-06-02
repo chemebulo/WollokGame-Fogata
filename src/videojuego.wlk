@@ -3,7 +3,7 @@ import protagonista.*
 import direccion.*
 import escenarios.*
 import visualesDiapositivas.*
-
+import visualesExtra.*
 object videojuego{
     const gestorDiapositiva = diapositivasInicio
     const ostInicioJuego    = game.sound("inicio-v1.png")
@@ -20,6 +20,23 @@ object videojuego{
         escenario.limpiar()
         self.escenario(escenarioNuevo)
         escenario.puestaEnEscena()
+    }
+
+    method finalizarJuego(){
+        escenario.limpiar()
+        game.clear();
+        game.addVisual(gameover); 
+        game.sound("gameover.mp3").play();
+        game.onTick(5000,"fin",{game.stop()})
+
+    }
+
+    method juegoGanado(){
+        escenario.limpiar();
+        game.clear()
+        game.addVisual(juegoGanado);
+        game.sound("game-win.mp3").play()
+        game.onTick(5000,"fin",{game.stop()})
     }
 
     // ############################### TABLERO ###############################
@@ -40,6 +57,7 @@ object videojuego{
         keyboard.e().onPressDo({protagonista.interactuarNPC()})
         keyboard.f().onPressDo({self.iniciarJuego()})
         keyboard.m().onPressDo({game.stop()})
+        keyboard.y().onPressDo({self.juegoGanado()})
     }
 
     // ################### INICIO DE JUEGO CON DIAPOSITIVAS ##################

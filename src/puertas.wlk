@@ -54,6 +54,6 @@ class PuertaCerrada inherits Puerta {
       nada en la posicion que tendrian en la matriz.
   
     * En algunos escenarios hay conversaciones o cosas para hacer, buscar la forma de que de momento
-      las puertas esten cerradas hasta que se cumpla lo que ocurre en el mapa.
+      las puertas esten cerradas hasta que se cumpla lo que ocurre en el mapa.(solucionado)
 
 */ 

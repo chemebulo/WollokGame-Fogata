@@ -70,3 +70,15 @@ object cabaña inherits Visual{
 
     method interaccion(){}
 }
+
+object gameover {
+    method image() = "game-over.png"
+
+    method position() = game.at(0,0)
+}
+
+object juegoGanado{
+    method image() = "game-win.png"
+
+    method position() = game.at(0,0)
+}
