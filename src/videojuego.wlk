@@ -58,6 +58,7 @@ object videojuego{
         keyboard.f().onPressDo({self.iniciarJuego()})
         keyboard.m().onPressDo({game.stop()})
         keyboard.y().onPressDo({self.juegoGanado()})
+        keyboard.k().onPressDo({protagonista.atacar()})
     }
 
     // ################### INICIO DE JUEGO CON DIAPOSITIVAS ##################

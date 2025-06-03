@@ -1,6 +1,8 @@
 import visualesExtra.*
 import videojuego.*
 import protagonista.*
+import direccion.*
+import estadosNPC.*
 
 object guardabosques inherits Visual{
 
@@ -11,6 +13,9 @@ object guardabosques inherits Visual{
 
     
     var dioleña=false
+    var estado = desarmadoGuardabosques
+
+    method estado(_estado){estado=_estado}
 
     override method esAtravesable() = false
 
@@ -20,14 +25,11 @@ object guardabosques inherits Visual{
 
      
 
-    /* method terminoDialogo(){
-        //return videojuego.escenario().dialogo().head().isEmpty()
-        return videojuego.escenario().dialogo().last().last().isEmpty()
-     }
-     */
+   // Metodos usados para dar la leña al principio
     method comprobarDialogo(){
 
-            if(self.terminoDialogo() and (not dioleña)){
+            if(self.terminoDialogo() and (not dioleña)){ // como comprobarDialogo() es llamado por un evento en eventos.wlk 
+                                                          //se necesitan bolleanos para que solo se ejecute una vez
                 self.darLeña()
                 dioleña=true
             }
@@ -35,14 +37,17 @@ object guardabosques inherits Visual{
 
     method terminoDialogo() = enemigo.conversacionNPC().isEmpty()        
         
-
     method darLeña() {game.addVisual(leña) }
-}
 
-object pasivo{
-    method dar(){
-        game.addVisual(leña)
+
+    //ATAQUE AL PROTAGONISTA 
+    method atacar(){
+        estado.ataque()
     }
-}
-object traidor{}
 
+    method miCeldaArriba() = arriba.siguientePosicion(position)
+    method miCeldaAbajo() = abajo.siguientePosicion(position)
+    method miCeldaIzquierda()= izquierda.siguientePosicion(position)
+    method miCeldaDerecha()= derecha.siguientePosicion(position)
+
+}

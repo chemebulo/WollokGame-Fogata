@@ -22,6 +22,7 @@ class Escenario{
     var property confgActual = {} // Un bloque en configuradorEscenarios.wlk
     var property confgEscSiguiente = {}
     const gestorEvento = gestorDeEventos
+    
 
     method puestaEnEscena(){ 
         self.configurar()
@@ -32,7 +33,9 @@ class Escenario{
          self.configurarConversacion()
          self.dibujarTablero()
          self.agregarVisualesEscena()
-         self.colisionesYEventos()
+         game.onCollideDo(pj, {objeto => objeto.interaccion()})
+         gestorEvento.gestionarInicio(eventos)
+         
     }
     
     method dibujarTablero() {
@@ -50,32 +53,10 @@ class Escenario{
     method dibujarFondo(){
         gestorFondo.visualizarFondo(fondoEscenario)
     }
-   
-   method colisionesYEventos(){
-       self.colisiones()
-       self.eventosIniciar()
-   }
-
+      
     method configurarEscenarioSiguiente(){
         confgEscSiguiente.apply()
     }
-
-    method colisiones(){
-         game.onCollideDo(pj, {objeto => objeto.interaccion()})
-    }
-
-
-    method eventosIniciar(){ 
-       
-        gestorEvento.gestionar(eventos.isEmpty(),{eventos.forEach({ev =>ev.iniciarEvento()})} )
-    } 
-
-    method eventosFinalizar(){
-       
-        gestorEvento.gestionar(eventos.isEmpty(),{ eventos.forEach({ev => ev.finalizarEvento()})} )
-    }
-
-    
 
     method agregarVisualesEscena(){
         visualesEnEscena.forEach({v => game.addVisual(v)})
@@ -100,17 +81,17 @@ class Escenario{
         game.removeVisual(fondo)
         self.limpiarVisualesEnEscena()
         ost.stop()
-        self.eventosFinalizar()
-        pj.resetearDialogo()
+       gestorEvento.gestionarFin(eventos)
         self.resetearEventosyDialogos() // evita tener que settear en los configuradores que los dialogos 
                                         // y eventos esten vacios, sino quedan los dialogos y eventos del escenario anterior
      }
 
     method limpiarVisualesEnEscena(){
-        visualesEnEscena.forEach({v => game.removeVisual(v)})
+        visualesEnEscena.forEach({visual => game.removeVisual(visual)})
     }
 
     method resetearEventosyDialogos(){
+        pj.resetearDialogo()
         dialogo = []
         eventos = []
     }
@@ -139,10 +120,22 @@ object fondo{
 
 object gestorDeEventos {
 
-    method gestionar(condicion, bloque){
-        if(not condicion){
-            bloque.apply()
+    
+    
+
+    method gestionarInicio(eventos){
+        if(not eventos.isEmpty()){
+            eventos.forEach({e => e.iniciarEvento()})
+        }
+    }
+     method gestionarFin(eventos){
+        if(not eventos.isEmpty()){
+            eventos.forEach({e => e.finalizarEvento()})
         }
     }
 
+
 }
+
+
+    

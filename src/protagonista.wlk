@@ -6,17 +6,19 @@ import enemigos.*
 import dialogos.*
 import visualesExtra.*
 import gestorColisiones.*
+import estadosNPC.*
 
 object protagonista inherits Visual{
     // ################################################ ATRIBUTOS ################################################
 
     var property position = game.at(0,0)
-    var property image    = "protagonista-abajo.png"
+    var property image    = "prota-desarmado-abajo.png"
     var property vida     = 10
     const property daño   = 1
     const property vg     = videojuego
-    
-    const colisionesGestor = gestorDeColisiones // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
+    var property estoyAtacando = false
+    const colisionesGestor = gestorDeColisiones
+    var estadoProta = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
@@ -54,10 +56,11 @@ object protagonista inherits Visual{
         return colisionesGestor.estaDentroDelTablero(posicionAMover) and not colisionesGestor.hayObstaculosEn(posicionAMover,self)
     }
 
-    method cambiarImagen(direccion){ 
-        self.image("protagonista-" + direccion.toString() + ".png") 
+    method cambiarImagen(direccion){
+        self.image(estadoProta.actual() + direccion.toString() + ".png")
     }
-
+    
+    method estadoProta(_estadoProta){estadoProta=_estadoProta}
     // #################################### INTERACCIÓN CON ENEMIGOS U OBJETOS ################################### 
 
     method interaccion(visual) {
@@ -107,9 +110,36 @@ object protagonista inherits Visual{
     
     method xPos() = self.position().x()
 
+    /*######################
+        ATAQUE
+    
+    ##############################*/
+
+    method atacar(){
+     
+        estadoProta.ataque()
+    }
+
+    //PARA CUANDO ME ATACA EL GUARDABOSQUES
+    override method atacado(){
+        game.say(self,"AUXILIO ME ATACA EL GUARDABOSQUES")
+    }
+
+    
+
     // ############################################### PARA TESTEAR ###############################################
 
     method mover(direccion,cantidad){
         (1 .. cantidad).forEach({n => self.mover(direccion)})
     }
+
+    method miCeldaArriba() = arriba.siguientePosicion(position)
+    method miCeldaAbajo() = abajo.siguientePosicion(position)
+    method miCeldaIzquierda()= izquierda.siguientePosicion(position)
+    method miCeldaDerecha()= derecha.siguientePosicion(position)
+
+  
+
+
 }
+

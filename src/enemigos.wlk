@@ -64,16 +64,25 @@ class Lobo inherits Visual{
     method interaccion() {}
 
     method atacarPresa()
+    //IMPLEMENTAR
+    
 }
 
 object loboAgresivo inherits Lobo {
     override method atacarPresa() {
         game.schedule(1000, {presa.atacadoPor(self)})
     } 
+    override method atacado(){
+        game.say(self,"Estoy siendo atacado,auxilio")
+    }
 }
 
 object loboPasivo inherits Lobo {
     override method atacarPresa() {}
 
     override method interaccion() {}
+
+    override method atacado(){
+        game.say(self,"Estoy siendo atacado,auxilio")
+    }
 }

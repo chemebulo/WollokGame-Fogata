@@ -111,6 +111,8 @@ object ca inherits Elemento(visual= cabaña){}
 
 object le inherits Elemento(visual=leña){}
 
+object h inherits Elemento(visual=hacha){}
+
 // ################################################################################
 // PUERTAS 
 object po inherits Elemento(visual=puertaOeste){}
@@ -179,7 +181,7 @@ const mapa_escenarioTest =
         [_,_,_,_,c,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,z,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,h,_,_,_,_,_,_,lp,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_]

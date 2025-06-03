@@ -21,6 +21,9 @@ const confg_escenarioNombre = {e => e.visualesEnEscena();
 
   IMPORTANTE: Si un escenario va a repetirse en distintos puntos del juego,
               los configuradores deben nombrarse al final con v1,v2,v3 para guiarse
+              *tanto dialogos como eventos son LISTAS:
+                  e.eventos(persecucionLobo)... MAL!!!
+                  e.eventos([persecucionLobo]) ..BIEN!!!
                                     
 
 */
@@ -50,7 +53,7 @@ const confg_escenarioBifurcacion =
 const confg_escenarioBifurcacion_v2 = 
      {e =>         
       e.mapa(mapa_escenarioBifurcacion_v2);
-      e.visualesEnEscena( [ protagonista,loboAgresivo]);
+      e.visualesEnEscena( [ protagonista,loboAgresivo,puertaOeste]);
       e.ost(game.sound("lobos-atacan.mp3"));
       e.eventos([persecucionLobo])}
 
@@ -84,9 +87,10 @@ const confg_escenarioEntradaCabaña_v2 =
 const confg_escenarioTEST = 
      {e =>           
       e.mapa(mapa_escenarioTest);
-      e.visualesEnEscena( [carpa, amiga, protagonista, puertaOeste]);
-      e.ost(game.sound("musica-escenarioInicial.mp3"));
-      e.dialogo(dialogoEscenarioTest)
+      e.visualesEnEscena( [carpa, amiga, protagonista,hacha,loboAgresivo]);
+      e.ost(game.sound("game-win.mp3"));
+      e.dialogo(dialogoEscenarioTest);
+      e.eventos([persecucionLobo])
       }
 
 

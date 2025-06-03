@@ -2,10 +2,15 @@ import protagonista.*
 import escenarios.*
 import confgEscSig.*
 import confgEscenarios.*
+import estadosNPC.*
 
 class Visual{
     method esAtravesable(){
         return false
+    }
+
+    method atacado(){
+        
     }
 }
 
@@ -69,6 +74,20 @@ object cabaña inherits Visual{
     override method esAtravesable() = true
 
     method interaccion(){}
+}
+
+object hacha inherits Visual{
+    method image() = "hacha.png"
+
+    var property position = game.at(5,5)
+
+    override method esAtravesable() = true 
+
+    method interaccion(){
+        game.removeVisual(self)
+        protagonista.estadoProta(armadoProtagonista)
+        game.say(protagonista,"Ya puedo defenderme")
+    }
 }
 
 object gameover {

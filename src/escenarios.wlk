@@ -79,6 +79,6 @@ const escenarioEntradaCabaña = esc.construir(confg_escenarioEntradaCabaña,
 
 
 const escenarioTEST = esc.construir(confg_escenarioTEST,
-                                    confg_escSig_TEST,"fondoEscenarioTEST")
+                                    confg_escSig_TEST,"fondo-escenario-inicial.png")
 
 // ##############################################################################################################
