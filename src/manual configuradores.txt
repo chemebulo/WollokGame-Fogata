@@ -1,0 +1,18 @@
+CONFIGURADORES
+
+
+sea A(escenario ) y B(escenariorepetido)  y C Y CS configuradores y configuradorSiguiente:
+
+*1)A tiene C y CS(aqui las puertas van a B)
+*cuando atravesas la puerta de A estas en B, como en el CS de A no actualizaste el C y CS de B, B ahora es una versionVieja
+Entonces se debe hacer:
+1) A tiene C y CS(aqui las peurtas van a B y se actualizan C y CS  de B)
+*cuando atravesas la puerta de A estas en B,en una version nueva de B
+
+PERO QUE PASA SI LO QUE SIGUE ES VOLVER AL ESCENARIO A
+En ese caso:
+1) A tieneC y CS(aqui las puertas van a B y se actualizan C y CS de B ...y dentro del CS de B(hacia donde van las puertas deB  y los configuradores de la version nueva de A))
+el 1) es la unica instruccion que hay que hacer, no hacer las 3, osea depende la situacion digo
+v1,2,3 = versiones de escenarios
+
+osea si estas en A-v1 y vas a B-v1,si queres ir de B-v2 a A-v2 tenes que decirle a A-v1 que se actualize a A-v2, y a su vez, decirle al Escenario que se ira despues de A-v2 que version es (sus configuradores y configuradoresSiguientes) 
