@@ -8,43 +8,32 @@ import visualesExtra.*
 class Lobo inherits Visual{
     // ############################################## ATRIBUTOS ############################################## //
 
-    var property position = game.at(6,0)
-    var property image    = "lobo-derecha.png"
-    var property vida     = 3
-    const property presa  = protagonista
-    const property daño   = 1
-    const ejePrimero = ejeX
-    const ejeSegundo = ejeY
+    var property position   = game.at(6,0)
+    var property image      = "lobo-derecha.png"
+    var property vida       = 3
+    const property presa    = protagonista
+    const property daño     = 1
+    const colisionesGestor  = gestorDeColisiones
+    const direccionesGestor = gestorDeDirecciones
+    const posicionesGestor  = gestorDePosiciones
 
     // ########################################## MOVIMIENTO GENERAL ######################################### //
 
-    method perseguirAPresa(){
-        self.perseguirYAtacarPresa()
+    method perseguirAPresa() {
+        if (self.estaSobrePresa() and self.estaVivo()) { self.atacarPresa() } else 
+        if (self.estaVivo())                           { self.avanzarHaciaLaPresa() }
     }
 
-    method perseguirYAtacarPresa(){
-        if (not self.estaSobrePresa() and self.estaVivo()) { self.moverHaciaLaPresa() } else { self.atacarPresa() }
+    method avanzarHaciaLaPresa() {
+        const positionAntigua = position
+        position = self.siguientePosicion()
+        self.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, position))
     }
-
-    method moverHaciaLaPresa(){
-        if (ejePrimero.mismoEjeEntreYPuedeMoverA(self, presa, ejeSegundo)) { self.moverEn(ejeSegundo) } else 
-        if (ejeSegundo.mismoEjeEntreYPuedeMoverA(self, presa, ejePrimero)) { self.moverEn(ejePrimero) } else 
-                                                                           { self.moverEnY(ejeSegundo, ejePrimero) }
-    }
-
-    method moverEn(eje){
-        if (eje.necesitaAcercarseA(self, presa)) { self.moverHacia(eje.primeraDir()) } else
-                                                 { self.moverHacia(eje.segundaDir()) }
-    }
-
-    method moverEnY(segundoEje, primerEje){
-        self.moverEn(segundoEje)
-        self.moverEn(primerEje)
-    }
-
-    method moverHacia(direccion){
-        position = direccion.siguientePosicion(position)
-        self.cambiarImagen(direccion)
+    
+    method siguientePosicion() {
+        return if (colisionesGestor.hayLindantesSinObstaculosSin(position, presa)) { 
+                   posicionesGestor.lindanteConvenienteHacia(position, presa) 
+               }
     }
 
     // ####################################### MOVIMIENTO - COLISIONES ####################################### // 
@@ -68,7 +57,9 @@ class Lobo inherits Visual{
     
 }
 
-object loboAgresivo inherits Lobo {
+// ########################################################################################################### //
+
+class LoboAgresivo inherits Lobo {
     override method atacarPresa() {
         game.schedule(1000, {presa.atacadoPor(self)})
     } 
@@ -77,12 +68,15 @@ object loboAgresivo inherits Lobo {
     }
 }
 
-object loboPasivo inherits Lobo {
+// ########################################################################################################### //
+
+class LoboPasivo inherits Lobo {
     override method atacarPresa() {}
 
     override method interaccion() {}
-
-    override method atacado(){
-        game.say(self,"Estoy siendo atacado,auxilio")
-    }
 }
+
+// ########################################################################################################### //
+
+const loboAgresivo = new LoboAgresivo()
+const loboPasivo = new LoboPasivo()

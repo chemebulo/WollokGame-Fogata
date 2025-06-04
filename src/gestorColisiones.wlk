@@ -1,3 +1,4 @@
+import src.direccion.*
 object gestorDeColisiones{
     /* 
         el gestorEntiende:
@@ -15,7 +16,7 @@ object gestorDeColisiones{
     }
 
     method estaDentroDelTablero(posicionAMover){
-        return  self.existeX(posicionAMover.x()) and self.existeY(posicionAMover.y())
+        return self.existeX(posicionAMover.x()) and self.existeY(posicionAMover.y())
     }
 
     method existeX(x){
@@ -33,4 +34,26 @@ object gestorDeColisiones{
 	}
 
     method puedeMoverHacia(posicionAMover, visual) = not self.hayObstaculosEn(posicionAMover, visual)
+
+    // #########################################################################################################################################
+
+    method hayLindantesSinObstaculosSin(posicion, visual){
+        // Indica si hay celdas lindantes sin obstaculos en desde la posición dada, sin incluir al visual dado en las mismas.
+        return not self.lindantesSinObstaculos(posicion, visual).isEmpty()
+    }
+    
+    method lindantesSinObstaculos(posicion, visual){
+        // Agarra todas las lindantes (ortogonales y diagonales), y se queda con las que no tienen obstaculos sin incluir al visual dado en las mismas.
+        return gestorDePosiciones.lindantesDe(posicion).filter({pos => not self.hayObstaculoEn(pos, visual)})
+    }
+
+    method hayObstaculoEn(posicion, visual){
+        // Indica si hay obstaculos en la posicion dada sin incluir al visual dado.
+        return self.posicionesConObstaculos(posicion, visual).any({pos => pos == posicion})
+    }
+
+    method posicionesConObstaculos(posicion, visual){
+        // Describe los obstaculos que hay en la posición dada sin incluir al visual dado.
+        return game.getObjectsIn(posicion).copyWithout(visual).map({obstaculo => obstaculo.position()})
+    }
 }

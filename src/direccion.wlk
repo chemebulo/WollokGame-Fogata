@@ -30,27 +30,15 @@ object izquierda{
 // ##############################################################################################
 
 class Eje{
-    method estanEnElMismoEje(primeraVis, segundaVis) {
-        return self.positionDeEnElEje(primeraVis) == self.positionDeEnElEje(segundaVis)
+    method sumoEnEje(posicionAntigua, posicionNueva){
+        return self.positionEnEje(posicionAntigua) + 1 == self.positionEnEje(posicionNueva)
     }
 
-    method necesitaAcercarseA(primeraVis, segundaVis) {
-        return self.positionDeEnElEje(primeraVis) < self.positionDeEnElEje(segundaVis) 
+    method restoEnEje(posicionAntigua, posicionNueva){
+        return self.positionEnEje(posicionAntigua) - 1 == self.positionEnEje(posicionNueva)
     }
 
-    method puedeMoverEnEjeHacia(primeraVis, segundaVis){
-        const nuevaPosicionPrimeraDireccion = self.primeraDir().siguientePosicion(primeraVis.position())
-        const nuevaPosicionSegundaDireccion = self.segundaDir().siguientePosicion(primeraVis.position())
-
-        return gestorDeColisiones.puedeMoverHacia(nuevaPosicionPrimeraDireccion, segundaVis) and 
-               gestorDeColisiones.puedeMoverHacia(nuevaPosicionSegundaDireccion, segundaVis)
-    }
-
-    method mismoEjeEntreYPuedeMoverA(primeraVis, segundaVis, eje) {
-        return self.estanEnElMismoEje(primeraVis, segundaVis) and eje.puedeMoverEnEjeHacia(primeraVis, segundaVis)
-    }
-
-    method positionDeEnElEje(visual)
+    method positionEnEje(posicion)
 
     method primeraDir()
 
@@ -58,7 +46,7 @@ class Eje{
 }
 
 object ejeX inherits Eje{
-    override method positionDeEnElEje(visual) = visual.position().x()
+    override method positionEnEje(posicion) = posicion.x()
 
     override method primeraDir() = derecha
 
@@ -66,7 +54,7 @@ object ejeX inherits Eje{
 }
 
 object ejeY inherits Eje{
-    override method positionDeEnElEje(visual) = visual.position().y()
+    override method positionEnEje(posicion) = posicion.y()
 
     override method primeraDir() = arriba
 
@@ -95,5 +83,32 @@ object este {
 object oeste {
     method ubicacion (){
       return game.at(0,4)
+    }
+}
+
+// ################################### GESTOR DE DIRECCIONES ###################################
+
+object gestorDeDirecciones {
+    const ejePrimero = ejeX
+    const ejeSegundo = ejeY
+
+    method direccionALaQueSeMovio(posicionAntigua, posicionNueva) {
+        return if (ejePrimero.sumoEnEje(posicionAntigua,  posicionNueva)) { ejePrimero.primeraDir() } else
+               if (ejePrimero.restoEnEje(posicionAntigua, posicionNueva)) { ejePrimero.segundaDir() } else
+               if (ejeSegundo.sumoEnEje(posicionAntigua,  posicionNueva)) { ejeSegundo.primeraDir() } else
+                                                                          { ejeSegundo.segundaDir() }
+    }
+}
+
+object gestorDePosiciones {
+    method lindanteConvenienteHacia(posicion, visual){
+        // Describe la celda lindante que más cerca está del visual dado.
+        return gestorDeColisiones.lindantesSinObstaculos(posicion, visual).min({pos => pos.distance(visual.position())})
+    }
+
+    method lindantesDe(posicion){
+        // Describe todas las celdas lindantes ortogonales y diagonales de la posición dada.
+        return #{posicion.up(1), posicion.up(1).right(1), posicion.right(1), posicion.right(1).down(1), 
+                 posicion.down(1), posicion.down(1).left(1), posicion.left(1), posicion.left(1).up(1)}
     }
 }
