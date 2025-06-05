@@ -13,7 +13,6 @@ class Lobo inherits Visual{
     var property vida       = 3
     const property presa    = protagonista
     const property daño     = 1
-    const colisionesGestor  = gestorDeColisiones
     const direccionesGestor = gestorDeDirecciones
     const posicionesGestor  = gestorDePosiciones
 
@@ -30,11 +29,7 @@ class Lobo inherits Visual{
         self.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, position))
     }
     
-    method siguientePosicion() {
-        return if (colisionesGestor.hayLindantesSinObstaculosSin(position, presa)) { 
-                   posicionesGestor.lindanteConvenienteHacia(position, presa) 
-               }
-    }
+    method siguientePosicion() = posicionesGestor.lindanteConvenienteHacia(position, presa)
 
     // ####################################### MOVIMIENTO - COLISIONES ####################################### // 
 
@@ -53,8 +48,6 @@ class Lobo inherits Visual{
     method interaccion() {}
 
     method atacarPresa()
-    //IMPLEMENTAR
-    
 }
 
 // ########################################################################################################### //
@@ -64,7 +57,7 @@ class LoboAgresivo inherits Lobo {
         game.schedule(1000, {presa.atacadoPor(self)})
     } 
     override method atacado(){
-        game.say(self,"Estoy siendo atacado,auxilio")
+        game.say(self,"Estoy siendo atacado, auxilio")
     }
 }
 
