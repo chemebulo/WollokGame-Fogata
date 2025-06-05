@@ -11,7 +11,7 @@
 
 ## Capturas
 
-[(agregar)](https://github.com/obj1unq/2025c1-tp-grupal-grupo1/blob/62493d58b6442c2487891b0fae0b1efc182dd082/assets/inicio-v2.png)
+![(agregar)](https://github.com/obj1unq/2025c1-tp-grupal-grupo1/blob/62493d58b6442c2487891b0fae0b1efc182dd082/assets/inicio-v2.png)
 
 ## Reglas de Juego / Instrucciones
 
