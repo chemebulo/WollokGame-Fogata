@@ -87,10 +87,10 @@ const confg_escenarioEntradaCabaña_v2 =
 const confg_escenarioTEST = 
      {e =>           
       e.mapa(mapa_escenarioTest);
-      e.visualesEnEscena( [carpa, amiga, protagonista,hacha,loboAgresivo]);
+      e.visualesEnEscena( [protagonista,guardabosques,hacha]);
       e.ost(game.sound("game-win.mp3"));
-      e.dialogo(dialogoEscenarioTest);
-      e.eventos([persecucionLobo])
+      //e.dialogo(dialogoEscenarioTest);
+      e.eventos([ataqueGuardabosques])
       }
 
 

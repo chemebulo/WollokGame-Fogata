@@ -1,4 +1,6 @@
+
 # Nombre del juego "Fogata"
+
 
 ## Equipo de desarrollo
 
@@ -11,13 +13,16 @@
 
 ## Capturas
 
+
 ![(agregar)](https://github.com/obj1unq/2025c1-tp-grupal-grupo1/blob/62493d58b6442c2487891b0fae0b1efc182dd082/assets/inicio-v2.png)
+
 
 ## Reglas de Juego / Instrucciones
 
 -Controles:
--   w : mover Arriba
--   a : mover Izquierda
+
+-    w : mover Arriba
+-    a : mover Izquierda
 -    s : mover Abajo
 -    d : mover Derecha
 -    e : dialogarConNPC

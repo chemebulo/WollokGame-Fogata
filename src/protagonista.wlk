@@ -122,7 +122,7 @@ object protagonista inherits Visual{
 
     //PARA CUANDO ME ATACA EL GUARDABOSQUES
     override method atacado(){
-        game.say(self,"AUXILIO ME ATACA EL GUARDABOSQUES")
+        game.say(self,"AUXILIO ME ATACA EL GUARDABOSQUES o el lobo")
     }
 
     

@@ -3,6 +3,7 @@ import videojuego.*
 import protagonista.*
 import direccion.*
 import estadosNPC.*
+import gestorColisiones.*
 
 object guardabosques inherits Visual{
 
@@ -11,9 +12,17 @@ object guardabosques inherits Visual{
 
     var property position = game.at(5,5)
 
+    var property vida = 20
+
+    const presa = protagonista
+
+    const colisionesGestor  = gestorDeColisiones
+    const direccionesGestor = gestorDeDirecciones
+    const posicionesGestor  = gestorDePosiciones
+
     
     var dioleña=false
-    var estado = desarmadoGuardabosques
+    var estado = armadoGuardabosques
 
     method estado(_estado){estado=_estado}
 
@@ -40,10 +49,45 @@ object guardabosques inherits Visual{
     method darLeña() {game.addVisual(leña) }
 
 
-    //ATAQUE AL PROTAGONISTA 
-    method atacar(){
-        estado.ataque()
+    /*
+        LOS SIGUIENTES 3 METODOS SON SIMILARES A LOS DEL LOBO PERO CON IMPLEMENTACION DISTINTA
+    */
+   
+    method perseguirAPresa() {
+        if (self.estaCercaProtagonista() ) { 
+            estado.ataque() } 
+        else { self.avanzarHaciaLaPresa() }
     }
+
+    method avanzarHaciaLaPresa() {
+        const positionAntigua = position
+        position = self.siguientePosicion()
+        self.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, position))
+    }
+    
+    method siguientePosicion() {
+        return if (colisionesGestor.hayLindantesSinObstaculosSin(position, presa)) { 
+                   posicionesGestor.lindanteConvenienteHacia(position, presa) 
+               }
+    }
+
+    method estaVivo() = self.vida() > 0
+
+    override method atacado(){
+        game.say(self,"Me esta atacando el protagonista")
+    }
+
+    method estaCercaProtagonista(){ return
+        estado.posicionesParaCalcularAtaque().contains(presa.position())
+    }
+
+    method estaSobreProtagonista() = self.position() == presa.position()
+
+
+
+     method cambiarImagen(direccion){ self.image(estado.actual()+direccion.toString()+".png") } 
+
+    // ##########################################
 
     method miCeldaArriba() = arriba.siguientePosicion(position)
     method miCeldaAbajo() = abajo.siguientePosicion(position)

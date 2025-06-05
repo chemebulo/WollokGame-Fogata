@@ -1,5 +1,7 @@
+import src.guardabosques.*
 import escenarios.*
 import confgEscenarios.*
+import estadosNPC.*
 /*
  CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
     *tipo: bloque
@@ -10,7 +12,8 @@ import confgEscenarios.*
 
 */
 
-const confg_escSig_escenarioInicial = { puertaNorte.irHacia(escenarioBifurcacion)}
+const confg_escSig_escenarioInicial = { puertaNorte.irHacia(escenarioBifurcacion);
+                                        }
 
 const confg_escSig_escenarioBifurcacion_v1 = {puertaEste.irHacia(escenarioEntradaCabaña)}
 
