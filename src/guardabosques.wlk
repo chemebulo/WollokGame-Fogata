@@ -64,13 +64,14 @@ object guardabosques inherits Visual{
         position = self.siguientePosicion()
         self.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, position))
     }
-    
+     method siguientePosicion() = posicionesGestor.lindanteConvenienteHacia(position, presa)
+    /*
     method siguientePosicion() {
         return if (colisionesGestor.hayLindantesSinObstaculosSin(position, presa)) { 
                    posicionesGestor.lindanteConvenienteHacia(position, presa) 
                }
     }
-
+*/
     method estaVivo() = self.vida() > 0
 
     override method atacado(){

@@ -37,7 +37,7 @@ object protagonista inherits Visual{
    // ############################################ MOVIMIENTO GENERAL ############################################
 
     method mover(direccion){
-        self.validarSiEstaVivo() 
+        //self.validarSiEstaVivo() 
         if(self.puedoMover(direccion)){
             self.moverHacia(direccion)
         }
