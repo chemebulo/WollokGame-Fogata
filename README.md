@@ -15,14 +15,14 @@
 
 ## Reglas de Juego / Instrucciones
 
-Controles:
-    w : mover Arriba
-    a : mover Izquierda
-    s : mover Abajo
-    d : mover Derecha
-    e : dialogarConNPC
-    f : saltarDiapositiva
-    k : atacar
+-Controles:
+-   w : mover Arriba
+-   a : mover Izquierda
+-    s : mover Abajo
+-    d : mover Derecha
+-    e : dialogarConNPC
+-    f : saltarDiapositiva
+-    k : atacar
 
 
 ## Otros
