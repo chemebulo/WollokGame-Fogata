@@ -39,6 +39,11 @@ object gestorDeColisiones{
 
     // #########################################################################################################################################
 
+    method hayLindantesSinObstaculosSin(posicion, visual){
+        // Indica si hay celdas lindantes sin obstaculos en desde la posición dada, sin incluir al visual dado en las mismas.
+        return not self.lindantesSinObstaculos(posicion, visual).isEmpty()
+    }
+    
     method lindantesSinObstaculos(posicion, visual){
         // Agarra todas las lindantes (ortogonales y diagonales), y se queda con las que no tienen obstaculos sin incluir al visual dado en las mismas.
         return gestorDePosiciones.lindantesDe(posicion).filter({pos => not self.hayObstaculoEn(pos, visual)})
