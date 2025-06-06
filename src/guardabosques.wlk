@@ -16,7 +16,7 @@ object guardabosques inherits Visual{
 
     const presa = protagonista
 
-    const colisionesGestor  = gestorDeColisiones
+    //const colisionesGestor  = gestorDeColisiones
     const direccionesGestor = gestorDeDirecciones
     const posicionesGestor  = gestorDePosiciones
 
