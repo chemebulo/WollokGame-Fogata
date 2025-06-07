@@ -4,6 +4,12 @@ import visualesExtra.*
 import direccion.*
 import wollok.game.*
 import gestorColisiones.*
+import escenarios.*
+import videojuego.*
+import confgEscenarios.*
+import confgEscSig.*
+import escenarios_mapas.*
+import estadosNPC.*
 
 describe "Movimiento del personaje"{
     
@@ -143,3 +149,60 @@ describe "Movimiento del personaje con colisiones:"{
     }
 }
 
+describe "Funcionamiento de puertas"{
+
+    const confg_test ={e=> e.mapa(mapa_TEST);e.visualesEnEscena([puertaNorte,puertaOeste])}
+    const confg_escsig = {puertaNorte.irHacia(escenarioBifurcacion);
+                           puertaOeste.irHacia(escenarioInicial)}
+   
+
+    const escenarioParaTestear = esc.construir(confg_test,confg_escsig,"")
+    method initialize(){
+        game.width(7)
+        game.height(7)
+        game.cellSize(100)
+        videojuego.escenario(escenarioParaTestear)
+        escenarioParaTestear.puestaEnEscena()    
+    }
+   
+    test "La puerta norte cambia de escenarioTEST al escenarioBifurcacion"{
+        
+        puertaNorte.interaccion()
+        assert.equals(escenarioBifurcacion,videojuego.escenario())
+        }
+    test  "La puerta norte cambia de escenarioTEST al escenarioInicial"{
+        
+        puertaOeste.interaccion()
+        assert.equals(escenarioInicial,videojuego.escenario())
+        }
+}
+describe "Ataque sobre lobo"{
+    test"a"{assert.that(true)}
+} //IMPLEMENTAR...
+
+describe "Ataque sobre guardabosques"{
+    test"a"{assert.that(true)}
+}//IMPLEMENTAR...
+
+describe "Cambio de estado desarmado a armado"{ 
+     const confg_test ={e=> e.mapa(mapa_TEST);e.visualesEnEscena([protagonista,hacha])}
+    const confg_escsig = {puertaNorte.irHacia(escenarioBifurcacion);
+                           puertaOeste.irHacia(escenarioInicial)}
+   
+
+    const escenarioParaTestear = esc.construir(confg_test,confg_escsig,"")
+
+    method initialize(){
+        game.width(7)
+        game.height(7)
+        game.cellSize(100)
+        videojuego.escenario(escenarioParaTestear)
+        escenarioParaTestear.puestaEnEscena()  
+    }
+    test"Al interactuar con el hacha el protagonista cambia de estado desarmado a armado"{
+        assert.equals(desarmadoProtagonista,protagonista.estadoProta())
+        hacha.interaccion()
+        assert.equals(armadoProtagonista,protagonista.estadoProta())
+
+        }
+}

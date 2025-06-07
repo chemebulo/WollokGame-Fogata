@@ -18,7 +18,7 @@ object protagonista inherits Visual{
     const property vg     = videojuego
     var property estoyAtacando = false
     const colisionesGestor = gestorDeColisiones
-    var estadoProta = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
+    var property estadoProta = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
@@ -60,7 +60,7 @@ object protagonista inherits Visual{
         self.image(estadoProta.actual() + direccion.toString() + ".png")
     }
     
-    method estadoProta(_estadoProta){estadoProta=_estadoProta}
+    
     // #################################### INTERACCIÓN CON ENEMIGOS U OBJETOS ################################### 
 
     method interaccion(visual) {
