@@ -11,6 +11,7 @@ import confgEscSig.*
 import escenarios_mapas.*
 import estadosNPC.*
 
+
 describe "Movimiento del personaje"{
     
     method initialize(){
