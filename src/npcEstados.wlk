@@ -1,5 +1,5 @@
 import protagonista.*
-import guardabosques.*
+import enemigos.*
 
 /*
     El protagonista inicia el juego desarmado y solo cuando interactua con el hacha pasa a estar armado el resto del juego hasta 

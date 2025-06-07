@@ -1,7 +1,6 @@
 import visualesExtra.*
 import protagonista.*
 import enemigos.*
-import guardabosques.*
 import escenarios.*
 import escenariosMapas.*
 import dialogos.*

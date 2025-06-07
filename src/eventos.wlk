@@ -1,6 +1,5 @@
 import protagonista.*
 import enemigos.*
-import guardabosques.*
 
 class EventoMultiple{
     /*

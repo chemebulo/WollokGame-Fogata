@@ -1,6 +1,5 @@
 import protagonista.*
 import enemigos.*
-import guardabosques.*
 import visualesExtra.*
 import escenarios.*
 /*

@@ -1,5 +1,5 @@
 import visualesExtra.amiga
-import guardabosques.*
+import enemigos.*
 
 /*
     INVARIANTE DE REPRESENTACION : *LA cantidad de dialogos es un numero par, 
