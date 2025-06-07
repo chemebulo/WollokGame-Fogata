@@ -1,10 +1,7 @@
-import wollok.game.*
 import protagonista.*
 import enemigos.*
-import puertas.*
-import visualesExtra.*
-import escenarioManager.*
 import guardabosques.*
+import visualesExtra.*
 import escenarios.*
 /*
     USAR ESTAS MEDIDAS PARA TODOS LOS ESCENARIOS:

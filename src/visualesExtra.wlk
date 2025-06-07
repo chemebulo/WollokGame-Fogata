@@ -9,12 +9,10 @@ class Visual{
         return false
     }
 
-    method atacado(){
-        
-    }
+    method atacado(){}
 }
 
-// ###########################################################
+// ####################################################################################################### //
 
 object amiga inherits Visual{
     var property dialogo = []
@@ -23,32 +21,27 @@ object amiga inherits Visual{
 
     var property position = game.at(2,4)
 
-   
-
     method xPos() = self.position().x()
-
-   
 }
 
-// ###########################################################
+// ####################################################################################################### //
 
 object fogata inherits Visual{
     method image() = "fogata-apagada.png"
 
     var property position = game.at(3,4)
-
-   
 }
 
-// ###########################################################
+// ####################################################################################################### //
 
 object carpa inherits Visual{
     var property image = "carpa.png"
 
     var property position = game.at(6,4)
-
-   
 }
+
+// ####################################################################################################### //
+
 object leña inherits Visual{
     method image() = "leña.png"
 
@@ -66,6 +59,8 @@ object leña inherits Visual{
     }
 }
 
+// ####################################################################################################### //
+
 object cabaña inherits Visual{
     method image() = "cabaña_entrada.png"
 
@@ -75,6 +70,8 @@ object cabaña inherits Visual{
 
     method interaccion(){}
 }
+
+// ####################################################################################################### //
 
 object hacha inherits Visual{
     method image() = "hacha.png"
@@ -90,11 +87,15 @@ object hacha inherits Visual{
     }
 }
 
+// ####################################################################################################### //
+
 object gameover {
     method image() = "game-over.png"
 
     method position() = game.at(0,0)
 }
+
+// ####################################################################################################### //
 
 object juegoGanado{
     method image() = "game-win.png"

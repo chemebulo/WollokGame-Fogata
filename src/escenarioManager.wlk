@@ -1,7 +1,5 @@
-import wollok.game.*
 import protagonista.*
-import visualesExtra.*
-import enemigos.*
+import gestores.gestorDeEventos
 
 // #############################################################################################################################
 
@@ -50,6 +48,7 @@ class Escenario{
     method configurar(){
         confgActual.apply(self)
     }
+
     method dibujarFondo(){
         gestorFondo.visualizarFondo(fondoEscenario)
     }
@@ -63,16 +62,12 @@ class Escenario{
     } 
 
     method configurarConversacion(){ 
-
         if(not dialogo.isEmpty()){
-            
             pj.npcActual(self.npcEscenario())
             pj.conversacionNPC(self.dialogoActual())
-         
         }
-        
-
     }
+
     method dialogoActual() = dialogo.last().copy()
 
     method npcEscenario() = dialogo.first()
@@ -106,7 +101,6 @@ object fondo{
     */
     var property position = game.at(0,0)
     var property image = ""
-
     
     method visualizarFondo(fondoEscenario){
         image = fondoEscenario
@@ -117,25 +111,3 @@ object fondo{
 
     method interaccion(){}
 }
-
-object gestorDeEventos {
-
-    
-    
-
-    method gestionarInicio(eventos){
-        if(not eventos.isEmpty()){
-            eventos.forEach({e => e.iniciarEvento()})
-        }
-    }
-     method gestionarFin(eventos){
-        if(not eventos.isEmpty()){
-            eventos.forEach({e => e.finalizarEvento()})
-        }
-    }
-
-
-}
-
-
-    

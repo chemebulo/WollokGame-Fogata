@@ -1,114 +1,87 @@
-import wollok.game.*
-import protagonista.*
-import enemigos.*
-import gestorColisiones.*
+class Direccion{
+    // INTERFAZ:
+    //  * siguientePosicion(posicion)
 
-object arriba{
-    method siguientePosicion(position){
-        return game.at(position.x(), position.y() + 1)
+    const dx = 0 // Representa el valor a aumentar o disminuir en la dirección "x".
+    const dy = 0 // Representa el valor a aumentar o disminuir en la dirección "y".
+
+    method siguientePosicion(posicion){
+        // Devuelve la siguiente posición de la posición dada, según lo almacenado en las constantes "dx" y "dy".
+        return game.at(posicion.x() + dx, posicion.y() + dy)
     }
 }
 
-object abajo{
-    method siguientePosicion(position){
-        return game.at(position.x(), position.y() - 1)
+object arriba    inherits Direccion(dy =  1){} // Representa la dirección Arriba en el tablero.
+object abajo     inherits Direccion(dy = -1){} // Representa la dirección Abajo en el tablero.
+object izquierda inherits Direccion(dx = -1){} // Representa la dirección Izquierda en el tablero.
+object derecha   inherits Direccion(dx =  1){} // Representa la dirección Derecha en el tablero.
+
+// ###################################################################################################################### \\
+
+class UbicacionPuerta{
+    // INTERFAZ:
+    //  * ubicacion()
+
+    const x // Representa el valor de la coordenada "x".
+    const y // Representa el valor de la coordenada "y".
+
+    method ubicacion(){
+        // Devuelve la posición resultante de la combinación de los valores almacenados en las constantes "x" e "y".
+        return game.at(x, y)
     }
 }
 
-object derecha{
-    method siguientePosicion(position){
-        return game.at(position.x() + 1, position.y())
-    }
-}
+const norte = new UbicacionPuerta(x = 6,  y = 8) // Representa la ubicación de la puerta al Norte en el tablero.
+const sur   = new UbicacionPuerta(x = 6,  y = 0) // Representa la ubicación de la puerta al Sur en el tablero. 
+const este  = new UbicacionPuerta(x = 12, y = 4) // Representa la ubicación de la puerta al Este en el tablero.  
+const oeste = new UbicacionPuerta(x = 0,  y = 4) // Representa la ubicación de la puerta al Oeste en el tablero.  
 
-object izquierda{
-    method siguientePosicion(position){
-        return game.at(position.x() - 1, position.y())
-    }
-}
-
-// ##############################################################################################
+// ###################################################################################################################### \\
 
 class Eje{
-    method sumoEnEje(posicionAntigua, posicionNueva){
-        return self.positionEnEje(posicionAntigua) + 1 == self.positionEnEje(posicionNueva)
+    // INTERFAZ:
+    //  * movimiento(posicionAntigua, posicionNueva)
+    //  * seSumoEnEje(posicionAntigua, posicionNueva)
+    //  * seRestoEnEje(posicionAntigua, posicionNueva)
+    //  * positionEnEje(posicion)
+    //  * primeraDir()
+    //  * segundaDir()
+
+    const primeraDir // Representa la primera dirección en el eje.
+    const segundaDir // Representa la segunda dirección en el eje.
+
+    method movimiento(posicionAntigua, posicionNueva){
+        // Describe el número resultante de restar la posición nueva con la antigua.
+        return self.positionEnEje(posicionNueva) - self.positionEnEje(posicionAntigua)
     }
 
-    method restoEnEje(posicionAntigua, posicionNueva){
-        return self.positionEnEje(posicionAntigua) - 1 == self.positionEnEje(posicionNueva)
+    method seSumoEnEje(posicionAntigua, posicionNueva){
+        // Indica si se sumó en el eje dado una posición antigua, y una posición nueva.
+        return self.movimiento(posicionAntigua, posicionNueva) == 1
     }
 
-    method positionEnEje(posicion)
-
-    method primeraDir()
-
-    method segundaDir()
-}
-
-object ejeX inherits Eje{
-    override method positionEnEje(posicion) = posicion.x()
-
-    override method primeraDir() = derecha
-
-    override method segundaDir() = izquierda
-}
-
-object ejeY inherits Eje{
-    override method positionEnEje(posicion) = posicion.y()
-
-    override method primeraDir() = arriba
-
-    override method segundaDir() = abajo
-}
-
-// ################################# DIRECCIONES PARA PUERTAS ##################################
-
-object norte {
-    method ubicacion (){
-      return game.at(6,8)
+    method seRestoEnEje(posicionAntigua, posicionNueva){
+        // Indica si se restó en el eje dado una posición antigua, y una posicion nueva.
+        return self.movimiento(posicionAntigua, posicionNueva) == -1
     }
+
+    method positionEnEje(posicion) // Describe la posición en el eje.
+
+    method primeraDir() = primeraDir // Describe la primera dirección del eje.
+
+    method segundaDir() = segundaDir // Describe la segunda dirección del eje.
 }
 
-object sur {
-    method ubicacion (){
-      return game.at(6,0)
+object ejeX inherits Eje(primeraDir = derecha, segundaDir = izquierda){
+    override method positionEnEje(posicion){
+        // Describe la posición en el eje.
+        return posicion.x()
     }
 }
 
-object este {
-    method ubicacion (){
-      return game.at(12,4)
-    }
-}
-object oeste {
-    method ubicacion (){
-      return game.at(0,4)
-    }
-}
-
-// ################################### GESTOR DE DIRECCIONES ###################################
-
-object gestorDeDirecciones {
-    const ejePrimero = ejeX
-    const ejeSegundo = ejeY
-
-    method direccionALaQueSeMovio(posicionAntigua, posicionNueva) {
-        return if (ejePrimero.sumoEnEje(posicionAntigua,  posicionNueva)) { ejePrimero.primeraDir() } else
-               if (ejePrimero.restoEnEje(posicionAntigua, posicionNueva)) { ejePrimero.segundaDir() } else
-               if (ejeSegundo.sumoEnEje(posicionAntigua,  posicionNueva)) { ejeSegundo.primeraDir() } else
-                                                                          { ejeSegundo.segundaDir() }
-    }
-}
-
-object gestorDePosiciones {
-    method lindanteConvenienteHacia(posicion, visual){
-        // Describe la celda lindante que más cerca está del visual dado.
-        return gestorDeColisiones.lindantesSinObstaculos(posicion, visual).min({pos => pos.distance(visual.position())})
-    }
-
-    method lindantesDe(posicion){
-        // Describe todas las celdas lindantes ortogonales y diagonales de la posición dada.
-        return #{posicion.up(1), posicion.up(1).right(1), posicion.right(1), posicion.right(1).down(1), 
-                 posicion.down(1), posicion.down(1).left(1), posicion.left(1), posicion.left(1).up(1)}
+object ejeY inherits Eje(primeraDir = arriba, segundaDir = abajo){
+    override method positionEnEje(posicion){
+        // Describe la posición en el eje.
+        return posicion.y()
     }
 }

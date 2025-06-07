@@ -1,11 +1,7 @@
-import escenarios.*
-import wollok.game.*
 import direccion.*
 import videojuego.*
-import enemigos.*
-import dialogos.*
 import visualesExtra.*
-import gestorColisiones.*
+import gestores.*
 import estadosNPC.*
 
 object protagonista inherits Visual{
@@ -22,7 +18,7 @@ object protagonista inherits Visual{
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
-    var  property conversacionNPC = []
+    var property conversacionNPC    = []
     var property npcActual          = null 
     var property conversadorActual  = self
   
@@ -37,7 +33,7 @@ object protagonista inherits Visual{
    // ############################################ MOVIMIENTO GENERAL ############################################
 
     method mover(direccion){
-        //self.validarSiEstaVivo() 
+        // self.validarSiEstaVivo() 
         if(self.puedoMover(direccion)){
             self.moverHacia(direccion)
         }
@@ -53,14 +49,17 @@ object protagonista inherits Visual{
     method puedoMover(direccion) {
         const posicionAMover = direccion.siguientePosicion(position)
 
-        return colisionesGestor.estaDentroDelTablero(posicionAMover) and not colisionesGestor.hayObstaculosEn(posicionAMover,self)
+        return colisionesGestor.estaDentroDelTablero(posicionAMover) and not colisionesGestor.hayObstaculoEn(posicionAMover,self)
     }
 
     method cambiarImagen(direccion){
         self.image(estadoProta.actual() + direccion.toString() + ".png")
     }
     
-    
+    method estadoProta(_estadoProta){
+        estadoProta = _estadoProta
+    }
+
     // #################################### INTERACCIÓN CON ENEMIGOS U OBJETOS ################################### 
 
     method interaccion(visual) {
@@ -116,7 +115,6 @@ object protagonista inherits Visual{
     ##############################*/
 
     method atacar(){
-     
         estadoProta.ataque()
     }
 
@@ -124,8 +122,6 @@ object protagonista inherits Visual{
     override method atacado(){
         game.say(self,"AUXILIO ME ATACA EL GUARDABOSQUES o el lobo")
     }
-
-    
 
     // ############################################### PARA TESTEAR ###############################################
 
@@ -137,9 +133,4 @@ object protagonista inherits Visual{
     method miCeldaAbajo() = abajo.siguientePosicion(position)
     method miCeldaIzquierda()= izquierda.siguientePosicion(position)
     method miCeldaDerecha()= derecha.siguientePosicion(position)
-
-  
-
-
 }
-

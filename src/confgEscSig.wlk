@@ -1,7 +1,6 @@
-import src.guardabosques.*
+import guardabosques.*
 import escenarios.*
 import confgEscenarios.*
-import estadosNPC.*
 /*
  CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
     *tipo: bloque

@@ -1,5 +1,4 @@
 import protagonista.*
-import visualesExtra.*
 import guardabosques.*
 
 /*
@@ -13,9 +12,9 @@ const desarmadoProtagonista = new Desarmado(image = "prota-desarmado-")
 
 const desarmadoGuardabosques = new Desarmado(image = "")
 
-const armadoGuardabosques = new ArmadoConHacha(pj=guardabosques,imagenActual="guardabosques-",imagenTemporal="guardabosques-cabaña.png")
+const armadoGuardabosques = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
 
-const armadoProtagonista = new ArmadoConHacha(pj=protagonista,imagenActual="prota-armado-",imagenTemporal="ataque-prota.png")
+const armadoProtagonista = new ArmadoConHacha(pj = protagonista, imagenActual = "prota-armado-", imagenTemporal = "ataque-prota.png")
 
 // CLASES DE ESTADO
 class Desarmado{
@@ -23,12 +22,13 @@ class Desarmado{
     method actual() = image
     method ataque(){}
 }
+
 class ArmadoConHacha{
     const pj = null  // personaje que ataca
     const imagenActual = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
     const modoAtaque = new HachazoCruz(atacante= self.pj())
-     const animacion = new AnimacionAtaque(imagenTemp = self.imagenTemporal(),pjAnimado= self.pj())
-     const imagenTemporal // la imagen que se muestra al atacar
+    const animacion = new AnimacionAtaque(imagenTemp = self.imagenTemporal(),pjAnimado= self.pj())
+    const imagenTemporal // la imagen que se muestra al atacar
 
     method imagenTemporal() = imagenTemporal
     method actual() = imagenActual
@@ -51,13 +51,14 @@ class AnimacionAtaque{
     */
     const imagenTemp = "" // la imagen que se muestra cuando se ataca
     const pjAnimado = null // el visual que ataca
-    method animarAtaque(){
 
+    method animarAtaque(){
         const imagenActual = pjAnimado.image()
-         game.removeVisual(pjAnimado) 
+
+        game.removeVisual(pjAnimado) 
         pjAnimado.image(imagenTemp)
         game.addVisual(pjAnimado)
-       game.schedule(200,{game.removeVisual(pjAnimado);pjAnimado.image(imagenActual);game.addVisual(pjAnimado)})
+        game.schedule(200,{game.removeVisual(pjAnimado);pjAnimado.image(imagenActual);game.addVisual(pjAnimado)})
     }
 }
 
@@ -68,12 +69,9 @@ class HachazoCruz{
         atacarObjetos(objetos) : dada una coleccion de objetos de una posicion(celda) ataca a esos objetos
         objetosEnPosicionAtacada(pos) : dada una posicion, retorna una lista con todos los objetos en esa posicion
         posicionesAtacar() : retorna las posiciones donde se atacara el cruz a partir de la posicion del personaje
-        
-
     */
- const atacante 
-
- 
+    const atacante 
+    
     method ataqueArma(){
         self.atacarEnPosiciones(self.posicionesAAtacar() )
     }
@@ -85,32 +83,19 @@ class HachazoCruz{
     method atacarObjetos(coleccionObjetos){ 
         coleccionObjetos.forEach({obj => obj.atacado()})
     }
-    method objetosEnPosicionAtacada(posicion) = game.getObjectsIn(posicion) // coleccion
 
+    method objetosEnPosicionAtacada(posicion) = game.getObjectsIn(posicion) // coleccion
     
     method posicionesAAtacar() = [atacante.miCeldaAbajo(),
                                   atacante.miCeldaArriba(),
                                   atacante.miCeldaIzquierda(),
                                   atacante.miCeldaDerecha()]
-
-
 }
 
-
-    
 class HachazoEnLugar inherits HachazoCruz{
-     override method ataqueArma(){
+    override method ataqueArma(){
         self.atacarObjetos(self.objetosEnPosicionAtacada(atacante.position()))
      }
-        override method objetosEnPosicionAtacada(posicion) { return  super(posicion).copyWithout(atacante)}
-            
-                    
-    }      
 
-                                     
-    
-   
-
-
-
-
+    override method objetosEnPosicionAtacada(posicion) { return  super(posicion).copyWithout(atacante)}
+} 

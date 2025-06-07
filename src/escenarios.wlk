@@ -1,18 +1,8 @@
-import wollok.game.*
-import protagonista.*
-import videojuego.*
-import enemigos.*
 import puertas.*
 import direccion.*
-import dialogos.*
-import visualesExtra.*
 import escenarioManager.*
-import escenarios_mapas.*
-import visualesDiapositivas.*
-import eventos.*
 import confgEscenarios.*
 import confgEscSig.*
-
 
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
 

@@ -1,8 +1,5 @@
-import wollok.game.*
-import escenarios.*
 import videojuego.*
 import protagonista.*
-import direccion.*
 import visualesExtra.*
 
 // ###############################################################################################

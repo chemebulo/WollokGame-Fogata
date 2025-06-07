@@ -1,9 +1,6 @@
-import src.gestorColisiones.*
-import wollok.game.*
 import protagonista.*
-import direccion.*
-import estado.*
 import visualesExtra.*
+import gestores.*
 
 class Lobo inherits Visual{
     // ############################################## ATRIBUTOS ############################################## //
@@ -19,18 +16,18 @@ class Lobo inherits Visual{
 
     // ########################################## MOVIMIENTO GENERAL ######################################### //
 
-    method perseguirAPresa() {
+    method perseguirAPresa(){
         if (self.estaSobrePresa() and self.estaVivo()) { self.atacarPresa() } else 
         if (self.estaVivo())                           { self.avanzarHaciaLaPresa() }
     }
 
-    method avanzarHaciaLaPresa() {
+    method avanzarHaciaLaPresa(){
         const positionAntigua = position
         self.avanzarSiPuede()
         self.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, position))
     }
 
-    method avanzarSiPuede() {
+    method avanzarSiPuede(){
         if(colisionesGestor.hayLindantesSinObstaculosSin(position, presa)) {position = self.siguientePosicion()}
     }
     

@@ -1,9 +1,8 @@
 import visualesExtra.*
-import videojuego.*
 import protagonista.*
 import direccion.*
 import estadosNPC.*
-import gestorColisiones.*
+import gestores.*
 
 object guardabosques inherits Visual{
 
@@ -64,7 +63,8 @@ object guardabosques inherits Visual{
         position = self.siguientePosicion()
         self.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, position))
     }
-     method siguientePosicion() = posicionesGestor.lindanteConvenienteHacia(position, presa)
+
+    method siguientePosicion() = posicionesGestor.lindanteConvenienteHacia(position, presa)
     /*
     method siguientePosicion() {
         return if (colisionesGestor.hayLindantesSinObstaculosSin(position, presa)) { 
@@ -94,5 +94,4 @@ object guardabosques inherits Visual{
     method miCeldaAbajo() = abajo.siguientePosicion(position)
     method miCeldaIzquierda()= izquierda.siguientePosicion(position)
     method miCeldaDerecha()= derecha.siguientePosicion(position)
-
 }

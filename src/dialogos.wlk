@@ -1,7 +1,6 @@
 import visualesExtra.amiga
 import guardabosques.*
 
-
 /*
     INVARIANTE DE REPRESENTACION : *LA cantidad de dialogos es un numero par, 
                                     *El primer dialogo es del protagonista

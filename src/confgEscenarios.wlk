@@ -1,11 +1,11 @@
 import visualesExtra.*
 import protagonista.*
-import dialogos.*
+import enemigos.*
+import guardabosques.*
 import escenarios.*
 import escenarios_mapas.*
-import enemigos.*
+import dialogos.*
 import eventos.*
-import guardabosques.*
 /*
 TEMPLATE CONFIGURADORES:
         

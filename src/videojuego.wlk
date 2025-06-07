@@ -1,9 +1,9 @@
-import wollok.game.*
 import protagonista.*
 import direccion.*
 import escenarios.*
 import visualesDiapositivas.*
 import visualesExtra.*
+
 object videojuego{
     const gestorDiapositiva = diapositivasInicio
     const ostInicioJuego    = game.sound("inicio-v1.png")

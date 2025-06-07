@@ -1,16 +1,11 @@
-import fogata.*
 import protagonista.*
 import visualesExtra.*
 import direccion.*
-import wollok.game.*
-import gestorColisiones.*
+import gestores.*
 import escenarios.*
 import videojuego.*
-import confgEscenarios.*
-import confgEscSig.*
-import escenarios_mapas.*
 import estadosNPC.*
-
+import escenarios_mapas.*
 
 describe "Movimiento del personaje"{
     
@@ -21,7 +16,7 @@ describe "Movimiento del personaje"{
 
         protagonista.position(game.at(0,0))
         game.addVisual(protagonista)
-    }
+    }   
 
     test "El personaje parte de la posicion (0,0) hacia la posicion (2,0) sin problemas."{
         protagonista.mover(derecha,2)
