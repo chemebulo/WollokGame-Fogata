@@ -1,6 +1,6 @@
 import puertas.*
 import direccion.*
-import escenarioManager.*
+import escenariosManager.*
 import confgEscenarios.*
 import confgEscSig.*
 

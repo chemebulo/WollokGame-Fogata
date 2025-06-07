@@ -67,10 +67,10 @@ object persecucionLobo inherits EventoMultiple( visualesEvento=[loboAgresivo] ){
                  en la lista de VisualesEnEscena del escenario son los mismos.
     */          
      
-      override method tiempo() = 1000
-      override method nombreEvento() = "Lobo persigue al protagonista"
+    override method tiempo() = 1000
+    override method nombreEvento() = "Lobo persigue al protagonista"
  
-     override method orden(visual) {visual.perseguirAPresa()}
+     override method orden(visual) {visual.perseguirEnemigo()}
     
 }  
 
@@ -80,9 +80,9 @@ object persecucionLoboPasivo{}
 object ataqueGuardabosques inherits EventoMultiple(visualesEvento=[guardabosques]){
     override method tiempo()= 1000
 
-      override method nombreEvento() = "Guardabosques persigue al protagonista"
+    override method nombreEvento() = "Guardabosques persigue al protagonista"
  
-     override method orden(visual) {visual.perseguirAPresa()}
+    override method orden(visual) {visual.perseguirEnemigo()}
 }
   /* 
 
@@ -121,4 +121,3 @@ object recojerLeña inherits EventoUnico(sujetoUnico= guardabosques){
         visual.comprobarDialogo()
     }
 }
-

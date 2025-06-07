@@ -2,17 +2,15 @@ import direccion.*
 
 object gestorDeEventos {
 
-    // INTERFAZ:
-    //  * gestionarInicio(eventos)
-    //  * gestionarFin(eventos)
-
     method gestionarInicio(eventos){
+        // Inicia todos los eventos dados, salvo que no haya ningún evento para iniciar.
         if(not eventos.isEmpty()) { eventos.forEach({e => e.iniciarEvento()}) }
     }
 
     // ========================================================================================================================================= \\
 
     method gestionarFin(eventos){
+        // Finaliza todos los eventos dados, salvo que no haya ningún evento para finalizar.
         if(not eventos.isEmpty()) { eventos.forEach({e => e.finalizarEvento()}) }
     }
 }
@@ -20,14 +18,11 @@ object gestorDeEventos {
 // ############################################################################################################################################# \\
 
 object gestorDeDirecciones {
-
-    // INTERFAZ:
-    //  * direccionALaQueSeMovio(posicionAntigua, posicionNueva)
-
-    const ejePrimero = ejeX
-    const ejeSegundo = ejeY
+    const ejePrimero = ejeX // Representa el primer eje del tablero, en este caso es el eje X.
+    const ejeSegundo = ejeY // Representa el segundo eje del tablero, en este caso es el eje Y.
 
     method direccionALaQueSeMovio(posicionAntigua, posicionNueva){
+        // Describe la dirección a la que se movió en base a dos posiciones dadas: una antigua y otra nueva.
         return if (ejePrimero.seSumoEnEje(posicionAntigua,  posicionNueva)) { ejePrimero.primeraDir() } else
                if (ejePrimero.seRestoEnEje(posicionAntigua, posicionNueva)) { ejePrimero.segundaDir() } else
                if (ejeSegundo.seSumoEnEje(posicionAntigua,  posicionNueva)) { ejeSegundo.primeraDir() } else
@@ -38,10 +33,6 @@ object gestorDeDirecciones {
 // ############################################################################################################################################# \\
 
 object gestorDePosiciones {
-
-    // INTERFAZ:
-    //  * lindanteConvenienteHacia(posicion, visual)
-    //  * lindantesDe(posicion)
 
     method lindanteConvenienteHacia(posicion, visual){
         // Describe la celda lindante que más cerca está del visual dado.
@@ -60,12 +51,6 @@ object gestorDePosiciones {
 // ############################################################################################################################################# \\
 
 object gestorDeColisiones{
-
-    // INTERFAZ:
-    //  * hayObstaculoEn(posicion, visual)  
-    //  * estaDentroDelTablero(posicion)
-    //  * lindantesSinObstaculos(posicion, visual) 
-    //  * hayLindantesSinObstaculosSin(posicion, visual)
 
     method hayObstaculoEn(posicion, visual){
         // Indica si algún obstáculo en la posicion dada sin incluir al visual dado.
@@ -105,11 +90,6 @@ object gestorDeColisiones{
         // Describe todas las posiciones lindantes (ortogonales y diagonales) que no tienen obstaculos sin incluir al visual dado en las mismas.
         return gestorDePosiciones.lindantesDe(posicion).filter({pos => not self.hayObstaculoEn(pos, visual)})
     }
-
-    // ========================================================================================================================================= \\
-
-    method hayLindantesSinObstaculosSin(posicion, visual){
-        // Indica si hay celdas lindantes sin obstaculos en desde la posición dada, sin incluir al visual dado en las mismas.
-        return not self.lindantesSinObstaculos(posicion, visual).isEmpty()
-    }
 }
+
+// ############################################################################################################################################# \\

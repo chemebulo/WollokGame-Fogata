@@ -2,7 +2,7 @@ import direccion.*
 import videojuego.*
 import visualesExtra.*
 import gestores.*
-import estadosNPC.*
+import npcEstados.*
 
 object protagonista inherits Visual{
     // ################################################ ATRIBUTOS ################################################

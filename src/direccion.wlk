@@ -1,7 +1,4 @@
 class Direccion{
-    // INTERFAZ:
-    //  * siguientePosicion(posicion)
-
     const dx = 0 // Representa el valor a aumentar o disminuir en la dirección "x".
     const dy = 0 // Representa el valor a aumentar o disminuir en la dirección "y".
 
@@ -19,9 +16,6 @@ object derecha   inherits Direccion(dx =  1){} // Representa la dirección Derec
 // ###################################################################################################################### \\
 
 class UbicacionPuerta{
-    // INTERFAZ:
-    //  * ubicacion()
-
     const x // Representa el valor de la coordenada "x".
     const y // Representa el valor de la coordenada "y".
 
@@ -39,14 +33,6 @@ const oeste = new UbicacionPuerta(x = 0,  y = 4) // Representa la ubicación de 
 // ###################################################################################################################### \\
 
 class Eje{
-    // INTERFAZ:
-    //  * movimiento(posicionAntigua, posicionNueva)
-    //  * seSumoEnEje(posicionAntigua, posicionNueva)
-    //  * seRestoEnEje(posicionAntigua, posicionNueva)
-    //  * positionEnEje(posicion)
-    //  * primeraDir()
-    //  * segundaDir()
-
     const primeraDir // Representa la primera dirección en el eje.
     const segundaDir // Representa la segunda dirección en el eje.
 
@@ -85,3 +71,5 @@ object ejeY inherits Eje(primeraDir = arriba, segundaDir = abajo){
         return posicion.y()
     }
 }
+
+// ###################################################################################################################### \\

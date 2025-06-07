@@ -3,7 +3,7 @@ import protagonista.*
 import enemigos.*
 import guardabosques.*
 import escenarios.*
-import escenarios_mapas.*
+import escenariosMapas.*
 import dialogos.*
 import eventos.*
 /*

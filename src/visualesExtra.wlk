@@ -2,7 +2,7 @@ import protagonista.*
 import escenarios.*
 import confgEscSig.*
 import confgEscenarios.*
-import estadosNPC.*
+import npcEstados.*
 
 class Visual{
     method esAtravesable(){

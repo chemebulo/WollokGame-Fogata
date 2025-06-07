@@ -4,8 +4,8 @@ import direccion.*
 import gestores.*
 import escenarios.*
 import videojuego.*
-import estadosNPC.*
-import escenarios_mapas.*
+import npcEstados.*
+import escenariosMapas.*
 
 describe "Movimiento del personaje"{
     
