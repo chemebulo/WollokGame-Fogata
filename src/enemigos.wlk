@@ -150,12 +150,12 @@ object guardabosques inherits Enemigo(position = game.at(5,5), image = "guardabo
         game.addVisual(leña) 
     }
 
-    // ============================================================================================================= \\
+   // Metodos necesarios para ataque
 
-    method miCeldaArriba()    = arriba.siguientePosicion(position)    // Esto existe unicamente por los tests.
-    method miCeldaAbajo()     = abajo.siguientePosicion(position)     // Esto existe unicamente por los tests.
-    method miCeldaIzquierda() = izquierda.siguientePosicion(position) // Esto existe unicamente por los tests.
-    method miCeldaDerecha()   = derecha.siguientePosicion(position)   // Esto existe unicamente por los tests.
+    method miCeldaArriba()    = arriba.siguientePosicion(position)    
+    method miCeldaAbajo()     = abajo.siguientePosicion(position)     
+    method miCeldaIzquierda() = izquierda.siguientePosicion(position) 
+    method miCeldaDerecha()   = derecha.siguientePosicion(position)   
 } 
 
 // ################################################################################################################# \\
