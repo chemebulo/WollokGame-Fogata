@@ -5,14 +5,17 @@ import visualesDiapositivas.*
 import visualesExtra.*
 
 object videojuego{
-    const gestorDiapositiva = diapositivasInicio
-    const ostInicioJuego    = game.sound("inicio-v1.png")
+    const gestorDiapositiva = gestorDeDiapositivas
+    var property ostJuego    = game.sound("inicio-v1.png")
     var property escenario  = inicioJuego
-    var estoyEnPrologo      = true
+    var property estoyEnPrologo      = true
+    var property estoyEnGranero = false
    
-    
+    method stopMusica(){
+        ostJuego.stop()
+    }
     method iniciar(){ 
-        ostInicioJuego.play()
+      
         escenario.puestaEnEscena()
     }
 
@@ -55,7 +58,7 @@ object videojuego{
         keyboard.s().onPressDo({protagonista.mover(abajo)})
         keyboard.d().onPressDo({protagonista.mover(derecha)})
         keyboard.e().onPressDo({protagonista.interactuarNPC()})
-        keyboard.f().onPressDo({self.iniciarJuego()})
+        keyboard.f().onPressDo({self.continuarJuego()})
         keyboard.m().onPressDo({game.stop()})
         keyboard.y().onPressDo({self.juegoGanado()})
         keyboard.k().onPressDo({protagonista.atacar()})
@@ -63,31 +66,68 @@ object videojuego{
 
     // ################### INICIO DE JUEGO CON DIAPOSITIVAS ##################
 
-    method iniciarJuego(){
-        if(estoyEnPrologo){ 
+    method continuarJuego(){
+        if(estoyEnPrologo || estoyEnGranero){ 
             gestorDiapositiva.gestionarDiapositivas()
        }
     }
 
-    method culminarPrologoEIniciarJuego(){
-        /*
-            PROPÓSITO: Borra las diapositivas en pantalla e inicia el juego.
-                Este metodo solo se llama desde el gestor de diapositivas ya que  si lo agrego en 
-                iniciarJuego() se ejecutara cada vez que presiono "f" y rompera todo el juego. 
-                Debo pensar en un mejor diseño.
-        */
-        gestorDiapositiva.removerTodo()
-        estoyEnPrologo = false // Evita que al pulsar "f" ejecute el gestor de diapositivas, una vez iniciado el juego.
-        ostInicioJuego.stop()
-        self.cambiarEscenario(escenarioInicial)
-    }
+        method culminarDiapositivasYContinuar(bloque){
+                     bloque.apply(self)
+        }
 }
         
 // ###################################################### DIAPOSITIVAS DEL VIDEOJUEGO ######################################################
             
 
-object diapositivasInicio{ // Podria ser una clase y usarse para distintos puntos del juego.
+object gestorDeDiapositivas{ // Podria ser una clase y usarse para distintos puntos del juego.
     const juego = videojuego
+  
+
+    var property peliculaAMostrar = peliculaInicioJuego
+
+   var property bloqueAEjecutar = inicioJuegoD
+
+    
+    method gestionarDiapositivas(){
+        if(peliculaAMostrar.iteradorActual().terminoPelicula()){
+            
+            juego.culminarDiapositivasYContinuar(self.bloqueAEjecutar())
+        } else{
+           peliculaAMostrar.iteradorActual().procesarDiapositivas()
+        }
+    }
+    method ultimaDiapositiva() = peliculaAMostrar.peliculaActual().size() 
+           
+    method removerTodo(){
+       peliculaAMostrar.peliculaActual().forEach({d => game.removeVisual(d)})
+       peliculaAMostrar.peliculaActual().clear() // Deja vacía la lista para liberar recursos.
+       peliculaAMostrar = null
+    }
+            
+}
+//bloque de diapositivas        
+const inicioJuegoD = {v => gestorDeDiapositivas.removerTodo();
+                        v.estoyEnPrologo( false );
+                      
+                        gestorDeDiapositivas.peliculaAMostrar(peliculaGranero)
+                        gestorDeDiapositivas.bloqueAEjecutar(despuesDeGranero)
+                        v.cambiarEscenario(escenarioInicial) ;
+
+}    
+const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
+                         v.estoyEnGranero( false );
+                        
+                         v.cambiarEscenario(escenarioTEST) ;            
+
+}        
+
+class Pelicula{
+    method peliculaActual()
+    method iteradorActual()
+}
+
+object peliculaInicioJuego inherits Pelicula{
 
     const d0 = new Diapositiva(image = "diapo-1.png")
     const d1 = new Diapositiva(image = "diapo-2.png")
@@ -100,25 +140,28 @@ object diapositivasInicio{ // Podria ser una clase y usarse para distintos punto
     const d8 = new Diapositiva(image = "diapo-9.png")
     const d9 = new Diapositiva(image = "diapo-10.png")
 
-   const pelicula       = [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9]
-   const iteradorDiapos = new IteradorDiapositiva(listaAIterar = pelicula.copy())
+    const pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9]
+    const iteradorPelicula = new IteradorDiapositiva(listaAIterar = self.peliculaActual().copy())
 
-    method gestionarDiapositivas(){
-        if(iteradorDiapos.terminoPelicula()){
-            juego.culminarPrologoEIniciarJuego()
-        } else{
-           iteradorDiapos.procesarDiapositivas()
-        }
-    }
-           
-    method ultimaDiapositiva() = pelicula.size() 
-            
-    method removerTodo(){
-       pelicula.forEach({d => game.removeVisual(d)})
-       pelicula.clear() // Deja vacía la lista para liberar recursos.
-    }
+   override  method peliculaActual() =  pelicula
+
+    override method iteradorActual() = iteradorPelicula
 }
-        
+
+object peliculaGranero inherits Pelicula{
+    const dg0 = new Diapositiva(image = "granero-diapo2.png")
+    const dg1 = new Diapositiva(image = "granero-diapo3.png")
+    const dg2 = new Diapositiva(image = "granero-diapo4.png")
+
+   
+    const pelicula =  [dg0,dg1,dg2]
+    const iteradorPelicula = new IteradorDiapositiva(listaAIterar = self.peliculaActual().copy())
+
+    override method peliculaActual() = pelicula
+
+    override method iteradorActual() = iteradorPelicula
+
+}
 class IteradorDiapositiva{
     /*
         Al dibujar una diapositiva, se dibuja el primer elemento de una lista y lo borra de la lista.

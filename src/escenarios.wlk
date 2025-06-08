@@ -39,6 +39,13 @@ IMPORTANTE!!!
 Cuando de un escenario se va a otro escenario que ya se visito (donde ocurre una etapa distinta del juego), 
 se debe settear los dos primeros parametros al escenario al que se ira dentro del configuradorEscenarioSiguiente
 del escenarioActual
+
+TEMPLATE escenarioDiapositivas:
+    const nombre_escenario = esc.construir(@param, //configurador implementado en confgEscenarios.wlk
+                                            {}   , // no requiere configuradorEscenario siguiente
+                                             @param     // imagen de 1300px * 900 px que es la primer diapositiva que se muestra
+    )
+    
 */
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
@@ -73,3 +80,8 @@ const escenarioTEST = esc.construir(confg_escenarioTEST,
 
 // ##############################################################################################################
 
+
+// ##############################################################################################################
+//  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
+// ##############################################################################################################
+const escenarioDiapoGranero = esc.construir(confg_graneroDiapo,{},"granero-diapo1.png") 

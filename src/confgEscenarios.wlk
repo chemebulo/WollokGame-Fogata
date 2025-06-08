@@ -5,6 +5,9 @@ import escenarios.*
 import escenariosMapas.*
 import dialogos.*
 import eventos.*
+
+import videojuego.*
+
 /*
 TEMPLATE CONFIGURADORES:
         
@@ -31,7 +34,6 @@ const confg_inicioJuego=
       e.mapa(mapa_inicioJuego);
       e.ost(game.sound("inicio_v1.mp3"));
       }
-                                      
 
 const confg_EscenarioInicial = 
      {e =>   
@@ -86,12 +88,17 @@ const confg_escenarioEntradaCabaña_v2 =
 const confg_escenarioTEST = 
      {e =>           
       e.mapa(mapa_escenarioTest);
-      e.visualesEnEscena( [protagonista,guardabosques,hacha]);
+      e.visualesEnEscena( [protagonista,loboAgresivo,hacha]);
       e.ost(game.sound("game-win.mp3"));
-      //e.dialogo(dialogoEscenarioTest);
-      e.eventos([ataqueGuardabosques])
+      
+      e.eventos([persecucionLobo])
       }
 
+// #########################################################################################################
+// CONFIGURADORES EXCLUSIVOS PARA ESCENARIOS CON DIAPOS, NO REQUIEREN CONFIGURADOR DE ESCEANRIO SIGUIENTE
+// #########################################################################################################
 
 
-                                     
+const confg_graneroDiapo = {e=> videojuego.estoyEnGranero(true);
+                                 e.mapa(mapa_inicioJuego);
+                                e.ost(game.sound("traicion-granero.mp3"))}                                     

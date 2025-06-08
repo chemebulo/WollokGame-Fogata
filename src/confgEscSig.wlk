@@ -1,5 +1,6 @@
 import escenarios.*
 import confgEscenarios.*
+
 /*
  CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
     *tipo: bloque
@@ -8,10 +9,17 @@ import confgEscenarios.*
     si se vuelve a un escenario anterior...se deben settear tanto el confgEscSiguiente como el confgActual
     si un escenario tiene dinstintos configuradores, respetar nomenclatura y escribir al final v1,v2,v3 
 
+  NOTAS: Los escenarios exclusivos para diapositivas no requieren un configurador de escenario siguiente
 */
 
-const confg_escSig_escenarioInicial = { puertaNorte.irHacia(escenarioBifurcacion);
+const confg_escSig_escenarioInicial = {   
+                                          puertaNorte.irHacia(escenarioBifurcacion);
+                                        
                                         }
+
+                                        
+                
+
 
 const confg_escSig_escenarioBifurcacion_v1 = {puertaEste.irHacia(escenarioEntradaCabaña)}
 
@@ -30,4 +38,8 @@ const confg_escSig_escenarioCabañaInicial = {puertaOeste.irHacia(escenarioEntra
                                              escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)}
 
 
-const confg_escSig_TEST = {puertaOeste.irHacia(escenarioCabañaInicial)}
+const confg_escSig_TEST = {}
+
+
+
+                         
