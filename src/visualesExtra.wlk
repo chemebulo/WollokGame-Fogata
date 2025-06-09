@@ -89,7 +89,7 @@ object hacha inherits Visual{
 
 // ####################################################################################################### //
 
-object gameover {
+object gameover{
     method image() = "game-over.png"
 
     method position() = game.at(0,0)

@@ -9,8 +9,6 @@ class Escenario{
         véase ejemplo en ISSUE en github
     
     */
-    const pj = protagonista
-    const gestorFondo = fondo     
     var property eventos = []
     var property mapa = []
     var property fondoEscenario = ""
@@ -19,6 +17,8 @@ class Escenario{
     var property dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
     var property confgActual = {} // Un bloque en configuradorEscenarios.wlk
     var property confgEscSiguiente = {}
+    const personaje    = protagonista
+    const gestorFondo  = fondo     
     const gestorEvento = gestorDeEventos
     
 
@@ -31,7 +31,7 @@ class Escenario{
          self.configurarConversacion()
          self.dibujarTablero()
          self.agregarVisualesEscena()
-         game.onCollideDo(pj, {objeto => objeto.interaccion()})
+         game.onCollideDo(personaje, {objeto => objeto.interaccion()})
          gestorEvento.gestionarInicio(eventos)
          
     }
@@ -63,8 +63,8 @@ class Escenario{
 
     method configurarConversacion(){ 
         if(not dialogo.isEmpty()){
-            pj.npcActual(self.npcEscenario())
-            pj.conversacionNPC(self.dialogoActual())
+            personaje.npcActual(self.npcEscenario())
+            personaje.conversacionNPC(self.dialogoActual())
         }
     }
 
@@ -86,7 +86,7 @@ class Escenario{
     }
 
     method resetearEventosyDialogos(){
-        pj.resetearDialogo()
+        personaje.resetearDialogo()
         dialogo = []
         eventos = []
     }

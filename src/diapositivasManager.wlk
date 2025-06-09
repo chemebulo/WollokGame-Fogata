@@ -115,6 +115,7 @@ class IteradorDiapositiva{
 
     method elementoAProcesar() = listaAIterar.first()
 }
+
 class Diapositiva{
     var property position = game.at(0,0)
     var property image 

@@ -39,7 +39,3 @@ const confg_escSig_escenarioCabañaInicial = {puertaOeste.irHacia(escenarioEntra
 
 
 const confg_escSig_TEST = {}
-
-
-
-                         

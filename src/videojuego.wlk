@@ -5,17 +5,16 @@ import visualesExtra.*
 import diapositivasManager.*
 
 object videojuego{
-    const gestorDiapositiva = gestorDeDiapositivas
-    var property ostJuego    = game.sound("inicio-v1.png")
-    var property escenario  = inicioJuego
-    var property estoyEnPrologo      = true
+    const gestorDiapositiva     = gestorDeDiapositivas
+    var property ostJuego       = game.sound("inicio-v1.png")
+    var property escenario      = inicioJuego
+    var property estoyEnPrologo = true
     var property estoyEnGranero = false
    
     method stopMusica(){
         ostJuego.stop()
     }
     method iniciar(){ 
-      
         escenario.puestaEnEscena()
     }
 
@@ -72,8 +71,7 @@ object videojuego{
        }
     }
 
-        method culminarDiapositivasYContinuar(bloque){
-                     bloque.apply(self)
-        }
+    method culminarDiapositivasYContinuar(bloque){
+        bloque.apply(self)
+    }
 }
-        

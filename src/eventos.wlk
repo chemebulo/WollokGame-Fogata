@@ -43,6 +43,7 @@ class EventoMultiple{
       
     method orden(visual){}
 }
+
 class EventoUnico inherits EventoMultiple(visualesEvento=[]){ 
     /*
         Evento para un solo visual,

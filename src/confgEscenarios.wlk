@@ -5,7 +5,6 @@ import escenarios.*
 import escenariosMapas.*
 import dialogos.*
 import eventos.*
-
 import videojuego.*
 
 /*

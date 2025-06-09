@@ -1,6 +1,6 @@
 import direccion.*
 
-object gestorDeEventos {
+object gestorDeEventos{
 
     method gestionarInicio(eventos){
         // Inicia todos los eventos dados, salvo que no haya ningún evento para iniciar.
@@ -17,7 +17,7 @@ object gestorDeEventos {
 
 // ############################################################################################################################################# \\
 
-object gestorDeDirecciones {
+object gestorDeDirecciones{
     const ejePrimero = ejeX // Representa el primer eje del tablero, en este caso es el eje X.
     const ejeSegundo = ejeY // Representa el segundo eje del tablero, en este caso es el eje Y.
 
@@ -32,7 +32,7 @@ object gestorDeDirecciones {
 
 // ############################################################################################################################################# \\
 
-object gestorDePosiciones {
+object gestorDePosiciones{
 
     method lindanteConvenienteHacia(posicion, visual){
         // Describe la celda lindante que más cerca está del visual dado.
