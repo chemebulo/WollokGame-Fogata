@@ -79,12 +79,12 @@ object protagonista inherits Visual{
     }
 
     method estaAlLadoDe(npc){
-        return (self.estoyAUnaCeldaDe(npc)) and self.estoyEnPosicionParaHablar(npc)
+        return (self.estoyEnMismoEjeY(npc)) and self.estoyAUnaCeldaEnX(npc)
     }
 
-    method estoyEnPosicionParaHablar(npc) =  (self.position().y()) == (npc.position().y())
+    method estoyEnMismoEjeY(npc) = ejeY.estaEnMismoEje(self, npc)
 
-    method estoyAUnaCeldaDe(npc) = ((self.position().x() - npc.position().x()).abs()) == 1 
+    method estoyAUnaCeldaEnX(npc) = ejeX.estaAlLado(self, npc)
     
 
     method conversar() {

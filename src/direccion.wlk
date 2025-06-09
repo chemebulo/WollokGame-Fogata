@@ -50,6 +50,14 @@ class Eje{
         // Indica si se restó en el eje dado una posición antigua, y una posicion nueva.
         return self.movimiento(posicionAntigua, posicionNueva) == -1
     }
+    
+    method estaEnMismoEje(visual1,visual2){
+        return self.positionEnEje(visual1.position()) == self.positionEnEje(visual2.position()) 
+    }
+
+    method estaAlLado(visual1, visual2){
+        return ((self.positionEnEje(visual1.position()) - self.positionEnEje(visual2.position())).abs()) == 1 
+    }
 
     method positionEnEje(posicion) // Describe la posición en el eje.
 
