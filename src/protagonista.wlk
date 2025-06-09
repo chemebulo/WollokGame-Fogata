@@ -79,8 +79,13 @@ object protagonista inherits Visual{
     }
 
     method estaAlLadoDe(npc){
-        return (self.position().x() - (npc.position().x())).abs() == 1 // Estoy exactamente a 1 celda del NPC.
+        return (self.estoyAUnaCeldaDe(npc)) and self.estoyEnPosicionParaHablar(npc)
     }
+
+    method estoyEnPosicionParaHablar(npc) =  (self.position().y()) == (npc.position().y())
+
+    method estoyAUnaCeldaDe(npc) = ((self.position().x() - npc.position().x()).abs()) == 1 
+    
 
     method conversar() {
     if(not self.esDialogoFinal()){
