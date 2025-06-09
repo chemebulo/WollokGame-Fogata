@@ -20,8 +20,6 @@ object amiga inherits Visual{
     method image() = "amiga.png"
 
     var property position = game.at(2,4)
-
-    method xPos() = self.position().x()
 }
 
 // ####################################################################################################### //

@@ -125,13 +125,6 @@ object guardabosques inherits Enemigo(position = game.at(5,5), image = "guardabo
 
     // ============================================================================================================= \\
 
-    method xPos(){
-        // Devuelve la coordenada "x" del guardabosques, se usa para que su enemigo (el protagonista) converse con él.
-        return self.position().x()
-    }  
-    
-    // ============================================================================================================= \\
-
     method comprobarDialogo(){
         // Comprueba si el diálogo terminó para poder darle la leña a su enemigo (el protagonista). 
         if(self.terminoDialogo() and (not dioleña)){
@@ -150,12 +143,12 @@ object guardabosques inherits Enemigo(position = game.at(5,5), image = "guardabo
         game.addVisual(leña) 
     }
 
-   // Metodos necesarios para ataque
+    // ============================================================================================================= \\
 
-    method miCeldaArriba()    = arriba.siguientePosicion(position)    
-    method miCeldaAbajo()     = abajo.siguientePosicion(position)     
-    method miCeldaIzquierda() = izquierda.siguientePosicion(position) 
-    method miCeldaDerecha()   = derecha.siguientePosicion(position)   
+    method miCeldaArriba()    = arriba.siguientePosicion(position)    // Metodos necesarios para ataque.    
+    method miCeldaAbajo()     = abajo.siguientePosicion(position)     // Metodos necesarios para ataque.    
+    method miCeldaIzquierda() = izquierda.siguientePosicion(position) // Metodos necesarios para ataque. 
+    method miCeldaDerecha()   = derecha.siguientePosicion(position)   // Metodos necesarios para ataque. 
 } 
 
 // ################################################################################################################# \\

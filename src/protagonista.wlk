@@ -79,7 +79,7 @@ object protagonista inherits Visual{
     }
 
     method estaAlLadoDe(npc){
-        return (self.xPos() - (npc.xPos())).abs() == 1 // Estoy exactamente a 1 celda del NPC.
+        return (self.position().x() - (npc.position().x())).abs() == 1 // Estoy exactamente a 1 celda del NPC.
     }
 
     method conversar() {
@@ -107,8 +107,6 @@ object protagonista inherits Visual{
         conversadorActual = self
     }
     
-    method xPos() = self.position().x()
-
     /*######################
         ATAQUE
     
