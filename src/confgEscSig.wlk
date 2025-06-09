@@ -27,7 +27,7 @@ const confg_escSig_escenarioBifurcacion_v2 = {puertaOeste.irHacia(escenarioTEST)
 
 const confg_escSig_escenarioEntradaCabaña_v1 = {puertaEntradaCabaña.irHacia(escenarioCabañaInicial)}
 
-const confg_escSig_escenarioEntradaCabaña_v2 = {game.removeVisual(puertaOeste); 
+const confg_escSig_escenarioEntradaCabaña_v2 = {game.removeVisual(puertaEntradaCabaña); 
                                                 puertaOeste.irHacia(escenarioBifurcacion);
                                                 escenarioBifurcacion.confgEscSiguiente(confg_escSig_escenarioBifurcacion_v2);
                                                 escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v2)}

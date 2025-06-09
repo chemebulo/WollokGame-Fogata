@@ -4,6 +4,7 @@ import direccion.*
 import npcEstados.*
 import npcMovimiento.*
 
+
 class Enemigo inherits Visual{
     var property position  // Describe la posición actual del enemigo.
     var property image     // Describe la imagen actual del enemigo.

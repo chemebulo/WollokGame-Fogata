@@ -6,17 +6,12 @@ import confgEscSig.*
 
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
 
-const puertaNorte = new PuertaAbierta(image = "puerta.png", position = norte.ubicacion(), irHacia = escenarioInicial)    
-const puertaOeste = new PuertaAbierta(image = "puerta.png", position = oeste.ubicacion(), irHacia = escenarioInicial)
-const puertaEste  = new PuertaAbierta(image = "puerta.png", position = este.ubicacion() , irHacia = escenarioInicial)
-const puertaSur   = new PuertaAbierta(image = "puerta.png", position = sur.ubicacion()  , irHacia = escenarioInicial)
+const puertaNorte = new Puerta(position = norte.ubicacion(), irHacia = escenarioInicial)    
+const puertaOeste = new Puerta(position = oeste.ubicacion(), irHacia = escenarioInicial)
+const puertaEste  = new Puerta(position = este.ubicacion() , irHacia = escenarioInicial)
+const puertaSur   = new Puerta(position = sur.ubicacion()  , irHacia = escenarioInicial)
 
-const puertaEntradaCabaña = new PuertaAbierta(image = "puerta.png", irHacia= escenarioCabañaInicial)
-  
-const puertaNorteCerrada = new PuertaCerrada(image = "puerta.png", position = sur.ubicacion()  , mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
-const puertaOesteCerrada = new PuertaCerrada(image = "puerta.png", position = oeste.ubicacion(), mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
-const puertaEsteCerrada  = new PuertaCerrada(image = "puerta.png", position = este.ubicacion() , mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
-const puertaSurCerrada   = new PuertaCerrada(image = "puerta.png", position = sur.ubicacion()  , mensaje = "Esta cerrada por ahora", irHacia = escenarioInicial)
+const puertaEntradaCabaña = new Puerta(image = "puerta.png", irHacia= escenarioCabañaInicial)
 
 
 // CONSTRUCTOR DE ESCENARIOS

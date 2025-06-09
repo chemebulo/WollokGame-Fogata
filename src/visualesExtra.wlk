@@ -49,8 +49,8 @@ object leña inherits Visual{
 
     method interaccion() {
         game.removeVisual(self)
-        game.addVisual(puertaOeste)
-        puertaOeste.irHacia(escenarioEntradaCabaña)
+        game.addVisual(puertaEntradaCabaña)
+        puertaEntradaCabaña.irHacia(escenarioEntradaCabaña)
         game.say(protagonista,"Gracias por la leña señor")
         escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
         escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)

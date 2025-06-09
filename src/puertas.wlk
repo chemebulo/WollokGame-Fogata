@@ -5,31 +5,23 @@ import visualesExtra.*
 // ###############################################################################################
 
 class Puerta inherits Visual{
-    var property image = "puerta.png" 
+    var property image = null
     var property position = game.origin() 
     var property irHacia 
-    override method esAtravesable() = true
-}
+    const property estaCerrada = false
+    override method esAtravesable() = true 
 
-// ###############################################################################################
-
-class PuertaAbierta inherits Puerta  {
-    method interaccion() {
+    method interaccion(){
+      self.validarInteraccion()
       videojuego.cambiarEscenario(irHacia)
     }
-}
 
-// ###############################################################################################
-
-class PuertaCerrada inherits Puerta {
-    var property mensaje
-
-    method interaccion() {
-      game.say(protagonista, mensaje)
+    method validarInteraccion(){
+      if (estaCerrada){
+        self.error("No puedo tomar este camino")
+      }
     }
 }
-
-// ###############################################################################################
 
 
 /*

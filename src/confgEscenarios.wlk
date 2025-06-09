@@ -78,7 +78,7 @@ const confg_escenarioEntradaCabaña =
 const confg_escenarioEntradaCabaña_v2 = 
      {e => 
       e.mapa(mapa_entradaCabaña_v2);
-      e.visualesEnEscena([cabaña,protagonista,puertaOeste] );
+      e.visualesEnEscena([cabaña,protagonista, puertaOeste] );
       e.ost(game.sound("musica-escenarioInicial-v1.mp3"));
       }
 
