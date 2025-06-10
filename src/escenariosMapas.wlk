@@ -2,6 +2,8 @@ import protagonista.*
 import enemigos.*
 import visualesExtra.*
 import escenarios.*
+import gestores.*
+
 /*
     USAR ESTAS MEDIDAS PARA TODOS LOS ESCENARIOS:
         * 9 listas     -> Formando el alto del escenario.
@@ -77,9 +79,11 @@ object a inherits Elemento(visual=amiga){}
 
 // #####################################################################
 
-object o {
+object o{
     method construir(posicion){
-        game.addVisual(new Obstaculo(position = posicion))
+        const temp = new Obstaculo(position = posicion);
+        game.addVisual(temp);
+        gestorDeObstaculos.agregar(temp)
     }
 }
 
@@ -149,7 +153,7 @@ const mapa_inicioJuego =
 const mapa_escenarioInicial = 
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,o,o,o,o,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,a,z,_,f,c,_,_],

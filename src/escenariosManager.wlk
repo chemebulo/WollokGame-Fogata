@@ -1,5 +1,5 @@
 import protagonista.*
-import gestores.gestorDeEventos
+import gestores.*
 
 // #############################################################################################################################
 
@@ -20,6 +20,7 @@ class Escenario{
     const personaje    = protagonista
     const gestorFondo  = fondo     
     const gestorEvento = gestorDeEventos
+    const gestorObs    = gestorDeObstaculos
     
 
     method puestaEnEscena(){ 
@@ -76,9 +77,10 @@ class Escenario{
         game.removeVisual(fondo)
         self.limpiarVisualesEnEscena()
         ost.stop()
-       gestorEvento.gestionarFin(eventos)
+        gestorEvento.gestionarFin(eventos)
         self.resetearEventosyDialogos() // evita tener que settear en los configuradores que los dialogos 
                                         // y eventos esten vacios, sino quedan los dialogos y eventos del escenario anterior
+        gestorObs.limpiarObstaculos()
      }
 
     method limpiarVisualesEnEscena(){

@@ -91,8 +91,6 @@ class Obstaculo inherits Visual{
     method image() = "obstaculo.png"
 
     var property position
-
-    method interaccion(){}
 }
 
 // ####################################################################################################### //

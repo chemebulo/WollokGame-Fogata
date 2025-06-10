@@ -93,3 +93,22 @@ object gestorDeColisiones{
 }
 
 // ############################################################################################################################################# \\
+
+object gestorDeObstaculos{
+    const obstaculos = []
+
+    method agregar(elem){
+        obstaculos.add(elem)
+    }
+    
+    method limpiarObstaculos() {
+        obstaculos.forEach({elem => game.removeVisual(elem)})
+        obstaculos.clear()
+    }
+
+    method obstaculos(){
+        return obstaculos
+    }
+}
+
+// ############################################################################################################################################# \\
