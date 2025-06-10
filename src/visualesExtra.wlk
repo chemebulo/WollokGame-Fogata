@@ -87,6 +87,17 @@ object hacha inherits Visual{
 
 // ####################################################################################################### //
 
+class Obstaculo inherits Visual{
+    method image() = "obstaculo.png"
+
+    var property position
+
+    method interaccion(){}
+}
+
+// ####################################################################################################### //
+
+
 object gameover{
     method image() = "game-over.png"
 

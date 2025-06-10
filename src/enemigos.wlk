@@ -40,7 +40,7 @@ class Enemigo inherits Visual{
         // Indica si el enemigo se encuentra vivo o no.
         return self.vida() > 0
     }
-    
+
     // ============================================================================================================= \\
 
     override method atacado(){

@@ -7,14 +7,14 @@ import npcEstados.*
 object protagonista inherits Visual{
     // ################################################ ATRIBUTOS ################################################
 
-    var property position = game.at(0,0)
-    var property image    = "prota-desarmado-abajo.png"
-    var property vida     = 10
-    const property daño   = 1
-    const property vg     = videojuego
+    var property position      = game.at(0,0)
+    var property image         = "prota-desarmado-abajo.png"
+    var property vida          = 10
     var property estoyAtacando = false
-    const colisionesGestor = gestorDeColisiones
-    var property estadoProta = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
+    var property estadoProta   = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
+    const property daño        = 1
+    const property vg          = videojuego
+    const colisionesGestor     = gestorDeColisiones
 
     // ####################################### VARIABLES PARA CONVERSACION #######################################
     
