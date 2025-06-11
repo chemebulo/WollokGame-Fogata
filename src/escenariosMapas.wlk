@@ -3,6 +3,7 @@ import enemigos.*
 import visualesExtra.*
 import escenarios.*
 import gestores.*
+import eventos.*
 
 /*
     USAR ESTAS MEDIDAS PARA TODOS LOS ESCENARIOS:
@@ -92,23 +93,22 @@ object o{
 // #####################################################################
 
 
-object la inherits Elemento(visual=loboAgresivo){  // Lobo -> Implementar. 
-
+object la {  
+    method construir(posicion){
+        const loboTemp = new LoboAgresivo(position = posicion);
+        const eventoTemp = new EventoLobo(loboEv=loboTemp)
+        game.addVisual(loboTemp);
+        gestorDeLobos.agregarLobos(loboTemp,eventoTemp);
+        eventoTemp.iniciarEvento()
+    }
 }
+
 
 
 object lp inherits Elemento(visual=loboPasivo){
 
 }
-//Otros lobos: implementar en enemigos.wlk
-/*
-object la2 inherits Elemento(visual=loboAgresivo2){  // Lobo -> Implementar. 
 
-}
-object la3 inherits Elemento(visual=loboAgresivo3){  // Lobo -> Implementar. 
-
-}
-*/
 // #####################################################################
 
 object g inherits Elemento(visual=guardabosques){ // Guardabosques -> No implementado, no usar.
@@ -170,7 +170,7 @@ const mapa_escenarioBifurcacion =
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,la,_,_,_,_,_,la,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
@@ -189,10 +189,10 @@ const mapa_entradaCabaña =
     
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , la , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ ,z  , _ , _ , _ ,ca ,pec, _ , _ , _ , _ , _ , _ ],
-        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , la , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
@@ -239,8 +239,8 @@ const mapa_escenarioBifurcacion_v2 =
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , o , o , _ , o , _ , _ , _ ],
         [ _ , _ ,la , _ , _ , _ , o , _ , _ , _ , _ , z , _ ],
-        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-        [ _ , _ , _ , _ , _ , _ , o , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , la , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , la , _ , _ , _ , o , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
 
@@ -252,7 +252,7 @@ const mapa_escenarioTest =
         [_,_,_,_,_,_,_,h,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,la,_,_,_,_,_,_,_,_,_],
+        [_,_,_,la,_,_,_,la,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,z,_,_,_,_,_,_],

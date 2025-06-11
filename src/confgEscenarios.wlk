@@ -53,9 +53,9 @@ const confg_escenarioBifurcacion =
 const confg_escenarioBifurcacion_v2 = 
      {e =>         
       e.mapa(mapa_escenarioBifurcacion_v2);
-      e.visualesEnEscena( [ protagonista,loboAgresivo,puertaOeste]);
+      e.visualesEnEscena( [ protagonista,puertaOeste]);
       e.ost(game.sound("lobos-atacan.mp3"));
-      e.eventos([persecucionLobo])}
+      e.eventos([])}
 
                                        
 
@@ -87,10 +87,10 @@ const confg_escenarioEntradaCabaña_v2 =
 const confg_escenarioTEST = 
      {e =>           
       e.mapa(mapa_escenarioTest);
-      e.visualesEnEscena( [protagonista,loboAgresivo,hacha]);
+      e.visualesEnEscena( [protagonista,hacha]);
       e.ost(game.sound("game-win.mp3"));
       
-      e.eventos([persecucionLobo])
+      e.eventos([])
       }
 
 // #########################################################################################################

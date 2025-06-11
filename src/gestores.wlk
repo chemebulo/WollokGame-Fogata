@@ -106,13 +106,10 @@ object gestorDeObstaculos{
         obstaculos.clear()
     }
 
-    method obstaculos(){
-        return obstaculos
-    }
+   
 }
 
 // ############################################################################################################################################# \\
-
 object gestorConversaciones{
       method configurarConversacion(esc){ 
         
@@ -154,4 +151,21 @@ object gestorDeLimpiezaEscenarios{
          esc.dialogo([]);
          esc.eventos([]);
        }
+
+}
+
+object gestorDeLobos{
+    const obstaculos = []
+    const eventosLobos = []
+    method agregarLobos(elem,ev){
+        obstaculos.add(elem);
+        eventosLobos.add(ev)
+    }
+    
+    method limpiarLobos() {
+        obstaculos.forEach({elem => game.removeVisual(elem)})
+        obstaculos.clear()
+        eventosLobos.forEach({ev => game.removeTickEvent(ev.nombre())})
+        eventosLobos.clear()
+    }
 }

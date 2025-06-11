@@ -44,6 +44,14 @@ class EventoMultiple{
     method orden(visual){}
 }
 
+class EventoLobo{ // solo funciona para lobos que se agregan directamente a la matriz
+    const nombre = self.toString()
+    const loboEv
+    method nombre() = nombre
+    method iniciarEvento(){
+        game.onTick(1000,nombre,{loboEv.perseguirEnemigo()})
+    }
+}
 class EventoUnico inherits EventoMultiple(visualesEvento=[]){ 
     /*
         Evento para un solo visual,
@@ -61,21 +69,9 @@ class EventoUnico inherits EventoMultiple(visualesEvento=[]){
         //EVENTOS PARA PERSECUCION DE LOBO
 //######################################################
 
-object persecucionLobo inherits EventoMultiple( visualesEvento=[loboAgresivo] ){
-     /*
-        INV.REP: El o los lobos que realizan el evento y el o los lobos que estan 
-                 en la lista de VisualesEnEscena del escenario son los mismos.
-    */          
-     
-    override method tiempo() = 1000
-    override method nombreEvento() = "Lobo persigue al protagonista"
- 
-     override method orden(visual) {visual.perseguirEnemigo()}
-    
-}  
 
-object persecucionLoboAgresivo {}
-object persecucionLoboPasivo{}
+
+
 
 object ataqueGuardabosques inherits EventoMultiple(visualesEvento=[guardabosques]){
     override method tiempo()= 1000
@@ -84,21 +80,9 @@ object ataqueGuardabosques inherits EventoMultiple(visualesEvento=[guardabosques
  
     override method orden(visual) {visual.perseguirEnemigo()}
 }
-  /* 
 
-const persecucionLoboAgresivo = new PersecucionLobo(
-                                     visualQueRealizaEvento=loboAgresivo,
-                                      nombreEvento= "Lobo persigue al personaje", 
-                                      tiempo = 800
-                                      )
 
-const persecucionLoboPasivo = new PersecucionLobo(
-                                     visualQueRealizaEvento=loboPasivo,
-                                      nombreEvento= "Lobo persigue al personaje", 
-                                      tiempo = 2000
-                                      )
 
-*/
  
 
 //######################################################

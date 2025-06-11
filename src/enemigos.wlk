@@ -58,11 +58,11 @@ class Enemigo inherits Visual{
 
     // ============================================================================================================= \\
 
-    method atacarEnemigo() // Representa el ataque del enemigo hacia su enemigo.
+    method atacarEnemigo(){} // Representa el ataque del enemigo hacia su enemigo.
 
     // ============================================================================================================= \\
 
-    method cambiarImagen(direccion) // Cambia la imagen del enemigo dependiendo de la dirección dada.
+    method cambiarImagen(direccion){} // Cambia la imagen del enemigo dependiendo de la dirección dada.
 }
 
 // ################################################################################################################# \\

@@ -21,9 +21,11 @@ class Escenario{
     const gestorFondo  = gestorFondoEscenario
     const gestorEvento = gestorDeEventos
     const gestorObs    = gestorDeObstaculos
+    const gestorLobos = gestorDeLobos
     const limpiadorEscenario = gestorDeLimpiezaEscenarios
     const gestorDialogo = gestorConversaciones
     
+
 
     method puestaEnEscena(){ 
         self.configurar()
@@ -67,6 +69,8 @@ class Escenario{
         gestorEvento.gestionarFin(eventos);
          gestorObs.limpiarObstaculos()
         protagonista.resetearDialogo()
+        gestorLobos.limpiarLobos()
+
      }
 
     method limpiarVisualesEnEscena(){
