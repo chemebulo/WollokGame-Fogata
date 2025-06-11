@@ -1,5 +1,5 @@
 import direccion.*
-
+import protagonista.*
 object gestorDeEventos{
 
     method gestionarInicio(eventos){
@@ -112,3 +112,46 @@ object gestorDeObstaculos{
 }
 
 // ############################################################################################################################################# \\
+
+object gestorConversaciones{
+      method configurarConversacion(esc){ 
+        
+        if(esc.hayDialogo()){
+
+            const dialogoActual = esc.dialogo().last().copy()
+            const npcEscenario =  esc.dialogo().first()
+
+            protagonista.npcActual(npcEscenario)
+            protagonista.conversacionNPC(dialogoActual)
+        }
+    }
+    method HayDialogo(esc) = not esc.dialogo().isEmpty()
+}
+object gestorFondoEscenario{
+    /* 
+        INVARIANTE DE REPRESENTACIÓN: 
+            * La imagen tiene el tamaño del tablero 1300px(ancho) x 900px(alto).
+    */
+    var property position = game.at(0,0)
+    var property image = ""
+    
+    method visualizarFondo(fond){
+        image = fond
+        game.addVisual(self)    
+    }
+    method borrarFondo(){
+        game.removeVisual(self)
+    }
+
+    method esAtravesable() = true
+
+    method interaccion(){}
+}   
+
+object gestorDeLimpiezaEscenarios{
+    method limpiar(esc){
+         esc.limpiarVisualesEnEscena();
+         esc.dialogo([]);
+         esc.eventos([]);
+       }
+}

@@ -17,10 +17,12 @@ class Escenario{
     var property dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
     var property confgActual = {} // Un bloque en configuradorEscenarios.wlk
     var property confgEscSiguiente = {}
-    const personaje    = protagonista
-    const gestorFondo  = fondo     
+   
+    const gestorFondo  = gestorFondoEscenario
     const gestorEvento = gestorDeEventos
     const gestorObs    = gestorDeObstaculos
+    const limpiadorEscenario = gestorDeLimpiezaEscenarios
+    const gestorDialogo = gestorConversaciones
     
 
     method puestaEnEscena(){ 
@@ -28,11 +30,11 @@ class Escenario{
          self.configurarEscenarioSiguiente()
          ost.shouldLoop(true)
          ost.play()
-         self.dibujarFondo()
-         self.configurarConversacion()
+          gestorFondo.visualizarFondo(fondoEscenario)
+         gestorDialogo.configurarConversacion(self)
          self.dibujarTablero()
          self.agregarVisualesEscena()
-         game.onCollideDo(personaje, {objeto => objeto.interaccion()})
+         game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
          gestorEvento.gestionarInicio(eventos)
          
     }
@@ -49,11 +51,7 @@ class Escenario{
     method configurar(){
         confgActual.apply(self)
     }
-
-    method dibujarFondo(){
-        gestorFondo.visualizarFondo(fondoEscenario)
-    }
-      
+ 
     method configurarEscenarioSiguiente(){
         confgEscSiguiente.apply()
     }
@@ -61,55 +59,24 @@ class Escenario{
     method agregarVisualesEscena(){
         visualesEnEscena.forEach({v => game.addVisual(v)})
     } 
-
-    method configurarConversacion(){ 
-        if(not dialogo.isEmpty()){
-            personaje.npcActual(self.npcEscenario())
-            personaje.conversacionNPC(self.dialogoActual())
-        }
-    }
-
-    method dialogoActual() = dialogo.last().copy()
-
-    method npcEscenario() = dialogo.first()
-
-    method limpiar(){
-        game.removeVisual(fondo)
-        self.limpiarVisualesEnEscena()
+  
+    method limpiar(){     
+        gestorFondo.borrarFondo()
         ost.stop()
-        gestorEvento.gestionarFin(eventos)
-        self.resetearEventosyDialogos() // evita tener que settear en los configuradores que los dialogos 
-                                        // y eventos esten vacios, sino quedan los dialogos y eventos del escenario anterior
-        gestorObs.limpiarObstaculos()
+        limpiadorEscenario.limpiar(self)
+        gestorEvento.gestionarFin(eventos);
+         gestorObs.limpiarObstaculos()
+        protagonista.resetearDialogo()
      }
 
     method limpiarVisualesEnEscena(){
         visualesEnEscena.forEach({visual => game.removeVisual(visual)})
     }
 
-    method resetearEventosyDialogos(){
-        personaje.resetearDialogo()
-        dialogo = []
-        eventos = []
-    }
-}
+    method hayDialogo() = not dialogo.isEmpty()
+
+}    
 
 // #############################################################################################################################
 
-object fondo{
-    /* 
-        INVARIANTE DE REPRESENTACIÓN: 
-            * La imagen tiene el tamaño del tablero 1300px(ancho) x 900px(alto).
-    */
-    var property position = game.at(0,0)
-    var property image = ""
-    
-    method visualizarFondo(fondoEscenario){
-        image = fondoEscenario
-        game.addVisual(self)    
-    }
 
-    method esAtravesable() = true
-
-    method interaccion(){}
-}
