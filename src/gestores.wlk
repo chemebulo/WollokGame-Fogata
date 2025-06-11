@@ -52,6 +52,14 @@ object gestorDePosiciones{
 
 object gestorDeColisiones{
 
+    method puedeMoverA(direccion, visual){
+        // Indica si el visual dado puede moverse hacia la dirección dada.
+        const posicionAMover = direccion.siguientePosicion(visual.position())
+        return self.estaDentroDelTablero(posicionAMover) and not self.hayObstaculoEn(posicionAMover, visual)
+    }
+
+    // ========================================================================================================================================= \\
+
     method hayObstaculoEn(posicion, visual){
         // Indica si algún obstáculo en la posicion dada sin incluir al visual dado.
         return not self.objetosEnPosicion(posicion, visual).all({vis => vis.esAtravesable()})
@@ -105,16 +113,57 @@ object gestorDeObstaculos{
         obstaculos.forEach({elem => game.removeVisual(elem)})
         obstaculos.clear()
     }
-
-   
 }
 
 // ############################################################################################################################################# \\
-object gestorConversaciones{
-      method configurarConversacion(esc){ 
-        
-        if(esc.hayDialogo()){
 
+object gestorDeVida{
+
+    method atacadoPor(visual, enemigo){
+        // Emite un mensaje cuando el enemigo es atacado por su enemigo.
+        self.recibirDaño(visual, enemigo.daño())
+        game.say(visual, "Mi vida es "+visual.vida()+"")
+    }
+
+    method recibirDaño(visual, dañoRecibido){
+        const vidaActualizada = visual.vida() - dañoRecibido
+        self.actualizarVidaYEstado(visual, vidaActualizada)
+    }
+
+    method actualizarVidaYEstado(visual, vidaActualizada){
+        if(vidaActualizada <= 0){ 
+            visual.actualizarAMuerto() 
+        } else {
+            visual.vida(vidaActualizada)
+        }
+    }
+}
+
+// ############################################################################################################################################# \\
+
+object gestorDeMovimiento{
+    const colisionesGestor = gestorDeColisiones
+
+    method mover(direccion, visual){
+        // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
+        if(colisionesGestor.puedeMoverA(direccion, visual)){
+            self.moverHacia(direccion, visual)
+        }
+    }
+
+    method moverHacia(direccion, visual){
+        // Mueve al protagonista una celda hacia la dirección dada.
+        visual.position(direccion.siguientePosicion(visual.position()))
+        visual.cambiarImagen(direccion)
+    }
+}
+
+// ############################################################################################################################################# \\
+
+object gestorConversaciones{
+
+    method configurarConversacion(esc){ 
+        if(esc.hayDialogo()){
             const dialogoActual = esc.dialogo().last().copy()
             const npcEscenario =  esc.dialogo().first()
 
@@ -122,8 +171,14 @@ object gestorConversaciones{
             protagonista.conversacionNPC(dialogoActual)
         }
     }
-    method HayDialogo(esc) = not esc.dialogo().isEmpty()
+
+    method HayDialogo(esc){
+        return not esc.dialogo().isEmpty()
+    }
 }
+
+// ############################################################################################################################################# \\
+
 object gestorFondoEscenario{
     /* 
         INVARIANTE DE REPRESENTACIÓN: 
@@ -136,14 +191,19 @@ object gestorFondoEscenario{
         image = fond
         game.addVisual(self)    
     }
+
     method borrarFondo(){
         game.removeVisual(self)
     }
 
-    method esAtravesable() = true
+    method esAtravesable(){
+        return true
+    }
 
     method interaccion(){}
 }   
+
+// ############################################################################################################################################# \\
 
 object gestorDeLimpiezaEscenarios{
     method limpiar(esc){
@@ -151,12 +211,14 @@ object gestorDeLimpiezaEscenarios{
          esc.dialogo([]);
          esc.eventos([]);
        }
-
 }
+
+// ############################################################################################################################################# \\
 
 object gestorDeLobos{
     const obstaculos = []
     const eventosLobos = []
+    
     method agregarLobos(elem,ev){
         obstaculos.add(elem);
         eventosLobos.add(ev)

@@ -3,6 +3,7 @@ import enemigos.*
 import visualesExtra.*
 import escenarios.*
 import gestores.*
+import npcEstados.*
 import eventos.*
 
 /*
@@ -92,22 +93,17 @@ object o{
  //                    ENEMIGOS
 // #####################################################################
 
-
 object la {  
     method construir(posicion){
-        const loboTemp = new LoboAgresivo(position = posicion);
-        const eventoTemp = new EventoLobo(loboEv=loboTemp)
+        const loboTemp = new Lobo(comportamiento = agresivo);
+        const eventoTemp = new EventoLobo(loboEv = loboTemp)
         game.addVisual(loboTemp);
         gestorDeLobos.agregarLobos(loboTemp,eventoTemp);
         eventoTemp.iniciarEvento()
     }
 }
 
-
-
-object lp inherits Elemento(visual=loboPasivo){
-
-}
+object lp inherits Elemento(visual = new Lobo(comportamiento = pasivo)){}
 
 // #####################################################################
 

@@ -69,10 +69,6 @@ class EventoUnico inherits EventoMultiple(visualesEvento=[]){
         //EVENTOS PARA PERSECUCION DE LOBO
 //######################################################
 
-
-
-
-
 object ataqueGuardabosques inherits EventoMultiple(visualesEvento=[guardabosques]){
     override method tiempo()= 1000
 
@@ -80,10 +76,6 @@ object ataqueGuardabosques inherits EventoMultiple(visualesEvento=[guardabosques
  
     override method orden(visual) {visual.perseguirEnemigo()}
 }
-
-
-
- 
 
 //######################################################
         //EVENTOS UNICOS

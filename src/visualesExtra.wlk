@@ -9,8 +9,46 @@ class Visual{
         return false
     }
 
-    method atacado(){}
+    method atacadoPor(visual){}
 }
+
+// ####################################################################################################### //
+
+class VisualConMovimiento inherits Visual{
+    var property position // Describe la posición actual del visual.
+    var property vida
+    var property image  = null
+    const property daño = 1
+
+    // ============================================================================================================= \\
+
+    method cambiarImagen(direccion){
+        // Cambia la imagen del lobo dependiendo de la dirección dada. 
+        self.image(self.imagenNueva(direccion))
+    }
+
+    // ============================================================================================================= \\
+
+    method imagenNueva(direccion) // Describe la imagen nueva del visual en base a la dirección dada.
+
+    // ============================================================================================================= \\
+
+    method interaccion(){} // Representa la interacción del visual con los diferentes objetos, en este caso no tiene ninguna.
+
+    // ============================================================================================================= \\
+
+    method estaVivo(){
+        // Indica si el enemigo se encuentra vivo o no.
+        return self.vida() > 0
+    }
+
+    // ============================================================================================================= \\
+
+    method actualizarAMuerto(){
+        vida = 0
+    }
+}
+
 
 // ####################################################################################################### //
 
@@ -80,7 +118,7 @@ object hacha inherits Visual{
 
     method interaccion(){
         game.removeVisual(self)
-        protagonista.estadoProta(armadoProtagonista)
+        protagonista.estadoCombate(armadoProtagonista)
         game.say(protagonista,"Ya puedo defenderme")
     }
 }

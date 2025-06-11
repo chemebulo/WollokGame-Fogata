@@ -196,9 +196,9 @@ describe "Cambio de estado desarmado a armado"{
         escenarioParaTestear.puestaEnEscena()  
     }
     test"Al interactuar con el hacha el protagonista cambia de estado desarmado a armado"{
-        assert.equals(desarmadoProtagonista,protagonista.estadoProta())
+        assert.equals(desarmadoProtagonista,protagonista.estadoCombate())
         hacha.interaccion()
-        assert.equals(armadoProtagonista,protagonista.estadoProta())
+        assert.equals(armadoProtagonista,protagonista.estadoCombate())
 
         }
 }

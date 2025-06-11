@@ -1,139 +1,105 @@
 import direccion.*
-import videojuego.*
 import visualesExtra.*
-import gestores.*
 import npcEstados.*
+import videojuego.*
+import gestores.*
 
-object protagonista inherits Visual{
-    // ################################################ ATRIBUTOS ################################################
-
-    var property position      = game.at(0,0)
-    var property image         = "prota-desarmado-abajo.png"
-    var property vida          = 10
-    var property estoyAtacando = false
-    var property estadoProta   = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
-    const property daño        = 1
-    const property vg          = videojuego
-    const colisionesGestor     = gestorDeColisiones
-
-    // ####################################### VARIABLES PARA CONVERSACION #######################################
-    
+object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 10, daño = 1){
+    var property conversadorActual  = self
     var property conversacionNPC    = []
     var property npcActual          = null 
-    var property conversadorActual  = self
-  
-   // ################################################## ESTADO ##################################################
+    var property estoyAtacando      = false
 
-    method validarSiEstaVivo(){ 
-        if (not self.estaVivo()) { vg.finalizarJuego()}
-    }
+    var property estadoCombate      = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
+    const property vg               = videojuego
+    const property vidaGestor       = gestorDeVida
+    const property movimientoGestor = gestorDeMovimiento
 
-     method estaVivo() = self.vida() > 0
-
-   // ############################################ MOVIMIENTO GENERAL ############################################
+    // ============================================================================================================= \\
 
     method mover(direccion){
-        // self.validarSiEstaVivo() 
-        if(self.puedoMover(direccion)){
-            self.moverHacia(direccion)
-        }
+        // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
+        movimientoGestor.mover(direccion, self)
     }
 
-     method moverHacia(direccion){
-        position = direccion.siguientePosicion(position)
-        self.cambiarImagen(direccion)
+    // ============================================================================================================= \\
+
+    method atacar(){
+        //
+        estadoCombate.ataque()
     }
 
-    // ########################################### COMPROBAR MOVIMIENTO ########################################## 
+    // ============================================================================================================= \\
+
+    override method atacadoPor(visual){
+        //
+        vidaGestor.atacadoPor(self, visual)
+    }
+
+    // ============================================================================================================= \\
+
+    override method actualizarAMuerto(){
+        //
+        super()
+        vg.finalizarJuego()
+    }
     
-    method puedoMover(direccion) {
-        const posicionAMover = direccion.siguientePosicion(position)
-
-        return colisionesGestor.estaDentroDelTablero(posicionAMover) and not colisionesGestor.hayObstaculoEn(posicionAMover,self)
-    }
-
-    method cambiarImagen(direccion){
-        self.image(estadoProta.actual() + direccion.toString() + ".png")
-    }
+    // ============================================================================================================= \\
     
-    method estadoProta(_estadoProta){
-        estadoProta = _estadoProta
+    override method imagenNueva(direccion){
+        //
+        return estadoCombate.actual() + direccion.toString() + ".png"
     }
 
-    // #################################### INTERACCIÓN CON ENEMIGOS U OBJETOS ################################### 
-
-    method interaccion(visual) {
-        // Por ahora nada...
-    }
-
-    method atacadoPor(visual) {
-        self.validarSiEstaVivo()
-        self.vida(vida - visual.daño())
-        game.say(self, "Mi vida es "+vida+"")
-    }
-
-    // ############################################## DIALOGOS NPC ###############################################
+    // ============================================================================================================= \\
+    // REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO:
 
     method interactuarNPC(){
         if (self.estaAlLadoDe(npcActual)){self.conversar()}
     }
 
     method estaAlLadoDe(npc){
-        return (self.estoyEnMismoEjeY(npc)) and self.estoyAUnaCeldaEnX(npc)
+        return ejeY.estaEnMismoEje(self, npc) and ejeX.estaAlLado(self, npc)
     }
 
-    method estoyEnMismoEjeY(npc) = ejeY.estaEnMismoEje(self, npc)
-
-    method estoyAUnaCeldaEnX(npc) = ejeX.estaAlLado(self, npc)
-    
-
     method conversar() {
-    if(not self.esDialogoFinal()){
-        game.say(conversadorActual,self.dialogoActual())
-        conversacionNPC.remove(self.dialogoActual())
-        self.cambiarConversador()
+        if(not self.esDialogoFinal()){
+            game.say(conversadorActual,self.dialogoActual())
+            conversacionNPC.remove(self.dialogoActual())
+            self.cambiarConversador()
         }
     }
 
-    method dialogoActual() = conversacionNPC.first()
-
-    method esDialogoFinal() = conversacionNPC.isEmpty()
-
-    method cambiarConversador(){ 
-        if (self.esMiTurnoDeHablar()){conversadorActual = self} else {conversadorActual = npcActual}
+    method dialogoActual(){
+        return conversacionNPC.first()
     }
 
-    method esMiTurnoDeHablar() = conversacionNPC.size().even()
-    
-    method conversacionNPC(_conversacionNPC){ conversacionNPC = _conversacionNPC }
+    method esDialogoFinal(){
+        return conversacionNPC.isEmpty()
+    }
 
+    method cambiarConversador(){ 
+        if (self.esMiTurnoDeHablar()){ conversadorActual = self } else { conversadorActual = npcActual }
+    }
+
+    method esMiTurnoDeHablar(){
+        return conversacionNPC.size().even()
+    }
+    
     method resetearDialogo(){
         conversacionNPC = []
         conversadorActual = self
     }
-    
-    /*######################
-        ATAQUE
-    
-    ##############################*/
 
-    method atacar(){
-        estadoProta.ataque()
+    // ============================================================================================================= \\
+
+    method mover(direccion, cantidad){
+        // Hace que el personaje se mueva la cantidad de veces dada en la direccion dada. 
+        (1 .. cantidad).forEach({n => self.mover(direccion)})        // Solo para testear.
     }
 
-    //PARA CUANDO ME ATACA EL GUARDABOSQUES
-    override method atacado(){
-        game.say(self,"AUXILIO ME ATACA EL GUARDABOSQUES o el lobo")
-    }
-
-    // ############################################### PARA TESTEAR ###############################################
-
-    method mover(direccion,cantidad){
-        (1 .. cantidad).forEach({n => self.mover(direccion)})
-    }
-
-    method miCeldaArriba() = arriba.siguientePosicion(position)
-    method miCeldaAbajo() = abajo.siguientePosicion(position)
-    method miCeldaIzquierda()= izquierda.siguientePosicion(position)
-    method miCeldaDerecha()= derecha.siguientePosicion(position)
+    method miCeldaArriba()    = arriba.siguientePosicion(position)    // Solo para testear.
+    method miCeldaAbajo()     = abajo.siguientePosicion(position)     // Solo para testear.
+    method miCeldaIzquierda() = izquierda.siguientePosicion(position) // Solo para testear.
+    method miCeldaDerecha()   = derecha.siguientePosicion(position)   // Solo para testear.
 }

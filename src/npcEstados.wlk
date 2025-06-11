@@ -1,5 +1,7 @@
 import protagonista.*
 import enemigos.*
+import npcMovimiento.*
+import gestores.*
 
 /*
     El protagonista inicia el juego desarmado y solo cuando interactua con el hacha pasa a estar armado el resto del juego hasta 
@@ -8,13 +10,10 @@ import enemigos.*
 */
 
 // ESTADOS DEL PROTAGONISTA Y GUARDABOSQUES
-const desarmadoProtagonista = new Desarmado(image = "prota-desarmado-")
-
+const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
-
-const armadoGuardabosques = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
-
-const armadoProtagonista = new ArmadoConHacha(pj = protagonista, imagenActual = "prota-armado-", imagenTemporal = "ataque-prota.png")
+const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
+const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
 
 // CLASES DE ESTADO
 class Desarmado{
@@ -24,22 +23,37 @@ class Desarmado{
 }
 
 class ArmadoConHacha{
-    const pj = null  // personaje que ataca
-    const imagenActual = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
-    const modoAtaque = new HachazoCruz(atacante= self.pj())
-    const animacion = new AnimacionAtaque(imagenTemp = self.imagenTemporal(),pjAnimado= self.pj())
+    const pj             = null  // personaje que ataca
+    const imagenActual   = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
+    const modoAtaque     = new HachazoCruz(atacante= self.pj())
+    const animacion      = new AnimacionAtaque(imagenTemp = self.imagenTemporal(),pjAnimado= self.pj())
     const imagenTemporal // la imagen que se muestra al atacar
 
-    method imagenTemporal() = imagenTemporal
-    method actual() = imagenActual
-    method pj() = pj
+    method imagenTemporal(){
+        return imagenTemporal
+    }
+
+    method actual(){
+        return imagenActual
+    } 
+
+    method pj(){
+        return pj
+    }
+
     method ataque(){
         animacion.animarAtaque()
         modoAtaque.ataqueArma()
     }
-     method modoAtaque() = modoAtaque // llamado por protagonista
+    
+    method modoAtaque(){
+        // Llamado por protagonista.
+        return modoAtaque
+    } 
 
-     method posicionesParaCalcularAtaque() = modoAtaque.posicionesAAtacar()
+    method posicionesParaCalcularAtaque(){
+        return modoAtaque.posicionesAAtacar()
+    }
 }
 
 // ANIMACION Y TIPO DE ATAQUE
@@ -50,7 +64,7 @@ class AnimacionAtaque{
                          para dar sensacion de animacion
     */
     const imagenTemp = "" // la imagen que se muestra cuando se ataca
-    const pjAnimado = null // el visual que ataca
+    const pjAnimado  = null // el visual que ataca
 
     method animarAtaque(){
         const imagenActual = pjAnimado.image()
@@ -73,7 +87,7 @@ class HachazoCruz{
     const atacante 
     
     method ataqueArma(){
-        self.atacarEnPosiciones(self.posicionesAAtacar() )
+        self.atacarEnPosiciones(self.posicionesAAtacar())
     }
 
     method atacarEnPosiciones(coleccionPosiciones){
@@ -81,10 +95,12 @@ class HachazoCruz{
     }
 
     method atacarObjetos(coleccionObjetos){ 
-        coleccionObjetos.forEach({obj => obj.atacado()})
+        coleccionObjetos.forEach({obj => obj.atacadoPor(atacante)})
     }
 
-    method objetosEnPosicionAtacada(posicion) = game.getObjectsIn(posicion) // coleccion
+    method objetosEnPosicionAtacada(posicion){
+        return game.getObjectsIn(posicion)
+    } 
     
     method posicionesAAtacar() = [atacante.miCeldaAbajo(),
                                   atacante.miCeldaArriba(),
@@ -97,5 +113,56 @@ class HachazoEnLugar inherits HachazoCruz{
         self.atacarObjetos(self.objetosEnPosicionAtacada(atacante.position()))
      }
 
-    override method objetosEnPosicionAtacada(posicion) { return  super(posicion).copyWithout(atacante)}
+    override method objetosEnPosicionAtacada(posicion) { 
+        return super(posicion).copyWithout(atacante)
+    }
 } 
+
+// ######################################################################################################################## //
+
+class EnemigoVivo{
+    const visual
+    const vidaGestor = gestorDeVida
+    const movimientoNPC = new MovimientoNPC(visual = visual)
+
+    method perseguirEnemigo(){
+        // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo.
+        movimientoNPC.perseguirEnemigo()
+    }
+
+    method atacarEnemigo(){
+        // El lobo ataca al enemigo cada 1 segundo.
+        game.schedule(1000, {visual.enemigo().atacadoPor(visual)})
+    }
+
+    method atacadoPor(enemigo){
+        // Emite un mensaje cuando el enemigo es atacado por su enemigo.
+        vidaGestor.atacadoPor(visual, enemigo)
+    }
+}
+
+class EnemigoMuerto{
+    method perseguirEnemigo(){}
+
+    method atacarEnemigo(){}
+
+    method atacadoPor(enemigo){}
+}
+
+// ######################################################################################################################## //
+
+object agresivo{
+    method puedeAtacarAlEnemigo(visual){
+        // Indica si el lobo puede atacar a su enemigo. 
+        return visual.estaSobreEnemigo()
+    } 
+}
+
+// ######################################################################################################################## //
+
+object pasivo{
+    method puedeAtacarAlEnemigo(visual){
+        // Indica si el lobo puede atacar a su enemigo. En este caso, no puede. 
+        return false
+    }
+}
