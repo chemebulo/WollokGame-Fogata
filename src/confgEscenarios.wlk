@@ -70,7 +70,7 @@ const confg_escenarioEntradaCabaña_v2 = {e =>
 //-----------DEJAR ABAJO DE TODO ---------
 const confg_escenarioTEST = {e =>           
                              e.mapa(mapa_escenarioTest);
-                             e.visualesEnEscena( [protagonista,hacha]);
+                             e.visualesEnEscena( [protagonista,hacha,cueva]);
                              e.ost(game.sound("game-win.mp3"));
                              e.eventos([])}
 

@@ -104,6 +104,10 @@ object p{
     }
 }
 
+object cu inherits Elemento(visual=cueva){
+
+}
+
 // #####################################################################
  //                    ENEMIGOS
 // #####################################################################
@@ -111,6 +115,14 @@ object p{
 object la inherits ElementoLobo{}
 
 object lp inherits ElementoLobo{}
+
+object lbe { // lobo especial del granero, al matarlo me spawnea la salida
+    method construir(posicion){
+        const loboTemp = new LoboEspecial(position=posicion,salida=puertaSur);
+        game.addVisual(loboTemp)
+        gestorDeLobos.agregarLobos(loboTemp)
+    }
+}
    
 // #####################################################################
 
@@ -156,13 +168,13 @@ const mapa_inicioJuego =
 const mapa_escenarioInicial = 
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,o,o,o,o,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,lp,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,a,z,_,f,c,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,p,p,p,p,p,p,p,p,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_]
      
      ].reverse()
@@ -252,9 +264,9 @@ const mapa_escenarioBifurcacion_v2 =
 const mapa_escenarioTest =
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,h,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,cu,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,lbe,_],
+        [_,h,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,la,_,_,_,la,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],

@@ -16,7 +16,9 @@ const confg_escSig_escenarioInicial          = {puertaNorte.irHacia(escenarioBif
 
 const confg_escSig_escenarioBifurcacion_v1   = {puertaEste.irHacia(escenarioEntradaCabaña)}
 
-const confg_escSig_escenarioBifurcacion_v2   = {puertaOeste.irHacia(escenarioTEST)}
+const confg_escSig_escenarioBifurcacion_v2   = {puertaOeste.irHacia(escenarioTEST);
+                                                puertaSur.irHacia(escenarioInicial)
+                                                escenarioTEST.confgEscSiguiente(confg_escSig_TEST)}
 
 const confg_escSig_escenarioEntradaCabaña_v1 = {puertaEntradaCabaña.irHacia(escenarioCabañaInicial)}
 
@@ -29,4 +31,4 @@ const confg_escSig_escenarioCabañaInicial    = {puertaOeste.irHacia(escenarioEn
                                                 escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
                                                 escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)}
 
-const confg_escSig_TEST = {}
+const confg_escSig_TEST = {game.removeVisual(puertaSur)}

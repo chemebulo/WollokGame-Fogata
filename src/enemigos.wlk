@@ -69,6 +69,18 @@ class Lobo inherits Enemigo(position = game.at(6,0), image = "lobo-derecha.png",
     } 
 }
 
+class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv=self),vida=30){
+     const salida
+     var puedeSalir = true
+     
+     method verEntorno(){
+        if(puedeSalir and not self.estaVivo()){
+            puedeSalir=false
+            game.addVisual(salida)
+        }
+     }
+}
+
 // ################################################################################################################# \\
 
 object guardabosques inherits Enemigo(position = game.at(5,5), image = "guardabosques-cabaña.png", vida = 20, daño = 1){

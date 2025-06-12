@@ -33,7 +33,6 @@ class Escenario{
         gestorDialogo.configurarConversacion(self)
         self.dibujarTablero()
         self.agregarVisualesEscena()
-        game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
         gestorEvento.gestionarInicio(eventos)
     }
     

@@ -47,6 +47,7 @@ object videojuego{
          game.width(13)
          game.height(9)
 	     game.cellSize(100)
+          game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
     }
 
     // ############################## CONTROLES ##############################

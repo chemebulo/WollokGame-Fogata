@@ -96,6 +96,17 @@ object cabaña inherits Visual{
     method interaccion(){}
 }
 
+object cueva inherits Visual{
+    var property position = game.at(2,5)
+    const property image = "cueva.png"
+    
+    override method esAtravesable(){
+        return true
+    }
+
+    method interaccion(){}
+}
+
 // ####################################################################################################### //
 
 object hacha inherits Visual{
@@ -109,7 +120,7 @@ object hacha inherits Visual{
     method interaccion(){
         game.removeVisual(self)
         protagonista.estadoCombate(armadoProtagonista)
-        game.say(protagonista, "Ya puedo defenderme")
+        game.say(protagonista, "Ya puedo defenderme de esos bichos")
     }
 }
 
