@@ -103,7 +103,15 @@ object la {
     }
 }
 
-object lp inherits Elemento(visual = new Lobo(comportamiento = pasivo)){}
+object lp {
+    method construir(posicion){
+        const loboTemp = new Lobo(position=posicion,estado=pasivo);
+        const eventoTemp = new EventoLobo(loboEv = loboTemp)
+        game.addVisual(loboTemp);
+        gestorDeLobos.agregarLobos(loboTemp,eventoTemp);
+        eventoTemp.iniciarEvento()
+    }
+}
 
 // #####################################################################
 
@@ -166,9 +174,9 @@ const mapa_escenarioBifurcacion =
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,la,_,_,_,_,_,la,_,_,_],
+        [_,_,_,la,_,_,lp,_,_,la,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,lp,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,z,_,_,_,_,_,_],
@@ -190,7 +198,7 @@ const mapa_entradaCabaña =
         [ _ ,z  , _ , _ , _ ,ca ,pec, _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , la , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , lp ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
 
     ].reverse() 
@@ -232,8 +240,8 @@ const mapa_escenarioBifurcacion_v2 =
 
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , o , o , _ , _ , _ , _ , _ , _ , _ , _ ],
-        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-        [ _ , _ , _ , _ , _ , _ , o , o , _ , o , _ , _ , _ ],
+        [ _ , _ , lp , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , lp , _ , _ , _ , o , o , _ , o , _ , _ , _ ],
         [ _ , _ ,la , _ , _ , _ , o , _ , _ , _ , _ , z , _ ],
         [ _ , _ , la , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , la , _ , _ , _ , o , _ , _ , _ , _ , _ , _ ],
