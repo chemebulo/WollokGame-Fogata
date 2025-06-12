@@ -216,17 +216,18 @@ object gestorDeLimpiezaEscenarios{
 // ############################################################################################################################################# \\
 
 object gestorDeLobos{
-    const obstaculos = []
+    const lobosEscenario = []
     const eventosLobos = []
     
-    method agregarLobos(elem,ev){
-        obstaculos.add(elem);
-        eventosLobos.add(ev)
+    method agregarLobos(lobo){
+        lobosEscenario.add(lobo);
+        eventosLobos.add(lobo.eventoLobo())
+        lobo.eventoLobo().iniciarEvento()
     }
     
     method limpiarLobos() {
-        obstaculos.forEach({elem => game.removeVisual(elem)})
-        obstaculos.clear()
+        lobosEscenario.forEach({lobo => game.removeVisual(lobo)})
+        lobosEscenario.clear()
         eventosLobos.forEach({ev => game.removeTickEvent(ev.nombre())})
         eventosLobos.clear()
     }

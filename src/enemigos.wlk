@@ -2,6 +2,7 @@ import protagonista.*
 import visualesExtra.*
 import direccion.*
 import npcEstados.*
+import eventos.*
 
 class Enemigo inherits VisualConMovimiento{
     var property estado    = new EnemigoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
@@ -58,8 +59,11 @@ class Enemigo inherits VisualConMovimiento{
 
 // ################################################################################################################# \\
 
-class Lobo inherits Enemigo(position = game.at(6,0), image = "lobo-derecha.png", vida = 3, daño = 1){
+class Lobo inherits Enemigo(position = game.at(6,0), image = "lobo-derecha.png", vida = 10, daño = 1){
     const property comportamiento = agresivo
+    const eventoLobo = new EventoLobo(loboEv = self)
+
+    method eventoLobo() = eventoLobo
 
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.

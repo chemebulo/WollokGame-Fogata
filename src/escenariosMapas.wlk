@@ -51,6 +51,14 @@ class Elemento{
         visual.position(position)
     }
 }
+class ElementoLobo{
+    method construir(posicion){
+        const loboTemp = new Lobo(position=posicion);
+        game.addVisual(loboTemp)
+        gestorDeLobos.agregarLobos(loboTemp)
+      
+    }
+}
 
 // #####################################################################
 
@@ -92,7 +100,7 @@ object o{
 // #####################################################################
  //                    ENEMIGOS
 // #####################################################################
-
+/*
 object la {  
     method construir(posicion){
         const loboTemp = new Lobo(position=posicion);
@@ -101,17 +109,14 @@ object la {
         gestorDeLobos.agregarLobos(loboTemp,eventoTemp);
         eventoTemp.iniciarEvento()
     }
-}
+}*/
+object la inherits ElementoLobo{}
 
-object lp {
-    method construir(posicion){
-        const loboTemp = new Lobo(position=posicion,comportamiento=pasivo);
-        const eventoTemp = new EventoLobo(loboEv = loboTemp)
-        game.addVisual(loboTemp);
-        gestorDeLobos.agregarLobos(loboTemp,eventoTemp);
-        eventoTemp.iniciarEvento()
-    }
-}
+object lp inherits ElementoLobo{}
+   
+
+
+
 
 // #####################################################################
 

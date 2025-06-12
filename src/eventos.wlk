@@ -47,9 +47,12 @@ class EventoMultiple{
 class EventoLobo{ // solo funciona para lobos que se agregan directamente a la matriz
     const nombre = self.toString()
     const loboEv
+
+    const tiempoRandom = 1000.randomUpTo(2000)
+    
     method nombre() = nombre
     method iniciarEvento(){
-        game.onTick(1000,nombre,{loboEv.perseguirEnemigo()})
+        game.onTick(tiempoRandom,nombre,{loboEv.perseguirEnemigo()})
     }
 }
 class EventoUnico inherits EventoMultiple(visualesEvento=[]){ 
