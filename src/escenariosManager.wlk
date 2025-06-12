@@ -1,5 +1,6 @@
 import protagonista.*
 import gestores.*
+import escenariosMapas.mapa_comun
 
 // #############################################################################################################################
 
@@ -9,7 +10,7 @@ class Escenario{
         véase ejemplo en ISSUE en github
     */
     var property eventos = []
-    var property mapa = []
+    var property mapa = mapa_comun
     var property fondoEscenario = ""
     var property visualesEnEscena = []
     var property ost = game.sound("")

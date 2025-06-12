@@ -7,8 +7,8 @@ import diapositivasManager.*
 object videojuego{
     const gestorDiapositiva     = gestorDeDiapositivas
     var property ostJuego       = game.sound("inicio-v1.png")
-    var property escenario      = inicioJuego
-    var property estoyEnPrologo = true
+    var property escenario      = inicioJuego// cambiar a inicio juego
+    var property estoyEnPrologo = true // settear a true 
     var property estoyEnGranero = false
    
     method stopMusica(){

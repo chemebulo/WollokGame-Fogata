@@ -12,7 +12,7 @@ import enemigos.*
 */
 // ---------- DIALOGO ESCENARIO INICIAL -------
 
-const dialogoAmiga = ["Hola, como estas","Bien y tu?","Bien, estamos reimplementando los dialogos","Adios"]
+const dialogoAmiga = ["Donde quedaba la cabaña?","al Norte y luego a la derecja","Dale, ahi vengo","Dale, te espero"]
 
 const dialogoEscenarioInicial = [amiga,dialogoAmiga]
 
@@ -21,5 +21,5 @@ const dialogoTEST = ["Hola de nuevo","Ya habiamos hablado","Enloqueci verdad?","
 const dialogoEscenarioTest = [amiga,dialogoTEST]
 //--------------------------------------------
 
-const dialogoCabaña = ["Hola señor guardabosques","Hola protagonista","Me da un poco de leña?","Claro tome"]
+const dialogoCabaña = ["Hola, como va?","Buenas Juan, como va el lugar?","Excelente, me preguntaba si tendria algo de leña","Claro,ahi al lado de la chimenea"]
 const dialogoEnCabaña = [guardabosques, dialogoCabaña]

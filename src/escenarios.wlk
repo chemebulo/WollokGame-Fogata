@@ -12,6 +12,8 @@ const puertaEste  = new Puerta(position = este.ubicacion() , irHacia = escenario
 const puertaSur   = new Puerta(position = sur.ubicacion()  , irHacia = escenarioInicial)
 
 const puertaEntradaCabaña = new Puerta(image = "puerta.png", irHacia= escenarioCabañaInicial)
+const puertaEntradaCueva = new Puerta(image ="puerta.png",irHacia = escenarioCueva)
+const puertaGranero = new Puerta(image = "puerta.png",irHacia= escenarioGranero)
 
 
 // CONSTRUCTOR DE ESCENARIOS
@@ -48,34 +50,47 @@ const inicioJuego = esc.construir(confg_inicioJuego, {}, "inicio-v2.png")
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
-const escenarioInicial = esc.construir(confg_EscenarioInicial,
-                                       confg_escSig_escenarioInicial, 
+const escenarioInicial = esc.construir(confg_EscenarioInicial_v1,
+                                       confg_escSig_escenarioInicial_v1, 
                                        "fondo-escenario-inicial.png")
 
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
-const escenarioBifurcacion = esc.construir(confg_escenarioBifurcacion,
+const escenarioBifurcacion = esc.construir(confg_escenarioBifurcacion_v1,
                                            confg_escSig_escenarioBifurcacion_v1,
                                            "fondo-escenario-inicial.png")
 
-const escenarioEntradaCabaña = esc.construir(confg_escenarioEntradaCabaña,
+const escenarioEntradaCabaña = esc.construir(confg_escenarioEntradaCabaña_v1,
                                              confg_escSig_escenarioEntradaCabaña_v1,
                                              "fondo-escenario-inicial.png" )
 
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
- const escenarioCabañaInicial = esc.construir(confg_escenarioCabañaInicial,
-                                              confg_escSig_escenarioCabañaInicial,
+ const escenarioCabañaInicial = esc.construir(confg_escenarioCabañaInicial_v1,
+                                              confg_escSig_escenarioCabañaInicial_v1,
                                               "cabaña.png")   
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
+
+const escenarioEntradaCueva = esc.construir(confg_escenarioEntradaCueva_v1,
+                                             confg_escSig_escenarioEntradaCueva_v1,
+                                             "fondo-entrada-cueva.png")
+
+const escenarioCueva = esc.construir(confg_escenarioCueva_v1,
+                             confg_esSig_cueva_v1,"fondo-cueva.png")
+
 
 const escenarioTEST = esc.construir(confg_escenarioTEST,
                                     confg_escSig_TEST, 
                                     "fondo-escenario-inicial.png")
 
+//const escenarioCueva = esc.construir({},{},"fondo-cueva.png")
 // ##############################################################################################################
 //  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
 // ##############################################################################################################
 
 const escenarioDiapoGranero = esc.construir(confg_graneroDiapo, {}, "granero-diapo1.png") 
+
+const escenarioGranero = esc.construir({},{},"fondo-granero.png")
+
+const escenarioEntradaGranero = esc.construir({},{},"")

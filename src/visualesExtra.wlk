@@ -3,6 +3,7 @@ import escenarios.*
 import confgEscSig.*
 import confgEscenarios.*
 import npcEstados.*
+import enemigos.*
 
 class Visual{
     method esAtravesable(){
@@ -77,7 +78,8 @@ object leña inherits Visual{
         game.removeVisual(self)
         game.addVisual(puertaEntradaCabaña)
         puertaEntradaCabaña.irHacia(escenarioEntradaCabaña)
-        game.say(protagonista,"Gracias por la leña señor")
+        game.say(protagonista,"Gracias por la leña")
+        game.say(guardabosques,"No hay de que.Tenga cuidado nomas que hay lobos por estos lados")
         escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
         escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)
     }
