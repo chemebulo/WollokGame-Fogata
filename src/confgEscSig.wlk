@@ -12,18 +12,11 @@ import confgEscenarios.*
   NOTAS: Los escenarios exclusivos para diapositivas no requieren un configurador de escenario siguiente
 */
 
-const confg_escSig_escenarioInicial = {   
-                                          puertaNorte.irHacia(escenarioBifurcacion);
-                                        
-                                        }
+const confg_escSig_escenarioInicial          = {puertaNorte.irHacia(escenarioBifurcacion)}
 
-                                        
-                
+const confg_escSig_escenarioBifurcacion_v1   = {puertaEste.irHacia(escenarioEntradaCabaña)}
 
-
-const confg_escSig_escenarioBifurcacion_v1 = {puertaEste.irHacia(escenarioEntradaCabaña)}
-
-const confg_escSig_escenarioBifurcacion_v2 = {puertaOeste.irHacia(escenarioTEST)}
+const confg_escSig_escenarioBifurcacion_v2   = {puertaOeste.irHacia(escenarioTEST)}
 
 const confg_escSig_escenarioEntradaCabaña_v1 = {puertaEntradaCabaña.irHacia(escenarioCabañaInicial)}
 
@@ -32,10 +25,8 @@ const confg_escSig_escenarioEntradaCabaña_v2 = {game.removeVisual(puertaEntrada
                                                 escenarioBifurcacion.confgEscSiguiente(confg_escSig_escenarioBifurcacion_v2);
                                                 escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v2)}
 
-
-const confg_escSig_escenarioCabañaInicial = {puertaOeste.irHacia(escenarioEntradaCabaña);
-                                             escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
-                                             escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)}
-
+const confg_escSig_escenarioCabañaInicial    = {puertaOeste.irHacia(escenarioEntradaCabaña);
+                                                escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
+                                                escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)}
 
 const confg_escSig_TEST = {}

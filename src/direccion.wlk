@@ -51,12 +51,20 @@ class Eje{
         return self.movimiento(posicionAntigua, posicionNueva) == -1
     }
     
-    method estaEnMismoEje(visual1,visual2){
-        return self.positionEnEje(visual1.position()) == self.positionEnEje(visual2.position()) 
+    method estaEnMismoEje(visualPrimero, visualSegundo){
+        // Indica si el visualPrimero se encuentra en el mismo eje que el visualSegundo.
+        const posicionPrimero = visualPrimero.position()
+        const posicionSegundo = visualSegundo.position()
+
+        return self.positionEnEje(posicionPrimero) == self.positionEnEje(posicionSegundo) 
     }
 
-    method estaAlLado(visual1, visual2){
-        return ((self.positionEnEje(visual1.position()) - self.positionEnEje(visual2.position())).abs()) == 1 
+    method estaAlLado(visualPrimero, visualSegundo){
+        // Indica si el visualPrimero se encuentra al lado (a una celda de diferencia) del visualSegundo.
+        const posicionPrimero = visualPrimero.position()
+        const posicionSegundo = visualSegundo.position()
+
+        return (self.positionEnEje(posicionPrimero) - self.positionEnEje(posicionSegundo)).abs() == 1 
     }
 
     method positionEnEje(posicion) // Describe la posición en el eje.
@@ -66,12 +74,16 @@ class Eje{
     method segundaDir() = segundaDir // Describe la segunda dirección del eje.
 }
 
+// ###################################################################################################################### \\
+
 object ejeX inherits Eje(primeraDir = derecha, segundaDir = izquierda){
     override method positionEnEje(posicion){
         // Describe la posición en el eje.
         return posicion.x()
     }
 }
+
+// ###################################################################################################################### \\
 
 object ejeY inherits Eje(primeraDir = arriba, segundaDir = abajo){
     override method positionEnEje(posicion){

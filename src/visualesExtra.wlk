@@ -6,84 +6,72 @@ import npcEstados.*
 
 class Visual{
     method esAtravesable(){
+        // Indica si el visual es atravesable o no, en este caso no es atravesable.
         return false
     }
 
-    method atacadoPor(visual){}
+    method atacadoPor(visual){} // Representa el comportamiento del visual al ser atacado por otro visual.
 }
 
 // ####################################################################################################### //
 
 class VisualConMovimiento inherits Visual{
-    var property position // Describe la posición actual del visual.
-    var property vida
-    var property image  = null
-    const property daño = 1
-
-    // ============================================================================================================= \\
+    var property position       // Describe la posición actual del visual.
+    var property vida           // Describe la vida del visual.
+    var property image  = null  // Describe la imagen del visual.
+    const property daño = 1     // Describe el daño del visual.
 
     method cambiarImagen(direccion){
-        // Cambia la imagen del lobo dependiendo de la dirección dada. 
+        // Cambia la imagen del visual dependiendo de la dirección dada. 
         self.image(self.imagenNueva(direccion))
     }
 
-    // ============================================================================================================= \\
-
     method imagenNueva(direccion) // Describe la imagen nueva del visual en base a la dirección dada.
-
-    // ============================================================================================================= \\
 
     method interaccion(){} // Representa la interacción del visual con los diferentes objetos, en este caso no tiene ninguna.
 
-    // ============================================================================================================= \\
-
     method estaVivo(){
-        // Indica si el enemigo se encuentra vivo o no.
+        // Indica si el visual se encuentra vivo o no.
         return self.vida() > 0
     }
 
-    // ============================================================================================================= \\
-
     method actualizarAMuerto(){
+        // Actualiza la vida del visual a cero.
         vida = 0
     }
 }
 
-
 // ####################################################################################################### //
 
 object amiga inherits Visual{
-    var property dialogo = []
-
-    method image() = "amiga.png"
-
     var property position = game.at(2,4)
+    const property image    = "amiga.png"
+    const property dialogo  = []
 }
 
 // ####################################################################################################### //
 
 object fogata inherits Visual{
-    method image() = "fogata-apagada.png"
-
     var property position = game.at(3,4)
+    const property image    = "fogata-apagada.png"
 }
 
 // ####################################################################################################### //
 
 object carpa inherits Visual{
-    var property image = "carpa.png"
-
     var property position = game.at(6,4)
+    const property image    = "carpa.png"
 }
 
 // ####################################################################################################### //
 
 object leña inherits Visual{
-    method image() = "leña.png"
-
     var property position = game.at(5,6)
+    const property image    = "leña.png"
 
-    override method esAtravesable() = true
+    override method esAtravesable(){
+        return true
+    }
 
     method interaccion() {
         game.removeVisual(self)
@@ -98,11 +86,12 @@ object leña inherits Visual{
 // ####################################################################################################### //
 
 object cabaña inherits Visual{
-    method image() = "cabaña_entrada.png"
-
     var property position = game.at(5,6)
+    const property image    = "cabaña_entrada.png"
 
-    override method esAtravesable() = true
+    override method esAtravesable(){
+        return true
+    }
 
     method interaccion(){}
 }
@@ -110,40 +99,45 @@ object cabaña inherits Visual{
 // ####################################################################################################### //
 
 object hacha inherits Visual{
-    method image() = "hacha.png"
+    var property position = game.at(5,5) // Sería const? 
+    var property image    = "hacha.png"  // Sería const?
 
-    var property position = game.at(5,5)
-
-    override method esAtravesable() = true 
+    override method esAtravesable(){
+        return true 
+    }
 
     method interaccion(){
         game.removeVisual(self)
         protagonista.estadoCombate(armadoProtagonista)
-        game.say(protagonista,"Ya puedo defenderme")
+        game.say(protagonista, "Ya puedo defenderme")
     }
 }
 
 // ####################################################################################################### //
 
 class Obstaculo inherits Visual{
-    method image() = "obstaculo.png"
-
     var property position
+    const property image = "obstaculo.png"
+}
+
+// ####################################################################################################### //
+
+class ParedInvisible inherits Visual{
+    var property position
+    const property image = null
 }
 
 // ####################################################################################################### //
 
 
 object gameover{
-    method image() = "game-over.png"
-
-    method position() = game.at(0,0)
+    const property position = game.at(0,0)
+    const property image    = "game-over.png"
 }
 
 // ####################################################################################################### //
 
 object juegoGanado{
-    method image() = "game-win.png"
-
-    method position() = game.at(0,0)
+    const property position = game.at(0,0)
+    const property image    = "game-win.png"
 }

@@ -5,24 +5,26 @@ import visualesExtra.*
 // ###############################################################################################
 
 class Puerta inherits Visual{
-    var property image = null
-    var property position = game.origin() 
+    var property image         = null
+    var property position      = game.origin() 
     var property irHacia 
     const property estaCerrada = false
-    override method esAtravesable() = true 
+	
+    override method esAtravesable(){
+		return true
+	} 
 
     method interaccion(){
-      self.validarInteraccion()
-      videojuego.cambiarEscenario(irHacia)
+      	self.validarInteraccion()
+      	videojuego.cambiarEscenario(irHacia)
     }
 
     method validarInteraccion(){
-      if (estaCerrada){
-        self.error("No puedo tomar este camino")
-      }
+      	if (estaCerrada){
+      	  	self.error("No puedo tomar este camino")
+      	}
     }
 }
-
 
 /*
   REQUERIMIENTOS:
@@ -44,5 +46,4 @@ class Puerta inherits Visual{
   
     * En algunos escenarios hay conversaciones o cosas para hacer, buscar la forma de que de momento
       las puertas esten cerradas hasta que se cumpla lo que ocurre en el mapa.(solucionado)
-
 */ 

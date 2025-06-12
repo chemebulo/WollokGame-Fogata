@@ -8,8 +8,8 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     var property conversadorActual  = self
     var property conversacionNPC    = []
     var property npcActual          = null 
-    var property estoyAtacando      = false
 
+    var property estoyAtacando      = false
     var property estadoCombate      = desarmadoProtagonista // Verifica si estoy dentro del tablero y los objetos que no puedo atravesar.
     const property vg               = videojuego
     const property vidaGestor       = gestorDeVida
@@ -22,21 +22,15 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         movimientoGestor.mover(direccion, self)
     }
 
-    // ============================================================================================================= \\
-
     method atacar(){
         //
         estadoCombate.ataque()
     }
 
-    // ============================================================================================================= \\
-
     override method atacadoPor(visual){
         //
         vidaGestor.atacadoPor(self, visual)
     }
-
-    // ============================================================================================================= \\
 
     override method actualizarAMuerto(){
         //
@@ -44,14 +38,11 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         vg.finalizarJuego()
     }
     
-    // ============================================================================================================= \\
-    
     override method imagenNueva(direccion){
         //
         return estadoCombate.actual() + direccion.toString() + ".png"
     }
 
-    // ============================================================================================================= \\
     // REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO:
 
     method interactuarNPC(){
@@ -97,9 +88,4 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         // Hace que el personaje se mueva la cantidad de veces dada en la direccion dada. 
         (1 .. cantidad).forEach({n => self.mover(direccion)})        // Solo para testear.
     }
-
-    method miCeldaArriba()    = arriba.siguientePosicion(position)    // Solo para testear.
-    method miCeldaAbajo()     = abajo.siguientePosicion(position)     // Solo para testear.
-    method miCeldaIzquierda() = izquierda.siguientePosicion(position) // Solo para testear.
-    method miCeldaDerecha()   = derecha.siguientePosicion(position)   // Solo para testear.
 }

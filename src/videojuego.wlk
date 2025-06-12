@@ -68,7 +68,7 @@ object videojuego{
     method interactuarDiapositias(){
         if(estoyEnPrologo || estoyEnGranero){ 
             gestorDiapositiva.gestionarDiapositivas()
-       }
+        }
     }
 
     method culminarDiapositivasYContinuar(bloque){

@@ -18,7 +18,11 @@ const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActu
 // CLASES DE ESTADO
 class Desarmado{
     const image // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
-    method actual() = image
+    
+    method actual(){
+        return image
+    }
+    
     method ataque(){}
 }
 
@@ -63,7 +67,7 @@ class AnimacionAtaque{
         animarAtaque() : realiza una secuencia de de instrucciones que consisten en remover/agregar y settear la imagen de un visual
                          para dar sensacion de animacion
     */
-    const imagenTemp = "" // la imagen que se muestra cuando se ataca
+    const imagenTemp = ""   // la imagen que se muestra cuando se ataca
     const pjAnimado  = null // el visual que ataca
 
     method animarAtaque(){
@@ -102,16 +106,16 @@ class HachazoCruz{
         return game.getObjectsIn(posicion)
     } 
     
-    method posicionesAAtacar() = [atacante.miCeldaAbajo(),
-                                  atacante.miCeldaArriba(),
-                                  atacante.miCeldaIzquierda(),
-                                  atacante.miCeldaDerecha()]
+    method posicionesAAtacar() = [atacante.position().down(1),
+                                  atacante.position().up(1),
+                                  atacante.position().left(1),
+                                  atacante.position().right(1)]
 }
 
 class HachazoEnLugar inherits HachazoCruz{
     override method ataqueArma(){
         self.atacarObjetos(self.objetosEnPosicionAtacada(atacante.position()))
-     }
+    }
 
     override method objetosEnPosicionAtacada(posicion) { 
         return super(posicion).copyWithout(atacante)
@@ -121,9 +125,9 @@ class HachazoEnLugar inherits HachazoCruz{
 // ######################################################################################################################## //
 
 class EnemigoVivo{
-    const visual
-    const vidaGestor = gestorDeVida
-    const movimientoNPC = new MovimientoNPC(visual = visual)
+    const visual //
+    const vidaGestor = gestorDeVida //
+    const movimientoNPC = new MovimientoNPC(npc = visual) //
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo.
@@ -142,16 +146,17 @@ class EnemigoVivo{
 }
 
 class EnemigoMuerto{
-    method perseguirEnemigo(){}
+    method perseguirEnemigo(){} //
 
-    method atacarEnemigo(){}
+    method atacarEnemigo(){} //
 
-    method atacadoPor(enemigo){}
+    method atacadoPor(enemigo){} //
 }
 
 // ######################################################################################################################## //
 
 object agresivo{
+
     method puedeAtacarAlEnemigo(visual){
         // Indica si el lobo puede atacar a su enemigo. 
         return visual.estaSobreEnemigo()
@@ -161,6 +166,7 @@ object agresivo{
 // ######################################################################################################################## //
 
 object pasivo{
+
     method puedeAtacarAlEnemigo(visual){
         // Indica si el lobo puede atacar a su enemigo. En este caso, no puede. 
         return false

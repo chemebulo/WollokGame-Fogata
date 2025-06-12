@@ -7,7 +7,6 @@ class Escenario{
     /*
         INV .REP: En eventos, cada evento de la lista se llama EXACTAMENTE IGUAL que los eventos que se implementan en eventos Iniciar,
         véase ejemplo en ISSUE en github
-    
     */
     var property eventos = []
     var property mapa = []
@@ -25,20 +24,17 @@ class Escenario{
     const limpiadorEscenario = gestorDeLimpiezaEscenarios
     const gestorDialogo = gestorConversaciones
     
-
-
     method puestaEnEscena(){ 
         self.configurar()
-         self.configurarEscenarioSiguiente()
-         ost.shouldLoop(true)
-         ost.play()
-          gestorFondo.visualizarFondo(fondoEscenario)
-         gestorDialogo.configurarConversacion(self)
-         self.dibujarTablero()
-         self.agregarVisualesEscena()
-         game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
-         gestorEvento.gestionarInicio(eventos)
-         
+        self.configurarEscenarioSiguiente()
+        ost.shouldLoop(true)
+        ost.play()
+        gestorFondo.visualizarFondo(fondoEscenario)
+        gestorDialogo.configurarConversacion(self)
+        self.dibujarTablero()
+        self.agregarVisualesEscena()
+        game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
+        gestorEvento.gestionarInicio(eventos)
     }
     
     method dibujarTablero() {
@@ -77,8 +73,9 @@ class Escenario{
         visualesEnEscena.forEach({visual => game.removeVisual(visual)})
     }
 
-    method hayDialogo() = not dialogo.isEmpty()
-
+    method hayDialogo(){
+        return not dialogo.isEmpty()
+    }
 }    
 
 // #############################################################################################################################

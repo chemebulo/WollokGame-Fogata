@@ -2,33 +2,33 @@ import gestores.*
 import protagonista.*
 
 class MovimientoNPC {
-    const colisionesGestor  = gestorDeColisiones  //
-    const direccionesGestor = gestorDeDirecciones //
-    const posicionesGestor  = gestorDePosiciones  //
-    const visual                                  //
-    const enemigo = protagonista                  //
+    const colisionesGestor  = gestorDeColisiones  // Representa el gestor de colisiones.
+    const direccionesGestor = gestorDeDirecciones // Representa el gestor de direcciones.
+    const posicionesGestor  = gestorDePosiciones  // Representa el gestor de posiciones.
+    const npc                                     // Representa al NPC que realiza el movimiento.
+    const enemigo = protagonista                  // Representa al enemigo que tiene el NPC.
 
     // ============================================================================================================= \\
 
     method perseguirEnemigo(){
-        //
-        if (visual.puedeAtacarAlEnemigo()) { visual.atacarEnemigo() } else 
-                                           { self.avanzarHaciaEnemigo() }
+        // Hace que el NPC persiga a su enemigo para poder atacarlo.
+        if (npc.puedeAtacarAlEnemigo()) { npc.atacarEnemigo() } else
+        if (not npc.estaSobreEnemigo()) { self.avanzarHaciaEnemigo() }
     }
 
     method avanzarHaciaEnemigo(){
-        //
-        const positionAntigua = visual.position()
+        // Mueve al NPC hacia la siguiente posición y modifica su imagen en base a la dirección a la que se movió.
+        const positionAntigua = npc.position()
         const positionNuevo   = self.siguientePosicion()
 
         if(not colisionesGestor.hayObstaculoEn(positionNuevo, enemigo)) {
-            visual.position(positionNuevo) 
-            visual.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, positionNuevo))
+            npc.position(positionNuevo) 
+            npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, positionNuevo))
         }
     }
     
     method siguientePosicion(){
-        //
-        return posicionesGestor.lindanteConvenienteHacia(visual.position(), enemigo)
+        // Describe la siguiente posición conveniente para el NPC en base de donde esté parado.
+        return posicionesGestor.lindanteConvenienteHacia(npc.position(), enemigo)
     }
 }

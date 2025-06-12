@@ -56,7 +56,6 @@ class ElementoLobo{
         const loboTemp = new Lobo(position=posicion);
         game.addVisual(loboTemp)
         gestorDeLobos.agregarLobos(loboTemp)
-      
     }
 }
 
@@ -97,27 +96,22 @@ object o{
     }
 }
 
+object p{
+    method construir(posicion){
+        const temp = new ParedInvisible(position = posicion);
+        game.addVisual(temp);
+        gestorDeObstaculos.agregar(temp)
+    }
+}
+
 // #####################################################################
  //                    ENEMIGOS
 // #####################################################################
-/*
-object la {  
-    method construir(posicion){
-        const loboTemp = new Lobo(position=posicion);
-        const eventoTemp = new EventoLobo(loboEv = loboTemp)
-        game.addVisual(loboTemp);
-        gestorDeLobos.agregarLobos(loboTemp,eventoTemp);
-        eventoTemp.iniciarEvento()
-    }
-}*/
+
 object la inherits ElementoLobo{}
 
 object lp inherits ElementoLobo{}
    
-
-
-
-
 // #####################################################################
 
 object g inherits Elemento(visual=guardabosques){ // Guardabosques -> No implementado, no usar.
@@ -164,11 +158,11 @@ const mapa_escenarioInicial =
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,o,o,o,o,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,lp,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,a,z,_,f,c,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,p,p,p,p,p,p,p,p,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_]
      
      ].reverse()

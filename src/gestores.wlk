@@ -1,5 +1,6 @@
 import direccion.*
 import protagonista.*
+
 object gestorDeEventos{
 
     method gestionarInicio(eventos){
@@ -103,14 +104,16 @@ object gestorDeColisiones{
 // ############################################################################################################################################# \\
 
 object gestorDeObstaculos{
-    const obstaculos = []
+    const obstaculos = [] // Describe una colección con los obstaculos que existen en el escenario actual.
 
-    method agregar(elem){
-        obstaculos.add(elem)
+    method agregar(elemento){
+        // Agrega un elemento a la lista de obstaculos.
+        obstaculos.add(elemento)
     }
     
-    method limpiarObstaculos() {
-        obstaculos.forEach({elem => game.removeVisual(elem)})
+    method limpiarObstaculos(){
+        // Limpia todos los obstaculos que se encuentren en la lista de obstaculos.
+        obstaculos.forEach({elemento => game.removeVisual(elemento)})
         obstaculos.clear()
     }
 }
@@ -120,17 +123,19 @@ object gestorDeObstaculos{
 object gestorDeVida{
 
     method atacadoPor(visual, enemigo){
-        // Emite un mensaje cuando el enemigo es atacado por su enemigo.
+        // Actualiza la vida del visual dado con el daño del enemigo dado, y además el visual emite un mensaje describiendo su vida actual.
         self.recibirDaño(visual, enemigo.daño())
         game.say(visual, "Mi vida es "+visual.vida()+"")
     }
 
     method recibirDaño(visual, dañoRecibido){
+        // Actualiza la vida y el estado del visual dado con el daño del enemigo dado.
         const vidaActualizada = visual.vida() - dañoRecibido
         self.actualizarVidaYEstado(visual, vidaActualizada)
     }
 
     method actualizarVidaYEstado(visual, vidaActualizada){
+        // Actualiza la vida y el estado del visual dado. Si la vida actualizada es menor o igual a cero, el visual muere.
         if(vidaActualizada <= 0){ 
             visual.actualizarAMuerto() 
         } else {
@@ -142,7 +147,7 @@ object gestorDeVida{
 // ############################################################################################################################################# \\
 
 object gestorDeMovimiento{
-    const colisionesGestor = gestorDeColisiones
+    const colisionesGestor = gestorDeColisiones // Representa al gestor de colisiones que se va a tomar de referencia.
 
     method mover(direccion, visual){
         // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
@@ -163,6 +168,7 @@ object gestorDeMovimiento{
 object gestorConversaciones{
 
     method configurarConversacion(esc){ 
+        //
         if(esc.hayDialogo()){
             const dialogoActual = esc.dialogo().last().copy()
             const npcEscenario =  esc.dialogo().first()
@@ -172,7 +178,8 @@ object gestorConversaciones{
         }
     }
 
-    method HayDialogo(esc){
+    method hayDialogo(esc){
+        //
         return not esc.dialogo().isEmpty()
     }
 }
@@ -187,8 +194,8 @@ object gestorFondoEscenario{
     var property position = game.at(0,0)
     var property image = ""
     
-    method visualizarFondo(fond){
-        image = fond
+    method visualizarFondo(nuevoFondo){
+        image = nuevoFondo
         game.addVisual(self)    
     }
 
@@ -207,10 +214,10 @@ object gestorFondoEscenario{
 
 object gestorDeLimpiezaEscenarios{
     method limpiar(esc){
-         esc.limpiarVisualesEnEscena();
-         esc.dialogo([]);
-         esc.eventos([]);
-       }
+        esc.limpiarVisualesEnEscena()
+        esc.dialogo([])
+        esc.eventos([])
+    }
 }
 
 // ############################################################################################################################################# \\

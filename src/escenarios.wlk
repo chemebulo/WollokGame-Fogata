@@ -44,23 +44,24 @@ TEMPLATE escenarioDiapositivas:
 */
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
-const inicioJuego = esc.construir(confg_inicioJuego,{},"inicio-v2.png")
+const inicioJuego = esc.construir(confg_inicioJuego, {}, "inicio-v2.png")
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
 const escenarioInicial = esc.construir(confg_EscenarioInicial,
                                        confg_escSig_escenarioInicial, 
                                        "fondo-escenario-inicial.png")
-// ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
+// ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
 const escenarioBifurcacion = esc.construir(confg_escenarioBifurcacion,
                                            confg_escSig_escenarioBifurcacion_v1,
-                                            "fondo-escenario-inicial.png")
+                                           "fondo-escenario-inicial.png")
 
 const escenarioEntradaCabaña = esc.construir(confg_escenarioEntradaCabaña,
-                                            confg_escSig_escenarioEntradaCabaña_v1,
-                                            "fondo-escenario-inicial.png" )
+                                             confg_escSig_escenarioEntradaCabaña_v1,
+                                             "fondo-escenario-inicial.png" )
+
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
  const escenarioCabañaInicial = esc.construir(confg_escenarioCabañaInicial,
@@ -69,14 +70,12 @@ const escenarioEntradaCabaña = esc.construir(confg_escenarioEntradaCabaña,
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
 
-
 const escenarioTEST = esc.construir(confg_escenarioTEST,
-                                    confg_escSig_TEST,"fondo-escenario-inicial.png")
-
-// ##############################################################################################################
-
+                                    confg_escSig_TEST, 
+                                    "fondo-escenario-inicial.png")
 
 // ##############################################################################################################
 //  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
 // ##############################################################################################################
-const escenarioDiapoGranero = esc.construir(confg_graneroDiapo,{},"granero-diapo1.png") 
+
+const escenarioDiapoGranero = esc.construir(confg_graneroDiapo, {}, "granero-diapo1.png") 

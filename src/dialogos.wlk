@@ -15,8 +15,8 @@ import enemigos.*
 const dialogoAmiga = ["Hola, como estas","Bien y tu?","Bien, estamos reimplementando los dialogos","Adios"]
 
 const dialogoEscenarioInicial = [amiga,dialogoAmiga]
-//------------DIALOGOS EN ESCENARIO TEST -----
 
+//------------DIALOGOS EN ESCENARIO TEST -----
 const dialogoTEST = ["Hola de nuevo","Ya habiamos hablado","Enloqueci verdad?","Si, ya vete"]
 const dialogoEscenarioTest = [amiga,dialogoTEST]
 //--------------------------------------------

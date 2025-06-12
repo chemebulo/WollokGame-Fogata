@@ -73,7 +73,7 @@ describe "Movimiento del personaje con colisiones:"{
         game.height(20)
         game.cellSize(100)
 
-        amiga.position (game.at(5,0))
+        amiga.position(game.at(5,0))
         fogata.position(game.at(2,2))
         carpa.position(game.at(5,5))
         protagonista.position(game.at(0,0))
