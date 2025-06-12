@@ -59,7 +59,7 @@ class Enemigo inherits VisualConMovimiento{
 // ################################################################################################################# \\
 
 class Lobo inherits Enemigo(position = game.at(6,0), image = "lobo-derecha.png", vida = 3, daño = 1){
-    const property comportamiento //
+    const property comportamiento = agresivo
 
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.

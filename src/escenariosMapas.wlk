@@ -95,7 +95,7 @@ object o{
 
 object la {  
     method construir(posicion){
-        const loboTemp = new Lobo(comportamiento = agresivo);
+        const loboTemp = new Lobo(position=posicion,comportamiento = agresivo);
         const eventoTemp = new EventoLobo(loboEv = loboTemp)
         game.addVisual(loboTemp);
         gestorDeLobos.agregarLobos(loboTemp,eventoTemp);
