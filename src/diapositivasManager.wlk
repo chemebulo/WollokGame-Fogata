@@ -39,54 +39,36 @@ const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGRE
                           v.cambiarEscenario(escenarioTEST)}        
 
 
-// DIAPOSITIVAS
+const peliculaInicioJuego = new Pelicula( pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
+const peliculaGranero = new Pelicula( pelicula =  [dg0,dg1,dg2])
 
 class Pelicula{
-    method peliculaActual() 
-    method iteradorActual()
-}
 
-object peliculaInicioJuego inherits Pelicula{
-    const d0 = new Diapositiva(image = "diapo-1.png")
-    const d1 = new Diapositiva(image = "diapo-2.png")
-    const d2 = new Diapositiva(image = "diapo-3.png")
-    const d3 = new Diapositiva(image = "diapo-4.png")
-    const d4 = new Diapositiva(image = "diapo-5.png")
-    const d5 = new Diapositiva(image = "diapo-6.png")
-    const d6 = new Diapositiva(image = "diapo-7.png")
-    const d7 = new Diapositiva(image = "diapo-8.png")
-    const d8 = new Diapositiva(image = "diapo-9.png")
-    const d9 = new Diapositiva(image = "diapo-10.png")
-
-    const pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9]
+    const pelicula
     const iteradorPelicula = new IteradorDiapositiva(listaAIterar = self.peliculaActual().copy())
-
-    override  method peliculaActual(){
-        return pelicula
-    }
-
-    override method iteradorActual(){
-        return iteradorPelicula
-    }
+    method peliculaActual() = pelicula
+    method iteradorActual() = iteradorPelicula
 }
 
-object peliculaGranero inherits Pelicula{
-    const dg0 = new Diapositiva(image = "granero-diapo2.png")
-    const dg1 = new Diapositiva(image = "granero-diapo3.png")
-    const dg2 = new Diapositiva(image = "granero-diapo4.png")
 
-    const pelicula =  [dg0,dg1,dg2]
-    const iteradorPelicula = new IteradorDiapositiva(listaAIterar = self.peliculaActual().copy())
+// DIAPOSITIVAS PARA TODO EL JUEGO                                        
+const d0 = new Diapositiva(image = "diapo-1.png")
+const d1 = new Diapositiva(image = "diapo-2.png")
+const d2 = new Diapositiva(image = "diapo-3.png")
+const d3 = new Diapositiva(image = "diapo-4.png")
+const d4 = new Diapositiva(image = "diapo-5.png")
+const d5 = new Diapositiva(image = "diapo-6.png")
+const d6 = new Diapositiva(image = "diapo-7.png")
+const d7 = new Diapositiva(image = "diapo-8.png")
+const d8 = new Diapositiva(image = "diapo-9.png")
+const d9 = new Diapositiva(image = "diapo-10.png")
+const dg0 = new Diapositiva(image = "granero-diapo2.png")
+const dg1 = new Diapositiva(image = "granero-diapo3.png")
+const dg2 = new Diapositiva(image = "granero-diapo4.png")
 
-    override method peliculaActual(){
-        return pelicula
-    }
 
-    override method iteradorActual(){
-        return iteradorPelicula
-    }
-}
-
+  
+    
 //####################################
 
 class IteradorDiapositiva{
