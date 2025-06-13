@@ -62,7 +62,8 @@ const confg_escSig_escenarioEntradaCabaña_v3 = {puertaEntradaCabaña.irHacia(es
                                                 escenarioCabañaInicial.confgEscSiguiente(confg_escSig_escenarioCabañaInicial_v2);} // estoy aqui
 
 
-const confg_escSig_escenarioCabañaInicial_v2 = {puertaEntradaCabaña.irHacia(escenarioInicial)}//estoy aqui//modificar esta parte
+const confg_escSig_escenarioCabañaInicial_v2 = {puertaEntradaCabaña.irHacia(escenarioEntradaCabaña)}
+//estoy aqui//modificar esta parte con los setters nuevos 
 
 
 
