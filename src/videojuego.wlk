@@ -11,6 +11,7 @@ object videojuego{
     var property estoyEnPrologo = true // settear a true 
     var property estoyEnGranero = false
     var property escenaAmigaMuerta =false
+    var property estoyEnFinalJuego = false
    
     method stopMusica(){
         ostJuego.stop()
@@ -68,7 +69,7 @@ object videojuego{
     // ################### Metodos para manejo de diapositivas ##################
 
     method interactuarDiapositias(){
-        if(estoyEnPrologo || estoyEnGranero || escenaAmigaMuerta){ 
+        if(estoyEnPrologo ||  escenaAmigaMuerta || estoyEnGranero || estoyEnFinalJuego){ 
             gestorDiapositiva.gestionarDiapositivas()
         }
     }
