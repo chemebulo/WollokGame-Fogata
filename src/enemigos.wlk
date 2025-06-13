@@ -3,6 +3,7 @@ import visualesExtra.*
 import direccion.*
 import npcEstados.*
 import eventos.*
+import escenarios.*
 
 class Enemigo inherits VisualConMovimiento{
     var property estado    = new EnemigoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
@@ -85,8 +86,8 @@ class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv=self
 
 object guardabosques inherits Enemigo(position = game.at(5,5), image = "guardabosques-cabaña.png", vida = 20, daño = 1){
     var property estadoCombate = armadoGuardabosques // Representa al estado de combate del guardabosques.
-    var dioleña = false // Indica si el guardabosques le dio leña a su enemigo (el protagonista).
-
+    
+    var property estadoCabaña = inicioLenia
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
@@ -109,12 +110,14 @@ object guardabosques inherits Enemigo(position = game.at(5,5), image = "guardabo
     }
 
     // ################# REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO: ################# //
+    /*
+        Estos dos metodos los llama eventoCabaña en eventos.wlk
+    */
 
     method comprobarDialogo(){
         // Comprueba si el diálogo terminó para poder darle la leña a su enemigo (el protagonista). 
-        if(self.terminoDialogo() and (not dioleña)){
-            self.darLeña()
-            dioleña = true
+        if(self.terminoDialogo()){
+           estadoCabaña.realizarAccion()
         }
     }
 
@@ -122,11 +125,34 @@ object guardabosques inherits Enemigo(position = game.at(5,5), image = "guardabo
         // Indica si el diálogo con su enemigo (el protagonista) terminó.
         return enemigo.conversacionNPC().isEmpty() 
     }       
-        
-    method darLeña(){
-        // Añade el visual de la leña en el mapa, para que su enemigo (el protagonista) pueda agarrarla.
-        game.addVisual(leña) 
-    }
-} 
+           
+}    
+/*
+ESTOS DOS OBJETOS SON LAS ACCIONES QUE HACE EL GUARDABOSQUES LAS DOS VECES QUE ESTA EN LA CABAÑA
+SOLO SE ACTIVAN CUANDO EL PROTAGONISTA AGOTA EL DIAOGO.  LUEGO NO HACEN NADA HASTA QUE SE FINALIZA EL 
+EVENTO CAMBIANDO DE ESCENARIO
+EL BOOLEANO SE CAMBIA A TRUE LUEGO DE REALIZAR ACCION PARA HACERLO UNA SOLA VEZ
+*/
+object inicioLenia{
+    var dioLeña = false
+
+        method realizarAccion(){
+            if(not dioLeña){
+                     game.addVisual(leña);
+                     dioLeña=true 
+            }
+        }
+}
+ 
+
+object prepararseParaGranero{
+     var iremosAGranero = false
+        method realizarAccion(){
+            if(not iremosAGranero)
+                    game.addVisual(puertaEntradaCabaña);
+                    iremosAGranero = true
+        }
+}
+
 
 // ################################################################################################################# \\

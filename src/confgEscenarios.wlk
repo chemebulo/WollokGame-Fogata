@@ -37,7 +37,7 @@ const confg_EscenarioInicial_v1 = {e =>
                                 e.visualesEnEscena( [amiga, carpa, fogata, puertaNorte, protagonista]);
                                 e.ost(game.sound("musica-escenarioInicial-v1.mp3"));
                                 e.dialogo(dialogoEscenarioInicial)}
-
+//CONFIGURADORESESCENARIO BIFURCACION
 const confg_escenarioBifurcacion_v1 = {e =>        
                                     e.mapa(mapa_escenarioBifurcacion_v1);
                                     e.visualesEnEscena( [ puertaEste, protagonista]);
@@ -50,7 +50,17 @@ const confg_escenarioBifurcacion_v2 = {e =>
                                        e.ost(game.sound("lobos-atacan.mp3"));
                                        }
 
+const confg_escenarioBifurcacion_v3 = {e=> e.mapa(mapa_escenarioBifurcacion_v3);
+                                          e.visualesEnEscena([protagonista,puertaSur]);
+                                        e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                        e.eventos([hablarProta2])
+                                        }
+const confg_escenarioBifurcacion_v4 = { e=> e.visualesEnEscena([protagonista,puertaEste]);
+                                            e.mapa(mapa_escenarioBifurcacion_v4);
+                                            e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                            e.eventos([hablarProta])}
 
+// CONFIGURADORES ENTRADACABAÑA
 const confg_escenarioEntradaCabaña_v1 = {e => 
                                       e.mapa(mapa_entradaCabaña_v1);
                                       e.visualesEnEscena([cabaña,protagonista,puertaEntradaCabaña] );
@@ -61,13 +71,27 @@ const confg_escenarioEntradaCabaña_v2 = {e =>
                                          e.visualesEnEscena([cabaña,protagonista, puertaOeste] );
                                          e.ost(game.sound("musica-escenarioInicial-v1.mp3"))}
 
+const confg_escenarioEntradaCabaña_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
+                                              e.visualesEnEscena([cabaña,protagonista,puertaEntradaCabaña]);
+                                              e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                              }
+
+
 const  confg_escenarioCabañaInicial_v1 = {e =>           
                                        e.mapa(mapa_cabañaInicial_v1);
                                        e.visualesEnEscena([guardabosques,protagonista] );
                                        e.ost(game.sound("cabaña.mp3"));
                                        e.dialogo(dialogoEnCabaña);
-                                       e.eventos([recojerLeña])}
+                                       e.eventos([eventoCabaña])}
 
+const confg_escenarioCabañaInicial_v2 = {e => guardabosques.estadoCabaña(prepararseParaGranero);
+                                          e.mapa(mapa_cabañaInicial_v1);
+                                          e.visualesEnEscena([guardabosques,protagonista]);
+                                          e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                          e.dialogo(dialogoEnCabaña2);
+                                          e.eventos([eventoCabaña])}
+
+// ############ZONA CUEVA
 const confg_escenarioEntradaCueva_v1 = {e => e.mapa(mapa_entradaCueva_v1);
                                           e.visualesEnEscena([cueva,protagonista,puertaEntradaCueva])
                                           e.ost(game.sound("lobos-atacan.mp3"))}    
@@ -101,7 +125,10 @@ const confg_escenarioTEST = {e =>
 // #########################################################################################################
 // CONFIGURADORES EXCLUSIVOS PARA ESCENARIOS CON DIAPOS, NO REQUIEREN CONFIGURADOR DE ESCEANRIO SIGUIENTE
 // #########################################################################################################
+const confg_escenarioAmigaMuerta = {e=> videojuego.escenaAmigaMuerta(true);
+                                        e.ost(game.sound("traicion-granero.mp3"))
 
+                                      }
 
 const confg_graneroDiapo = {e=> videojuego.estoyEnGranero(true);
                             //e.mapa(mapa_inicioJuego);

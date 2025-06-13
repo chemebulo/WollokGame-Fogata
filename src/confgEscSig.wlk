@@ -1,6 +1,6 @@
 import escenarios.*
 import confgEscenarios.*
-
+import videojuego.*
 /*
  CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
     *tipo: bloque
@@ -47,10 +47,24 @@ const confg_escSig_escenarioCueva_v4 = {puertaEntradaCueva.irHacia(escenarioEntr
                                           escenarioEntradaCueva.confgActual(confg_escenarioEntradaCueva_v2);
                                           escenarioEntradaCueva.confgEscSiguiente(confg_escSig_escenarioEntradaCueva_v2)}     
 
-const confg_escSig_escenarioEntradaCueva_v2 = {puertaEste.irHacia(escenarioBifurcacion)}// estoy aqui
+const confg_escSig_escenarioEntradaCueva_v2 = {puertaEste.irHacia(escenarioBifurcacion);
+                                                escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v3);
+                                                escenarioBifurcacion.confgEscSiguiente(confg_escSig_escenarioBifurcacion_v3);}
+
+const confg_escSig_escenarioBifurcacion_v3 = {puertaSur.irHacia(escenarioAmigaMuerta)}
+
+const confg_escSig_escenarioBifurcacion_v4 = {puertaEste.irHacia(escenarioEntradaCabaña)
+                                           escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v3);
+                                            escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v3); } 
+
+const confg_escSig_escenarioEntradaCabaña_v3 = {puertaEntradaCabaña.irHacia(escenarioCabañaInicial);
+                                                escenarioCabañaInicial.confgActual(confg_escenarioCabañaInicial_v2);
+                                                escenarioCabañaInicial.confgEscSiguiente(confg_escSig_escenarioCabañaInicial_v2);} // estoy aqui
+
+
+const confg_escSig_escenarioCabañaInicial_v2 = {puertaEntradaCabaña.irHacia(escenarioInicial)}//estoy aqui//modificar esta parte
 
 
 
-
-
+// TEXTOS
 const confg_escSig_TEST = {game.removeVisual(puertaSur)}

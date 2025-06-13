@@ -27,18 +27,19 @@ class EventoMultiple{
                  se espera que todos los visuales sepan cumplir la misma orden
             
     */
-    const visualesEvento
+    const visualesEvento = []
+    const nombreEvento = self.toString()
 
-    method nombreEvento() 
+  
     
     method tiempo() 
 
     method finalizarEvento(){
-        game.removeTickEvent(self.nombreEvento())
+        game.removeTickEvent(nombreEvento)
     }
  
     method iniciarEvento(){
-        game.onTick(self.tiempo(), self.nombreEvento(), {visualesEvento.forEach({v => self.orden(v)})})
+        game.onTick(self.tiempo(), nombreEvento, {visualesEvento.forEach({v => self.orden(v)})})
     }
       
     method orden(visual){}
@@ -49,7 +50,7 @@ class EventoLobo{ // solo funciona para lobos que se agregan directamente a la m
     const tiempoRandom = 1000.randomUpTo(2000)
     const loboEv
 
-    method nombre(){
+    method nombreEvento(){
         return nombre
     }
 
@@ -64,32 +65,28 @@ class EventoLoboEspecial inherits EventoLobo{ // hace que se muestre la puerta d
     }  
 }
 
-class EventoUnico inherits EventoMultiple(visualesEvento=[]){ 
+class EventoUnico{ 
     /*
         Evento para un solo visual,
         en la instancia implementar tiempo(), nombreEvento() y ordenUnica(sujeto)
     */
-    const sujetoUnico
+    const tiempo = 800
+    const sujetoUnico = null
 
-    override method iniciarEvento(){
-        game.onTick(self.tiempo(), self.nombreEvento(), {self.ordenUnica(sujetoUnico)})
+     method iniciarEvento(){
+        game.schedule(tiempo, {self.ordenUnica(sujetoUnico)})
     }
 
-    method ordenUnica(visual)
+    method ordenUnica(visual){}
 }
 
 //######################################################
         //EVENTOS PARA PERSECUCION DE LOBO
 //######################################################
 
-object ataqueGuardabosques inherits EventoMultiple(visualesEvento=[guardabosques]){
-    override method tiempo()= 1000
-
-    override method nombreEvento(){
-        return "Guardabosques persigue al protagonista"
-    }
- 
-    override method orden(visual){
+object ataqueGuardabosques inherits EventoUnico(sujetoUnico=guardabosques){
+    
+    override method ordenUnica(visual){
         visual.perseguirEnemigo()
     }
 }
@@ -98,30 +95,24 @@ object ataqueGuardabosques inherits EventoMultiple(visualesEvento=[guardabosques
         //EVENTOS UNICOS
 //######################################################
 
-object personajeHabla inherits EventoUnico(sujetoUnico=protagonista){
+object hablarProta inherits EventoUnico(sujetoUnico=protagonista){
 
-    override method tiempo(){
-        return 800
-    }
-    override method nombreEvento(){
-        return "Hablar"
-    }
- 
     override method ordenUnica(visual){
-        game.say(visual,"Hola, estoy hablando por un evento")
+        game.say(visual,"Laura esta muerta, vere si el guardabosques tiene armas para matar a los bichos")
+    }
+}
+object hablarProta2 inherits EventoUnico(sujetoUnico=protagonista){
+    override method ordenUnica(visual){
+        game.say(visual,"La puta madre...LAURAAA!!!")
     }
 }
 
-object recojerLeña inherits EventoUnico(sujetoUnico= guardabosques){
 
-    override method tiempo(){
-        return 800
-    }
-    override method nombreEvento(){
-        return "Recojer leña"
-    }
-
-    override method ordenUnica(visual){
+object eventoCabaña inherits EventoMultiple(visualesEvento=[guardabosques]){
+     
+    override method tiempo() = 800
+    override method orden(visual){
         visual.comprobarDialogo()
     }
 }
+

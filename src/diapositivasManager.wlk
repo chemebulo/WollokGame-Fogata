@@ -1,5 +1,8 @@
 import videojuego.*
 import escenarios.*
+import confgEscenarios.*
+import confgEscSig.*
+
 
 object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapositivas
     var property peliculaAMostrar = peliculaInicioJuego
@@ -30,9 +33,21 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
 */
 const inicioJuegoD = {v => gestorDeDiapositivas.removerTodo();
                       v.estoyEnPrologo( false );
-                      gestorDeDiapositivas.peliculaAMostrar(peliculaGranero)
-                      gestorDeDiapositivas.bloqueAEjecutar(despuesDeGranero)
+                      gestorDeDiapositivas.peliculaAMostrar(peliculaAmigaMuerta)
+                      gestorDeDiapositivas.bloqueAEjecutar(despuesDeAmigaMuerta)
                       v.cambiarEscenario(escenarioInicial)}
+
+   
+const despuesDeAmigaMuerta = { v => gestorDeDiapositivas.removerTodo();
+                                   v.escenaAmigaMuerta(false);
+                                  gestorDeDiapositivas.peliculaAMostrar(peliculaGranero);
+                                 gestorDeDiapositivas.bloqueAEjecutar(despuesDeGranero) ;
+                                 escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v4);
+                                 escenarioBifurcacion.confgEscSiguiente(confg_escSig_escenarioBifurcacion_v4)
+                                 v.cambiarEscenario(escenarioBifurcacion) //HAY QUE DARLE LOS CONFIGURADORES AQUI
+                                 
+                      
+                      }                                         
 
 const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
                           v.estoyEnGranero( false );
@@ -41,6 +56,7 @@ const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGRE
 
 const peliculaInicioJuego = new Pelicula( pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
 const peliculaGranero = new Pelicula( pelicula =  [dg0,dg1,dg2])
+const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1,dam2,dam3])
 
 class Pelicula{
 
@@ -49,6 +65,11 @@ class Pelicula{
     method peliculaActual() = pelicula
     method iteradorActual() = iteradorPelicula
 }
+
+
+const dam1 = new Diapositiva(image ="diapo-amiga-muerta2.png")
+const dam2 = new Diapositiva(image ="diapo-amiga-muerta3.png")
+const dam3 = new Diapositiva(image ="diapo-amiga-muerta4.png")
 
 
 // DIAPOSITIVAS PARA TODO EL JUEGO                                        

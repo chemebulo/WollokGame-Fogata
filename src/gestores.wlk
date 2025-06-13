@@ -235,7 +235,7 @@ object gestorDeLobos{
     method limpiarLobos() {
         lobosEscenario.forEach({lobo => game.removeVisual(lobo)})
         lobosEscenario.clear()
-        eventosLobos.forEach({ev => game.removeTickEvent(ev.nombre())})
+        eventosLobos.forEach({ev => game.removeTickEvent(ev.nombreEvento())})
         eventosLobos.clear()
     }
 }

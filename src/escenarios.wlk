@@ -6,10 +6,10 @@ import confgEscSig.*
 
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
 
-const puertaNorte = new Puerta(position = norte.ubicacion(), irHacia = escenarioInicial)    
-const puertaOeste = new Puerta(position = oeste.ubicacion(), irHacia = escenarioInicial)
-const puertaEste  = new Puerta(position = este.ubicacion() , irHacia = escenarioInicial)
-const puertaSur   = new Puerta(position = sur.ubicacion()  , irHacia = escenarioInicial)
+const puertaNorte = new Puerta(image = "puerta.png",position = norte.ubicacion(), irHacia = escenarioInicial)    
+const puertaOeste = new Puerta(image = "puerta.png",position = oeste.ubicacion(), irHacia = escenarioInicial)
+const puertaEste  = new Puerta(image = "puerta.png",position = este.ubicacion() , irHacia = escenarioInicial)
+const puertaSur   = new Puerta(image = "puerta.png",position = sur.ubicacion()  , irHacia = escenarioInicial)
 
 const puertaEntradaCabaña = new Puerta(image = "puerta.png", irHacia= escenarioCabañaInicial)
 const puertaEntradaCueva = new Puerta(image ="puerta.png",irHacia = escenarioCueva)
@@ -85,6 +85,7 @@ const escenarioTEST = esc.construir(confg_escenarioTEST,
                                     "fondo-escenario-inicial.png")
 
 //const escenarioCueva = esc.construir({},{},"fondo-cueva.png")
+
 // ##############################################################################################################
 //  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
 // ##############################################################################################################
@@ -92,5 +93,7 @@ const escenarioTEST = esc.construir(confg_escenarioTEST,
 const escenarioDiapoGranero = esc.construir(confg_graneroDiapo, {}, "granero-diapo1.png") 
 
 const escenarioGranero = esc.construir({},{},"fondo-granero.png")
+
+const escenarioAmigaMuerta = esc.construir(confg_escenarioAmigaMuerta,{},"diapo-amiga-muerta1.png")
 
 const escenarioEntradaGranero = esc.construir({},{},"")

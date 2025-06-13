@@ -23,3 +23,6 @@ const dialogoEscenarioTest = [amiga,dialogoTEST]
 
 const dialogoCabaña = ["Hola, como va?","Buenas Juan, como va el lugar?","Excelente, me preguntaba si tendria algo de leña","Claro,ahi al lado de la chimenea"]
 const dialogoEnCabaña = [guardabosques, dialogoCabaña]
+
+const dialogoCabaña2 = ["AUXILIOO!!!?","Que paso chango?","Esta lleno de lobos, mataron a mi amiga","Mierda, no pensé que se acercarian","Que hare ahora?","Tranquilo,iremos al granero","Que hay ahi?","Tengo...armas"]
+const dialogoEnCabaña2 = [guardabosques, dialogoCabaña2]
