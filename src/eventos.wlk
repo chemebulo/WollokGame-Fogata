@@ -66,7 +66,7 @@ class EventoLobo{ // solo funciona para lobos que se agregan directamente a la m
 class EventoLoboEspecial inherits EventoLobo{ // hace que se muestre la puerta deseada cuando los lobos mueran
    
    override  method iniciarEvento(){
-        game.onTick(tiempoRandom,nombre,{loboEv.perseguirEnemigo(); loboEv.verEntorno()})
+        game.onTick(tiempoRandom,nombre,{loboEv.verEntorno();loboEv.perseguirEnemigo()})
     }  
 }
 
@@ -121,9 +121,16 @@ const hablarProta2 = new EventoHablar(sujetoUnico=protagonista,mensaje="La puta 
 
 const hablarProta3 = new EventoHablar(sujetoUnico=protagonista,mensaje="Ya mismo lo mato a ese hijo de p@ta")  
 
+const hablarProta4 = new EventoHablar(sujetoUnico=protagonista,mensaje= "Que carajo????")
+
+const hablarProta5 = new EventoHablar(sujetoUnico=protagonista,mensaje= "Aca tambien????")
+
+const hablarProta6 = new EventoHablar(sujetoUnico=protagonista,mensaje= "buehhhh ")
+
 const guardabosquesHabla = new EventoHablar(sujetoUnico=guardabosques,mensaje= "Aqui al norte esta el granero")
 
 const guardabosquesHabla2 = new EventoHablar(sujetoUnico=guardabosques,mensaje= "Aca adentro, apurate chango")
+
 
 
 

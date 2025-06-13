@@ -67,7 +67,8 @@ const confg_escSig_escenarioCabañaInicial_v2 = {puertaEntradaCabaña.irHacia(es
                                                 escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v4);
                                                 escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v4)}
 //estoy aqui//modificar esta parte con los setters nuevos 
-const confg_escSig_escenarioEntradaCabaña_v4 ={puertaNorte.irHacia(escenarioEntradaGranero)}
+const confg_escSig_escenarioEntradaCabaña_v4 ={
+                                               puertaNorte.irHacia(escenarioEntradaGranero)}
 
 // configuradores granero
 const confg_esSig_escenarioEntradaGranero_v1 = {puertaGranero.irHacia(escenarioDiapoGranero)}
@@ -76,7 +77,16 @@ const confg_esSig_escenarioGranero_v1 = {puertaGranero.irHacia(escenarioEntradaG
                                           escenarioEntradaGranero.confgActual(confg_escenarioEntradaGranero_v2)
                                           escenarioEntradaGranero.confgEscSiguiente(confg_esSig_escenarioEntradaGranero_v2)}
 
-const confg_esSig_escenarioEntradaGranero_v2 = {puertaSur.irHacia(escenarioInicial)}                                          
+const confg_esSig_escenarioEntradaGranero_v2 = {puertaSur.irHacia(escenarioEntradaCabaña);
+                                                 escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v5);
+                                                 escenarioEntradaCabaña.confgEscSiguiente(confg_esSig_escenarioEntradaCabaña_v5)
+                                                 }            
+const confg_esSig_escenarioEntradaCabaña_v5 = {puertaEntradaCabaña.irHacia(escenarioCabañaInicial);
+                                               escenarioCabañaInicial.confgActual(confg_escenarioCabañaInicial_v3);
+                                               escenarioCabañaInicial.confgEscSiguiente( confg_escSig_escenarioCabañaInicial_v3)
+                                              
+                                               }                
+const confg_escSig_escenarioCabañaInicial_v3 = {puertaEntradaCabaña.irHacia(escenarioInicial)}                                                                                                              
 //CONTINUAR AQUI....                                           
 // TEXTOS
 const confg_escSig_TEST = {game.removeVisual(puertaSur)}

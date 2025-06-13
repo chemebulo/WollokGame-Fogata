@@ -146,7 +146,18 @@ object hacha inherits Visual{
         game.say(protagonista, "Ya puedo defenderme de esos bichos")
     }
 }
-
+object nota inherits Visual{
+    var property position = game.at(5,5)
+    var property image = "nota.png"
+    override method esAtravesable(){
+        return true 
+    }
+      method interaccion(){
+        game.removeVisual(self)
+        game.say(protagonista, "SI SOBREVIVISTE TE ESPERO EN LA CUEVA...")
+        game.addVisual(puertaEntradaCabaña)
+    }
+}
 // ########################################################################################################################## \\
 
 class Obstaculo inherits Visual{

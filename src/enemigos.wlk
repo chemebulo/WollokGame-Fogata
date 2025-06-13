@@ -72,7 +72,7 @@ class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv = se
     var puedeSalir = true
      
     method verEntorno(){
-        if(puedeSalir and not self.estaVivo()){
+        if( not self.estaVivo() and puedeSalir){
             puedeSalir=false
             game.addVisual(salida)
         }
