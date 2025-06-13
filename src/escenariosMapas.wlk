@@ -320,7 +320,7 @@ const mapa_entradaCueva_v2 =
      
     ].reverse()
 
-//#### ESCENARIOS CUEVAS ########
+//#### ESCENARIOS CUEVAS (LABERINTO,SON 4)########
 
 const mapa_cueva_v1 =
     [
