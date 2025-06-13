@@ -9,13 +9,47 @@ import gestores.*
     El guardabosques pasa a estado armado al final del juego
 */
 
+// ########################################################################################################################## \\
 // ESTADOS DEL PROTAGONISTA Y GUARDABOSQUES
+
 const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
 const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
 const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
 
-// CLASES DE ESTADO
+// ########################################################################################################################## \\
+
+class Agresivo{
+    const pj
+    const animacion = new AnimacionAtaque(pjAnimado= pj, imagenTemp = pj.imagenTemporal())
+
+    method atacarEnemigo(){
+        // El lobo ataca al enemigo cada 1 segundo.
+        animacion.animarAtaque()
+        game.schedule(800, {pj.emitirSonidoEnojado();
+                            pj.enemigo().atacadoPor(pj)})
+    }
+
+    method puedeAtacarAlEnemigo(){
+        // Indica si el lobo puede atacar a su enemigo. 
+        return pj.estaSobreEnemigo()
+    } 
+}
+
+// ########################################################################################################################## \\
+
+class Pasivo{
+
+    method atacarEnemigo(){}
+
+    method puedeAtacarAlEnemigo(){
+        // Indica si el lobo puede atacar a su enemigo. En este caso, no puede. 
+        return false
+    }
+}
+
+// ########################################################################################################################## \\
+
 class Desarmado{
     const image // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
     
@@ -23,14 +57,16 @@ class Desarmado{
         return image
     }
     
-    method ataque(){}
+    method atacarEnemigo(){}
 }
+
+// ########################################################################################################################## \\
 
 class ArmadoConHacha{
     const pj             = null  // personaje que ataca
     const imagenActual   = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
-    const modoAtaque     = new HachazoCruz(atacante= self.pj())
-    const animacion      = new AnimacionAtaque(imagenTemp = self.imagenTemporal(),pjAnimado= self.pj())
+    const modoAtaque     = new AtaqueEnCruz(atacante = pj)
+    const animacion      = new AnimacionAtaque(imagenTemp = imagenTemporal, pjAnimado= pj)
     const imagenTemporal // la imagen que se muestra al atacar
 
     method imagenTemporal(){
@@ -45,7 +81,7 @@ class ArmadoConHacha{
         return pj
     }
 
-    method ataque(){
+    method atacarEnemigo(){
         animacion.animarAtaque()
         modoAtaque.ataqueArma()
     }
@@ -60,7 +96,7 @@ class ArmadoConHacha{
     }
 }
 
-// ANIMACION Y TIPO DE ATAQUE
+// ########################################################################################################################## \\
 
 class AnimacionAtaque{
     /*
@@ -76,11 +112,15 @@ class AnimacionAtaque{
         game.removeVisual(pjAnimado) 
         pjAnimado.image(imagenTemp)
         game.addVisual(pjAnimado)
-        game.schedule(200,{game.removeVisual(pjAnimado);pjAnimado.image(imagenActual);game.addVisual(pjAnimado)})
+        game.schedule(200,{game.removeVisual(pjAnimado); 
+                           pjAnimado.image(imagenActual); 
+                           game.addVisual(pjAnimado)})
     }
 }
 
-class HachazoCruz{
+// ########################################################################################################################## \\
+
+class AtaqueEnCruz{
     /*
         FUNCIONAMIENTO DEL ATAQUE EN CRUZ:
         atacarEnPosiciones(posiciones) : dada una coleccion de posiciones(celdas) ataca a los objetos en esas posiciones
@@ -112,7 +152,7 @@ class HachazoCruz{
                                   atacante.position().right(1)]
 }
 
-class HachazoEnLugar inherits HachazoCruz{
+class AtaqueEnLugar inherits AtaqueEnCruz{
     override method ataqueArma(){
         self.atacarObjetos(self.objetosEnPosicionAtacada(atacante.position()))
     }
@@ -122,7 +162,7 @@ class HachazoEnLugar inherits HachazoCruz{
     }
 } 
 
-// ######################################################################################################################## //
+// ########################################################################################################################## \\
 
 class EnemigoVivo{
     const visual //
@@ -135,8 +175,12 @@ class EnemigoVivo{
     }
 
     method atacarEnemigo(){
-        // El lobo ataca al enemigo cada 1 segundo.
-        game.schedule(1000, {visual.enemigo().atacadoPor(visual)})
+        visual.estadoCombate().atacarEnemigo()
+    }
+
+    method puedeAtacarAlEnemigo(){
+        // Indica si el enemigo puede atacar a su enemigo. 
+        return visual.estadoCombate().puedeAtacarAlEnemigo()
     }
 
     method atacadoPor(enemigo){
@@ -144,6 +188,8 @@ class EnemigoVivo{
         vidaGestor.atacadoPor(visual, enemigo)
     }
 }
+
+// ########################################################################################################################## \\
 
 class EnemigoMuerto{
     method perseguirEnemigo(){} //
@@ -153,22 +199,4 @@ class EnemigoMuerto{
     method atacadoPor(enemigo){} //
 }
 
-// ######################################################################################################################## //
-
-object agresivo{
-
-    method puedeAtacarAlEnemigo(visual){
-        // Indica si el lobo puede atacar a su enemigo. 
-        return visual.estaSobreEnemigo()
-    } 
-}
-
-// ######################################################################################################################## //
-
-object pasivo{
-
-    method puedeAtacarAlEnemigo(visual){
-        // Indica si el lobo puede atacar a su enemigo. En este caso, no puede. 
-        return false
-    }
-}
+// ########################################################################################################################## \\

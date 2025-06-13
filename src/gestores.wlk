@@ -17,7 +17,6 @@ object gestorDeEventos{
 }
 
 // ############################################################################################################################################# \\
-
 object gestorDeDirecciones{
     const ejePrimero = ejeX // Representa el primer eje del tablero, en este caso es el eje X.
     const ejeSegundo = ejeY // Representa el segundo eje del tablero, en este caso es el eje Y.
@@ -30,7 +29,6 @@ object gestorDeDirecciones{
                                                                             { ejeSegundo.segundaDir() }
     }
 }
-
 // ############################################################################################################################################# \\
 
 object gestorDePosiciones{
@@ -52,7 +50,6 @@ object gestorDePosiciones{
 // ############################################################################################################################################# \\
 
 object gestorDeColisiones{
-
     method puedeMoverA(direccion, visual){
         // Indica si el visual dado puede moverse hacia la dirección dada.
         const posicionAMover = direccion.siguientePosicion(visual.position())
@@ -213,6 +210,7 @@ object gestorFondoEscenario{
 // ############################################################################################################################################# \\
 
 object gestorDeLimpiezaEscenarios{
+    
     method limpiar(esc){
         esc.limpiarVisualesEnEscena()
         esc.dialogo([])
@@ -232,7 +230,7 @@ object gestorDeLobos{
         lobo.eventoLobo().iniciarEvento()
     }
     
-    method limpiarLobos() {
+    method limpiarLobos(){
         lobosEscenario.forEach({lobo => game.removeVisual(lobo)})
         lobosEscenario.clear()
         eventosLobos.forEach({ev => game.removeTickEvent(ev.nombreEvento())})

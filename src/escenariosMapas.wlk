@@ -41,7 +41,7 @@ import eventos.*
     nombres de variables recomendados = mapa_nombreEscenario
 */
 
-//################# ELEMENTOS PARA CONSTRUIR EL MAPA ###################
+// ################################################################################################################# \\
 
 // Referencias a los distintos visuales para setter sus posiciones a la matriz o instanciarlos.
 class Elemento{ 
@@ -51,42 +51,40 @@ class Elemento{
         visual.position(position)
     }
 }
+
+// ################################################################################################################# \\
+
 class ElementoLobo{
     method construir(posicion){
-        const loboTemp = new Lobo(position=posicion);
+        const loboTemp = new Lobo(position = posicion);
         game.addVisual(loboTemp)
         gestorDeLobos.agregarLobos(loboTemp)
     }
 }
 
-// #####################################################################
+// ################################################################################################################# \\
 
 object _ inherits Elemento{
     override method construir(position){} // Por las dudas.
 }
 
+// ################################################################################################################# \\
 
-// #####################################################################
+object z inherits Elemento(visual = protagonista){} 
 
-object z inherits Elemento(visual=protagonista){} 
+// ################################################################################################################# \\
 
+object f inherits Elemento(visual = fogata){}
 
-// #####################################################################
+// ################################################################################################################# \\
 
-object f inherits Elemento(visual=fogata){}
+object v inherits Elemento(visual = carpa){}
 
+// ################################################################################################################# \\
 
-// #####################################################################
+object a inherits Elemento(visual = amiga){}
 
-object v inherits Elemento(visual=carpa){}
-
-
-// #####################################################################
-
-object a inherits Elemento(visual=amiga){}
-   
-
-// #####################################################################
+// ################################################################################################################# \\
 
 object o{
     method construir(posicion){
@@ -104,9 +102,7 @@ object p{
     }
 }
 
-object c inherits Elemento(visual=cueva){
-
-}
+object c inherits Elemento(visual = cueva){}
 
 // #####################################################################
  //                    ENEMIGOS
@@ -125,11 +121,9 @@ object j{ // lobo especial del granero, al matarlo me spawnea la salida
     }
 }
    
-// #####################################################################
+// ################################################################################################################# \\
 
-object g inherits Elemento(visual=guardabosques){ // Guardabosques -> No implementado, no usar.
-    
-}
+object g inherits Elemento(visual=guardabosques){} // Guardabosques -> No implementado, no usar. 
 
 object x inherits Elemento(visual= cabaña){}
 
@@ -137,8 +131,8 @@ object u inherits Elemento(visual=leña){}
 
 object h inherits Elemento(visual=hacha){}
 
-// ################################################################################
-// PUERTAS 
+// ################################################################################################################# \\
+
 object po inherits Elemento(visual=puertaOeste){}
 
 object pn inherits Elemento(visual=puertaNorte){}
@@ -166,7 +160,7 @@ const mapa_comun =
      
     ].reverse()
 
-// ################################################################################
+// ################################################################################################################# \\
 
 const mapa_escenarioInicial_v1 = 
     [
@@ -182,7 +176,7 @@ const mapa_escenarioInicial_v1 =
      
      ].reverse()
 
-// ################################################################################
+// ################################################################################################################# \\
 
 const mapa_escenarioBifurcacion_v1 =
     [
@@ -197,10 +191,10 @@ const mapa_escenarioBifurcacion_v1 =
         [_,_,_,_,_,_,_,_,_,_,_,_,_]
      
     ].reverse()
+
 const mapa_escenarioBifurcacion_v2 =     
 
     [
-
         [ _ , _ , _ , _ , _ , _ , t , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , l , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , o , o , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -246,13 +240,12 @@ const mapa_escenarioBifurcacion_v4 =
 
 
 const mapa_entradaCabaña_v1 = 
-[
-    
+    [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-        [ _ ,z  , _ , _ , _ ,x ,pg, _ , _ , _ , _ , _ , _ ],
+        [ _ ,z  , _ , _ , _ , x ,pg , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -261,8 +254,7 @@ const mapa_entradaCabaña_v1 =
     ].reverse() 
 
 const mapa_entradaCabaña_v2 = 
-[
-    
+    [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -381,19 +373,6 @@ const mapa_cueva_v4 =
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 const mapa_escenarioTest =
     [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
@@ -409,9 +388,9 @@ const mapa_escenarioTest =
     ].reverse()
 
 
+// ################################################################################################################# \\
+// EXCLUSIVO PARA REALIZAR LOS TEST, NO TOCAR O AVISAR SI SE MODIFICA
 
-
-//######################## EXCLUSIVO PARA REALIZAR LOS TEST, NO TOCAR O AVISAR SI SE MODIFICA
     const mapa_TEST =
     [
         [_,_,_,_,_,_,pn,_,_,_,_,_,_],

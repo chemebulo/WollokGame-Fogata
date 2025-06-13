@@ -14,7 +14,7 @@ class Visual{
     method atacadoPor(visual){} // Representa el comportamiento del visual al ser atacado por otro visual.
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 class VisualConMovimiento inherits Visual{
     var property position       // Describe la posición actual del visual.
@@ -27,10 +27,6 @@ class VisualConMovimiento inherits Visual{
         self.image(self.imagenNueva(direccion))
     }
 
-    method imagenNueva(direccion) // Describe la imagen nueva del visual en base a la dirección dada.
-
-    method interaccion(){} // Representa la interacción del visual con los diferentes objetos, en este caso no tiene ninguna.
-
     method estaVivo(){
         // Indica si el visual se encuentra vivo o no.
         return self.vida() > 0
@@ -40,9 +36,22 @@ class VisualConMovimiento inherits Visual{
         // Actualiza la vida del visual a cero.
         vida = 0
     }
+
+    method imagenMuerto(){
+        // Describe la imagen del enemigo muerto.
+        return "muerto-"+self.image()
+    }
+
+    method imagenTemporal(){
+        return "atacando-"+self.image()
+    }
+
+    method imagenNueva(direccion) // Describe la imagen nueva del visual en base a la dirección dada.
+
+    method interaccion(){} // Representa la interacción del visual con los diferentes objetos, en este caso no tiene ninguna.
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 object amiga inherits Visual{
     var property position = game.at(2,4)
@@ -50,21 +59,21 @@ object amiga inherits Visual{
     const property dialogo  = []
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 object fogata inherits Visual{
     var property position = game.at(3,4)
     const property image    = "fogata-apagada.png"
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 object carpa inherits Visual{
     var property position = game.at(6,4)
     const property image    = "carpa.png"
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 object leña inherits Visual{
     var property position = game.at(5,6)
@@ -85,7 +94,7 @@ object leña inherits Visual{
     }
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 object cabaña inherits Visual{
     var property position = game.at(5,6)
@@ -98,6 +107,7 @@ object cabaña inherits Visual{
     method interaccion(){}
 }
 
+// ########################################################################################################################## \\
 object cueva inherits Visual{
     var property position = game.at(2,5)
     const property image = "cueva.png"
@@ -126,29 +136,28 @@ object hacha inherits Visual{
     }
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 class Obstaculo inherits Visual{
     var property position
     const property image = "obstaculo.png"
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 class ParedInvisible inherits Visual{
     var property position
     const property image = null
 }
 
-// ####################################################################################################### //
-
+// ########################################################################################################################## \\
 
 object gameover{
     const property position = game.at(0,0)
     const property image    = "game-over.png"
 }
 
-// ####################################################################################################### //
+// ########################################################################################################################## \\
 
 object juegoGanado{
     const property position = game.at(0,0)
