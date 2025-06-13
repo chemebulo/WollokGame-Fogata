@@ -3,11 +3,14 @@ import visualesExtra.*
 import npcEstados.*
 import eventos.*
 import escenarios.*
+import puertas.*
+
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estadoCombate 
     var property estado        = new EnemigoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
     const property enemigo     = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
+
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo dependiendo de su estado.
@@ -78,7 +81,7 @@ class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv = se
 
 // ################################################################################################################# \\
 
-object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = armadoGuardabosques, vida = 20, daño = 1){
+object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
     var property estadoCabaña = inicioLenia
 
     override method imagenNueva(direccion){ 

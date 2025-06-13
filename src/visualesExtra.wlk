@@ -4,6 +4,7 @@ import confgEscSig.*
 import confgEscenarios.*
 import npcEstados.*
 import enemigos.*
+import puertas.*
 
 class Visual{
     method esAtravesable(){
@@ -119,6 +120,16 @@ object cueva inherits Visual{
     method interaccion(){}
 }
 
+object granero inherits Visual{
+    var property position =game.at(6,6)
+    const property image = "granero.png"
+
+    override method esAtravesable(){
+        return true
+    }
+    method interaccion(){}
+}
+
 // ####################################################################################################### //
 
 object hacha inherits Visual{
@@ -163,3 +174,4 @@ object juegoGanado{
     const property position = game.at(0,0)
     const property image    = "game-win.png"
 }
+

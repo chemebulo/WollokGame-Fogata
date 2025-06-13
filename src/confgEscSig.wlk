@@ -1,6 +1,7 @@
 import escenarios.*
 import confgEscenarios.*
 import videojuego.*
+import puertas.*
 /*
  CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
     *tipo: bloque
@@ -62,10 +63,20 @@ const confg_escSig_escenarioEntradaCabaña_v3 = {puertaEntradaCabaña.irHacia(es
                                                 escenarioCabañaInicial.confgEscSiguiente(confg_escSig_escenarioCabañaInicial_v2);} // estoy aqui
 
 
-const confg_escSig_escenarioCabañaInicial_v2 = {puertaEntradaCabaña.irHacia(escenarioEntradaCabaña)}
+const confg_escSig_escenarioCabañaInicial_v2 = {puertaEntradaCabaña.irHacia(escenarioEntradaCabaña);
+                                                escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v4);
+                                                escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v4)}
 //estoy aqui//modificar esta parte con los setters nuevos 
+const confg_escSig_escenarioEntradaCabaña_v4 ={puertaNorte.irHacia(escenarioEntradaGranero)}
 
+// configuradores granero
+const confg_esSig_escenarioEntradaGranero_v1 = {puertaGranero.irHacia(escenarioDiapoGranero)}
 
+const confg_esSig_escenarioGranero_v1 = {puertaGranero.irHacia(escenarioEntradaGranero)
+                                          escenarioEntradaGranero.confgActual(confg_escenarioEntradaGranero_v2)
+                                          escenarioEntradaGranero.confgEscSiguiente(confg_esSig_escenarioEntradaGranero_v2)}
 
+const confg_esSig_escenarioEntradaGranero_v2 = {puertaSur.irHacia(escenarioInicial)}                                          
+//CONTINUAR AQUI....                                           
 // TEXTOS
 const confg_escSig_TEST = {game.removeVisual(puertaSur)}

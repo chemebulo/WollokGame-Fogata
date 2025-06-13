@@ -7,6 +7,7 @@ import dialogos.*
 import eventos.*
 import videojuego.*
 import diapositivasManager.*
+import puertas.*
 
 /*
 TEMPLATE CONFIGURADORES:
@@ -77,6 +78,30 @@ const confg_escenarioEntradaCabaña_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
                                               e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                               }
 
+const confg_escenarioEntradaCabaña_v4 = {e=> guardabosques.image("guardabosques-abajo.png");
+                                            e.mapa(mapa_EntradaCabaña_v3);
+                                            e.visualesEnEscena([cabaña,protagonista,puertaNorte,guardabosques]);
+                                            e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                            e.eventos([guardabosquesHabla])
+
+}
+//########### CONFIGURADORES  PARA TODA LA SECUENCIA DEL  GRANERO
+
+const confg_escenarioEntradaGranero_v1 = {e=> e.mapa(mapa_entradaGranero_v1);
+                                                e.visualesEnEscena([granero,protagonista,guardabosques,puertaGranero]);
+                                                e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                                e.eventos([guardabosquesHabla2])}
+const confg_escenarioGranero_v1 ={e=> e.mapa(mapa_peleaGranero);
+                                  e.visualesEnEscena([protagonista,hacha]);
+                                  e.ost(game.sound("lobos-atacan.mp3"))}
+
+const confg_escenarioEntradaGranero_v2 ={e=> game.removeVisual(puertaGranero);
+                                              e.mapa(mapa_entradaGranero_v2)
+                                          e.visualesEnEscena([granero,protagonista,puertaSur]);
+                                          e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                          e.eventos([hablarProta3])}
+
+//## CABAÑA
 
 const  confg_escenarioCabañaInicial_v1 = {e =>           
                                        e.mapa(mapa_cabañaInicial_v1);
@@ -132,5 +157,5 @@ const confg_escenarioAmigaMuerta = {e=> gestorDeDiapositivas.esHoraDeDiapositiva
                                       }
 
 const confg_graneroDiapo = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                            //e.mapa(mapa_inicioJuego);
+                            
                             e.ost(game.sound("traicion-granero.mp3"))}

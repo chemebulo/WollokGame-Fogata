@@ -61,12 +61,17 @@ const despuesDeAmigaMuerta = { v => gestorDeDiapositivas.removerTodo();
 
 const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
                           gestorDeDiapositivas.esHoraDeDiapositiva(false);
-                          v.cambiarEscenario(escenarioTEST)}        
+                          gestorDeDiapositivas.peliculaAMostrar(peliculaReencuentro);
+                          gestorDeDiapositivas.bloqueAEjecutar(despuesDeReencuentro) ;
+                          v.cambiarEscenario(escenarioGranero)}        
+
+const   despuesDeReencuentro = {}                   
 
 // LAS PELICULAS QUE SE MUESTRAN
 const peliculaInicioJuego = new Pelicula( pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
 const peliculaGranero = new Pelicula( pelicula =  [dg0,dg1,dg2])
 const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1,dam2,dam3])
+const peliculaReencuentro = new Pelicula(pelicula=[])
 
 class Pelicula{
 

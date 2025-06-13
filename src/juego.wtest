@@ -6,6 +6,7 @@ import escenarios.*
 import videojuego.*
 import npcEstados.*
 import escenariosMapas.*
+import puertas.*
 
 describe "Movimiento del personaje"{
     

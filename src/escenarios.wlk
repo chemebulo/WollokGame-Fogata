@@ -4,16 +4,6 @@ import escenariosManager.*
 import confgEscenarios.*
 import confgEscSig.*
 
-// #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
-
-const puertaNorte = new Puerta(image = "puerta.png",position = norte.ubicacion(), irHacia = escenarioInicial)    
-const puertaOeste = new Puerta(image = "puerta.png",position = oeste.ubicacion(), irHacia = escenarioInicial)
-const puertaEste  = new Puerta(image = "puerta.png",position = este.ubicacion() , irHacia = escenarioInicial)
-const puertaSur   = new Puerta(image = "puerta.png",position = sur.ubicacion()  , irHacia = escenarioInicial)
-
-const puertaEntradaCabaña = new Puerta(image = "puerta.png", irHacia= escenarioCabañaInicial)
-const puertaEntradaCueva = new Puerta(image ="puerta.png",irHacia = escenarioCueva)
-const puertaGranero = new Puerta(image = "puerta.png",irHacia= escenarioGranero)
 
 
 // CONSTRUCTOR DE ESCENARIOS
@@ -46,7 +36,7 @@ TEMPLATE escenarioDiapositivas:
 */
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
-const inicioJuego = esc.construir(confg_inicioJuego, {}, "inicio-v2.png")
+const inicioJuego = esc.construir(confg_inicioJuego, {}, "inicio.png")
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
@@ -84,7 +74,11 @@ const escenarioTEST = esc.construir(confg_escenarioTEST,
                                     confg_escSig_TEST, 
                                     "fondo-escenario-inicial.png")
 
-//const escenarioCueva = esc.construir({},{},"fondo-cueva.png")
+const escenarioEntradaGranero = esc.construir(confg_escenarioEntradaGranero_v1,
+                                                confg_esSig_escenarioEntradaGranero_v1,
+                                                "fondo-entrada-granero.png")
+
+const escenarioGranero = esc.construir(confg_escenarioGranero_v1,confg_esSig_escenarioGranero_v1,"fondo-granero.png")
 
 // ##############################################################################################################
 //  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
@@ -92,8 +86,7 @@ const escenarioTEST = esc.construir(confg_escenarioTEST,
 
 const escenarioDiapoGranero = esc.construir(confg_graneroDiapo, {}, "granero-diapo1.png") 
 
-const escenarioGranero = esc.construir({},{},"fondo-granero.png")
 
 const escenarioAmigaMuerta = esc.construir(confg_escenarioAmigaMuerta,{},"diapo-amiga-muerta1.png")
 
-const escenarioEntradaGranero = esc.construir({},{},"")
+

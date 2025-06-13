@@ -7,7 +7,7 @@ import diapositivasManager.*
 
 object videojuego{  
    
-    var property escenario      = inicioJuego
+    var property escenario  = inicioJuego
    
     
     method iniciar(){ 

@@ -5,6 +5,7 @@ import escenarios.*
 import gestores.*
 import npcEstados.*
 import eventos.*
+import puertas.*
 
 /*
     USAR ESTAS MEDIDAS PARA TODOS LOS ESCENARIOS:
@@ -108,9 +109,10 @@ object c inherits Elemento(visual = cueva){}
  //                    ENEMIGOS
 // #####################################################################
 
-object l inherits ElementoLobo{}
+object l inherits ElementoLobo{} //agresivo
 
-object t inherits ElementoLobo{}
+object t inherits ElementoLobo{} // pasivo
+object q inherits Elemento(visual=granero){}
 
 object j{ // lobo especial del granero, al matarlo me spawnea la salida
     method construir(posicion){
@@ -121,9 +123,11 @@ object j{ // lobo especial del granero, al matarlo me spawnea la salida
     }
 }
    
-// ################################################################################################################# \\
+// #####################################################################
 
-object g inherits Elemento(visual=guardabosques){} // Guardabosques -> No implementado, no usar. 
+object g inherits Elemento(visual=guardabosques){ // Guardabosques -> No implementado, no usar.
+    
+}
 
 object x inherits Elemento(visual= cabaña){}
 
@@ -144,6 +148,8 @@ object ps inherits Elemento(visual=puertaSur){}
 object pg inherits Elemento(visual= puertaEntradaCabaña){}
 
 object pc inherits Elemento(visual = puertaEntradaCueva){}
+
+object pq inherits Elemento(visual=puertaGranero){}
 //###########################################################
 
 const mapa_comun =
@@ -237,7 +243,7 @@ const mapa_escenarioBifurcacion_v4 =
     ].reverse()
 // ################################################################################
 
-
+//ENTRADA DE CABAÑA
 
 const mapa_entradaCabaña_v1 = 
     [
@@ -267,7 +273,21 @@ const mapa_entradaCabaña_v2 =
 
     ].reverse()     
 
+const mapa_EntradaCabaña_v3 = 
+[
+    
+        [ _ , _ , _ , _ , g , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ ,_  , _ , _ , z ,x ,_, _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
 
+    ].reverse() 
+// CABAÑA MAPAS 
 const mapa_cabañaInicial_v1 = 
    [
         [_,p,_,_,_,_,_,_,_,_,_,_,_],
@@ -369,6 +389,68 @@ const mapa_cueva_v4 =
         [_,pc,_,_,_,_,_,_,_,_,_,_,_]
      
     ].reverse()
+
+
+
+
+
+
+// GRANERO
+
+const mapa_entradaGranero_v1 = 
+[
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,q,_,_,pq,_,_,_,_],
+        [_,_,_,_,g,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,z,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_]
+     
+    ].reverse()
+
+const mapa_entradaGranero_v2 =    
+[
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,q,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,z,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_]
+     
+    ].reverse() 
+
+const mapa_peleaGranero = 
+[
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,h,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,l,_,l,_,j,_,_,l,l,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,z,_,_,_,_,_,_],
+        [_,_,_,_,_,_,pq,_,_,_,_,_,_]
+     
+    ].reverse()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
