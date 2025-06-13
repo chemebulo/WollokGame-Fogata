@@ -86,7 +86,33 @@ const confg_esSig_escenarioEntradaCabaña_v5 = {puertaEntradaCabaña.irHacia(esc
                                                escenarioCabañaInicial.confgEscSiguiente( confg_escSig_escenarioCabañaInicial_v3)
                                               
                                                }                
-const confg_escSig_escenarioCabañaInicial_v3 = {puertaEntradaCabaña.irHacia(escenarioInicial)}                                                                                                              
+const confg_escSig_escenarioCabañaInicial_v3 = {puertaEntradaCabaña.irHacia(escenarioEntradaCabaña);
+                                                escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v6);
+                                                escenarioEntradaCabaña.confgEscSiguiente(confg_esSig_escenarioEntradaCabaña_v6)}    
+
+const confg_esSig_escenarioEntradaCabaña_v6 = {puertaOeste.irHacia(escenarioBifurcacion)
+                                                escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v5);
+                                                escenarioBifurcacion.confgEscSiguiente(confg_escSig_escenarioBifurcacion_v5)}
+//aqui voy luego
+const confg_escSig_escenarioBifurcacion_v5 = {puertaOeste.irHacia(escenarioEntradaCueva);
+                                              escenarioEntradaCueva.confgActual(confg_escenarioEntradaCueva_v3);
+                                              escenarioEntradaCueva.confgEscSiguiente(confg_escSig_escenarioEntradaCueva_v3)}     
+
+const confg_escSig_escenarioEntradaCueva_v3 = {puertaEntradaCueva.irHacia(escenarioCueva);
+                                                escenarioCueva.confgActual(confg_escenarioCueva_v1);
+                                                escenarioCueva.confgEscSiguiente(confg_escSig_escenarioCueva_v6)}  
+
+const confg_escSig_escenarioCueva_v6 ={puertaEntradaCueva.irHacia(escenarioCueva);
+                                         escenarioCueva.confgActual(confg_escenarioCueva_v2);
+                                          escenarioCueva.confgEscSiguiente(confg_escSig_escenarioCueva_v7)}   
+
+const confg_escSig_escenarioCueva_v7 = {puertaEntradaCueva.irHacia(escenarioCueva);
+                                          
+                                         escenarioCueva.confgActual(confg_escenarioCueva_v5);
+                                          escenarioCueva.confgEscSiguiente(confg_escSig_escenarioCueva_v8)}  
+
+const confg_escSig_escenarioCueva_v8 ={
+                                        puertaEntradaCueva.irHacia(escenarioInicial)}
 //CONTINUAR AQUI....                                           
 // TEXTOS
 const confg_escSig_TEST = {game.removeVisual(puertaSur)}

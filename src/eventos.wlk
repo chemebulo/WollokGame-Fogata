@@ -105,7 +105,7 @@ class EventoUnico{
 }
 
 //### Los personajes dicen una frase al inicio del escenario donde se aplica el evento
-class EventoHablar inherits EventoUnico{
+class EventoHablar inherits EventoUnico(sujetoUnico=protagonista){
     
     const mensaje
     override method ordenUnica(visual){
@@ -113,19 +113,21 @@ class EventoHablar inherits EventoUnico{
     }
     
 }
-const hablarProta = new EventoHablar(sujetoUnico=protagonista,
-                                     mensaje="Laura esta muerta, vere si el guardabosques tiene armas para matar a los bichos")
 
+// A veces el prota al inicio de un escenario dice algo
+const hablarProta = new EventoHablar( mensaje="Laura esta muerta, vere si el guardabosques tiene armas para matar a los bichos")
 
-const hablarProta2 = new EventoHablar(sujetoUnico=protagonista,mensaje="La puta madre...LAURAAA!!!")   
+const hablarProta2 = new EventoHablar(mensaje="La puta madre...LAURAAA!!!")   
 
-const hablarProta3 = new EventoHablar(sujetoUnico=protagonista,mensaje="Ya mismo lo mato a ese hijo de p@ta")  
+const hablarProta3 = new EventoHablar(mensaje="Ya mismo lo mato a ese hijo de p@ta")  
 
-const hablarProta4 = new EventoHablar(sujetoUnico=protagonista,mensaje= "Que carajo????")
+const hablarProta4 = new EventoHablar(mensaje= "Que carajo????")
 
-const hablarProta5 = new EventoHablar(sujetoUnico=protagonista,mensaje= "Aca tambien????")
+const hablarProta5 = new EventoHablar(mensaje= "Aca tambien????")
 
-const hablarProta6 = new EventoHablar(sujetoUnico=protagonista,mensaje= "buehhhh ")
+const hablarProta6 = new EventoHablar(mensaje= "buehhhh ")
+
+const hablarProta7 = new EventoHablar(mensaje = "Ahora si lo hago cagar!!!")
 
 const guardabosquesHabla = new EventoHablar(sujetoUnico=guardabosques,mensaje= "Aqui al norte esta el granero")
 
