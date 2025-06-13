@@ -6,6 +6,7 @@ import escenariosMapas.*
 import dialogos.*
 import eventos.*
 import videojuego.*
+import diapositivasManager.*
 
 /*
 TEMPLATE CONFIGURADORES:
@@ -125,11 +126,11 @@ const confg_escenarioTEST = {e =>
 // #########################################################################################################
 // CONFIGURADORES EXCLUSIVOS PARA ESCENARIOS CON DIAPOS, NO REQUIEREN CONFIGURADOR DE ESCEANRIO SIGUIENTE
 // #########################################################################################################
-const confg_escenarioAmigaMuerta = {e=> videojuego.escenaAmigaMuerta(true);
+const confg_escenarioAmigaMuerta = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                         e.ost(game.sound("traicion-granero.mp3"))
 
                                       }
 
-const confg_graneroDiapo = {e=> videojuego.estoyEnGranero(true);
+const confg_graneroDiapo = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
                             //e.mapa(mapa_inicioJuego);
                             e.ost(game.sound("traicion-granero.mp3"))}

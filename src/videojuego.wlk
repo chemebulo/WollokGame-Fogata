@@ -4,18 +4,12 @@ import escenarios.*
 import visualesExtra.*
 import diapositivasManager.*
 
-object videojuego{
-    const gestorDiapositiva     = gestorDeDiapositivas
-    var property ostJuego       = game.sound("inicio-v1.png")
-    var property escenario      = inicioJuego// cambiar a inicio juego
-    var property estoyEnPrologo = true // settear a true 
-    var property estoyEnGranero = false
-    var property escenaAmigaMuerta =false
-    var property estoyEnFinalJuego = false
+
+object videojuego{  
    
-    method stopMusica(){
-        ostJuego.stop()
-    }
+    var property escenario      = inicioJuego
+   
+    
     method iniciar(){ 
         escenario.puestaEnEscena()
     }
@@ -60,19 +54,13 @@ object videojuego{
         keyboard.s().onPressDo({protagonista.mover(abajo)})
         keyboard.d().onPressDo({protagonista.mover(derecha)})
         keyboard.e().onPressDo({protagonista.interactuarNPC()})
-        keyboard.f().onPressDo({self.interactuarDiapositias()})
+        keyboard.f().onPressDo({gestorDeDiapositivas.interactuarDiapositivas()})
         keyboard.m().onPressDo({game.stop()})
         keyboard.y().onPressDo({self.juegoGanado()})
         keyboard.k().onPressDo({protagonista.atacar()})
     }
 
-    // ################### Metodos para manejo de diapositivas ##################
-
-    method interactuarDiapositias(){
-        if(estoyEnPrologo ||  escenaAmigaMuerta || estoyEnGranero || estoyEnFinalJuego){ 
-            gestorDiapositiva.gestionarDiapositivas()
-        }
-    }
+    // ################### Metodo para manejo de diapositivas ##################
 
     method culminarDiapositivasYContinuar(bloque){
         bloque.apply(self)

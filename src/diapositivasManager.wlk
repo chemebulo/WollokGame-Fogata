@@ -3,11 +3,11 @@ import escenarios.*
 import confgEscenarios.*
 import confgEscSig.*
 
-
 object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapositivas
     var property peliculaAMostrar = peliculaInicioJuego
     var property bloqueAEjecutar  = inicioJuegoD
     const juego = videojuego
+    var property esHoraDeDiapositiva = true
 
     method gestionarDiapositivas(){
         if(peliculaAMostrar.iteradorActual().terminoPelicula()){
@@ -22,24 +22,34 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
     }
            
     method removerTodo(){
-       peliculaAMostrar.peliculaActual().forEach({d => game.removeVisual(d)})
+       peliculaAMostrar.peliculaActual().forEach({d => d.borrar()})
        peliculaAMostrar.peliculaActual().clear() // Deja vacía la lista para liberar recursos.
        peliculaAMostrar = null
     }
+
+    method esTiempoDeDiapositiva() = esHoraDeDiapositiva
+
+     method interactuarDiapositivas(){
+        if(esHoraDeDiapositiva){ 
+            self.gestionarDiapositivas()
+        }
+    }
+        
+    
 }
 
 /*
-    BLOQUES QUE EJECUTAN LO QUE SUCEDE AL FINALIZAR LA ULTIMA DIAPOSITIVA DE LA ESCENA
+    BLOQUES QUE EJECUTAN LO QUE SUCEDE AL FINALIZAR LA ULTIMA DIAPOSITIVA DE LA ESCENA EN UN ESCENARIO
 */
 const inicioJuegoD = {v => gestorDeDiapositivas.removerTodo();
-                      v.estoyEnPrologo( false );
+                      gestorDeDiapositivas.esHoraDeDiapositiva(false);
                       gestorDeDiapositivas.peliculaAMostrar(peliculaAmigaMuerta)
                       gestorDeDiapositivas.bloqueAEjecutar(despuesDeAmigaMuerta)
                       v.cambiarEscenario(escenarioInicial)}
 
    
 const despuesDeAmigaMuerta = { v => gestorDeDiapositivas.removerTodo();
-                                   v.escenaAmigaMuerta(false);
+                                  gestorDeDiapositivas.esHoraDeDiapositiva(false);
                                   gestorDeDiapositivas.peliculaAMostrar(peliculaGranero);
                                  gestorDeDiapositivas.bloqueAEjecutar(despuesDeGranero) ;
                                  escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v4);
@@ -50,10 +60,10 @@ const despuesDeAmigaMuerta = { v => gestorDeDiapositivas.removerTodo();
                       }                                         
 
 const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
-                          v.estoyEnGranero( false );
+                          gestorDeDiapositivas.esHoraDeDiapositiva(false);
                           v.cambiarEscenario(escenarioTEST)}        
 
-
+// LAS PELICULAS QUE SE MUESTRAN
 const peliculaInicioJuego = new Pelicula( pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
 const peliculaGranero = new Pelicula( pelicula =  [dg0,dg1,dg2])
 const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1,dam2,dam3])
@@ -128,7 +138,7 @@ class Diapositiva{
         return true
     }
     
-    method interaccion(){
+    method borrar(){
         return game.removeVisual(self)
     }
 }
