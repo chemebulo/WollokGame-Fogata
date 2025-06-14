@@ -36,61 +36,61 @@ TEMPLATE escenarioDiapositivas:
 */
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
-const inicio = esc.construir(confg_inicioJuego, {}, "inicio.png")
+const inicio = esc.construir(inicioC_v1, {}, "inicio.png")
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
-const fogata = esc.construir(confg_EscenarioInicial_v1,
+const fogata = esc.construir(fogataC_v1,
                                        confg_escSig_escenarioInicial_v1, 
                                        "fondo-escenario-inicial.png")
 
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
-const bifurcacion = esc.construir(confg_escenarioBifurcacion_v1,
+const bifurcacion = esc.construir(bifurcacionC_v1,
                                            confg_escSig_escenarioBifurcacion_v1,
                                            "fondo-escenario-inicial.png")
 
-const entradaCabaña = esc.construir(confg_escenarioEntradaCabaña_v1,
+const entradaCabaña = esc.construir(entradaCabañaC_v1,
                                              confg_escSig_escenarioEntradaCabaña_v1,
                                              "fondo-escenario-inicial.png" )
 
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
- const cabaña = esc.construir(confg_escenarioCabañaInicial_v1,
+ const cabaña = esc.construir(cabañaC_v1,
                                               confg_escSig_escenarioCabañaInicial_v1,
                                               "cabaña.png")   
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
 
-const entradaCueva = esc.construir(confg_escenarioEntradaCueva_v1,
+const entradaCueva = esc.construir(entradaCuevaC_v1,
                                              confg_escSig_escenarioEntradaCueva_v1,
                                              "fondo-entrada-cueva.png")
 
-const cueva = esc.construir(confg_escenarioCueva_v1,
+const cueva = esc.construir(cuevaC_v1,
                              confg_esSig_cueva_v1,"fondo-cueva.png")
 
 
-const escenarioTEST = esc.construir(confg_escenarioTEST,
+const escenarioTEST = esc.construir(escenarioTestC_v1,
                                     confg_escSig_TEST, 
                                     "fondo-escenario-inicial.png")
 
-const entradaGranero = esc.construir(confg_escenarioEntradaGranero_v1,
+const entradaGranero = esc.construir(entradaGraneroC_v1,
                                                 confg_esSig_escenarioEntradaGranero_v1,
                                                 "fondo-entrada-granero.png")
 
-const granero = esc.construir(confg_escenarioGranero_v1,confg_esSig_escenarioGranero_v1,"fondo-granero.png")
+const granero = esc.construir(graneroC_v1,confg_esSig_escenarioGranero_v1,"fondo-granero.png")
 
-const peleaFinal = esc.construir(confg_escenarioPeleaFinal,confg_esSig_escenarioPeleaFinal,"fondo-cueva.png") // recordar borrar la puertade salida
+const peleaFinal = esc.construir(peleaFinalC_v1,confg_esSig_escenarioPeleaFinal,"fondo-cueva.png") // recordar borrar la puertade salida
 
 // ##############################################################################################################
 //  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
 // ##############################################################################################################
 
-const diapoGranero = esc.construir(confg_graneroDiapo, {}, "granero-diapo1.png") 
+const diapoGranero = esc.construir(diapoGraneroC_v1, {}, "granero-diapo1.png") 
 
 
-const diapoAmigaMuerta = esc.construir(confg_escenarioAmigaMuerta,{},"diapo-amiga-muerta1.png")
+const diapoAmigaMuerta = esc.construir(diapoAmigaMuertaC_v1,{},"diapo-amiga-muerta1.png")
 
-const diapoPeleaFinal = esc.construir(confg_escenarioDiapoPeleaFinal,{},"diapo-pelea-final1.png")
+const diapoPeleaFinal = esc.construir(diapoPeleaFinalC_v1,{},"diapo-pelea-final1.png")
 
 

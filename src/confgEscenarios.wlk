@@ -13,7 +13,7 @@ import npcEstados.*
 /*
 TEMPLATE CONFIGURADORES:
         
-const confg_escenarioNombre = {e => e.visualesEnEscena();
+const nombreEscenarioC_v* = {e => e.visualesEnEscena();
                                     e.mapa();
                                     e.ost();
                                     e.dialogo();  // si no hay dialogos borrar esta linea
@@ -31,72 +31,72 @@ const confg_escenarioNombre = {e => e.visualesEnEscena();
                                     
 
 */
-const confg_inicioJuego = {e =>           
+const inicioC_v1 = {e =>           
                            
                            e.ost(game.sound("inicio_v1.mp3"))}
 
-const confg_EscenarioInicial_v1 = {e =>   
+const fogataC_v1 = {e =>   
                                 e.mapa(mapa_escenarioInicial_v1);
                                 e.visualesEnEscena( [amiga, carpa, fogataOBJ, puertaNorte, protagonista]);
                                 e.ost(game.sound("musica-escenarioInicial-v1.mp3"));
                                 e.dialogo(dialogoEscenarioInicial)}
 //CONFIGURADORESESCENARIO BIFURCACION
-const confg_escenarioBifurcacion_v1 = {e =>        
+const bifurcacionC_v1 = {e =>        
                                     e.mapa(mapa_escenarioBifurcacion_v1);
                                     e.visualesEnEscena( [ puertaEste, protagonista]);
                                     e.ost(game.sound("musica-escenarioInicial-v1.mp3"))
                                    }
       
-const confg_escenarioBifurcacion_v2 = {e =>         
+const bifurcacionC_v2 = {e =>         
                                        e.mapa(mapa_escenarioBifurcacion_v2);
                                        e.visualesEnEscena( [ protagonista,puertaOeste]);
                                        e.ost(game.sound("lobos-atacan.mp3"));
                                        e.eventos([hablarProta4])
                                        }
 
-const confg_escenarioBifurcacion_v3 = {e=> e.mapa(mapa_escenarioBifurcacion_v3);
+const bifurcacionC_v3 = {e=> e.mapa(mapa_escenarioBifurcacion_v3);
                                           e.visualesEnEscena([protagonista,puertaSur]);
                                         e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                         e.eventos([hablarProta2])
                                         }
-const confg_escenarioBifurcacion_v4 = { e=> e.visualesEnEscena([protagonista,puertaEste]);
+const bifurcacionC_v4 = { e=> e.visualesEnEscena([protagonista,puertaEste]);
                                             e.mapa(mapa_escenarioBifurcacion_v4);
                                             e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                             e.eventos([hablarProta])}
 
-const confg_escenarioBifurcacion_v5 = {e => e.visualesEnEscena([protagonista,puertaOeste]);
+const bifurcacionC_v5 = {e => e.visualesEnEscena([protagonista,puertaOeste]);
                                              e.mapa(mapa_escenarioBifurcacion_v5);
                                              e.ost(game.sound("lobos-atacan.mp3"));
                                              e.eventos([hablarProta7])}
 // CONFIGURADORES ENTRADACABAÑA
-const confg_escenarioEntradaCabaña_v1 = {e => 
+const entradaCabañaC_v1 = {e => 
                                       e.mapa(mapa_entradaCabaña_v1);
                                       e.visualesEnEscena([cabañaOBJ,protagonista,puertaEntradaCabaña] );
                                       e.ost(game.sound("musica-escenarioInicial-v1.mp3"))}
 
-const confg_escenarioEntradaCabaña_v2 = {e => 
+const entradaCabañaC_v2 = {e => 
                                          e.mapa(mapa_entradaCabaña_v2);
                                          e.visualesEnEscena([cabañaOBJ,protagonista, puertaOeste] );
                                          e.ost(game.sound("musica-escenarioInicial-v1.mp3"))}
 
-const confg_escenarioEntradaCabaña_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
+const entradaCabañaC_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
                                               e.visualesEnEscena([cabañaOBJ,protagonista,puertaEntradaCabaña]);
                                               e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                               }
 
-const confg_escenarioEntradaCabaña_v4 = {e=> game.removeVisual(puertaEntradaCabaña);
+const entradaCabañaC_v4 = {e=> game.removeVisual(puertaEntradaCabaña);
                                             guardabosques.image("guardabosques-abajo.png");
                                             e.mapa(mapa_EntradaCabaña_v3);
                                             e.visualesEnEscena([cabañaOBJ,protagonista,puertaNorte,guardabosques]);
                                             e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                             e.eventos([guardabosquesHabla])
                                         }
-const confg_escenarioEntradaCabaña_v5  = {e =>  e.mapa(mapa_EntradaCabaña_v4);
+const entradaCabañaC_v5  = {e =>  e.mapa(mapa_EntradaCabaña_v4);
                                                 e.visualesEnEscena([cabañaOBJ,protagonista,puertaEntradaCabaña]);
                                                 e.ost(game.sound("calma-antes-de-tormenta.mp3"))
 }           
 //aqui arranque
-const confg_escenarioEntradaCabaña_v6 = {e => game.removeVisual(puertaEntradaCabaña);
+const entradaCabañaC_v6 = {e => game.removeVisual(puertaEntradaCabaña);
                                               e.mapa(mapa_EntradaCabaña_v3);
                                               e.visualesEnEscena([cabañaOBJ,protagonista,puertaOeste]);
                                               e.ost(game.sound("calma-antes-de-tormenta.mp3"));
@@ -105,16 +105,16 @@ const confg_escenarioEntradaCabaña_v6 = {e => game.removeVisual(puertaEntradaCa
 
 //########### CONFIGURADORES  PARA TODA LA SECUENCIA DEL  GRANERO
 
-const confg_escenarioEntradaGranero_v1 = {e=> e.mapa(mapa_entradaGranero_v1);
+const entradaGraneroC_v1 = {e=> e.mapa(mapa_entradaGranero_v1);
                                                 e.visualesEnEscena([graneroOBJ,protagonista,guardabosques,puertaGranero]);
                                                 e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                                 e.eventos([guardabosquesHabla2])}
-const confg_escenarioGranero_v1 ={e=> 
+const graneroC_v1 ={e=> 
                                  e.mapa(mapa_peleaGranero);
                                   e.visualesEnEscena([protagonista,hacha]);
                                   e.ost(game.sound("lobos-atacan.mp3"))}
 
-const confg_escenarioEntradaGranero_v2 ={e=> game.removeVisual(puertaGranero);
+const entradaGraneroC_v2 ={e=> game.removeVisual(puertaGranero);
                                               e.mapa(mapa_entradaGranero_v2)
                                           e.visualesEnEscena([graneroOBJ,protagonista,puertaSur]);
                                           e.ost(game.sound("calma-antes-de-tormenta.mp3"));
@@ -122,64 +122,64 @@ const confg_escenarioEntradaGranero_v2 ={e=> game.removeVisual(puertaGranero);
 
 //## CABAÑA
 
-const  confg_escenarioCabañaInicial_v1 = {e =>           
+const  cabañaC_v1 = {e =>           
                                        e.mapa(mapa_cabañaInicial_v1);
                                        e.visualesEnEscena([guardabosques,protagonista] );
                                        e.ost(game.sound("cabaña.mp3"));
                                        e.dialogo(dialogoEnCabaña);
                                        e.eventos([eventoCabaña])}
 
-const confg_escenarioCabañaInicial_v2 = {e => guardabosques.estadoCabaña(prepararseParaGranero);
+const cabañaC_v2 = {e => guardabosques.estadoCabaña(prepararseParaGranero);
                                           e.mapa(mapa_cabañaInicial_v1);
                                           e.visualesEnEscena([guardabosques,protagonista]);
                                           e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                           e.dialogo(dialogoEnCabaña2);
                                           e.eventos([eventoCabaña])}
 
-const confg_escenarioCabañaInicial_v3 = {e => e.mapa(mapa_cabañaInicial_v2);
+const cabañaC_v3 = {e => e.mapa(mapa_cabañaInicial_v2);
                                          e.visualesEnEscena([protagonista,nota]);
                                          e.ost(game.sound("calma-antes-de-tormenta.mp3"))}     // estoy aqui                       
 // ############ZONA CUEVA
-const confg_escenarioEntradaCueva_v1 = {e => e.mapa(mapa_entradaCueva_v1);
+const entradaCuevaC_v1 = {e => e.mapa(mapa_entradaCueva_v1);
                                           e.visualesEnEscena([cuevaOBJ,protagonista,puertaEntradaCueva])
                                           e.ost(game.sound("lobos-atacan.mp3"));
                                           e.eventos([hablarProta5])}    
 
-const confg_escenarioEntradaCueva_v2  ={e => e.mapa(mapa_entradaCueva_v2);
+const entradaCuevaC_v2  ={e => e.mapa(mapa_entradaCueva_v2);
                                               e.visualesEnEscena([cuevaOBJ,protagonista,puertaEste]);
                                               e.ost(game.sound("calma-antes-de-tormenta.mp3"))} 
-const confg_escenarioEntradaCueva_v3 = {e=> e.mapa(mapa_entradaCueva_v3);
+const entradaCuevaC_v3 = {e=> e.mapa(mapa_entradaCueva_v3);
                                             e.visualesEnEscena([cuevaOBJ,protagonista,puertaEntradaCueva]);
                                             e.ost(game.sound("lobos-atacan.mp3"))}                                                 
                                                                                           
 
-const confg_escenarioCueva_v1 = {e=> e.mapa(mapa_cueva_v1);
+const cuevaC_v1 = {e=> e.mapa(mapa_cueva_v1);
                                      e.visualesEnEscena([protagonista,puertaEntradaCueva]);
                                      e.ost(game.sound("cueva.mp3"));
                                      e.eventos([hablarProta6])}
-const confg_escenarioCueva_v2 ={e=> e.mapa(mapa_cueva_v2);
+const cuevaC_v2 ={e=> e.mapa(mapa_cueva_v2);
                                      e.visualesEnEscena([protagonista,puertaEntradaCueva]);
                                      e.ost(game.sound("cueva.mp3"))}
 
- const confg_escenarioCueva_v3 = {e=> e.mapa(mapa_cueva_v3);
+ const cuevaC_v3 = {e=> e.mapa(mapa_cueva_v3);
                                      e.visualesEnEscena([protagonista,puertaEntradaCueva]);
                                      e.ost(game.sound("cueva.mp3"))}
- const confg_escenarioCueva_v4 =   {e=> e.mapa(mapa_cueva_v4);
+ const cuevaC_v4 =   {e=> e.mapa(mapa_cueva_v4);
                                         e.visualesEnEscena([protagonista,puertaEntradaCueva]);
                                        e.ost(game.sound("cueva.mp3"))}                          
 
-const confg_escenarioCueva_v5 = {e=> e.mapa(mapa_cueva_v5);
+const cuevaC_v5 = {e=> e.mapa(mapa_cueva_v5);
                                         e.visualesEnEscena([protagonista,puertaEntradaCueva]);
                                        e.ost(game.sound("cueva.mp3"))}  
 
   /*  PELEA FINAL */                                     
-const confg_escenarioPeleaFinal = {e => guardabosques.estadoCombate(armadoGuardabosques);
+const peleaFinalC_v1 = {e => guardabosques.estadoCombate(armadoGuardabosques);
                                         e.mapa(mapa_FinalJuego)
                                         e.visualesEnEscena([protagonista,guardabosques]);
                                         e.ost(game.sound("pelea-final.mp3"));
                                         e.eventos([eventoCueva])}  
 //-----------DEJAR ABAJO DE TODO ---------
-const confg_escenarioTEST = {e =>           
+const escenarioTestC_v1 = {e =>           
                              e.mapa(mapa_escenarioTest);
                              e.visualesEnEscena( [protagonista,hacha,cuevaOBJ]);
                              e.ost(game.sound("game-win.mp3"));
@@ -188,14 +188,14 @@ const confg_escenarioTEST = {e =>
 // #########################################################################################################
 // CONFIGURADORES EXCLUSIVOS PARA ESCENARIOS CON DIAPOS, NO REQUIEREN CONFIGURADOR DE ESCEANRIO SIGUIENTE
 // #########################################################################################################
-const confg_escenarioAmigaMuerta = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
+const diapoAmigaMuertaC_v1 = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                         e.ost(game.sound("traicion-granero.mp3"))
 
                                       }
 
-const confg_escenarioDiapoPeleaFinal = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
+const diapoPeleaFinalC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                             e.ost(game.sound("traicion-granero.mp3"))}
 
-const confg_graneroDiapo = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
+const diapoGraneroC_v1 = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
                             game.removeVisual(puertaGranero)
                             e.ost(game.sound("traicion-granero.mp3"))}

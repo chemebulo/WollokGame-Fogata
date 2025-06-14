@@ -23,46 +23,46 @@ const confg_escSig_escenarioEntradaCabaña_v1 = {puertaEntradaCabaña.irHacia(ca
 
 const confg_escSig_escenarioEntradaCabaña_v2 = {game.removeVisual(puertaEntradaCabaña); 
                                                 puertaOeste.irHacia(bifurcacion);
-                                                bifurcacion.configuradorTotal(confg_escenarioBifurcacion_v2,confg_escSig_escenarioBifurcacion_v2)
+                                                bifurcacion.configuradorTotal(bifurcacionC_v2,confg_escSig_escenarioBifurcacion_v2)
                                                 }
                                                 
 const confg_escSig_escenarioCabañaInicial_v1    = {puertaOeste.irHacia(entradaCabaña);
-                                                    entradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v2,confg_escSig_escenarioEntradaCabaña_v2)}
+                                                    entradaCabaña.configuradorTotal(entradaCabañaC_v2,confg_escSig_escenarioEntradaCabaña_v2)}
                                                
 const confg_escSig_escenarioEntradaCueva_v1 = {puertaEntradaCueva.irHacia(cueva)}       
 
 const confg_esSig_cueva_v1 = {puertaEntradaCueva.irHacia(cueva);
-                              cueva.configuradorTotal(confg_escenarioCueva_v2,confg_escSig_escenarioCueva_v2)}
+                              cueva.configuradorTotal(cuevaC_v2,confg_escSig_escenarioCueva_v2)}
                           
 const confg_escSig_escenarioCueva_v2 = {puertaEntradaCueva.irHacia(cueva);
-                                       cueva.configuradorTotal(confg_escenarioCueva_v3,confg_escSig_escenarioCueva_v3)}
+                                       cueva.configuradorTotal(cuevaC_v3,confg_escSig_escenarioCueva_v3)}
                                                   
 
 const confg_escSig_escenarioCueva_v3 = {puertaEntradaCueva.irHacia(cueva);
-                                      cueva.configuradorTotal(confg_escenarioCueva_v4, confg_escSig_escenarioCueva_v4)}
+                                      cueva.configuradorTotal(cuevaC_v4, confg_escSig_escenarioCueva_v4)}
                             
 
 const confg_escSig_escenarioCueva_v4 = {puertaEntradaCueva.irHacia(entradaCueva);
-                                      entradaCueva.configuradorTotal(confg_escenarioEntradaCueva_v2, confg_escSig_escenarioEntradaCueva_v2)  }
+                                      entradaCueva.configuradorTotal(entradaCuevaC_v2, confg_escSig_escenarioEntradaCueva_v2)  }
                                           
 
 const confg_escSig_escenarioEntradaCueva_v2 = {puertaEste.irHacia(bifurcacion);
-                                                  bifurcacion.configuradorTotal(confg_escenarioBifurcacion_v3,confg_escSig_escenarioBifurcacion_v3)}
+                                                  bifurcacion.configuradorTotal(bifurcacionC_v3,confg_escSig_escenarioBifurcacion_v3)}
                                             
 
 const confg_escSig_escenarioBifurcacion_v3 = {puertaSur.irHacia(diapoAmigaMuerta)}
 
 const confg_escSig_escenarioBifurcacion_v4 = {puertaEste.irHacia(entradaCabaña);
-                                              entradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v3,confg_escSig_escenarioEntradaCabaña_v3)}
+                                              entradaCabaña.configuradorTotal(entradaCabañaC_v3,confg_escSig_escenarioEntradaCabaña_v3)}
                                          
 
 const confg_escSig_escenarioEntradaCabaña_v3 = {puertaEntradaCabaña.irHacia(cabaña);
-                                                cabaña.configuradorTotal(confg_escenarioCabañaInicial_v2,confg_escSig_escenarioCabañaInicial_v2)}
+                                                cabaña.configuradorTotal(cabañaC_v2,confg_escSig_escenarioCabañaInicial_v2)}
                                            
 
 
 const confg_escSig_escenarioCabañaInicial_v2 = {puertaEntradaCabaña.irHacia(entradaCabaña);
-                                                entradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v4,confg_escSig_escenarioEntradaCabaña_v4)}
+                                                entradaCabaña.configuradorTotal(entradaCabañaC_v4,confg_escSig_escenarioEntradaCabaña_v4)}
                                              
 //estoy aqui//modificar esta parte con los setters nuevos 
 const confg_escSig_escenarioEntradaCabaña_v4 ={
@@ -72,40 +72,40 @@ const confg_escSig_escenarioEntradaCabaña_v4 ={
 const confg_esSig_escenarioEntradaGranero_v1 = {puertaGranero.irHacia(diapoGranero)}
 
 const confg_esSig_escenarioGranero_v1 = {puertaGranero.irHacia(entradaGranero);
-                                          entradaGranero.configuradorTotal(confg_escenarioEntradaGranero_v2,confg_esSig_escenarioEntradaGranero_v2)}
+                                          entradaGranero.configuradorTotal(entradaGraneroC_v2,confg_esSig_escenarioEntradaGranero_v2)}
                                         
 
 const confg_esSig_escenarioEntradaGranero_v2 = {puertaSur.irHacia(entradaCabaña);
-                                                  entradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v5,confg_esSig_escenarioEntradaCabaña_v5)}
+                                                  entradaCabaña.configuradorTotal(entradaCabañaC_v5,confg_esSig_escenarioEntradaCabaña_v5)}
                                                         
 const confg_esSig_escenarioEntradaCabaña_v5 = {puertaEntradaCabaña.irHacia(cabaña);
-                                                cabaña.configuradorTotal(confg_escenarioCabañaInicial_v3,confg_escSig_escenarioCabañaInicial_v3)}
+                                                cabaña.configuradorTotal(cabañaC_v3,confg_escSig_escenarioCabañaInicial_v3)}
                                                       
 const confg_escSig_escenarioCabañaInicial_v3 = {puertaEntradaCabaña.irHacia(entradaCabaña);
-                                                entradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v6,confg_esSig_escenarioEntradaCabaña_v6)}
+                                                entradaCabaña.configuradorTotal(entradaCabañaC_v6,confg_esSig_escenarioEntradaCabaña_v6)}
                                            
 
 const confg_esSig_escenarioEntradaCabaña_v6 = {puertaOeste.irHacia(bifurcacion)
-                                                bifurcacion.configuradorTotal(confg_escenarioBifurcacion_v5,confg_escSig_escenarioBifurcacion_v5)}
+                                                bifurcacion.configuradorTotal(bifurcacionC_v5,confg_escSig_escenarioBifurcacion_v5)}
                                                
 //aqui voy luego
 const confg_escSig_escenarioBifurcacion_v5 = {puertaOeste.irHacia(entradaCueva);
-                                              entradaCueva.configuradorTotal(confg_escenarioEntradaCueva_v3,confg_escSig_escenarioEntradaCueva_v3)}
+                                              entradaCueva.configuradorTotal(entradaCuevaC_v3,confg_escSig_escenarioEntradaCueva_v3)}
                                             
 
 const confg_escSig_escenarioEntradaCueva_v3 = {puertaEntradaCueva.irHacia(cueva);
-                                                cueva.configuradorTotal(confg_escenarioCueva_v1,confg_escSig_escenarioCueva_v6)}
+                                                cueva.configuradorTotal(cuevaC_v1,confg_escSig_escenarioCueva_v6)}
                                                
 
 const confg_escSig_escenarioCueva_v6 ={puertaEntradaCueva.irHacia(cueva);
-                                          cueva.configuradorTotal(confg_escenarioCueva_v2,confg_escSig_escenarioCueva_v7)}
+                                          cueva.configuradorTotal(cuevaC_v2,confg_escSig_escenarioCueva_v7)}
                                      
 
 const confg_escSig_escenarioCueva_v7 = {puertaEntradaCueva.irHacia(cueva);
-                                          cueva.configuradorTotal(confg_escenarioCueva_v3,confg_escSig_escenarioCueva_v8)}                                     
+                                          cueva.configuradorTotal(cuevaC_v3,confg_escSig_escenarioCueva_v8)}                                     
 
 const confg_escSig_escenarioCueva_v8 ={puertaEntradaCueva.irHacia(cueva);
-                                          cueva.configuradorTotal(confg_escenarioCueva_v4,confg_escSig_escenarioCueva_v9)}
+                                          cueva.configuradorTotal(cuevaC_v4,confg_escSig_escenarioCueva_v9)}
                                                                        
 const confg_escSig_escenarioCueva_v9 ={    puertaEntradaCueva.irHacia(diapoPeleaFinal)}
 
