@@ -10,12 +10,16 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
     var property esHoraDeDiapositiva = true
 
     method gestionarDiapositivas(){
-        if(peliculaAMostrar.iteradorActual().terminoPelicula()){
+        if(self.esLaUltimaDiapositiva()){
             juego.culminarDiapositivasYContinuar(self.bloqueAEjecutar())
         } else{
-           peliculaAMostrar.iteradorActual().procesarDiapositivas()
+           self.diapositivaActual().procesarDiapositiva()
         }
-    }
+    } 
+
+    method diapositivaActual() =   peliculaAMostrar.iteradorActual()
+    
+    method esLaUltimaDiapositiva() = peliculaAMostrar.iteradorActual().terminoPelicula()
 
     method ultimaDiapositiva(){
         return peliculaAMostrar.peliculaActual().size()
@@ -84,6 +88,7 @@ class Pelicula{
     const iteradorPelicula = new IteradorDiapositiva(listaAIterar = self.peliculaActual().copy())
     method peliculaActual() = pelicula
     method iteradorActual() = iteradorPelicula
+    
 }
 
 // DIAPOSITIVAS PARA TODO EL JUEGO                                        
@@ -124,7 +129,7 @@ class IteradorDiapositiva{
     */
     const listaAIterar
 
-    method procesarDiapositivas(){
+    method procesarDiapositiva(){
         self.dibujarYActualizar(self.elementoAProcesar())
     }
         
