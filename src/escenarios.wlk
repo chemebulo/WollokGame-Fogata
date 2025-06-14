@@ -80,6 +80,8 @@ const escenarioEntradaGranero = esc.construir(confg_escenarioEntradaGranero_v1,
 
 const escenarioGranero = esc.construir(confg_escenarioGranero_v1,confg_esSig_escenarioGranero_v1,"fondo-granero.png")
 
+const escenarioPeleaFinal = esc.construir(confg_escenarioPeleaFinal,confg_esSig_escenarioPeleaFinal,"fondo-cueva.png") // recordar borrar la puertade salida
+
 // ##############################################################################################################
 //  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
 // ##############################################################################################################
@@ -88,5 +90,7 @@ const escenarioDiapoGranero = esc.construir(confg_graneroDiapo, {}, "granero-dia
 
 
 const escenarioAmigaMuerta = esc.construir(confg_escenarioAmigaMuerta,{},"diapo-amiga-muerta1.png")
+
+const escenarioDiapoPeleaFinal = esc.construir(confg_escenarioDiapoPeleaFinal,{},"diapo-pelea-final1.png")
 
 

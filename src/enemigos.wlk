@@ -83,11 +83,21 @@ class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv = se
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
     var property estadoCabaña = inicioLenia
-
+    var property estadoPeleaFinal = peleaFinal
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
+
+    method comprobarVida(){
+        if(self.estoyMuerto() ){
+            estadoPeleaFinal.realizarAccion()
+        }
+    }
+
+    
+
+    method estoyMuerto() = not self.estaVivo()
 
     // ################# REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO: ################# //
     // Estos dos metodos los llama eventoCabaña en eventos.wlk
@@ -129,6 +139,16 @@ object prepararseParaGranero{
         if(not iremosAGranero){
             game.addVisual(puertaEntradaCabaña);
             iremosAGranero = true
+        }
+    }
+}
+
+object peleaFinal {
+    var protaYaGano = false
+    method realizarAccion(){
+        if(not protaYaGano){
+            game.addVisual(puertaEntradaCueva)
+            protaYaGano = true
         }
     }
 }

@@ -8,6 +8,7 @@ import eventos.*
 import videojuego.*
 import diapositivasManager.*
 import puertas.*
+import npcEstados.*
 
 /*
 TEMPLATE CONFIGURADORES:
@@ -170,6 +171,13 @@ const confg_escenarioCueva_v2 ={e=> e.mapa(mapa_cueva_v2);
 const confg_escenarioCueva_v5 = {e=> e.mapa(mapa_cueva_v5);
                                         e.visualesEnEscena([protagonista,puertaEntradaCueva]);
                                        e.ost(game.sound("cueva.mp3"))}  
+
+  /*  PELEA FINAL */                                     
+const confg_escenarioPeleaFinal = {e => guardabosques.estadoCombate(armadoGuardabosques);
+                                        e.mapa(mapa_FinalJuego)
+                                        e.visualesEnEscena([protagonista,guardabosques]);
+                                        e.ost(game.sound("pelea-final.mp3"));
+                                        e.eventos([eventoCueva])}  
 //-----------DEJAR ABAJO DE TODO ---------
 const confg_escenarioTEST = {e =>           
                              e.mapa(mapa_escenarioTest);
@@ -184,6 +192,9 @@ const confg_escenarioAmigaMuerta = {e=> gestorDeDiapositivas.esHoraDeDiapositiva
                                         e.ost(game.sound("traicion-granero.mp3"))
 
                                       }
+
+const confg_escenarioDiapoPeleaFinal = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
+                                            e.ost(game.sound("traicion-granero.mp3"))}
 
 const confg_graneroDiapo = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
                             game.removeVisual(puertaGranero)

@@ -108,11 +108,21 @@ const confg_escSig_escenarioCueva_v6 ={puertaEntradaCueva.irHacia(escenarioCueva
 
 const confg_escSig_escenarioCueva_v7 = {puertaEntradaCueva.irHacia(escenarioCueva);
                                           
-                                         escenarioCueva.confgActual(confg_escenarioCueva_v5);
+                                         escenarioCueva.confgActual(confg_escenarioCueva_v3);
                                           escenarioCueva.confgEscSiguiente(confg_escSig_escenarioCueva_v8)}  
 
-const confg_escSig_escenarioCueva_v8 ={
-                                        puertaEntradaCueva.irHacia(escenarioInicial)}
+const confg_escSig_escenarioCueva_v8 ={puertaEntradaCueva.irHacia(escenarioCueva);
+                                          
+                                         escenarioCueva.confgActual(confg_escenarioCueva_v4);
+                                          escenarioCueva.confgEscSiguiente(confg_escSig_escenarioCueva_v9)}  
+                                       
+
+const confg_escSig_escenarioCueva_v9 ={
+
+                                        puertaEntradaCueva.irHacia(escenarioDiapoPeleaFinal)}
+const confg_esSig_escenarioPeleaFinal = {puertaEntradaCueva.irHacia(escenarioEntradaCueva) 
+                                          escenarioEntradaCueva.confgActual({});
+                                          escenarioEntradaCueva.confgEscSiguiente({})}//borrar la puertaEntradaCueva cuando se pase al escenario en los configuradores                                        
 //CONTINUAR AQUI....                                           
 // TEXTOS
 const confg_escSig_TEST = {game.removeVisual(puertaSur)}

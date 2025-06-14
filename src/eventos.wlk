@@ -143,3 +143,12 @@ object eventoCabaña inherits EventoLoopIndividual(sujetoUnico=guardabosques,tie
         visual.comprobarDialogo()
     }
 }
+
+object eventoCueva inherits EventoLoopIndividual(sujetoUnico=guardabosques,tiempo=800){
+    
+    override method orden(visual){
+        visual.perseguirEnemigo();
+        visual.comprobarVida();
+        game.say(guardabosques,"ESTOY ACA INVISIBLE")
+    }
+}

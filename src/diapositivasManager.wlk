@@ -61,17 +61,23 @@ const despuesDeAmigaMuerta = { v => gestorDeDiapositivas.removerTodo();
 
 const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
                           gestorDeDiapositivas.esHoraDeDiapositiva(false);
-                          gestorDeDiapositivas.peliculaAMostrar(peliculaReencuentro);
-                          gestorDeDiapositivas.bloqueAEjecutar(despuesDeReencuentro) ;
+                          gestorDeDiapositivas.peliculaAMostrar(peliculaPeleaFinal);
+                          gestorDeDiapositivas.bloqueAEjecutar(despuesDePeleaFinal) ;
                           v.cambiarEscenario(escenarioGranero)}        
 
-const   despuesDeReencuentro = {}                   
+const   despuesDePeleaFinal = {v => gestorDeDiapositivas.removerTodo(); 
+                                    gestorDeDiapositivas.esHoraDeDiapositiva(false);
+                                     gestorDeDiapositivas.peliculaAMostrar(finalJuego);
+                                 gestorDeDiapositivas.bloqueAEjecutar(despuesFinalJuego) ;
+                                 v.cambiarEscenario(escenarioPeleaFinal)}      
+const despuesFinalJuego = {} // completar                                              
 
 // LAS PELICULAS QUE SE MUESTRAN
 const peliculaInicioJuego = new Pelicula( pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
 const peliculaGranero = new Pelicula( pelicula =  [dg0,dg1,dg2])
 const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1,dam2,dam3])
-const peliculaReencuentro = new Pelicula(pelicula=[])
+const peliculaPeleaFinal = new Pelicula(pelicula=[dpf1,dpf2])
+const finalJuego = new Pelicula(pelicula=[]) // completar
 
 class Pelicula{
 
@@ -81,6 +87,8 @@ class Pelicula{
     method iteradorActual() = iteradorPelicula
 }
 
+const dpf1 = new Diapositiva(image ="diapo-pelea-final2.png")
+const dpf2 = new Diapositiva(image ="diapo-pelea-final3.png")
 
 const dam1 = new Diapositiva(image ="diapo-amiga-muerta2.png")
 const dam2 = new Diapositiva(image ="diapo-amiga-muerta3.png")
