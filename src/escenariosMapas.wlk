@@ -75,7 +75,7 @@ object z inherits Elemento(visual = protagonista){}
 
 // ################################################################################################################# \\
 
-object f inherits Elemento(visual = fogata){}
+object f inherits Elemento(visual = fogataOBJ){}
 
 // ################################################################################################################# \\
 
@@ -104,7 +104,9 @@ object p{
     }
 }
 
-object c inherits Elemento(visual = cueva){}
+object x inherits Elemento(visual= cabañaOBJ){}
+object c inherits Elemento(visual = cuevaOBJ){}
+object q inherits Elemento(visual=graneroOBJ){}
 
 // #####################################################################
  //                    ENEMIGOS
@@ -113,12 +115,11 @@ object c inherits Elemento(visual = cueva){}
 object l inherits ElementoLobo{} //agresivo
 
 object t inherits ElementoLobo{} // pasivo
-object q inherits Elemento(visual=granero){}
 
 object j{ // lobo especial del granero, al matarlo me spawnea la salida
     method construir(posicion){
         const loboTemp = new LoboEspecial(position=posicion,salida=puertaGranero);
-        puertaGranero.irHacia(escenarioEntradaGranero)
+        puertaGranero.irHacia(entradaGranero)
         game.addVisual(loboTemp)
         gestorDeLobos.agregarLobos(loboTemp)
     }
@@ -130,7 +131,6 @@ object g inherits Elemento(visual=guardabosques){ // Guardabosques -> No impleme
     
 }
 
-object x inherits Elemento(visual= cabaña){}
 
 object u inherits Elemento(visual=leña){}
 

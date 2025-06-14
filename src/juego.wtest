@@ -149,8 +149,8 @@ describe "Movimiento del personaje con colisiones:"{
 describe "Funcionamiento de puertas"{
 
     const confg_test ={e=> e.mapa(mapa_TEST);e.visualesEnEscena([puertaNorte,puertaOeste])}
-    const confg_escsig = {puertaNorte.irHacia(escenarioBifurcacion);
-                           puertaOeste.irHacia(escenarioInicial)}
+    const confg_escsig = {puertaNorte.irHacia(bifurcacion);
+                           puertaOeste.irHacia(fogata)}
    
 
     const escenarioParaTestear = esc.construir(confg_test,confg_escsig,"")
@@ -165,12 +165,12 @@ describe "Funcionamiento de puertas"{
     test "La puerta norte cambia de escenarioTEST al escenarioBifurcacion"{
         
         puertaNorte.interaccion()
-        assert.equals(escenarioBifurcacion,videojuego.escenario())
+        assert.equals(bifurcacion,videojuego.escenario())
         }
     test  "La puerta norte cambia de escenarioTEST al escenarioInicial"{
         
         puertaOeste.interaccion()
-        assert.equals(escenarioInicial,videojuego.escenario())
+        assert.equals(fogata,videojuego.escenario())
         }
 }
 describe "Ataque sobre lobo"{
@@ -183,8 +183,8 @@ describe "Ataque sobre guardabosques"{
 
 describe "Cambio de estado desarmado a armado"{ 
      const confg_test ={e=> e.mapa(mapa_TEST);e.visualesEnEscena([protagonista,hacha])}
-    const confg_escsig = {puertaNorte.irHacia(escenarioBifurcacion);
-                           puertaOeste.irHacia(escenarioInicial)}
+    const confg_escsig = {puertaNorte.irHacia(bifurcacion);
+                           puertaOeste.irHacia(fogata)}
    
 
     const escenarioParaTestear = esc.construir(confg_test,confg_escsig,"")

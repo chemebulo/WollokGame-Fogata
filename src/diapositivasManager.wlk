@@ -51,24 +51,24 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
 */
 const inicioJuegoD = {v,g => g.removerTodo();
                              g.configurarParaSiguiente(peliculaAmigaMuerta,despuesDeAmigaMuerta)                      
-                             v.cambiarEscenario(escenarioInicial)}
+                             v.cambiarEscenario(fogata)}
 
    
 const despuesDeAmigaMuerta = { v,g => g.removerTodo();
                                    g.configurarParaSiguiente(peliculaGranero,despuesDeGranero)                               
-                                 escenarioBifurcacion.configuradorTotal(confg_escenarioBifurcacion_v4,confg_escSig_escenarioBifurcacion_v4)                       
-                                 v.cambiarEscenario(escenarioBifurcacion) //HAY QUE DARLE LOS CONFIGURADORES AQUI
+                                 bifurcacion.configuradorTotal(confg_escenarioBifurcacion_v4,confg_escSig_escenarioBifurcacion_v4)                       
+                                 v.cambiarEscenario(bifurcacion) 
                                  
                       
                       }                                         
 
-const despuesDeGranero = {v,g => g.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
+const despuesDeGranero = {v,g => g.removerTodo(); 
                             g.configurarParaSiguiente(peliculaPeleaFinal,despuesDePeleaFinal )
-                          v.cambiarEscenario(escenarioGranero)}        
+                          v.cambiarEscenario(granero)}        
 
 const   despuesDePeleaFinal = {v,g => g.removerTodo(); 
                                     g.configurarParaSiguiente(finalJuego, despuesFinalJuego)                              
-                                 v.cambiarEscenario(escenarioPeleaFinal)}      
+                                 v.cambiarEscenario(peleaFinal)}      
 const despuesFinalJuego = {} // completar                                              
 
 // LAS PELICULAS QUE SE MUESTRAN

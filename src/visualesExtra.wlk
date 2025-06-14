@@ -62,7 +62,7 @@ object amiga inherits Visual{
 
 // ########################################################################################################################## \\
 
-object fogata inherits Visual{
+object fogataOBJ inherits Visual{
     var property position = game.at(3,4)
     const property image    = "fogata-apagada.png"
 }
@@ -87,16 +87,16 @@ object leña inherits Visual{
     method interaccion() {
         game.removeVisual(self)
         game.addVisual(puertaEntradaCabaña)
-        puertaEntradaCabaña.irHacia(escenarioEntradaCabaña)
+        puertaEntradaCabaña.irHacia(entradaCabaña)
         game.say(protagonista,"Gracias por la leña")
         game.say(guardabosques,"No hay de que.Tenga cuidado nomas que hay lobos por estos lados")
-        escenarioEntradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v2,confg_escSig_escenarioEntradaCabaña_v2)     
+        entradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v2,confg_escSig_escenarioEntradaCabaña_v2)     
     }
 }
 
 // ########################################################################################################################## \\
 
-object cabaña inherits Visual{
+object cabañaOBJ inherits Visual{
     var property position = game.at(5,6)
     const property image    = "cabaña_entrada.png"
 
@@ -110,7 +110,7 @@ object cabaña inherits Visual{
 }
 
 // ########################################################################################################################## \\
-object cueva inherits Visual{
+object cuevaOBJ inherits Visual{
     var property position = game.at(2,5)
     const property image = "cueva.png"
     
@@ -121,7 +121,7 @@ object cueva inherits Visual{
     method interaccion(){}
 }
 
-object granero inherits Visual{
+object graneroOBJ inherits Visual{
     var property position =game.at(6,6)
     const property image = "granero.png"
 
