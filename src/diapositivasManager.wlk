@@ -86,6 +86,7 @@ class Pelicula{
     method iteradorActual() = iteradorPelicula
 }
 
+// DIAPOSITIVAS PARA TODO EL JUEGO                                        
 const dpf1 = new Diapositiva(image ="diapo-pelea-final2.png")
 const dpf2 = new Diapositiva(image ="diapo-pelea-final3.png")
 
@@ -94,7 +95,6 @@ const dam2 = new Diapositiva(image ="diapo-amiga-muerta3.png")
 const dam3 = new Diapositiva(image ="diapo-amiga-muerta4.png")
 
 
-// DIAPOSITIVAS PARA TODO EL JUEGO                                        
 const d0 = new Diapositiva(image = "diapo-1.png")
 const d1 = new Diapositiva(image = "diapo-2.png")
 const d2 = new Diapositiva(image = "diapo-3.png")
