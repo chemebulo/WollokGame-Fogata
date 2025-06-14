@@ -90,8 +90,9 @@ object leña inherits Visual{
         puertaEntradaCabaña.irHacia(escenarioEntradaCabaña)
         game.say(protagonista,"Gracias por la leña")
         game.say(guardabosques,"No hay de que.Tenga cuidado nomas que hay lobos por estos lados")
-        escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
-        escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)
+        escenarioEntradaCabaña.configuradorTotal(confg_escenarioEntradaCabaña_v2,confg_escSig_escenarioEntradaCabaña_v2)
+      /*  escenarioEntradaCabaña.confgEscSiguiente(confg_escSig_escenarioEntradaCabaña_v2);
+        escenarioEntradaCabaña.confgActual(confg_escenarioEntradaCabaña_v2)*/
     }
 }
 
@@ -106,6 +107,8 @@ object cabaña inherits Visual{
     }
 
     method interaccion(){}
+
+    
 }
 
 // ########################################################################################################################## \\

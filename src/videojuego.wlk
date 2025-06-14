@@ -8,7 +8,7 @@ import diapositivasManager.*
 object videojuego{  
    
     var property escenario  = inicioJuego
-   
+    const gestorDiapositivas = gestorDeDiapositivas
     
     method iniciar(){ 
         escenario.puestaEnEscena()
@@ -63,6 +63,6 @@ object videojuego{
     // ################### Metodo para manejo de diapositivas ##################
 
     method culminarDiapositivasYContinuar(bloque){
-        bloque.apply(self)
+        bloque.apply(self,gestorDiapositivas)
     }
 }

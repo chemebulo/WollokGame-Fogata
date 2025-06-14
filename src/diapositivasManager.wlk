@@ -34,41 +34,40 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
             self.gestionarDiapositivas()
         }
     }
+
+    method configurarParaSiguiente(nuevaPelicula,nuevoBloque){
+        self.esHoraDeDiapositiva(false)
+        self.peliculaAMostrar(nuevaPelicula)
+        self.bloqueAEjecutar(nuevoBloque)
+    }
         
     
 }
 
 /*
     BLOQUES QUE EJECUTAN LO QUE SUCEDE AL FINALIZAR LA ULTIMA DIAPOSITIVA DE LA ESCENA EN UN ESCENARIO
+    v=videojuego
+    g=gestorDeDiapositivas
 */
-const inicioJuegoD = {v => gestorDeDiapositivas.removerTodo();
-                      gestorDeDiapositivas.esHoraDeDiapositiva(false);
-                      gestorDeDiapositivas.peliculaAMostrar(peliculaAmigaMuerta)
-                      gestorDeDiapositivas.bloqueAEjecutar(despuesDeAmigaMuerta)
-                      v.cambiarEscenario(escenarioInicial)}
+const inicioJuegoD = {v,g => g.removerTodo();
+                             g.configurarParaSiguiente(peliculaAmigaMuerta,despuesDeAmigaMuerta)                      
+                             v.cambiarEscenario(escenarioInicial)}
 
    
-const despuesDeAmigaMuerta = { v => gestorDeDiapositivas.removerTodo();
-                                  gestorDeDiapositivas.esHoraDeDiapositiva(false);
-                                  gestorDeDiapositivas.peliculaAMostrar(peliculaGranero);
-                                 gestorDeDiapositivas.bloqueAEjecutar(despuesDeGranero) ;
-                                 escenarioBifurcacion.confgActual(confg_escenarioBifurcacion_v4);
-                                 escenarioBifurcacion.confgEscSiguiente(confg_escSig_escenarioBifurcacion_v4)
+const despuesDeAmigaMuerta = { v,g => g.removerTodo();
+                                   g.configurarParaSiguiente(peliculaGranero,despuesDeGranero)                               
+                                 escenarioBifurcacion.configuradorTotal(confg_escenarioBifurcacion_v4,confg_escSig_escenarioBifurcacion_v4)                       
                                  v.cambiarEscenario(escenarioBifurcacion) //HAY QUE DARLE LOS CONFIGURADORES AQUI
                                  
                       
                       }                                         
 
-const despuesDeGranero = {v => gestorDeDiapositivas.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
-                          gestorDeDiapositivas.esHoraDeDiapositiva(false);
-                          gestorDeDiapositivas.peliculaAMostrar(peliculaPeleaFinal);
-                          gestorDeDiapositivas.bloqueAEjecutar(despuesDePeleaFinal) ;
+const despuesDeGranero = {v,g => g.removerTodo(); // SI SE AGREGAN MAS DIAPOSITIVAS SETTEAR AQUI
+                            g.configurarParaSiguiente(peliculaPeleaFinal,despuesDePeleaFinal )
                           v.cambiarEscenario(escenarioGranero)}        
 
-const   despuesDePeleaFinal = {v => gestorDeDiapositivas.removerTodo(); 
-                                    gestorDeDiapositivas.esHoraDeDiapositiva(false);
-                                     gestorDeDiapositivas.peliculaAMostrar(finalJuego);
-                                 gestorDeDiapositivas.bloqueAEjecutar(despuesFinalJuego) ;
+const   despuesDePeleaFinal = {v,g => g.removerTodo(); 
+                                    g.configurarParaSiguiente(finalJuego, despuesFinalJuego)                              
                                  v.cambiarEscenario(escenarioPeleaFinal)}      
 const despuesFinalJuego = {} // completar                                              
 
@@ -154,4 +153,6 @@ class Diapositiva{
     method borrar(){
         return game.removeVisual(self)
     }
+
+    method atacadoPor(visual){}
 }

@@ -46,6 +46,11 @@ class Escenario{
         })
     }
 
+    method configuradorTotal(confgAct,confgEscenarioSiguiente){
+        self.confgActual(confgAct);
+        self.confgEscSiguiente(confgEscenarioSiguiente) 
+    }
+
     method configurar(){
         confgActual.apply(self)
     }
@@ -76,6 +81,8 @@ class Escenario{
     method hayDialogo(){
         return not dialogo.isEmpty()
     }
+
+    method atacadoPor(visual){}
 }    
 
 // #############################################################################################################################
