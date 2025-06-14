@@ -56,7 +56,7 @@ const inicioJuegoD = {v,g => g.removerTodo();
    
 const despuesDeAmigaMuerta = { v,g => g.removerTodo();
                                    g.configurarParaSiguiente(peliculaGranero,despuesDeGranero)                               
-                                 bifurcacion.configuradorTotal(bifurcacionC_v4,confg_escSig_escenarioBifurcacion_v4)                       
+                                 bifurcacion.configuradorTotal(bifurcacionC_v4,bifurcacionCES_v4)                       
                                  v.cambiarEscenario(bifurcacion) 
                                  
                       

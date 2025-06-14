@@ -90,7 +90,7 @@ object leña inherits Visual{
         puertaEntradaCabaña.irHacia(entradaCabaña)
         game.say(protagonista,"Gracias por la leña")
         game.say(guardabosques,"No hay de que.Tenga cuidado nomas que hay lobos por estos lados")
-        entradaCabaña.configuradorTotal(entradaCabañaC_v2,confg_escSig_escenarioEntradaCabaña_v2)     
+        entradaCabaña.configuradorTotal(entradaCabañaC_v2,entradaCabañaCES_v2)     
     }
 }
 

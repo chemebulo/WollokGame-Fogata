@@ -83,7 +83,7 @@ class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv = se
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
     var property estadoCabaña = inicioLenia
-    var property estadoPeleaFinal = peleaFinal
+    var property estadoPeleaFinal = peleaFinalEstado 
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
@@ -143,7 +143,7 @@ object prepararseParaGranero{
     }
 }
 
-object peleaFinal {
+object peleaFinalEstado { // cuidado al cambiar nombre, un escenario se llama peleaFinal
     var protaYaGano = false
     method realizarAccion(){
         if(not protaYaGano){
