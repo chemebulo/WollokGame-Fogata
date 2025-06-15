@@ -5,6 +5,7 @@ import eventos.*
 import escenarios.*
 import puertas.*
 import gestores.gestorAccionesGuardabosques
+import videojuego.*
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estadoCombate 
@@ -48,6 +49,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         // Indica si el enemigo puede atacar a su enemigo. 
         return estado.puedeAtacarAlEnemigo()
     }
+    method escenarioDondeEstoy() = videojuego.escenario() // agregado solo para que lo usen el loboEspecial y el guardabosques
 }
 
 // ################################################################################################################# \\
@@ -66,30 +68,59 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agre
 }
 
 // ################################################################################################################# \\
+// JEFE DEL GRANERO
+object loboEspecial inherits Lobo( vida = 30){
 
-class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv = self), vida = 30){
-    const salida
-    var puedeSalir = true
-     
-    method verEntorno(){
-        if( not self.estaVivo() and puedeSalir){
-            puedeSalir=false
-            game.addVisual(salida)
-        }
+    const musicaVictoria = game.sound("victoria-lobo.mp3")
+
+    method estoyMuerto() = not self.estaVivo()
+
+    method darSalidaGranero() {game.addVisual(puertaGranero)}
+
+    override method actualizarAMuerto(){ //cuando lo matas corta la musica y emite una musica de victoria
+        super()
+        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();musicaVictoria.play()})
+       
     }
 }
+//accion que hace el lobo cuando lo matas
+object darSalidaGranero inherits AccionUnica(sujeto=loboEspecial){
+        override method hacer() { sujeto.darSalidaGranero() }    
+               
+     override method esTiempoDeRealizarAccion() = sujeto.estoyMuerto()
+}
+
+
 
 // ################################################################################################################# \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
    
-  
+    const musicaVictoria = game.sound("victoria-guardabosques.mp3")
+
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
-    
+     override method actualizarAMuerto(){ //cuando lo matas corta la musica y emite una musica de victoria
+        super()
+        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();musicaVictoria.play()})
+        
+        
+        
+    }
+
+    method darLeña(){
+         game.addVisual(leña);
+    }
+    method darSalidaCabaña(){
+         game.addVisual(puertaEntradaCabaña)
+    }
+
+    method darSalidaCueva(){
+        game.addVisual(puertaEntradaCueva)
+    }
 
     // ################# REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO: ################# //
    
@@ -103,7 +134,8 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
 }    
 
 // pequeñas acciones que realiza el guardabosques en 3 puntos de la historia en los eventos
-class AccionGuardabosques{
+class AccionUnica{
+    const  property sujeto= null
     const property gestorAC = gestorAccionesGuardabosques
   
     var accionHecha = false
@@ -118,26 +150,26 @@ class AccionGuardabosques{
     method esTiempoDeRealizarAccion()
 
 }
-object darLaLeña inherits AccionGuardabosques{
+object darLaLeña inherits AccionUnica(sujeto=guardabosques){
     
-     override method hacer()  { gestorAC.darLeña()}
+     override method hacer()  { sujeto.darLeña()}
   
 
-    override method esTiempoDeRealizarAccion() =  guardabosques.termineDialogo()
+    override method esTiempoDeRealizarAccion() =  sujeto.termineDialogo()
 }
  
-object prepararseParaGranero inherits AccionGuardabosques{
+object prepararseParaGranero inherits AccionUnica(sujeto=guardabosques){
     
-    override method hacer()  {  gestorAC.darSalidaCabaña()}
+    override method hacer()  {  sujeto.darSalidaCabaña()}
         
-    override method esTiempoDeRealizarAccion() =  guardabosques.termineDialogo()
+    override method esTiempoDeRealizarAccion() =  sujeto.termineDialogo()
 }
 
-object peleaFinalEstado inherits AccionGuardabosques { // cuidado si cambian nombre, un escenario se llama peleaFinal
+object peleaFinalEstado inherits AccionUnica(sujeto=guardabosques) { // cuidado si cambian nombre, un escenario se llama peleaFinal
      
-    override method hacer() {  gestorAC.darSalidaCueva() }    
+    override method hacer() {  sujeto.darSalidaCueva() }    
                
-     override method esTiempoDeRealizarAccion() = guardabosques.estoyMuerto()
+     override method esTiempoDeRealizarAccion() = sujeto.estoyMuerto()
 }
 
 

@@ -112,8 +112,9 @@ const entradaGraneroC_v1 = {e=> e.mapa(mapa_entradaGranero_v1);
                                                 e.eventos([guardabosquesHabla2])}
 const graneroC_v1 ={e=> 
                                  e.mapa(mapa_peleaGranero);
-                                  e.visualesEnEscena([protagonista,hacha]);
-                                  e.ost(game.sound("lobos-atacan.mp3"))}
+                                  e.visualesEnEscena([protagonista,hacha,loboEspecial]);
+                                  e.ost(game.sound("lobos-atacan.mp3"));
+                                  e.eventos([eventoLoboEspecial])}
 
 const entradaGraneroC_v2 ={e=> game.removeVisual(puertaGranero);
                                               e.mapa(mapa_entradaGranero_v2)
@@ -170,7 +171,7 @@ const cuevaC_v2 ={e=> e.mapa(mapa_cueva_v2);
                                        e.ost(game.sound("cueva.mp3"))}                          
 
 const cuevaC_v5 = {e=> e.mapa(mapa_cueva_v5);
-                                        e.visualesEnEscena([protagonista,puertaEntradaCueva]);
+                                        e.visualesEnEscena([protagonista]);
                                        e.ost(game.sound("cueva.mp3"))}  
 
   /*  PELEA FINAL */                                     

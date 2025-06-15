@@ -116,12 +116,12 @@ object l inherits ElementoLobo{} //agresivo
 
 object t inherits ElementoLobo{} // pasivo
 
-object j{ // lobo especial del granero, al matarlo me spawnea la salida
-    method construir(posicion){
-        const loboTemp = new LoboEspecial(position=posicion,salida=puertaGranero);
+object j inherits Elemento(visual=loboEspecial){ // lobo especial del granero, al matarlo me spawnea la salida
+    override method construir(posicion){
+        super(posicion)
         puertaGranero.irHacia(entradaGranero)
-        game.addVisual(loboTemp)
-        gestorDeLobos.agregarLobos(loboTemp)
+       // game.addVisual(loboTemp)
+        gestorDeLobos.agregarLobos(loboEspecial)
     }
 }
    

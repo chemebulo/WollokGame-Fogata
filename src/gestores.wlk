@@ -213,13 +213,27 @@ object gestorFondoEscenario{
 
 // ############################################################################################################################################# \\
 
-object gestorDeLimpiezaEscenarios{
+object gestorDeListasEscenario{
     
-    method limpiar(esc){
-        esc.limpiarVisualesEnEscena()
+    method limpiarListas(esc){
+       self.limpiarListaVisuales(esc)
         esc.dialogo([])
         esc.eventos([])
     }
+    method limpiarListaVisuales(esc){
+        self.limpiezaDeVisuales(esc.visualesEnEscena())
+    }
+
+    method limpiezaDeVisuales(visuales){
+        visuales.forEach({visual => game.removeVisual(visual)})
+    }
+    method agregarVisualesEscena(esc){
+        self.agregarVisuales(esc.visualesEnEscena())
+    }
+    method agregarVisuales(visuales){
+        visuales.forEach({v => game.addVisual(v)})
+    } 
+
 }
 
 // ############################################################################################################################################# \\
@@ -246,17 +260,6 @@ object gestorAccionesGuardabosques{
 
     var property accionesGuardabosques = darLaLeña
    
-     method darLeña(){
-         game.addVisual(leña);
-    }
-    method darSalidaCabaña(){
-         game.addVisual(puertaEntradaCabaña)
-    }
-
-    method darSalidaCueva(){
-        game.addVisual(puertaEntradaCueva)
-    }
-
      
     method comprobarAccion(){
         if (accionesGuardabosques.esTiempoDeRealizarAccion() ){
@@ -265,4 +268,14 @@ object gestorAccionesGuardabosques{
         }
     }
 
+}
+
+object gestorAccionesLobo{
+    var property accionesLobo =darSalidaGranero
+
+    method verEntorno(){
+        if(accionesLobo.esTiempoDeRealizarAccion()){
+            accionesLobo.hacerAccion()
+        }
+    }
 }

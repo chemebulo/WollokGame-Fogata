@@ -1,6 +1,6 @@
 import protagonista.*
 import enemigos.*
-import gestores.gestorAccionesGuardabosques
+import gestores.*
 
 class EventoLoop{
     /*
@@ -63,12 +63,6 @@ class EventoLobo{ // solo funciona para lobos que se agregan directamente a la m
     method iniciarEvento(){
         game.onTick(tiempoRandom, nombre, {loboEv.perseguirEnemigo()})
     }
-}
-class EventoLoboEspecial inherits EventoLobo{ // hace que se muestre la puerta deseada cuando los lobos mueran
-   
-   override  method iniciarEvento(){
-        game.onTick(tiempoRandom,nombre,{loboEv.verEntorno();loboEv.perseguirEnemigo()})
-    }  
 }
 
 
@@ -142,5 +136,13 @@ object accionesGuardabosques inherits EventoLoopIndividual(sujetoUnico=gestorAcc
 
     override method orden(visual){
         visual.comprobarAccion() 
+    }
+}
+
+object  eventoLoboEspecial inherits EventoLoopIndividual(sujetoUnico=gestorAccionesLobo,tiempo=800){ 
+   
+ 
+    override method orden(visual){
+        visual.verEntorno()
     }
 }

@@ -22,7 +22,7 @@ class Escenario{
     const gestorEvento = gestorDeEventos
     const gestorObs    = gestorDeObstaculos
     const gestorLobos = gestorDeLobos
-    const limpiadorEscenario = gestorDeLimpiezaEscenarios
+    const gestorListasEscenario = gestorDeListasEscenario
     const gestorDialogo = gestorConversaciones
     
     method puestaEnEscena(){ 
@@ -33,7 +33,7 @@ class Escenario{
         gestorFondo.visualizarFondo(fondoEscenario)
         gestorDialogo.configurarConversacion(self)
         self.dibujarTablero()
-        self.agregarVisualesEscena()
+        gestorListasEscenario.agregarVisualesEscena(self)
         gestorEvento.gestionarInicio(eventos)
     }
     
@@ -45,6 +45,8 @@ class Escenario{
             })
         })
     }
+
+    method bajarVolumen(){ost.volume(0)}
 
     method configuradorTotal(confgAct,confgEscenarioSiguiente){
         self.confgActual(confgAct);
@@ -58,26 +60,18 @@ class Escenario{
     method configurarEscenarioSiguiente(){
         confgEscSiguiente.apply()
     }
-
-    method agregarVisualesEscena(){
-        visualesEnEscena.forEach({v => game.addVisual(v)})
-    } 
-  
+ 
     method limpiar(){     
         gestorFondo.borrarFondo()
         ost.stop()
-        limpiadorEscenario.limpiar(self)
+        gestorListasEscenario.limpiarListas(self)
         gestorEvento.gestionarFin(eventos);
          gestorObs.limpiarObstaculos()
         protagonista.resetearDialogo()
         gestorLobos.limpiarLobos()
 
      }
-
-    method limpiarVisualesEnEscena(){
-        visualesEnEscena.forEach({visual => game.removeVisual(visual)})
-    }
-
+  
     method hayDialogo(){
         return not dialogo.isEmpty()
     }
