@@ -4,7 +4,7 @@ import npcEstados.*
 import eventos.*
 import escenarios.*
 import puertas.*
-
+import gestores.gestorAccionesGuardabosques
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estadoCombate 
@@ -82,75 +82,63 @@ class LoboEspecial inherits Lobo(eventoLobo = new EventoLoboEspecial(loboEv = se
 // ################################################################################################################# \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
-    var property estadoCabaña = inicioLenia
-    var property estadoPeleaFinal = peleaFinalEstado 
+   
+  
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
-    method comprobarVida(){
-        if(self.estoyMuerto() ){
-            estadoPeleaFinal.realizarAccion()
-        }
-    }
-
     
 
+    // ################# REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO: ################# //
+   
     method estoyMuerto() = not self.estaVivo()
 
-    // ################# REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO: ################# //
-    // Estos dos metodos los llama eventoCabaña en eventos.wlk
-
-
-    method comprobarDialogo(){
-        // Comprueba si el diálogo terminó para poder darle la leña a su enemigo (el protagonista). 
-        if(self.terminoDialogo()){
-           estadoCabaña.realizarAccion()
-        }
-    }
-
-    method terminoDialogo(){
+    method termineDialogo(){
         // Indica si el diálogo con su enemigo (el protagonista) terminó.
         return enemigo.conversacionNPC().isEmpty() 
-    }       
-}    
-/*
-ESTOS DOS OBJETOS SON LAS ACCIONES QUE HACE EL GUARDABOSQUES LAS DOS VECES QUE ESTA EN LA CABAÑA
-SOLO SE ACTIVAN CUANDO EL PROTAGONISTA AGOTA EL DIAOGO. LUEGO NO HACEN NADA HASTA QUE SE FINALIZA EL 
-EVENTO CAMBIANDO DE ESCENARIO
-EL BOOLEANO SE CAMBIA A TRUE LUEGO DE REALIZAR ACCION PARA HACERLO UNA SOLA VEZ
-*/
-object inicioLenia{
-    var dioLeña = false
+    }   
 
-    method realizarAccion(){
-        if(not dioLeña){
-            game.addVisual(leña);
-            dioLeña=true 
+}    
+
+// pequeñas acciones que realiza el guardabosques en 3 puntos de la historia en los eventos
+class AccionGuardabosques{
+    const property gestorAC = gestorAccionesGuardabosques
+  
+    var accionHecha = false
+
+    method hacerAccion(){ // se usa el booleano para que haga la accion una sola vez
+        if(not accionHecha){
+            self.hacer()
+            accionHecha = true
         }
     }
+    method hacer()
+    method esTiempoDeRealizarAccion()
+
+}
+object darLaLeña inherits AccionGuardabosques{
+    
+     override method hacer()  { gestorAC.darLeña()}
+  
+
+    override method esTiempoDeRealizarAccion() =  guardabosques.termineDialogo()
 }
  
-object prepararseParaGranero{
-    var iremosAGranero = false
-
-    method realizarAccion(){
-        if(not iremosAGranero){
-            game.addVisual(puertaEntradaCabaña);
-            iremosAGranero = true
-        }
-    }
+object prepararseParaGranero inherits AccionGuardabosques{
+    
+    override method hacer()  {  gestorAC.darSalidaCabaña()}
+        
+    override method esTiempoDeRealizarAccion() =  guardabosques.termineDialogo()
 }
 
-object peleaFinalEstado { // cuidado al cambiar nombre, un escenario se llama peleaFinal
-    var protaYaGano = false
-    method realizarAccion(){
-        if(not protaYaGano){
-            game.addVisual(puertaEntradaCueva)
-            protaYaGano = true
-        }
-    }
+object peleaFinalEstado inherits AccionGuardabosques { // cuidado si cambian nombre, un escenario se llama peleaFinal
+     
+    override method hacer() {  gestorAC.darSalidaCueva() }    
+               
+     override method esTiempoDeRealizarAccion() = guardabosques.estoyMuerto()
 }
 
-// ################################################################################################################# \\
+
+

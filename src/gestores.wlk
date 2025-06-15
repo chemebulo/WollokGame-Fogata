@@ -1,6 +1,8 @@
 import direccion.*
 import protagonista.*
-
+import enemigos.*
+import puertas.*
+import visualesExtra.leña
 object gestorDeEventos{
 
     method gestionarInicio(eventos){
@@ -238,4 +240,29 @@ object gestorDeLobos{
         eventosLobos.forEach({ev => game.removeTickEvent(ev.nombreEvento())})
         eventosLobos.clear()
     }
+}
+
+object gestorAccionesGuardabosques{
+
+    var property accionesGuardabosques = darLaLeña
+   
+     method darLeña(){
+         game.addVisual(leña);
+    }
+    method darSalidaCabaña(){
+         game.addVisual(puertaEntradaCabaña)
+    }
+
+    method darSalidaCueva(){
+        game.addVisual(puertaEntradaCueva)
+    }
+
+     
+    method comprobarAccion(){
+        if (accionesGuardabosques.esTiempoDeRealizarAccion() ){
+            accionesGuardabosques.hacerAccion()
+            
+        }
+    }
+
 }

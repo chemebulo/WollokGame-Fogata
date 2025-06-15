@@ -1,5 +1,6 @@
 import protagonista.*
 import enemigos.*
+import gestores.gestorAccionesGuardabosques
 
 class EventoLoop{
     /*
@@ -136,19 +137,10 @@ const guardabosquesHabla2 = new EventoHablar(sujetoUnico=guardabosques,mensaje= 
 
 
 
-object eventoCabaña inherits EventoLoopIndividual(sujetoUnico=guardabosques,tiempo=800){
+object accionesGuardabosques inherits EventoLoopIndividual(sujetoUnico=gestorAccionesGuardabosques,tiempo=800){
        
 
     override method orden(visual){
-        visual.comprobarDialogo()
-    }
-}
-
-object eventoCueva inherits EventoLoopIndividual(sujetoUnico=guardabosques,tiempo=800){
-    
-    override method orden(visual){
-        visual.perseguirEnemigo();
-        visual.comprobarVida();
-        game.say(guardabosques,"ESTOY ACA INVISIBLE")
+        visual.comprobarAccion() 
     }
 }

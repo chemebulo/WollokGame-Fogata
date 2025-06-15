@@ -9,6 +9,7 @@ import videojuego.*
 import diapositivasManager.*
 import puertas.*
 import npcEstados.*
+import gestores.gestorAccionesGuardabosques
 
 /*
 TEMPLATE CONFIGURADORES:
@@ -127,14 +128,14 @@ const  cabañaC_v1 = {e =>
                                        e.visualesEnEscena([guardabosques,protagonista] );
                                        e.ost(game.sound("cabaña.mp3"));
                                        e.dialogo(dialogoEnCabaña);
-                                       e.eventos([eventoCabaña])}
+                                       e.eventos([accionesGuardabosques])}
 
-const cabañaC_v2 = {e => guardabosques.estadoCabaña(prepararseParaGranero);
+const cabañaC_v2 = {e => gestorAccionesGuardabosques.accionesGuardabosques(prepararseParaGranero);
                                           e.mapa(mapa_cabañaInicial_v1);
                                           e.visualesEnEscena([guardabosques,protagonista]);
                                           e.ost(game.sound("calma-antes-de-tormenta.mp3"));
                                           e.dialogo(dialogoEnCabaña2);
-                                          e.eventos([eventoCabaña])}
+                                          e.eventos([accionesGuardabosques])}
 
 const cabañaC_v3 = {e => e.mapa(mapa_cabañaInicial_v2);
                                          e.visualesEnEscena([protagonista,nota]);
@@ -173,11 +174,12 @@ const cuevaC_v5 = {e=> e.mapa(mapa_cueva_v5);
                                        e.ost(game.sound("cueva.mp3"))}  
 
   /*  PELEA FINAL */                                     
-const peleaFinalC_v1 = {e => guardabosques.estadoCombate(armadoGuardabosques);
-                                        e.mapa(mapa_FinalJuego)
-                                        e.visualesEnEscena([protagonista,guardabosques]);
-                                        e.ost(game.sound("pelea-final.mp3"));
-                                        e.eventos([eventoCueva])}  
+const peleaFinalC_v1 = {e => gestorAccionesGuardabosques.accionesGuardabosques(peleaFinalEstado);
+                            // guardabosques.estadoCombate(armadoGuardabosques);
+                             e.mapa(mapa_FinalJuego)
+                             e.visualesEnEscena([protagonista,guardabosques]);
+                             e.ost(game.sound("pelea-final.mp3"));
+                             e.eventos([accionesGuardabosques,ataqueGuardabosques])}  
 //-----------DEJAR ABAJO DE TODO ---------
 const escenarioTestC_v1 = {e =>           
                              e.mapa(mapa_escenarioTest);
