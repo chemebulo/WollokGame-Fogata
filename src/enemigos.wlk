@@ -6,6 +6,7 @@ import escenarios.*
 import puertas.*
 import gestores.gestorAccionesGuardabosques
 import videojuego.*
+import musica.*
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estadoCombate 
@@ -57,25 +58,21 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 10, daño = 1){ 
     const property eventoLobo = new EventoLobo(loboEv = self)
 
-    const sonidoMuerte = game.sound("muerte-perro-normal.mp3")
-    const sonidoMuerte2 = game.sound("muerte-perro-normal2.mp3")
-    const sonidoMuerte3 = game.sound("muerte-perro-normal3.mp3")
-    const sonidoMuerte4 = game.sound("muerte-perro-normal4.mp3")
-
-    const miSonidoMuerte = #{sonidoMuerte,sonidoMuerte2,sonidoMuerte3,sonidoMuerte4}.anyOne()
-
-
+    const miSonidoMuerte = sonidosMuerteLobo.anyOne()
+                          
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.
         return "lobo-"+direccion.toString()+".png"
     }
 
-    method emitirSonidoEnojado(){
-        game.sound("lobo-enojado.mp3").play()
+    method emitirSonidoEnojado(){ // es necesario el schedule porque hay un problema con las referencias si el sonido se repite otra vez en otro momento
+    
+        game.sound(track_loboEnojado).play() // NO MOVER A CONSTANTE A ARCHIVO MUSICA, SE BUGUEA Y NO SE PORQUE 
     }
     override method actualizarAMuerto(){
         super()
-        game.schedule(1,{miSonidoMuerte.play()})
+        
+        game.schedule(1,{game.sound(miSonidoMuerte).play()})
     }
 }
 
@@ -83,15 +80,14 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agre
 // JEFE DEL GRANERO
 object loboEspecial inherits Lobo( vida = 30){
 
-    const musicaVictoria = game.sound("victoria-lobo.mp3")
-
+    
     method estoyMuerto() = not self.estaVivo()
 
     method darSalidaGranero() {game.addVisual(puertaGranero)}
 
     override method actualizarAMuerto(){ //cuando lo matas corta la musica y emite una musica de victoria
         super()
-        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();musicaVictoria.play()})
+        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();game.sound(track_loboJefe_derrotado).play()})
        
     }
 }
@@ -107,10 +103,8 @@ object darSalidaGranero inherits AccionUnica(sujeto=loboEspecial){
 // ################################################################################################################# \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
-   
-    const musicaVictoria = game.sound("victoria-guardabosques.mp3")
-    const sonidoMuerte = game.sound("muerte-guardabosques")
-
+      
+    
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
@@ -118,11 +112,9 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
 
      override method actualizarAMuerto(){ //cuando lo matas corta la musica y emite una musica de victoria
         super()
-        game.schedule(1,{sonidoMuerte.play()})
-        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();musicaVictoria.play()})
-        
-        
-        
+        game.schedule(1,{game.sound(track_guardabosques_muerte).play()})
+        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();game.sound(track_loboJefe_derrotado).play()})
+              
     }
 
     method darLeña(){

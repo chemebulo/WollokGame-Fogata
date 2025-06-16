@@ -3,6 +3,7 @@ import direccion.*
 import escenarios.*
 import visualesExtra.*
 import diapositivasManager.*
+import musica.*
 
 
 object videojuego{  
@@ -21,11 +22,11 @@ object videojuego{
     }
 
     method finalizarJuego(){      
-         self.finalizarYMostrar(gameover,"gameover.mp3")
+         self.finalizarYMostrar(gameover,track_game_over)
     }
 
     method juegoGanado(){      
-        self.finalizarYMostrar(juegoGanado,"game-win.mp3")
+        self.finalizarYMostrar(juegoGanado,track_win)
     }
     
     method finalizarYMostrar(visual,sonido){

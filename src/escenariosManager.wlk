@@ -37,7 +37,7 @@ class Escenario{
     }
 
     method configurarSonido(){
-        ost.volume(1)
+        ost.volume(0.5)
         ost.shouldLoop(true)
         ost.play()
     }

@@ -1,6 +1,7 @@
 import protagonista.*
 import enemigos.*
 import gestores.*
+import musica.*
 
 class EventoLoop{
     /*
@@ -112,16 +113,16 @@ class EventoHablarConSonido inherits EventoUnico(sujetoUnico=protagonista){
     const ost
     const mensaje
     override method ordenUnica(visual){
-        ost.play()
+        game.sound(ost).play()
         game.say(visual,mensaje)
     }
     
 }
-const escucharLobos = new EventoHablarConSonido(mensaje="Que fue eso??",ost=game.sound("manada-lobo.mp3"))
+const escucharLobos = new EventoHablarConSonido(mensaje="Que fue eso??",ost=track_manada)
 // A veces el prota al inicio de un escenario dice algo
 const hablarProta = new EventoHablar( mensaje="Laura esta muerta, vere si el guardabosques tiene armas para matar a los bichos")
 
-const hablarProta2 = new EventoHablarConSonido(mensaje="La puta madre...LAURAAA!!!",ost=game.sound("lobos-amiga.mp3"))   
+const hablarProta2 = new EventoHablarConSonido(mensaje="La puta madre...LAURAAA!!!",ost=track_prota_preocupado)   
 
 const hablarProta3 = new EventoHablar(mensaje="Ya mismo lo mato a ese hijo de p@ta")  
 
