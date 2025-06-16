@@ -111,7 +111,12 @@ const cuevaCES_v8 ={puertaEntradaCueva.irHacia(cueva);
 const cuevaCES_v9 ={    puertaEntradaCueva.irHacia(diapoPeleaFinal)}
 
 const peleaFinalCES_v1 = {puertaEntradaCueva.irHacia(entradaCueva);
-                           entradaCueva.configuradorTotal({},{})}                                      
+                           entradaCueva.configuradorTotal(entradaCueva_v4,entradaCuevaCES_v4)}         
+
+const entradaCuevaCES_v4 = {puertaEste.irHacia(bifurcacion);
+                            bifurcacion.configuradorTotal(bifurcacionC_v6,bifurcacionCES_v6)}         
+
+const bifurcacionCES_v6 ={puertaNorte.irHacia(estacionamiento)}                                                                           
                                           //borrar la puertaEntradaCueva cuando se pase al escenario en los configuradores                                        
 //CONTINUAR AQUI....                                           
 // TEXTOS

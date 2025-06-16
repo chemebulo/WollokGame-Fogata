@@ -67,6 +67,8 @@ const granero = esc.construir(graneroC_v1,graneroCES_v1,"fondo-granero.png")
 
 const peleaFinal = esc.construir(peleaFinalC_v1,peleaFinalCES_v1,"fondo-cueva.png") // recordar borrar la puertade salida
 
+const estacionamiento = esc.construir(estacionamientoC_v1,{},"fondo-escenario-final.png")
+
 // ##############################################################################################################
 //  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
 // ##############################################################################################################

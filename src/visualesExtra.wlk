@@ -5,6 +5,7 @@ import confgEscenarios.*
 import npcEstados.*
 import enemigos.*
 import puertas.*
+import videojuego.*
 
 class Visual{
     method esAtravesable(){
@@ -145,6 +146,18 @@ object hacha inherits Visual{
         game.removeVisual(self)
         protagonista.estadoCombate(armadoProtagonista)
         game.say(protagonista, "Ya puedo defenderme de esos bichos")
+    }
+}
+
+object auto inherits Visual{
+    var property image = "auto.png"
+
+    var property position = game.at(5,5)
+
+    override method esAtravesable() = true
+
+    method interaccion(){
+        videojuego.juegoGanado()
     }
 }
 object nota inherits Visual{

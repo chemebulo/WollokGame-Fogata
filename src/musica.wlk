@@ -4,7 +4,7 @@ const track_fogata = game.sound("musica-escenarioInicial-v1.mp3")
 
 const track_ataque_lobos = game.sound("lobos-atacan.mp3")
 
-const track_suspence = game.sound("calma-antes-de-tormenta.mp3")
+const track_suspence = game.sound("suspenso.mp3")
 
 const track_cueva = game.sound("cueva.mp3")
 
@@ -13,7 +13,11 @@ const track_pelea_final = game.sound("pelea-final.mp3")
 
 const track_cabaña = game.sound("cabaña.mp3")
 
+const track_tramo_a_cabaña = game.sound("tramo-a-cabaña.mp3")
+
 const track_pelea_granero = game.sound("pelea-granero.mp3")
+
+const track_tramo_final = game.sound("tramo-final.mp3")
 
 //MUSICA DIAPOSITIVAS
 const track_inicio = game.sound("inicio_v1.mp3")

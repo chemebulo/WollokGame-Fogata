@@ -63,13 +63,17 @@ const bifurcacionC_v3 = {e=> e.mapa(mapa_escenarioBifurcacion_v3);
                                         }
 const bifurcacionC_v4 = { e=> e.visualesEnEscena([protagonista,puertaEste]);
                                             e.mapa(mapa_escenarioBifurcacion_v4);
-                                            e.ost(track_suspence);
+                                            e.ost(track_tramo_a_cabaña);
                                             e.eventos([hablarProta])}
 
 const bifurcacionC_v5 = {e => e.visualesEnEscena([protagonista,puertaOeste]);
                                              e.mapa(mapa_escenarioBifurcacion_v5);
                                              e.ost(track_ataque_lobos);
                                              e.eventos([hablarProta7])}
+
+const bifurcacionC_v6 = {e => e.mapa(mapa_escenarioBifurcacion_v6);
+                               e.visualesEnEscena([protagonista,puertaNorte]);
+                               e.ost(track_tramo_final)}                                             
 // CONFIGURADORES ENTRADACABAÑA
 const entradaCabañaC_v1 = {e => 
                                       e.mapa(mapa_entradaCabaña_v1);
@@ -84,7 +88,7 @@ const entradaCabañaC_v2 = {e =>
 
 const entradaCabañaC_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
                                               e.visualesEnEscena([cabañaOBJ,protagonista,puertaEntradaCabaña]);
-                                              e.ost(track_suspence);
+                                              e.ost(track_tramo_a_cabaña);
                                               }
 
 const entradaCabañaC_v4 = {e=> game.removeVisual(puertaEntradaCabaña);
@@ -155,7 +159,14 @@ const entradaCuevaC_v2  ={e => e.mapa(mapa_entradaCueva_v2);
 const entradaCuevaC_v3 = {e=> e.mapa(mapa_entradaCueva_v3);
                                             e.visualesEnEscena([cuevaOBJ,protagonista,puertaEntradaCueva]);
                                             e.ost(track_ataque_lobos)}                                                 
-                                                                                          
+const entradaCueva_v4 = {e =>protagonista.estadoCombate(desarmadoProtagonista);
+                            protagonista.image("prota-desarmado-abajo.png");
+                              game.removeVisual(puertaEntradaCueva)
+                              e.mapa(mapa_entradaCueva_v2);
+                             e.visualesEnEscena([cuevaOBJ,protagonista,puertaEste]);
+                             e.ost(track_tramo_final)
+                             }
+
 
 const cuevaC_v1 = {e=> e.mapa(mapa_cueva_v1);
                                      e.visualesEnEscena([protagonista,puertaEntradaCueva]);
@@ -184,6 +195,10 @@ const peleaFinalC_v1 = {e => protagonista.estadoCombate(armadoProtagonista);
                              e.visualesEnEscena([protagonista,guardabosques]);
                              e.ost(track_pelea_final);
                              e.eventos([accionesGuardabosques,ataqueGuardabosques])}  
+
+const estacionamientoC_v1 ={e => e.mapa(mapa_estacionamiento_v1);
+                                e.visualesEnEscena([protagonista,auto]);
+                                 e.ost(track_tramo_final)}                            
 //-----------DEJAR ABAJO DE TODO ---------
 const escenarioTestC_v1 = {e =>           
                              e.mapa(mapa_escenarioTest);
