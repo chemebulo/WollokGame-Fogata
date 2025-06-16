@@ -49,6 +49,6 @@ const puertaOeste = new Puerta(direccion=izquierda,image = "puerta.png",position
 const puertaEste  = new Puerta(direccion=derecha,image = "puerta.png",position = este.ubicacion() )
 const puertaSur   = new Puerta(direccion=abajo,image = "puerta.png",position = sur.ubicacion()  )
 
-const puertaEntradaCabaña = new PuertaEspecial(image = "puerta.png", irHacia= cabaña)
-const puertaEntradaCueva = new PuertaEspecial(image ="puerta.png",irHacia = cueva)
-const puertaGranero = new PuertaEspecial(image = "puerta.png",irHacia= granero)
+const puertaEntradaCabaña = new PuertaEspecial(image = "puerta-cabaña.png", irHacia= cabaña)
+const puertaEntradaCueva = new PuertaEspecial(image ="puerta-cueva.png",irHacia = cueva)
+const puertaGranero = new PuertaEspecial(image = "puerta-granero.png",irHacia= granero)

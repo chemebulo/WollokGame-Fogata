@@ -2,8 +2,7 @@ import wollok.game.*
 import videojuego.*
 
 program Fogata {
-	game.clear()
-    
+	 
     videojuego.tablero()
 
     videojuego.controles()

@@ -78,7 +78,8 @@ const entradaCabañaC_v1 = {e =>
 const entradaCabañaC_v2 = {e => 
                                          e.mapa(mapa_entradaCabaña_v2);
                                          e.visualesEnEscena([cabañaOBJ,protagonista, puertaOeste] );
-                                         e.ost(game.sound("musica-escenarioInicial-v1.mp3"))}
+                                         e.ost(game.sound("calma-antes-de-tormenta.mp3"));
+                                         e.eventos([escucharLobos])}
 
 const entradaCabañaC_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
                                               e.visualesEnEscena([cabañaOBJ,protagonista,puertaEntradaCabaña]);
@@ -113,7 +114,7 @@ const entradaGraneroC_v1 = {e=> e.mapa(mapa_entradaGranero_v1);
 const graneroC_v1 ={e=> 
                                  e.mapa(mapa_peleaGranero);
                                   e.visualesEnEscena([protagonista,hacha,loboEspecial]);
-                                  e.ost(game.sound("lobos-atacan.mp3"));
+                                  e.ost(game.sound("pelea-granero.mp3"));
                                   e.eventos([eventoLoboEspecial])}
 
 const entradaGraneroC_v2 ={e=> game.removeVisual(puertaGranero);
@@ -171,12 +172,13 @@ const cuevaC_v2 ={e=> e.mapa(mapa_cueva_v2);
                                        e.ost(game.sound("cueva.mp3"))}                          
 
 const cuevaC_v5 = {e=> e.mapa(mapa_cueva_v5);
-                                        e.visualesEnEscena([protagonista]);
+                                        e.visualesEnEscena([protagonista,puertaEntradaCueva]);
                                        e.ost(game.sound("cueva.mp3"))}  
 
   /*  PELEA FINAL */                                     
-const peleaFinalC_v1 = {e => gestorAccionesGuardabosques.accionesGuardabosques(peleaFinalEstado);
-                            // guardabosques.estadoCombate(armadoGuardabosques);
+const peleaFinalC_v1 = {e => protagonista.estadoCombate(armadoProtagonista);
+                             gestorAccionesGuardabosques.accionesGuardabosques(peleaFinalEstado);
+                             guardabosques.estadoCombate(armadoGuardabosques);
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista,guardabosques]);
                              e.ost(game.sound("pelea-final.mp3"));
@@ -192,13 +194,13 @@ const escenarioTestC_v1 = {e =>
 // CONFIGURADORES EXCLUSIVOS PARA ESCENARIOS CON DIAPOS, NO REQUIEREN CONFIGURADOR DE ESCEANRIO SIGUIENTE
 // #########################################################################################################
 const diapoAmigaMuertaC_v1 = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                        e.ost(game.sound("traicion-granero.mp3"))
+                                        e.ost(game.sound("terror-amiga-muerta.mp3"))
 
                                       }
 
-const diapoPeleaFinalC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                            e.ost(game.sound("traicion-granero.mp3"))}
+const diapoPeleaFinalC_v1 = {e => protagonista.estadoCombate(desarmadoProtagonista);gestorDeDiapositivas.esHoraDeDiapositiva(true);
+                                            e.ost(game.sound("guardabosques-cueva.mp3"))}
 
 const diapoGraneroC_v1 = {e=> gestorDeDiapositivas.esHoraDeDiapositiva(true);
                             game.removeVisual(puertaGranero)
-                            e.ost(game.sound("traicion-granero.mp3"))}
+                            e.ost(game.sound("traicion-guardabosques.mp3"))}

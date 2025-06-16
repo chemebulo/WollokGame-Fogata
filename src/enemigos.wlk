@@ -57,6 +57,14 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 10, daño = 1){ 
     const property eventoLobo = new EventoLobo(loboEv = self)
 
+    const sonidoMuerte = game.sound("muerte-perro-normal.mp3")
+    const sonidoMuerte2 = game.sound("muerte-perro-normal2.mp3")
+    const sonidoMuerte3 = game.sound("muerte-perro-normal3.mp3")
+    const sonidoMuerte4 = game.sound("muerte-perro-normal4.mp3")
+
+    const miSonidoMuerte = #{sonidoMuerte,sonidoMuerte2,sonidoMuerte3,sonidoMuerte4}.anyOne()
+
+
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.
         return "lobo-"+direccion.toString()+".png"
@@ -64,6 +72,10 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agre
 
     method emitirSonidoEnojado(){
         game.sound("lobo-enojado.mp3").play()
+    }
+    override method actualizarAMuerto(){
+        super()
+        game.schedule(1,{miSonidoMuerte.play()})
     }
 }
 
@@ -97,6 +109,7 @@ object darSalidaGranero inherits AccionUnica(sujeto=loboEspecial){
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
    
     const musicaVictoria = game.sound("victoria-guardabosques.mp3")
+    const sonidoMuerte = game.sound("muerte-guardabosques")
 
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
@@ -105,6 +118,7 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
 
      override method actualizarAMuerto(){ //cuando lo matas corta la musica y emite una musica de victoria
         super()
+        game.schedule(1,{sonidoMuerte.play()})
         game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();musicaVictoria.play()})
         
         

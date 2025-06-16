@@ -96,7 +96,7 @@ object leña inherits Visual{
 
 // ########################################################################################################################## \\
 
-object cabañaOBJ inherits Visual{
+object cabañaOBJ inherits Visual{ // se llama cabañaOBJ porque hay un escenario cabaña
     var property position = game.at(5,6)
     const property image    = "cabaña_entrada.png"
 
@@ -110,18 +110,18 @@ object cabañaOBJ inherits Visual{
 }
 
 // ########################################################################################################################## \\
-object cuevaOBJ inherits Visual{
+object cuevaOBJ inherits Visual{// se llama cuevaOBJ porque hay un escenario cueva
     var property position = game.at(2,5)
     const property image = "cueva.png"
-    
-    override method esAtravesable(){
+     override method esAtravesable(){
         return true
     }
+    
 
     method interaccion(){}
 }
 
-object graneroOBJ inherits Visual{
+object graneroOBJ inherits Visual{ // se llama graneroOBJ porque hay un escenario granero
     var property position =game.at(6,6)
     const property image = "granero.png"
 

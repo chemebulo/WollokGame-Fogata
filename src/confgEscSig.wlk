@@ -106,7 +106,7 @@ const cuevaCES_v7 = {puertaEntradaCueva.irHacia(cueva);
                      cueva.configuradorTotal(cuevaC_v3,cuevaCES_v8)}                                     
 
 const cuevaCES_v8 ={puertaEntradaCueva.irHacia(cueva);
-                     cueva.configuradorTotal(cuevaC_v4,cuevaCES_v9)}
+                     cueva.configuradorTotal(cuevaC_v5,cuevaCES_v9)}
                                                                        
 const cuevaCES_v9 ={    puertaEntradaCueva.irHacia(diapoPeleaFinal)}
 

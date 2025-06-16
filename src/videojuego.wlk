@@ -7,7 +7,7 @@ import diapositivasManager.*
 
 object videojuego{  
    
-    var property escenario  = inicio
+    var property escenario  = entradaCueva
     const gestorDiapositivas = gestorDeDiapositivas
     
     method iniciar(){ 
@@ -20,20 +20,19 @@ object videojuego{
         escenario.puestaEnEscena()
     }
 
-    method finalizarJuego(){
-        escenario.limpiar()
-        game.clear();
-        game.addVisual(gameover); 
-        game.sound("gameover.mp3").play();
-        game.onTick(5000,"fin",{game.stop()})
-
+    method finalizarJuego(){      
+         self.finalizarYMostrar(gameover,"gameover.mp3")
     }
 
-    method juegoGanado(){
-        escenario.limpiar();
-        game.clear()
-        game.addVisual(juegoGanado);
-        game.sound("game-win.mp3").play()
+    method juegoGanado(){      
+        self.finalizarYMostrar(juegoGanado,"game-win.mp3")
+    }
+    
+    method finalizarYMostrar(visual,sonido){
+         escenario.limpiar()
+        game.clear();
+        game.addVisual(visual); 
+        game.sound(sonido).play()
         game.onTick(5000,"fin",{game.stop()})
     }
 
