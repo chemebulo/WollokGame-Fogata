@@ -28,13 +28,18 @@ class Escenario{
     method puestaEnEscena(){ 
         self.configurar()
         self.configurarEscenarioSiguiente()
-        ost.shouldLoop(true)
-        ost.play()
+        self.configurarSonido()
         gestorFondo.visualizarFondo(fondoEscenario)
         gestorDialogo.configurarConversacion(self)
         self.dibujarTablero()
         gestorListasEscenario.agregarVisualesEscena(self)
         gestorEvento.gestionarInicio(eventos)
+    }
+
+    method configurarSonido(){
+        ost.volume(1)
+        ost.shouldLoop(true)
+        ost.play()
     }
     
     method dibujarTablero() {
