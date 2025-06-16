@@ -132,7 +132,11 @@ const hablarProta5 = new EventoHablar(mensaje= "Aca tambien????")
 
 const hablarProta6 = new EventoHablar(mensaje= "buehhhh ")
 
-const hablarProta7 = new EventoHablar(mensaje = "Ahora si lo hago cagar!!!")
+const hablarProta7 = new EventoHablar(mensaje = "Ahora si los hago cagar!!!")
+
+const hablarProta8 = new EventoHablar(mensaje = "Laura....")
+
+const hablarProta9 = new EventoHablar(mensaje = "AHHHHHHHH!!!!!!!")
 
 const guardabosquesHabla = new EventoHablar(sujetoUnico=guardabosques,mensaje= "Aqui al norte esta el granero")
 

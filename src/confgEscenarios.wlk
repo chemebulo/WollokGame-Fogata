@@ -194,11 +194,12 @@ const peleaFinalC_v1 = {e => protagonista.estadoCombate(armadoProtagonista);
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista,guardabosques]);
                              e.ost(track_pelea_final);
-                             e.eventos([accionesGuardabosques,ataqueGuardabosques])}  
+                             e.eventos([accionesGuardabosques,ataqueGuardabosques,hablarProta9])}  
 
 const estacionamientoC_v1 ={e => e.mapa(mapa_estacionamiento_v1);
                                 e.visualesEnEscena([protagonista,auto]);
-                                 e.ost(track_tramo_final)}                            
+                                 e.ost(track_tramo_final);
+                                 e.eventos([hablarProta8])}                            
 //-----------DEJAR ABAJO DE TODO ---------
 const escenarioTestC_v1 = {e =>           
                              e.mapa(mapa_escenarioTest);
