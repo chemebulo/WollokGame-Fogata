@@ -28,6 +28,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         game.schedule(1, {game.sound(self.sonidoMuerte()).play()})
         estado = new EnemigoMuerto()
         image = self.imagenMuerto()
+        self.accionesAdicionalesAlMorir()
     }
 
     method estaSobreEnemigo(){
@@ -54,6 +55,8 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         // Describe el escenario donde actualmente está el enemigo.
         return videojuego.escenario()
     }
+
+    method accionesAdicionalesAlMorir(){} // Acciones que el enemigo realizaría en caso que necesite hacer después de morir.
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
 }
@@ -85,15 +88,9 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agre
 
 object loboEspecial inherits Lobo(vida = 30){
 
-    override method actualizarAMuerto(){ 
-        // Actualiza el estado del lobo especial a muerto y emite una musica de victoria.
-        super()
-        game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen()})
-    }
-
-    override method sonidoMuerte(){
-        // Describe el sonido de muerte del lobo especial.
-        return track_loboJefe_derrotado
+    override method accionesAdicionalesAlMorir() {
+        game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen();
+                          game.sound(track_loboJefe_derrotado).play()})
     }
 }
 
@@ -106,9 +103,7 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
-    override method actualizarAMuerto(){ 
-        // Actualiza el estado del guardabosques a muerto y emite una musica de victoria.
-        super()
+    override method accionesAdicionalesAlMorir() {
         game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen();
                           game.sound(track_loboJefe_derrotado).play()})
     }
