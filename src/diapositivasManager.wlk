@@ -79,7 +79,7 @@ const despuesFinalJuego = {} // completar
 const peliculaInicioJuego = new Pelicula( pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
 const peliculaGranero = new Pelicula( pelicula =  [dg0,dg1,dg2])
 const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1,dam2,dam3])
-const peliculaPeleaFinal = new Pelicula(pelicula=[dpf1,dpf2])
+const peliculaPeleaFinal = new Pelicula(pelicula=[dpf1,dpf2,dpf3])
 const finalJuego = new Pelicula(pelicula=[]) // completar
 
 class Pelicula{
@@ -94,6 +94,7 @@ class Pelicula{
 // DIAPOSITIVAS PARA TODO EL JUEGO                                        
 const dpf1 = new Diapositiva(image ="diapo-pelea-final2.png")
 const dpf2 = new Diapositiva(image ="diapo-pelea-final3.png")
+const dpf3 = new Diapositiva(image ="diapo-pelea-final4.png")
 
 const dam1 = new Diapositiva(image ="diapo-amiga-muerta2.png")
 const dam2 = new Diapositiva(image ="diapo-amiga-muerta3.png")
