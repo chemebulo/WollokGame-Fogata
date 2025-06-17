@@ -2,9 +2,6 @@ import protagonista.*
 import visualesExtra.*
 import npcEstados.*
 import eventos.*
-import escenarios.*
-import puertas.*
-import gestores.gestorAccionesGuardabosques
 import videojuego.*
 import musica.*
 
@@ -13,6 +10,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estado        = new EnemigoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
     const property enemigo     = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
 
+    // ============================================================================================================== \\
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo dependiendo de su estado.
@@ -20,13 +18,14 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     }
 
     override method atacadoPor(visual){
-        // Emite un mensaje cuando el enemigo es atacado por su enemigo.
+        // Representa el comportamiento del enemigo cuando un enemigo suyo lo ataca.
         estado.atacadoPor(visual)
     }
 
     override method actualizarAMuerto(){
         // Actualiza el estado del enemigo a muerto y además modifica la imagen del enemigo.
         super()
+        game.schedule(1, {game.sound(self.sonidoMuerte()).play()})
         estado = new EnemigoMuerto()
         image = self.imagenMuerto()
     }
@@ -37,12 +36,12 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     }
 
     override method esAtravesable(){
-        // Indica si el enemigo si tiene colisión o no. En este caso describe que tiene colisión.
+        // Indica si el enemigo si tiene colisión o no. En este caso describe que tiene colisión (salvo por su enemigo).
         return false
     }
 
     method atacarEnemigo(){
-        // Representa el ataque del enemigo hacia su enemigo.
+        // Representa el comportamiento del ataque del enemigo hacia su enemigo.
         estado.atacarEnemigo()
     }
 
@@ -50,7 +49,13 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         // Indica si el enemigo puede atacar a su enemigo. 
         return estado.puedeAtacarAlEnemigo()
     }
-    method escenarioDondeEstoy() = videojuego.escenario() // agregado solo para que lo usen el loboEspecial y el guardabosques
+
+    method escenarioDondeEstoy(){
+        // Describe el escenario donde actualmente está el enemigo.
+        return videojuego.escenario()
+    }
+
+    method sonidoMuerte() // Describe el sonido de muerte del enemigo.
 }
 
 // ################################################################################################################# \\
@@ -58,125 +63,60 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 10, daño = 1){ 
     const property eventoLobo = new EventoLobo(loboEv = self)
 
-    const miSonidoMuerte = sonidosMuerteLobo.anyOne()
-                          
+    // ============================================================================================================== \\
+      
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.
         return "lobo-"+direccion.toString()+".png"
     }
 
-    method emitirSonidoEnojado(){ // es necesario el schedule porque hay un problema con las referencias si el sonido se repite otra vez en otro momento
-    
-        game.sound(track_loboEnojado).play() // NO MOVER A CONSTANTE A ARCHIVO MUSICA, SE BUGUEA Y NO SE PORQUE 
+    override method sonidoMuerte(){
+        // Describe el sonido de muerte del lobo.
+        return sonidosMuerteLobo.anyOne()
     }
-    override method actualizarAMuerto(){
-        super()
-        
-        game.schedule(1,{game.sound(miSonidoMuerte).play()})
+
+    method emitirSonidoEnojado(){
+        // Emite un sonido de enojo del lobo.
+        game.sound("lobo-enojado.mp3").play()
     }
 }
 
 // ################################################################################################################# \\
-// JEFE DEL GRANERO
-object loboEspecial inherits Lobo( vida = 30){
 
-    
-    method estoyMuerto() = not self.estaVivo()
+object loboEspecial inherits Lobo(vida = 30){
 
-    method darSalidaGranero() {game.addVisual(puertaGranero)}
-
-    override method actualizarAMuerto(){ //cuando lo matas corta la musica y emite una musica de victoria
+    override method actualizarAMuerto(){ 
+        // Actualiza el estado del lobo especial a muerto y emite una musica de victoria.
         super()
-        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();game.sound(track_loboJefe_derrotado).play()})
-       
+        game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen()})
+    }
+
+    override method sonidoMuerte(){
+        // Describe el sonido de muerte del lobo especial.
+        return track_loboJefe_derrotado
     }
 }
-//accion que hace el lobo cuando lo matas
-object darSalidaGranero inherits AccionUnica(sujeto=loboEspecial){
-        override method hacer() { sujeto.darSalidaGranero() }    
-               
-     override method esTiempoDeRealizarAccion() = sujeto.estoyMuerto()
-}
-
-
 
 // ################################################################################################################# \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
-      
     
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
-     override method actualizarAMuerto(){ //cuando lo matas corta la musica y emite una musica de victoria
+    override method actualizarAMuerto(){ 
+        // Actualiza el estado del guardabosques a muerto y emite una musica de victoria.
         super()
-        game.schedule(1,{game.sound(track_guardabosques_muerte).play()})
-        game.schedule(1,{self.escenarioDondeEstoy().bajarVolumen();game.sound(track_loboJefe_derrotado).play()})
-              
+        game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen();
+                          game.sound(track_loboJefe_derrotado).play()})
     }
-
-    method darLeña(){
-         game.addVisual(leña);
+    
+    override method sonidoMuerte(){
+        // Describe el sonido de muerte del guardabosques.
+        return track_guardabosques_muerte
     }
-    method darSalidaCabaña(){
-         game.addVisual(puertaEntradaCabaña)
-    }
-
-    method darSalidaCueva(){
-        game.addVisual(puertaEntradaCueva)
-    }
-
-    // ################# REFACTORIZAR Y MOVER LA MAYOR PARTE POSIBLE A OTRO LADO DE TODO ESTO: ################# //
-   
-    method estoyMuerto() = not self.estaVivo()
-
-    method termineDialogo(){
-        // Indica si el diálogo con su enemigo (el protagonista) terminó.
-        return enemigo.conversacionNPC().isEmpty() 
-    }   
-
 }    
 
-// pequeñas acciones que realiza el guardabosques en 3 puntos de la historia en los eventos
-class AccionUnica{
-    const  property sujeto= null
-    const property gestorAC = gestorAccionesGuardabosques
-  
-    var accionHecha = false
-
-    method hacerAccion(){ // se usa el booleano para que haga la accion una sola vez
-        if(not accionHecha){
-            self.hacer()
-            accionHecha = true
-        }
-    }
-    method hacer()
-    method esTiempoDeRealizarAccion()
-
-}
-object darLaLeña inherits AccionUnica(sujeto=guardabosques){
-    
-     override method hacer()  { sujeto.darLeña()}
-  
-
-    override method esTiempoDeRealizarAccion() =  sujeto.termineDialogo()
-}
- 
-object prepararseParaGranero inherits AccionUnica(sujeto=guardabosques){
-    
-    override method hacer()  {  sujeto.darSalidaCabaña()}
-        
-    override method esTiempoDeRealizarAccion() =  sujeto.termineDialogo()
-}
-
-object peleaFinalEstado inherits AccionUnica(sujeto=guardabosques) { // cuidado si cambian nombre, un escenario se llama peleaFinal
-     
-    override method hacer() {  sujeto.darSalidaCueva() }    
-               
-     override method esTiempoDeRealizarAccion() = sujeto.estoyMuerto()
-}
-
-
-
+// ################################################################################################################# \\

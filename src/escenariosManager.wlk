@@ -9,28 +9,29 @@ class Escenario{
         INV .REP: En eventos, cada evento de la lista se llama EXACTAMENTE IGUAL que los eventos que se implementan en eventos Iniciar,
         véase ejemplo en ISSUE en github
     */
-    var property eventos = []
-    var property mapa = mapa_comun
-    var property fondoEscenario = ""
-    var property visualesEnEscena = []
-    var property ost = game.sound("")
-    var property dialogo = [] // [npcActual, dialogo] implementar en dialogos.wlk
-    var property confgActual = {} // Un bloque en configuradorEscenarios.wlk
+    var property eventos           = []
+    var property mapa              = mapa_comun
+    var property fondoEscenario    = ""
+    var property visualesEnEscena  = []
+    var property ost               = game.sound("")
+    var property dialogo           = [] // [npcActual, dialogo] implementar en dialogos.wlk
+    var property confgActual       = {} // Un bloque en configuradorEscenarios.wlk
     var property confgEscSiguiente = {}
-   
-    const gestorFondo  = gestorFondoEscenario
-    const gestorEvento = gestorDeEventos
-    const gestorObs    = gestorDeObstaculos
-    const gestorLobos = gestorDeLobos
+    
+    const personaje             = protagonista
+    const gestorFondo           = gestorFondoEscenario
+    const gestorEvento          = gestorDeEventos
+    const gestorObstaculos      = gestorDeObstaculos
+    const gestorLobos           = gestorDeLobos
     const gestorListasEscenario = gestorDeListasEscenario
-    const gestorDialogo = gestorConversaciones
+    const gestorDialogo         = gestorDeDialogo
     
     method puestaEnEscena(){ 
         self.configurar()
         self.configurarEscenarioSiguiente()
         self.configurarSonido()
         gestorFondo.visualizarFondo(fondoEscenario)
-        gestorDialogo.configurarConversacion(self)
+        gestorDialogo.configurarConversacion(self, personaje)
         self.dibujarTablero()
         gestorListasEscenario.agregarVisualesEscena(self)
         gestorEvento.gestionarInicio(eventos)
@@ -51,7 +52,9 @@ class Escenario{
         })
     }
 
-    method bajarVolumen(){ost.volume(0)}
+    method bajarVolumen(){
+        ost.volume(0)
+    }
 
     method configuradorTotal(confgAct,confgEscenarioSiguiente){
         self.confgActual(confgAct);
@@ -71,11 +74,10 @@ class Escenario{
         ost.stop()
         gestorListasEscenario.limpiarListas(self)
         gestorEvento.gestionarFin(eventos);
-         gestorObs.limpiarObstaculos()
-        protagonista.resetearDialogo()
+        gestorObstaculos.limpiarObstaculos()
+        gestorDialogo.resetearDialogo(personaje)
         gestorLobos.limpiarLobos()
-
-     }
+    }
   
     method hayDialogo(){
         return not dialogo.isEmpty()

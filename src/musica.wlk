@@ -55,9 +55,6 @@ const track_lobo_muerto3 = "muerte-perro-normal3.mp3"
 
 const track_lobo_muerto4 = "muerte-perro-normal4.mp3"
 
-const sonidosMuerteLobo = [track_lobo_muerto1,track_lobo_muerto2,track_lobo_muerto3,track_lobo_muerto4]
+const sonidosMuerteLobo = [track_lobo_muerto1, track_lobo_muerto2, track_lobo_muerto3, track_lobo_muerto4]
 
 const track_loboEnojado = "lobo-enojado.mp3"
-
-
-

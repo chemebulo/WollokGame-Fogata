@@ -56,30 +56,30 @@ class VisualConMovimiento inherits Visual{
 // ########################################################################################################################## \\
 
 object amiga inherits Visual{
-    var property position = game.at(2,4)
-    const property image    = "amiga.png"
-    const property dialogo  = []
+    var property position  = game.at(2,4)
+    const property image   = "amiga.png"
+    const property dialogo = []
 }
 
 // ########################################################################################################################## \\
 
 object fogataOBJ inherits Visual{
     var property position = game.at(3,4)
-    const property image    = "fogata-apagada.png"
+    const property image  = "fogata-apagada.png"
 }
 
 // ########################################################################################################################## \\
 
 object carpa inherits Visual{
     var property position = game.at(6,4)
-    const property image    = "carpa.png"
+    const property image  = "carpa.png"
 }
 
 // ########################################################################################################################## \\
 
 object leña inherits Visual{
     var property position = game.at(5,6)
-    const property image    = "leña.png"
+    const property image  = "leña.png"
 
     override method esAtravesable(){
         return true
@@ -106,18 +106,16 @@ object cabañaOBJ inherits Visual{ // se llama cabañaOBJ porque hay un escenari
     }
 
     method interaccion(){}
-
-    
 }
 
 // ########################################################################################################################## \\
 object cuevaOBJ inherits Visual{// se llama cuevaOBJ porque hay un escenario cueva
     var property position = game.at(2,5)
     const property image = "cueva.png"
-     override method esAtravesable(){
+
+    override method esAtravesable(){
         return true
     }
-    
 
     method interaccion(){}
 }
@@ -129,6 +127,7 @@ object graneroOBJ inherits Visual{ // se llama graneroOBJ porque hay un escenari
     override method esAtravesable(){
         return true
     }
+
     method interaccion(){}
 }
 
@@ -163,10 +162,12 @@ object auto inherits Visual{
 object nota inherits Visual{
     var property position = game.at(5,5)
     var property image = "nota.png"
+    
     override method esAtravesable(){
         return true 
     }
-      method interaccion(){
+
+    method interaccion(){
         game.removeVisual(self)
         game.say(protagonista, "SI SOBREVIVISTE TE ESPERO EN LA CUEVA...")
         game.addVisual(puertaEntradaCabaña)
@@ -199,4 +200,3 @@ object juegoGanado{
     const property position = game.at(0,0)
     const property image    = "game-win.png"
 }
-

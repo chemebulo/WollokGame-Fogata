@@ -7,8 +7,7 @@ import musica.*
 
 
 object videojuego{  
-   
-    var property escenario  = inicio
+    var property escenario   = inicio
     const gestorDiapositivas = gestorDeDiapositivas
     
     method iniciar(){ 
@@ -22,7 +21,7 @@ object videojuego{
     }
 
     method finalizarJuego(){      
-         self.finalizarYMostrar(gameover,track_game_over)
+        self.finalizarYMostrar(gameover,track_game_over)
     }
 
     method juegoGanado(){      
@@ -30,20 +29,20 @@ object videojuego{
     }
     
     method finalizarYMostrar(visual,sonido){
-         escenario.limpiar()
-        game.clear();
-        game.addVisual(visual); 
+        escenario.limpiar()
+        game.clear()
+        game.addVisual(visual) 
         game.sound(sonido).play()
-        game.onTick(5000,"fin",{game.stop()})
+        game.onTick(5000, "fin", {game.stop()})
     }
 
     // ############################### TABLERO ###############################
     
     method tablero(){
-         game.width(13)
-         game.height(9)
-	     game.cellSize(100)
-          game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
+        game.width(13)
+        game.height(9)
+        game.cellSize(100)
+        game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
     }
 
     // ############################## CONTROLES ##############################

@@ -11,6 +11,7 @@ import puertas.*
 import npcEstados.*
 import gestores.gestorAccionesGuardabosques
 import musica.*
+import acciones.*
 
 /*
 TEMPLATE CONFIGURADORES:

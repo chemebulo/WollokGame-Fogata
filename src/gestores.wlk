@@ -3,6 +3,8 @@ import protagonista.*
 import enemigos.*
 import puertas.*
 import visualesExtra.leña
+import acciones.*
+
 object gestorDeEventos{
 
     method gestionarInicio(eventos){
@@ -19,6 +21,7 @@ object gestorDeEventos{
 }
 
 // ############################################################################################################################################# \\
+
 object gestorDeDirecciones{
     const ejePrimero = ejeX // Representa el primer eje del tablero, en este caso es el eje X.
     const ejeSegundo = ejeY // Representa el segundo eje del tablero, en este caso es el eje Y.
@@ -34,10 +37,17 @@ object gestorDeDirecciones{
 // ############################################################################################################################################# \\
 
 object gestorDePosiciones{
+    const colisionesGestor  = gestorDeColisiones  // Representa el gestor de colisiones.
 
     method lindanteConvenienteHacia(posicion, visual){
         // Describe la celda lindante que más cerca está del visual dado.
-        return gestorDeColisiones.lindantesSinObstaculos(posicion, visual).min({pos => pos.distance(visual.position())})
+        const lindantesSinObstaculo = colisionesGestor.lindantesSinObstaculos(posicion, visual)
+
+        if(colisionesGestor.hayLindanteSinObstaculo(posicion, visual)){
+            return lindantesSinObstaculo.min({pos => pos.distance(visual.position())})
+        } else {
+            return posicion
+        }
     }
 
     // ========================================================================================================================================= \\
@@ -97,6 +107,12 @@ object gestorDeColisiones{
     method lindantesSinObstaculos(posicion, visual){
         // Describe todas las posiciones lindantes (ortogonales y diagonales) que no tienen obstaculos sin incluir al visual dado en las mismas.
         return gestorDePosiciones.lindantesDe(posicion).filter({pos => not self.hayObstaculoEn(pos, visual)})
+    }
+
+    // ========================================================================================================================================= \\
+
+    method hayLindanteSinObstaculo(posicion, visual){
+        return not self.lindantesSinObstaculos(posicion, visual).isEmpty()
     }
 }
 
@@ -164,27 +180,6 @@ object gestorDeMovimiento{
 
 // ############################################################################################################################################# \\
 
-object gestorConversaciones{
-
-    method configurarConversacion(esc){ 
-        //
-        if(esc.hayDialogo()){
-            const dialogoActual = esc.dialogo().last().copy()
-            const npcEscenario =  esc.dialogo().first()
-
-            protagonista.npcActual(npcEscenario)
-            protagonista.conversacionNPC(dialogoActual)
-        }
-    }
-
-    method hayDialogo(esc){
-        //
-        return not esc.dialogo().isEmpty()
-    }
-}
-
-// ############################################################################################################################################# \\
-
 object gestorFondoEscenario{
     /* 
         INVARIANTE DE REPRESENTACIÓN: 
@@ -220,6 +215,7 @@ object gestorDeListasEscenario{
         esc.dialogo([])
         esc.eventos([])
     }
+
     method limpiarListaVisuales(esc){
         self.limpiezaDeVisuales(esc.visualesEnEscena())
     }
@@ -227,13 +223,14 @@ object gestorDeListasEscenario{
     method limpiezaDeVisuales(visuales){
         visuales.forEach({visual => game.removeVisual(visual)})
     }
+
     method agregarVisualesEscena(esc){
         self.agregarVisuales(esc.visualesEnEscena())
     }
+
     method agregarVisuales(visuales){
         visuales.forEach({v => game.addVisual(v)})
     } 
-
 }
 
 // ############################################################################################################################################# \\
@@ -256,26 +253,91 @@ object gestorDeLobos{
     }
 }
 
-object gestorAccionesGuardabosques{
+// ############################################################################################################################################# \\
 
+object gestorAccionesGuardabosques{
     var property accionesGuardabosques = darLaLeña
-   
      
     method comprobarAccion(){
-        if (accionesGuardabosques.esTiempoDeRealizarAccion() ){
+        if (accionesGuardabosques.esTiempoDeRealizarAccion()){
             accionesGuardabosques.hacerAccion()
-            
         }
     }
-
 }
 
+// ############################################################################################################################################# \\
+
 object gestorAccionesLobo{
-    var property accionesLobo =darSalidaGranero
+    var property accionesLobo = darSalidaGranero
 
     method verEntorno(){
         if(accionesLobo.esTiempoDeRealizarAccion()){
             accionesLobo.hacerAccion()
         }
+    }
+}
+
+// ############################################################################################################################################# \\
+
+object gestorDeDialogo{
+
+    method configurarConversacion(escenario, visual){ 
+        //
+        if(escenario.hayDialogo()){
+            const dialogoActual = escenario.dialogo().last().copy()
+            const npcEscenario =  escenario.dialogo().first()
+
+            visual.npcActual(npcEscenario)
+            visual.conversacionNPC(dialogoActual)
+        }
+    }
+
+    method resetearDialogo(visual){
+        visual.conversacionNPC([])
+        visual.conversadorActual(visual)
+    }
+
+    method interactuarNPC(visual){
+        //
+        if (visual.estaAlLadoDelNPC()){
+            self.conversar(visual)
+        }
+    }
+
+    method conversar(visual){
+        //
+        if(not self.esDialogoFinal(visual)){
+            game.say(visual.conversadorActual(), self.dialogoActual(visual))
+            visual.conversacionNPC().remove(self.dialogoActual(visual))
+            self.cambiarConversador(visual)
+        }
+    }
+
+    method dialogoActual(visual){
+        //
+        return visual.conversacionNPC().first()
+    }
+
+    method esDialogoFinal(visual){
+        //
+        return visual.conversacionNPC().isEmpty()
+    }
+
+    method cambiarConversador(visual){
+        // 
+        if (self.esElTurnoDeHablarDe(visual)){ 
+            visual.conversadorActual(visual) 
+        } else { 
+            visual.conversadorActual(visual.npcActual()) 
+        }
+    }
+
+    method esElTurnoDeHablarDe(visual){
+        //
+        return visual.conversacionNPC().size().even()
+    }
+
+    method terminoElDialogo(visual){
+        return self.esDialogoFinal(visual.enemigo())
     }
 }

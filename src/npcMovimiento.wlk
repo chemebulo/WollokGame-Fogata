@@ -2,7 +2,7 @@ import gestores.*
 import protagonista.*
 
 class MovimientoNPC {
-    const colisionesGestor  = gestorDeColisiones  // Representa el gestor de colisiones.
+    
     const direccionesGestor = gestorDeDirecciones // Representa el gestor de direcciones.
     const posicionesGestor  = gestorDePosiciones  // Representa el gestor de posiciones.
     const npc                                     // Representa al NPC que realiza el movimiento.
@@ -18,12 +18,12 @@ class MovimientoNPC {
 
     method avanzarHaciaEnemigo(){
         // Mueve al NPC hacia la siguiente posición y modifica su imagen en base a la dirección a la que se movió.
-        const positionAntigua = npc.position()
+        const positionAntiguo = npc.position()
         const positionNuevo   = self.siguientePosicion()
-
-        if(not colisionesGestor.hayObstaculoEn(positionNuevo, enemigo)) {
+        
+        if(positionAntiguo != positionNuevo){
             npc.position(positionNuevo) 
-            npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntigua, positionNuevo))
+            npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
         }
     }
     
