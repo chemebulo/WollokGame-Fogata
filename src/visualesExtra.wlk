@@ -95,6 +95,8 @@ object leña inherits Visual{
     }
 }
 
+
+
 // ########################################################################################################################## \\
 
 object cabañaOBJ inherits Visual{ // se llama cabañaOBJ porque hay un escenario cabaña
@@ -132,7 +134,7 @@ object graneroOBJ inherits Visual{ // se llama graneroOBJ porque hay un escenari
 }
 
 // ####################################################################################################### //
-
+// ARMAS PROTAGONISTA
 object hacha inherits Visual{
     var property position = game.at(5,5) // Sería const? 
     var property image    = "hacha.png"  // Sería const?
@@ -143,7 +145,26 @@ object hacha inherits Visual{
 
     method interaccion(){
         game.removeVisual(self)
+        game.removeVisual(tridente)
         protagonista.estadoCombate(armadoProtagonista)
+        protagonista.estadoCombateElejido(armadoProtagonista)
+        game.say(protagonista, "Pulsa K para atacar")
+    }
+}
+
+object tridente inherits Visual{
+    var property position = game.at(6,6)
+    var property image = "tridente.png"
+
+     override method esAtravesable(){
+        return true 
+    }
+
+     method interaccion(){
+        game.removeVisual(self)
+        game.removeVisual(hacha)
+        protagonista.estadoCombate(armadoProtagonista2)
+        protagonista.estadoCombateElejido(armadoProtagonista2)
         game.say(protagonista, "Pulsa K para atacar")
     }
 }

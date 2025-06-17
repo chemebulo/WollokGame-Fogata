@@ -136,6 +136,8 @@ object u inherits Elemento(visual=leña){}
 
 object h inherits Elemento(visual=hacha){}
 
+object tr inherits Elemento(visual=tridente){}
+
 object s inherits Elemento(visual=auto){}
 // ################################################################################################################# \\
 
@@ -510,7 +512,7 @@ const mapa_entradaGranero_v2 =
 const mapa_peleaGranero = 
 [
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,h,_,_,_,_,_,_],
+        [_,_,_,tr,_,_,_,_,_,h,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,l,_,l,_,j,_,_,l,l,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_],

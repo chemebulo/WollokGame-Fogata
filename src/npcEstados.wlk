@@ -16,6 +16,7 @@ const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
 const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
 const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
+const armadoProtagonista2 = new ArmadoConTridente(pj = protagonista,imagenActual="prota-armado-", imagenTemporal = "ataque-prota-tridente.png")
 
 // ########################################################################################################################## \\
 
@@ -61,11 +62,10 @@ class Desarmado{
 }
 
 // ########################################################################################################################## \\
-
-class ArmadoConHacha{
+class Armado {
     const pj             = null  // personaje que ataca
     const imagenActual   = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
-    const modoAtaque     = new AtaqueEnCruz(atacante = pj)
+    const modoAtaque     
     const animacion      = new AnimacionAtaque(imagenTemp = imagenTemporal, pjAnimado= pj)
     const imagenTemporal // la imagen que se muestra al atacar
 
@@ -95,7 +95,11 @@ class ArmadoConHacha{
         return modoAtaque.posicionesAAtacar()
     }
 }
+class ArmadoConHacha inherits Armado ( modoAtaque   = new AtaqueEnCruz(atacante = pj)){}
+  
+class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante=pj)){}
 
+   
 // ########################################################################################################################## \\
 
 class AnimacionAtaque{
@@ -119,17 +123,9 @@ class AnimacionAtaque{
 }
 
 // ########################################################################################################################## \\
+class Ataque {
+    const atacante
 
-class AtaqueEnCruz{
-    /*
-        FUNCIONAMIENTO DEL ATAQUE EN CRUZ:
-        atacarEnPosiciones(posiciones) : dada una coleccion de posiciones(celdas) ataca a los objetos en esas posiciones
-        atacarObjetos(objetos) : dada una coleccion de objetos de una posicion(celda) ataca a esos objetos
-        objetosEnPosicionAtacada(pos) : dada una posicion, retorna una lista con todos los objetos en esa posicion
-        posicionesAtacar() : retorna las posiciones donde se atacara el cruz a partir de la posicion del personaje
-    */
-    const atacante 
-    
     method ataqueArma(){
         self.atacarEnPosiciones(self.posicionesAAtacar())
     }
@@ -146,11 +142,25 @@ class AtaqueEnCruz{
         return game.getObjectsIn(posicion)
     } 
     
-    method posicionesAAtacar() = [atacante.position().down(1),
+    method posicionesAAtacar()
+}
+class AtaqueEnCruz inherits Ataque{
+        
+   override method posicionesAAtacar() = [atacante.position().down(1),
                                   atacante.position().up(1),
                                   atacante.position().left(1),
                                   atacante.position().right(1)]
 }
+
+class AtaqueTridente inherits Ataque{
+    
+    override method posicionesAAtacar() = [atacante.position().left(1),
+                                  atacante.position().left(2),
+                                  atacante.position().right(1),
+                                  atacante.position().right(2)]
+                                  
+}
+
 
 class AtaqueEnLugar inherits AtaqueEnCruz{
     override method ataqueArma(){
