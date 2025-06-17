@@ -17,7 +17,7 @@ const desarmadoGuardabosques = new Desarmado(image = "")
 const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
 const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
 const armadoProtagonista2 = new ArmadoConTridente(pj = protagonista,imagenActual="prota-armado-", imagenTemporal = "ataque-prota-tridente.png")
-
+const armadoProtagonista3 = new ArmadoConManopla(pj=protagonista,imagenActual="prota-desarmado-",imagenTemporal ="ataque-prota-manopla.png")
 // ########################################################################################################################## \\
 
 class Agresivo{
@@ -27,7 +27,7 @@ class Agresivo{
     method atacarEnemigo(){
         // El lobo ataca al enemigo cada 1 segundo.
         animacion.animarAtaque()
-        game.schedule(800, {pj.emitirSonidoEnojado();
+        game.schedule(1, {pj.emitirSonidoEnojado();
                             pj.enemigo().atacadoPor(pj)})
     }
 
@@ -99,7 +99,7 @@ class ArmadoConHacha inherits Armado ( modoAtaque   = new AtaqueEnCruz(atacante 
   
 class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante=pj)){}
 
-   
+class ArmadoConManopla inherits Armado(modoAtaque = new AtaqueManopla(atacante=pj)){}   
 // ########################################################################################################################## \\
 
 class AnimacionAtaque{
@@ -160,7 +160,14 @@ class AtaqueTridente inherits Ataque{
                                   atacante.position().right(2)]
                                   
 }
+class AtaqueManopla inherits Ataque{
+    override method posicionesAAtacar() = [atacante.position()]
 
+     override method objetosEnPosicionAtacada(posicion){
+        return game.getObjectsIn(posicion).copyWithout(atacante)
+    } 
+                                  
+}
 
 class AtaqueEnLugar inherits AtaqueEnCruz{
     override method ataqueArma(){

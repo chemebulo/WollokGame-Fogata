@@ -25,7 +25,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     override method actualizarAMuerto(){
         // Actualiza el estado del enemigo a muerto y además modifica la imagen del enemigo.
         super()
-        game.schedule(1, {game.sound(self.sonidoMuerte()).play()})
+       game.sound(self.sonidoMuerte()).play()
         estado = new EnemigoMuerto()
         image = self.imagenMuerto()
         self.accionesAdicionalesAlMorir()
@@ -63,7 +63,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 
 // ################################################################################################################# \\
 
-class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 10, daño = 1){ 
+class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 15, daño = 2){ 
     const property eventoLobo = new EventoLobo(loboEv = self)
 
     // ============================================================================================================== \\
@@ -86,26 +86,34 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agre
 
 // ################################################################################################################# \\
 
-object loboEspecial inherits Lobo(vida = 30){
+object loboEspecial inherits Lobo(vida = 30,daño=5){
+
+
+    override method sonidoMuerte(){
+        // Describe el sonido de muerte del lobo especial.
+        return track_loboJefe_derrotado}
 
     override method accionesAdicionalesAlMorir() {
         game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen();
                           game.sound(track_loboJefe_derrotado).play()})
+
     }
 }
 
 // ################################################################################################################# \\
 
-object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 40, daño = 2){
+object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 50, daño = 2){
     
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
+
     override method accionesAdicionalesAlMorir() {
         game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen();
                           game.sound(track_loboJefe_derrotado).play()})
+
     }
     
     override method sonidoMuerte(){

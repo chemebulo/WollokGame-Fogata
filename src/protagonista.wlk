@@ -4,7 +4,7 @@ import npcEstados.*
 import videojuego.*
 import gestores.*
 
-object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 10, daño = 1){
+object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 50, daño = 2){
     var property conversadorActual  = self
     var property conversacionNPC    = []
     var property npcActual          = null 

@@ -6,13 +6,15 @@ import escenarios.*
 
 // ###############################################################################################
 
-class Puerta inherits Visual{
+class Puerta inherits Visual(image=null,position=game.origin()){
 
   /*
     Se descarto lo de la puerta cerrada.Se requiere quitar la funcionalidad
+    Se recomienda pasar la herencia a visualInteractuable,
+     y pasar la interaccion a un bloque como en esa clase
+     Lo mismo con la puerta especial
   */
-    var property image         = null
-    var property position      = game.origin() 
+  
     var property irHacia       = fogata // por defecto
     const property estaCerrada = false
     const direccion = null
@@ -21,7 +23,7 @@ class Puerta inherits Visual{
 		return true
 	} 
 
-    method interaccion(){
+   override  method interaccion(){
       	self.validarInteraccion()
         const imagenRetorno = protagonista.imagenNueva(direccion)
         protagonista.image(imagenRetorno) // para que al atravesar la puerta el prota quede con la imagen bien
