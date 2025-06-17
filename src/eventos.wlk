@@ -120,7 +120,7 @@ class EventoHablarConSonido inherits EventoUnico(sujetoUnico=protagonista){
 }
 const escucharLobos = new EventoHablarConSonido(mensaje="Que fue eso??",ost=track_manada)
 // A veces el prota al inicio de un escenario dice algo
-const hablarProta = new EventoHablar( mensaje="Laura esta muerta, vere si el guardabosques tiene armas para matar a los bichos")
+const hablarProta = new EventoHablar( mensaje="Laura esta muerta...")
 
 const hablarProta2 = new EventoHablarConSonido(mensaje="La puta madre...LAURAAA!!!",ost=track_prota_preocupado)   
 
@@ -128,7 +128,7 @@ const hablarProta3 = new EventoHablar(mensaje="Ya mismo lo mato a ese hijo de p@
 
 const hablarProta4 = new EventoHablar(mensaje= "Que carajo????")
 
-const hablarProta5 = new EventoHablar(mensaje= "Aca tambien????")
+const hablarProta5 = new EventoHablar(mensaje= "Mierda, voy a esa cueva")
 
 const hablarProta6 = new EventoHablar(mensaje= "buehhhh ")
 

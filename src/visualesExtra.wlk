@@ -144,7 +144,7 @@ object hacha inherits Visual{
     method interaccion(){
         game.removeVisual(self)
         protagonista.estadoCombate(armadoProtagonista)
-        game.say(protagonista, "Ya puedo defenderme de esos bichos")
+        game.say(protagonista, "Pulsa K para atacar")
     }
 }
 
