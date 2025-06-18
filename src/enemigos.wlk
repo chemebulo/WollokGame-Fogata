@@ -64,7 +64,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 // ################################################################################################################# \\
 
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 15, daño = 2){ 
-    const property eventoLobo = new EventoLobo(loboEv = self)
+    const property eventoLobo = new EventoLobo(sujetoUnico=self)
 
     // ============================================================================================================== \\
       
@@ -94,8 +94,8 @@ object loboEspecial inherits Lobo(vida = 30,daño=5){
         return track_loboJefe_derrotado}
 
     override method accionesAdicionalesAlMorir() {
-        game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen();
-                          game.sound(track_loboJefe_derrotado).play()})
+       self.escenarioDondeEstoy().bajarVolumen();
+        game.sound(track_loboJefe_derrotado).play()
 
     }
 }
@@ -111,8 +111,8 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
 
 
     override method accionesAdicionalesAlMorir() {
-        game.schedule(1, {self.escenarioDondeEstoy().bajarVolumen();
-                          game.sound(track_loboJefe_derrotado).play()})
+        self.escenarioDondeEstoy().bajarVolumen();
+        game.sound(track_loboJefe_derrotado).play()
 
     }
     

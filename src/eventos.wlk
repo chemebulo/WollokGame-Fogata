@@ -3,140 +3,93 @@ import enemigos.*
 import gestores.*
 import musica.*
 
-class EventoLoop{
-    /*
-        ATRIBUTOS:
-            
-        @variable visualesEvento : lista de los visuales que realizaran el evento,deben estar en la lista de visualesEnEscena de escenarios
-        
-        @abstractMethod  tiempo():   el tiempo en milisegundos de loop del evento
-        @abstractMethod nombreEvento(): nombre que requiere el evento 
-        @abstractMethod orden(visual): mensaje de orden que entienden los visuales que participan del evento
+class EventoLoopIndividual{
 
-        @method finalizarEventos() : metodo que requiere el escenario para finalizar eventos
-        @method iniciarEventos() : metodo que requiere el escenario para iniciar Eventos      
-
-        Como crear evento Multiple: 
-        crear objeto que herede de Evento con una lista de los visuales que participaran en el evento,
-        implementar tiempo() , nombreEvento()
-
-        Como implementar orden(visual): 
-            override method orden(visual){ 
-                    visual.metodoPolimorficoQueEntiendenLosVisuales()
-            } 
-
-        INV.REP: La orden implementada en orden(visual) es un metodo polimorfico para todos los visuales que participan el evento
-                 se espera que todos los visuales sepan cumplir la misma orden
-            
-    */
-    const visualesEvento = []
+    const sujetoUnico
     const nombreEvento = self.toString()
+    const bloque
 
-    const tiempo
+    const tiempo = 800
 
 
     method finalizarEvento(){
         game.removeTickEvent(nombreEvento)
     }
- 
-    method iniciarEvento(){
-        game.onTick(tiempo, nombreEvento, {visualesEvento.forEach({v => self.orden(v)})})
-    }
-      
-    method orden(visual){}
-}
-class EventoLoopIndividual inherits EventoLoop{
-    const sujetoUnico
-    override method iniciarEvento(){game.onTick(tiempo,nombreEvento,{self.orden(sujetoUnico)})}
-}
-
-// ################################################################################################################# \\
-
-class EventoLobo{ // solo funciona para lobos que se agregan directamente a la matriz
-    const nombre       = self.toString()
-    const tiempoRandom = 1000.randomUpTo(2000)
-    const loboEv
-
     method nombreEvento(){
-        return nombre
+        return nombreEvento
     }
-
-    method iniciarEvento(){
-        game.onTick(tiempoRandom, nombre, {loboEv.perseguirEnemigo()})
-    }
-}
-
-
-
-// ################################################################################################################# \\
-//                                    EVENTOS PARA PERSECUCION DE LOBO                                               \\
-// ################################################################################################################# \\
-
-object ataqueGuardabosques inherits EventoUnico(sujetoUnico = guardabosques){
     
-    override method ordenUnica(visual){
-        visual.perseguirEnemigo()
+     method iniciarEvento(){game.onTick(tiempo,nombreEvento,{self.orden(sujetoUnico)})}
+      
+    method orden(visual){
+        bloque.apply(visual)
     }
 }
 
+
 // ################################################################################################################# \\
-//                                               EVENTOS UNICOS                                                      \\
+//                                    EVENTO PARA PERSECUCION DE LOBO                                               \\
+// ################################################################################################################# \\
+class EventoLobo inherits EventoLoopIndividual(tiempo=1000.randomUpTo(2000),bloque = bloqueEventoLobo ){}
+    
+const bloqueEventoLobo = {l => l.perseguirEnemigo()}
+
+
+
+
+// ################################################################################################################# \\
+//                                               EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO                                                 \\
 // ################################################################################################################# \\
 
 
-class EventoUnico{ 
-    /*
-        Evento para un solo visual,
-        en la instancia implementar tiempo(), nombreEvento() y ordenUnica(sujeto)
-    */
+class EventoHablar {
+
     const tiempo = 800
     const sujetoUnico = null
-
-     method iniciarEvento(){
+    const bloque = bloqueEventoHablar
+    const  mensaje 
+    
+       method ordenUnica(visual){
+        bloque.apply(visual,mensaje)
+     }
+    method iniciarEvento(){
         game.schedule(tiempo, {self.ordenUnica(sujetoUnico)})
+        }
 
-    }
-
-    method ordenUnica(visual){}
+  
 }
 
-//### Los personajes dicen una frase al inicio del escenario donde se aplica el evento
-class EventoHablar inherits EventoUnico(sujetoUnico=protagonista){
-    
-    const mensaje
-    override method ordenUnica(visual){
-        game.say(visual,mensaje)
-    }
-    
-}
-class EventoHablarConSonido inherits EventoUnico(sujetoUnico=protagonista){
+const bloqueEventoHablar = {v,m =>game.say(v,m) }
+
+class EventoHablarConSonido inherits EventoHablar(bloque=bloqueEventoHablarSonido){
     const ost
-    const mensaje
     override method ordenUnica(visual){
-        game.sound(ost).play()
-        game.say(visual,mensaje)
+        bloque.apply(visual,ost,mensaje)
     }
-    
 }
-const escucharLobos = new EventoHablarConSonido(mensaje="Que fue eso??",ost=track_manada)
-// A veces el prota al inicio de un escenario dice algo
-const hablarProta = new EventoHablar( mensaje="Laura esta muerta...")
 
-const hablarProta2 = new EventoHablarConSonido(mensaje="La puta madre...LAURAAA!!!",ost=track_prota_preocupado)   
+const bloqueEventoHablarSonido = {v,o,m => game.sound(o).play();game.say(v,m) }
 
-const hablarProta3 = new EventoHablar(mensaje="Ya mismo lo mato a ese hijo de p@ta")  
+//EVENTOS DE DIALOGOS
+const escucharLobos = new EventoHablarConSonido(sujetoUnico=protagonista,mensaje="Que fue eso??",ost=track_manada)
 
-const hablarProta4 = new EventoHablar(mensaje= "Que carajo????")
+const hablarProta = new EventoHablar(sujetoUnico=protagonista, mensaje="Laura esta muerta...")
 
-const hablarProta5 = new EventoHablar(mensaje= "Mierda, voy a esa cueva")
+const hablarProta2 = new EventoHablarConSonido(sujetoUnico=protagonista,mensaje="La puta madre...LAURAAA!!!",ost=track_prota_preocupado)   
 
-const hablarProta6 = new EventoHablar(mensaje= "buehhhh ")
+const hablarProta3 = new EventoHablar(sujetoUnico=protagonista,mensaje="Ya mismo lo mato a ese hijo de p@ta")  
 
-const hablarProta7 = new EventoHablar(mensaje = "Ahora si los hago cagar!!!")
+const hablarProta4 = new EventoHablar(sujetoUnico=protagonista,mensaje= "Que carajo????")
 
-const hablarProta8 = new EventoHablar(mensaje = "Laura....")
+const hablarProta5 = new EventoHablar(sujetoUnico=protagonista,mensaje= "Mierda, voy a esa cueva")
 
-const hablarProta9 = new EventoHablar(mensaje = "AHHHHHHHH!!!!!!!")
+const hablarProta6 = new EventoHablar(sujetoUnico=protagonista,mensaje= "buehhhh ")
+
+const hablarProta7 = new EventoHablar(sujetoUnico=protagonista,mensaje = "Ahora si los hago cagar!!!")
+
+const hablarProta8 = new EventoHablar(sujetoUnico=protagonista,mensaje = "Laura....")
+
+const hablarProta9 = new EventoHablar(sujetoUnico=protagonista,mensaje = "AHHHHHHHH!!!!!!!")
 
 const guardabosquesHabla = new EventoHablar(sujetoUnico=guardabosques,mensaje= "Aqui al norte esta el granero")
 
@@ -144,19 +97,16 @@ const guardabosquesHabla2 = new EventoHablar(sujetoUnico=guardabosques,mensaje= 
 
 
 
-
-object accionesGuardabosques inherits EventoLoopIndividual(sujetoUnico=gestorAccionesGuardabosques,tiempo=800){
+// ACCIONES QUE SE REALIZAN EN LOOP
+const accionesGuardabosques = new EventoLoopIndividual(sujetoUnico=gestorAccionesGuardabosques,
+                                                            bloque=bloqueGuardabosques)
        
+const eventoLoboEspecial = new EventoLoopIndividual(sujetoUnico=gestorAccionesLobo,bloque=bloqueLoboEspecial)
+    
+const ataqueGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,bloque=bloqueAtaqueGuardabosques)
 
-    override method orden(visual){
-        visual.comprobarAccion() 
-    }
-}
+const bloqueGuardabosques = {g => g.comprobarAccion() }
 
-object  eventoLoboEspecial inherits EventoLoopIndividual(sujetoUnico=gestorAccionesLobo,tiempo=800){ 
-   
- 
-    override method orden(visual){
-        visual.verEntorno()
-    }
-}
+const bloqueLoboEspecial = {l => l.verEntorno()}
+
+const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}

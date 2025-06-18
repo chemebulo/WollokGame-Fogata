@@ -95,7 +95,7 @@ class Armado {
         return modoAtaque.posicionesAAtacar()
     }
 }
-class ArmadoConHacha inherits Armado ( modoAtaque   = new AtaqueEnCruz(atacante = pj)){}
+class ArmadoConHacha inherits Armado ( modoAtaque   = new AtaqueHacha(atacante = pj)){}
   
 class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante=pj)){}
 
@@ -127,24 +127,22 @@ class Ataque {
     const atacante
 
     method ataqueArma(){
-        self.atacarEnPosiciones(self.posicionesAAtacar())
+        
+        self.posicionesAAtacar().forEach({pos => self.atacarEnPosicion(pos)})
     }
-
-    method atacarEnPosiciones(coleccionPosiciones){
-        coleccionPosiciones.forEach({pos => self.atacarObjetos(self.objetosEnPosicionAtacada(pos))})
+  
+    method atacarEnPosicion(pos){
+         self.objetosEnPosicion(pos).forEach({obj => obj.atacadoPor(atacante)})
     }
+ 
 
-    method atacarObjetos(coleccionObjetos){ 
-        coleccionObjetos.forEach({obj => obj.atacadoPor(atacante)})
-    }
-
-    method objetosEnPosicionAtacada(posicion){
+    method objetosEnPosicion(posicion){
         return game.getObjectsIn(posicion)
     } 
     
     method posicionesAAtacar()
 }
-class AtaqueEnCruz inherits Ataque{
+class AtaqueHacha inherits Ataque{
         
    override method posicionesAAtacar() = [atacante.position().down(1),
                                   atacante.position().up(1),
@@ -163,21 +161,11 @@ class AtaqueTridente inherits Ataque{
 class AtaqueManopla inherits Ataque{
     override method posicionesAAtacar() = [atacante.position()]
 
-     override method objetosEnPosicionAtacada(posicion){
+     override method objetosEnPosicion(posicion){
         return game.getObjectsIn(posicion).copyWithout(atacante)
     } 
                                   
 }
-
-class AtaqueEnLugar inherits AtaqueEnCruz{
-    override method ataqueArma(){
-        self.atacarObjetos(self.objetosEnPosicionAtacada(atacante.position()))
-    }
-
-    override method objetosEnPosicionAtacada(posicion) { 
-        return super(posicion).copyWithout(atacante)
-    }
-} 
 
 // ########################################################################################################################## \\
 
