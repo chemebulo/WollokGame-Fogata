@@ -1,6 +1,6 @@
 import protagonista.*
 import direccion.*
-import escenarios.*
+import escenariosManager.*
 import visualesExtra.*
 import diapositivasManager.*
 import musica.*

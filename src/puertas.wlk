@@ -2,7 +2,7 @@ import videojuego.*
 import protagonista.*
 import visualesExtra.*
 import direccion.*
-import escenarios.*
+import escenariosManager.*
 
 // ###############################################################################################
 

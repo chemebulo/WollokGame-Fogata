@@ -1,7 +1,7 @@
 import protagonista.*
 import enemigos.*
 import visualesExtra.*
-import escenarios.*
+import escenariosManager.*
 import gestores.*
 import puertas.*
 

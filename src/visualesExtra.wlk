@@ -1,7 +1,5 @@
 import protagonista.*
-import escenarios.*
-import confgEscSig.*
-import confgEscenarios.*
+import escenariosManager.*
 import npcEstados.*
 import enemigos.*
 import puertas.*

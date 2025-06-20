@@ -1,7 +1,5 @@
 import videojuego.*
-import escenarios.*
-import confgEscenarios.*
-import confgEscSig.*
+import escenariosManager.*
 
 object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapositivas
     var property peliculaAMostrar    = peliculaInicioJuego

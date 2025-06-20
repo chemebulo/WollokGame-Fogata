@@ -1,4 +1,4 @@
-import src.diapositivasManager.*
+import diapositivasManager.*
 import enemigos.*
 import protagonista.*
 import puertas.*
@@ -9,13 +9,11 @@ object gestorDeDialogo{
 
     var property dialogo = dialogoEscenarioInicial
   
-  
     method interactuarNPC(){
         if (esTiempoDeDialogo){
             dialogo.conversar()
         }
-    }  
-    
+    }     
 }
 
 class Dialogo{
@@ -36,14 +34,20 @@ class Dialogo{
 
     method gestionarDialogo(){
         if(not self.esUltimoDialogo()){
-             game.say(self.conversadorActual(), dialogoEscenario.first())
-             dialogoEscenario.remove(dialogoEscenario.first())
+            self.decirDialogo()
             self.cambiarConversador()
         }
         else{ self.accionFinalDialogo()}
     }
 
+    method actualizarADialogoSiguiente(){dialogoEscenario.remove(dialogoEscenario.first())}
+
     method esUltimoDialogo() = dialogoEscenario.isEmpty()
+
+    method decirDialogo(){
+         game.say(self.conversadorActual(), dialogoEscenario.first())
+             self.actualizarADialogoSiguiente()
+    }
 
 
     method cambiarConversador(){
