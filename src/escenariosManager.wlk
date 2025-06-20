@@ -15,16 +15,13 @@ import musica.*
 // #############################################################################################################################
 
 class Escenario{ 
-    /*
-        INV .REP: En eventos, cada evento de la lista se llama EXACTAMENTE IGUAL que los eventos que se implementan en eventos Iniciar,
-        véase ejemplo en ISSUE en github
-    */
+   
     var property eventos           = []
     var property mapa              = mapa_comun
     var property fondoEscenario    = ""
     var property visualesEnEscena  = []
     var property ost               = game.sound("")
-    var property confgActual       = {} // Un bloque en configuradorEscenarios.wlk
+    var property confgActual       = {} 
     var property confgEscSiguiente = {}
     
     const gestorFondo           = gestorFondoEscenario
