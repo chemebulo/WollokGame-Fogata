@@ -53,7 +53,7 @@ class Elemento{
 
 class ElementoLobo{
     method construir(posicion){
-        const loboTemp = new Lobo(position = posicion);
+        const loboTemp = new Lobo(position = posicion)
         game.addVisual(loboTemp)
         gestorDeLobos.agregarLobos(loboTemp)
     }
@@ -69,16 +69,16 @@ object _ inherits Elemento{
 
 object o{
     method construir(posicion){
-        const temp = new Obstaculo(position = posicion);
-        game.addVisual(temp);
+        const temp = new Obstaculo(position = posicion)
+        game.addVisual(temp)
         gestorDeObstaculos.agregar(temp)
     }
 }
 
 object p{
     method construir(posicion){
-        const temp = new ParedInvisible(position = posicion);
-        game.addVisual(temp);
+        const temp = new ParedInvisible(position = posicion)
+        game.addVisual(temp)
         gestorDeObstaculos.agregar(temp)
     }
 }
@@ -86,8 +86,6 @@ object p{
 // ################################################################################################################# \\
 
 object l inherits ElementoLobo{} // Lobo agresivo.
-
-object t inherits ElementoLobo{} // Lobo pasivo.
 
 object j inherits Elemento(visual = loboEspecial){ // Lobo especial del granero, al matarlo me spawnea la salida.
     override method construir(posicion){

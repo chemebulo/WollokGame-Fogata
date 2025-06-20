@@ -7,7 +7,6 @@ import escenariosManager.*
 import puertas.*
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
-    var property estadoCombate 
     var property estado        = new EnemigoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
     const property enemigo     = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
 
@@ -68,7 +67,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 
 // ################################################################################################################# \\
 
-class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 15, daño = 2){ 
+class Lobo inherits Enemigo(image = "lobo-derecha.png", vida = 15, daño = 2){ 
     const property eventoPersecucion = new EventoLoboPersecucion(sujetoUnico = self)
     const property eventoAtaque      = new EventoLoboAtaque(sujetoUnico = self)
 
@@ -107,7 +106,8 @@ object loboEspecial inherits Lobo(vida = 30, daño = 5){
 
 // ################################################################################################################# \\
 
-object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = desarmadoGuardabosques, vida = 50, daño = 2){
+object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida = 50, daño = 2){
+    var property estadoCombate = desarmadoGuardabosques
     
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.

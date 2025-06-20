@@ -14,43 +14,10 @@ import gestores.*
 
 const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
-const armadoGuardabosques    = new ArmadoConHacha(pj    = guardabosques, imagenActual = "guardabosques-",   imagenTemporal = "guardabosques-cabaña.png")
-const armadoProtagonista     = new ArmadoConHacha(pj    = protagonista,  imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota.png")
-const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista,  imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota-tridente.png")
-const armadoProtagonista3    = new ArmadoConManopla(pj  = protagonista,  imagenActual = "prota-desarmado-", imagenTemporal = "ataque-prota-manopla.png")
-
-// ########################################################################################################################## \\
-
-class Agresivo{
-    const pj
-    const animacion = new AnimacionAtaque(pjAnimado = pj, imagenTemp = pj.imagenTemporal())
-
-    method atacarEnemigo(){
-        // El lobo ataca al enemigo cada 1 segundo.
-        if (self.puedeAtacarAlEnemigo()){ 
-            animacion.animarAtaque()
-            game.schedule(1, {pj.emitirSonidoEnojado();
-                              pj.enemigo().atacadoPor(pj)})
-        }
-    }
-
-    method puedeAtacarAlEnemigo(){
-        // Indica si el lobo puede atacar a su enemigo. 
-        return pj.estaSobreEnemigo()
-    } 
-}
-
-// ########################################################################################################################## \\
-
-class Pasivo{
-
-    method atacarEnemigo(){}
-
-    method puedeAtacarAlEnemigo(){
-        // Indica si el lobo puede atacar a su enemigo. En este caso, no puede. 
-        return false
-    }
-}
+const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
+const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
+const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota-tridente.png")
+const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista,  imagenActual = "prota-desarmado-", imagenTemporal = "ataque-prota-manopla.png")
 
 // ########################################################################################################################## \\
 
@@ -178,8 +145,9 @@ class AtaqueManopla inherits Ataque{
 
 class EnemigoVivo{
     const visual //
-    const vidaGestor = gestorDeVida //
+    const vidaGestor    = gestorDeVida //
     const movimientoNPC = new MovimientoNPC(npc = visual) //
+    const animacion     = new AnimacionAtaque(pjAnimado = visual, imagenTemp = visual.imagenTemporal())
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo.
@@ -187,13 +155,18 @@ class EnemigoVivo{
     }
 
     method atacarEnemigo(){
-        visual.estadoCombate().atacarEnemigo()
+        // El lobo ataca al enemigo cada 1 segundo.
+        if (self.puedeAtacarAlEnemigo()){ 
+            animacion.animarAtaque()
+            game.schedule(1, {visual.emitirSonidoEnojado();
+                              visual.enemigo().atacadoPor(visual)})
+        }
     }
 
     method puedeAtacarAlEnemigo(){
-        // Indica si el enemigo puede atacar a su enemigo. 
-        return visual.estadoCombate().puedeAtacarAlEnemigo()
-    }
+        // Indica si el lobo puede atacar a su enemigo. 
+        return visual.estaSobreEnemigo()
+    } 
 
     method atacadoPor(enemigo){
         // Emite un mensaje cuando el enemigo es atacado por su enemigo.
@@ -210,5 +183,3 @@ class EnemigoMuerto{
 
     method atacadoPor(enemigo){} //
 }
-
-// ########################################################################################################################## \\
