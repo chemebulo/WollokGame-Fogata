@@ -11,8 +11,9 @@ class MovimientoNPC {
 
     method perseguirEnemigo(){
         // Hace que el NPC persiga a su enemigo para poder atacarlo.
-        if (npc.puedeAtacarAlEnemigo()) { npc.atacarEnemigo() } else
-        if (not npc.estaSobreEnemigo()) { self.avanzarHaciaEnemigo() }
+        if (not npc.estaSobreEnemigo()){ 
+            self.avanzarHaciaEnemigo() 
+        }
     }
 
     method avanzarHaciaEnemigo(){

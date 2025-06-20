@@ -9,31 +9,34 @@ class EventoLoopIndividual{
     const bloque
     const tiempo = 800
 
+    method iniciarEvento(){
+        game.onTick(tiempo, nombreEvento, {self.orden(sujetoUnico)})
+    }
+
     method finalizarEvento(){
         game.removeTickEvent(nombreEvento)
     }
     
-    method nombreEvento(){
-        return nombreEvento
-    }
-    
-    method iniciarEvento(){game.onTick(tiempo,nombreEvento,{self.orden(sujetoUnico)})}
-      
     method orden(visual){
         bloque.apply(visual)
     }
+
+    method nombreEvento(){
+        return nombreEvento
+    }
 }
 
-// ################################################################################################################# \\
-//                                    EVENTO PARA PERSECUCION DE LOBO                                               \\
-// ################################################################################################################# \\
-class EventoLobo inherits EventoLoopIndividual(tiempo=1000.randomUpTo(2000),bloque = bloqueEventoLobo ){}
-    
-const bloqueEventoLobo = {l => l.perseguirEnemigo()}
+// ####################################### EVENTO PARA PERSECUCION DE LOBO #######################################
 
-// ################################################################################################################# \\
-//                                               EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO                         \\
-// ################################################################################################################# \\
+class EventoLoboPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(2000), bloque = bloquePersecucion){}
+
+class EventoLoboAtaque inherits EventoLoopIndividual(tiempo = 500, bloque = bloqueAtaque){}
+    
+const bloquePersecucion = {l => l.perseguirEnemigo()}  
+
+const bloqueAtaque = {l => l.atacarEnemigo()}
+
+// ################################# EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO #################################
 
 class EventoHablar {
     const tiempo      = 1
@@ -60,7 +63,8 @@ class EventoHablarConSonido inherits EventoHablar(bloque=bloqueEventoHablarSonid
     }
 }
 
-// EVENTOS DE DIALOGOS
+// ############################################# EVENTOS DE DIALOGOS ############################################
+
 const bloqueEventoHablarSonido = {v,o,m => game.sound(o).play();game.say(v,m) }
 
 const escucharLobos = new EventoHablarConSonido(mensaje = "¿¿Qué fue eso??", ost = track_manada)

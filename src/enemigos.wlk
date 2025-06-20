@@ -57,7 +57,11 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         return videojuego.escenario()
     }
 
-    method accionesAdicionalesAlMorir(){} // Acciones que el enemigo realizaría en caso que necesite hacer después de morir.
+    method accionesAdicionalesAlMorir(){
+        // Acciones que el enemigo realizaría en caso que necesite hacer después de morir.
+        self.escenarioDondeEstoy().bajarVolumen()
+        game.sound(track_loboJefe_derrotado).play()
+    } 
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
 }
@@ -65,7 +69,8 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 // ################################################################################################################# \\
 
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agresivo(pj = self), vida = 15, daño = 2){ 
-    const property eventoLobo = new EventoLobo(sujetoUnico = self)
+    const property eventoPersecucion = new EventoLoboPersecucion(sujetoUnico = self)
+    const property eventoAtaque      = new EventoLoboAtaque(sujetoUnico = self)
 
     // ============================================================================================================== \\
       
@@ -91,13 +96,12 @@ object loboEspecial inherits Lobo(vida = 30, daño = 5){
 
     override method sonidoMuerte(){
         // Describe el sonido de muerte del lobo especial.
-        return track_loboJefe_derrotado}
+        return track_loboJefe_derrotado
+    }
 
-    override method accionesAdicionalesAlMorir() {
+    override method accionesAdicionalesAlMorir(){
+        super()
         game.addVisual(puertaGranero)
-        self.escenarioDondeEstoy().bajarVolumen();
-        game.sound(track_loboJefe_derrotado).play()
-
     }
 }
 
@@ -110,11 +114,9 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
-    override method accionesAdicionalesAlMorir() {
-        self.escenarioDondeEstoy().bajarVolumen();
-        game.sound(track_loboJefe_derrotado).play()
+    override method accionesAdicionalesAlMorir(){
+        super()
         game.addVisual(puertaEntradaCueva)
-
     }
     
     override method sonidoMuerte(){

@@ -27,9 +27,11 @@ class Agresivo{
 
     method atacarEnemigo(){
         // El lobo ataca al enemigo cada 1 segundo.
-        animacion.animarAtaque()
-        game.schedule(1, {pj.emitirSonidoEnojado();
-                          pj.enemigo().atacadoPor(pj)})
+        if (self.puedeAtacarAlEnemigo()){ 
+            animacion.animarAtaque()
+            game.schedule(1, {pj.emitirSonidoEnojado();
+                              pj.enemigo().atacadoPor(pj)})
+        }
     }
 
     method puedeAtacarAlEnemigo(){

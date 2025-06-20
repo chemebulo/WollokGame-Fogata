@@ -244,8 +244,10 @@ object gestorDeLobos{
     
     method agregarLobos(lobo){
         lobosEscenario.add(lobo);
-        eventosLobos.add(lobo.eventoLobo())
-        lobo.eventoLobo().iniciarEvento()
+        eventosLobos.add(lobo.eventoPersecucion())
+        eventosLobos.add(lobo.eventoAtaque())
+        lobo.eventoPersecucion().iniciarEvento()
+        lobo.eventoAtaque().iniciarEvento()
     }
     
     method limpiarLobos(){
@@ -257,5 +259,3 @@ object gestorDeLobos{
 }
 
 // ############################################################################################################################################# \\
-
-
