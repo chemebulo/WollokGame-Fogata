@@ -216,7 +216,6 @@ object gestorDeListasEscenario{
     
     method limpiarListas(esc){
         self.limpiarListaVisuales(esc)
-       // esc.dialogo([])
         esc.eventos([])
     }
 
