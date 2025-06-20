@@ -87,7 +87,15 @@ class Escenario{
   
 
     method atacadoPor(visual){}
-}    
+} 
+
+
+/*
+
+    A PARTIR DE AQUI EL RESTO SON INSTANCIAS DE ESCENARIOS E INSTANCIAS DE LOS DOS CONFIGURADORES
+    QUE REQUIEREN LOS ESCENARIOS
+
+*/
 
 // #############################################################################################################################
 
