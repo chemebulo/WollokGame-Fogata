@@ -8,8 +8,9 @@ import puertas.*
 import videojuego.*
 
 class Visual{
-   var property position =game.at(0,0) // por defecto
-   var property image = null // por defecto
+    var property position =game.at(0,0) // por defecto
+    var property image = null // por defecto
+    
     method esAtravesable(){
         // Indica si el visual es atravesable o no, en este caso no es atravesable.
         return false

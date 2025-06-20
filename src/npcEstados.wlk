@@ -14,10 +14,10 @@ import gestores.*
 
 const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
-const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
-const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
-const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-armado-", imagenTemporal = "ataque-prota-tridente.png")
-const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista, imagenActual = "prota-desarmado-", imagenTemporal ="ataque-prota-manopla.png")
+const armadoGuardabosques    = new ArmadoConHacha(pj    = guardabosques, imagenActual = "guardabosques-",   imagenTemporal = "guardabosques-cabaña.png")
+const armadoProtagonista     = new ArmadoConHacha(pj    = protagonista,  imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota.png")
+const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista,  imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota-tridente.png")
+const armadoProtagonista3    = new ArmadoConManopla(pj  = protagonista,  imagenActual = "prota-desarmado-", imagenTemporal = "ataque-prota-manopla.png")
 
 // ########################################################################################################################## \\
 
@@ -29,7 +29,7 @@ class Agresivo{
         // El lobo ataca al enemigo cada 1 segundo.
         animacion.animarAtaque()
         game.schedule(1, {pj.emitirSonidoEnojado();
-                            pj.enemigo().atacadoPor(pj)})
+                          pj.enemigo().atacadoPor(pj)})
     }
 
     method puedeAtacarAlEnemigo(){
@@ -95,6 +95,11 @@ class Armado {
     method posicionesParaCalcularAtaque(){
         return modoAtaque.posicionesAAtacar()
     }
+
+    method puedeAtacarAlEnemigo(){
+        // Indica si el lobo puede atacar a su enemigo. En este caso, no puede. 
+        return pj.estaSobreEnemigo()
+    }
 }
 class ArmadoConHacha inherits Armado(modoAtaque = new AtaqueHacha(atacante = pj)){}
   
@@ -143,6 +148,7 @@ class Ataque {
     
     method posicionesAAtacar()
 }
+
 class AtaqueHacha inherits Ataque{
         
     override method posicionesAAtacar() = [atacante.position().down(1),

@@ -26,8 +26,8 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     override method actualizarAMuerto(){
         // Actualiza el estado del enemigo a muerto y además modifica la imagen del enemigo.
         super()
-       game.sound(self.sonidoMuerte()).play()
         estado = new EnemigoMuerto()
+        game.sound(self.sonidoMuerte()).play()
         image = self.imagenMuerto()
         self.accionesAdicionalesAlMorir()
     }
@@ -87,8 +87,7 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Agre
 
 // ################################################################################################################# \\
 
-object loboEspecial inherits Lobo(vida = 30,daño=5){
-
+object loboEspecial inherits Lobo(vida = 30, daño = 5){
 
     override method sonidoMuerte(){
         // Describe el sonido de muerte del lobo especial.
@@ -96,7 +95,7 @@ object loboEspecial inherits Lobo(vida = 30,daño=5){
 
     override method accionesAdicionalesAlMorir() {
         game.addVisual(puertaGranero)
-       self.escenarioDondeEstoy().bajarVolumen();
+        self.escenarioDondeEstoy().bajarVolumen();
         game.sound(track_loboJefe_derrotado).play()
 
     }
@@ -110,7 +109,6 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
-
 
     override method accionesAdicionalesAlMorir() {
         self.escenarioDondeEstoy().bajarVolumen();

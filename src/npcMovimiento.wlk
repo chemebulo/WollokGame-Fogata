@@ -2,7 +2,6 @@ import gestores.*
 import protagonista.*
 
 class MovimientoNPC {
-    
     const direccionesGestor = gestorDeDirecciones // Representa el gestor de direcciones.
     const posicionesGestor  = gestorDePosiciones  // Representa el gestor de posiciones.
     const npc                                     // Representa al NPC que realiza el movimiento.

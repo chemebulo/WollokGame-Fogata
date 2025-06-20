@@ -4,7 +4,6 @@ import gestores.*
 import musica.*
 
 class EventoLoopIndividual{
-
     const sujetoUnico
     const nombreEvento = self.toString()
     const bloque
