@@ -8,23 +8,18 @@ import videojuego.*
 class Visual{
     var property position =game.at(0,0) // por defecto
     var property image = null // por defecto
+    var property esAtravesable = false
     
-    method esAtravesable(){
-        // Indica si el visual es atravesable o no, en este caso no es atravesable.
-        return false
-    }
-
     method interaccion(){}
 
     method atacadoPor(visual){} // Representa el comportamiento del visual al ser atacado por otro visual.
-}
 
-class VisualAtravasable inherits Visual{
-    override method esAtravesable(){
-        // Indica si el visual es atravesable o no, en este caso no es atravesable.
-        return true
+    method cambiarAAtravesable(){
+        esAtravesable = true
     }
 }
+
+class VisualAtravasable inherits Visual(esAtravesable = true){}
 
 // ########################################################################################################################## \\
 

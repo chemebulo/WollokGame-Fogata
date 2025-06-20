@@ -7,13 +7,12 @@ import escenariosManager.*
 // ###############################################################################################
 
 class Puerta inherits Visual(image=null,position=game.origin()){
-
-  /*
-    Se descarto lo de la puerta cerrada.Se requiere quitar la funcionalidad
-    Se recomienda pasar la herencia a visualInteractuable,
-     y pasar la interaccion a un bloque como en esa clase
-     Lo mismo con la puerta especial
-  */
+	/*
+    	Se descarto lo de la puerta cerrada.Se requiere quitar la funcionalidad
+    	Se recomienda pasar la herencia a visualInteractuable,
+    	 y pasar la interaccion a un bloque como en esa clase
+    	 Lo mismo con la puerta especial
+  	*/
   
     var property irHacia       = fogata // por defecto
     const property estaCerrada = false
@@ -23,7 +22,7 @@ class Puerta inherits Visual(image=null,position=game.origin()){
 		return true
 	} 
 
-   override  method interaccion(){
+   	override  method interaccion(){
       	self.validarInteraccion()
         const imagenRetorno = protagonista.imagenNueva(direccion)
         protagonista.image(imagenRetorno) // para que al atravesar la puerta el prota quede con la imagen bien
@@ -37,6 +36,7 @@ class Puerta inherits Visual(image=null,position=game.origin()){
       	}
     }
 }
+
 class PuertaEspecial inherits Puerta{
   	override method interaccion(){
        self.validarInteraccion()

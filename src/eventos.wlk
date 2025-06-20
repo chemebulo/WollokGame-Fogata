@@ -30,7 +30,7 @@ class EventoLoopIndividual{
 
 class EventoLoboPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(2000), bloque = bloquePersecucion){}
 
-class EventoLoboAtaque inherits EventoLoopIndividual(tiempo = 800, bloque = bloqueAtaque){}
+class EventoLoboAtaque inherits EventoLoopIndividual(tiempo = 1000, bloque = bloqueAtaque){}
     
 const bloquePersecucion = {l => l.perseguirEnemigo()}  
 

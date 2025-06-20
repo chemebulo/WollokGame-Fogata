@@ -7,8 +7,8 @@ import escenariosManager.*
 import puertas.*
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
-    var property estado        = new EnemigoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
-    const property enemigo     = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
+    var property estado    = new EnemigoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
+    const property enemigo = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
 
     // ============================================================================================================== \\
 
@@ -26,19 +26,15 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         // Actualiza el estado del enemigo a muerto y además modifica la imagen del enemigo.
         super()
         estado = new EnemigoMuerto()
-        game.sound(self.sonidoMuerte()).play()
         image = self.imagenMuerto()
+        self.cambiarAAtravesable()
+        game.sound(self.sonidoMuerte()).play()
         self.accionesAdicionalesAlMorir()
     }
 
     method estaSobreEnemigo(){
         // Indica si el enemigo se encuentra sobre su enemigo o no.
         return self.position() == enemigo.position()
-    }
-
-    override method esAtravesable(){
-        // Indica si el enemigo si tiene colisión o no. En este caso describe que tiene colisión (salvo por su enemigo).
-        return false
     }
 
     method atacarEnemigo(){
@@ -91,7 +87,12 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", vida = 15, daño = 2){
 
 // ################################################################################################################# \\
 
-object loboEspecial inherits Lobo(vida = 30, daño = 5){
+object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 30, daño = 5){
+
+    override method imagenNueva(direccion){
+        // Describe la imagen nueva del lobo en base a la dirección dada.
+        return "lobo-jefe-"+direccion.toString()+".png"
+    }
 
     override method sonidoMuerte(){
         // Describe el sonido de muerte del lobo especial.
