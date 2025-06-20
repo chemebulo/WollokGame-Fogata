@@ -4,22 +4,26 @@ import confgEscenarios.*
 import confgEscSig.*
 
 object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapositivas
-    var property peliculaAMostrar = peliculaInicioJuego
-    var property bloqueAEjecutar  = inicioJuegoD
-    const juego = videojuego
+    var property peliculaAMostrar    = peliculaInicioJuego
+    var property bloqueAEjecutar     = inicioJuegoD
+    const juego                      = videojuego
     var property esHoraDeDiapositiva = true
 
     method gestionarDiapositivas(){
         if(self.esLaUltimaDiapositiva()){
             juego.culminarDiapositivasYContinuar(self.bloqueAEjecutar())
-        } else{
+        } else {
            self.diapositivaActual().procesarDiapositiva()
         }
     } 
 
-    method diapositivaActual() =   peliculaAMostrar.iteradorActual()
+    method diapositivaActual(){
+        return peliculaAMostrar.iteradorActual()
+    }
     
-    method esLaUltimaDiapositiva() = peliculaAMostrar.iteradorActual().terminoPelicula()
+    method esLaUltimaDiapositiva(){
+        return peliculaAMostrar.iteradorActual().terminoPelicula()
+    }
 
     method ultimaDiapositiva(){
         return peliculaAMostrar.peliculaActual().size()
@@ -31,7 +35,9 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
        peliculaAMostrar = null
     }
 
-    method esTiempoDeDiapositiva() = esHoraDeDiapositiva
+    method esTiempoDeDiapositiva(){
+        return esHoraDeDiapositiva
+    }
 
      method interactuarDiapositivas(){
         if(esHoraDeDiapositiva){ 
@@ -44,8 +50,6 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
         self.peliculaAMostrar(nuevaPelicula)
         self.bloqueAEjecutar(nuevoBloque)
     }
-        
-    
 }
 
 /*
@@ -54,41 +58,43 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
     g=gestorDeDiapositivas
 */
 const inicioJuegoD = {v,g => g.removerTodo();
-                             g.configurarParaSiguiente(peliculaAmigaMuerta,despuesDeAmigaMuerta)                      
+                             g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta)                      
                              v.cambiarEscenario(fogata)}
 
    
-const despuesDeAmigaMuerta = { v,g => g.removerTodo();
-                                   g.configurarParaSiguiente(peliculaGranero,despuesDeGranero)                               
-                                 bifurcacion.configuradorTotal(bifurcacionC_v4,bifurcacionCES_v4)                       
-                                 v.cambiarEscenario(bifurcacion) 
-                                 
-                      
-                      }                                         
+const despuesDeAmigaMuerta = {v,g => g.removerTodo();
+                                     g.configurarParaSiguiente(peliculaGranero, despuesDeGranero)                               
+                                     bifurcacion.configuradorTotal(bifurcacionC_v4, bifurcacionCES_v4)                       
+                                     v.cambiarEscenario(bifurcacion)}                                         
 
 const despuesDeGranero = {v,g => g.removerTodo(); 
-                            g.configurarParaSiguiente(peliculaPeleaFinal,despuesDePeleaFinal )
-                          v.cambiarEscenario(granero)}        
+                                 g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal)
+                                 v.cambiarEscenario(granero)}        
 
-const   despuesDePeleaFinal = {v,g => g.removerTodo(); 
+const despuesDePeleaFinal = {v,g => g.removerTodo(); 
                                     g.configurarParaSiguiente(finalJuego, despuesFinalJuego)                              
-                                 v.cambiarEscenario(peleaFinal)}      
-const despuesFinalJuego = {} // completar                                              
+                                    v.cambiarEscenario(peleaFinal)}      
+
+const despuesFinalJuego = {} // COMPLETAR                                              
 
 // LAS PELICULAS QUE SE MUESTRAN
-const peliculaInicioJuego = new Pelicula( pelicula=  [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
-const peliculaGranero = new Pelicula( pelicula =  [dg0,dg1,dg2])
-const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1,dam2,dam3])
-const peliculaPeleaFinal = new Pelicula(pelicula=[dpf1,dpf2,dpf3])
-const finalJuego = new Pelicula(pelicula=[]) // completar
+const peliculaInicioJuego = new Pelicula(pelicula = [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
+const peliculaGranero     = new Pelicula(pelicula = [dg0, dg1, dg2])
+const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1, dam2, dam3])
+const peliculaPeleaFinal  = new Pelicula(pelicula = [dpf1, dpf2, dpf3])
+const finalJuego          = new Pelicula(pelicula = []) // completar
 
 class Pelicula{
-
     const pelicula
     const iteradorPelicula = new IteradorDiapositiva(listaAIterar = self.peliculaActual().copy())
-    method peliculaActual() = pelicula
-    method iteradorActual() = iteradorPelicula
-    
+
+    method peliculaActual(){
+        return pelicula
+    }
+
+    method iteradorActual(){
+        return iteradorPelicula
+    }
 }
 
 // DIAPOSITIVAS PARA TODO EL JUEGO                                        
@@ -100,23 +106,19 @@ const dam1 = new Diapositiva(image ="diapo-amiga-muerta2.png")
 const dam2 = new Diapositiva(image ="diapo-amiga-muerta3.png")
 const dam3 = new Diapositiva(image ="diapo-amiga-muerta4.png")
 
-
-const d0 = new Diapositiva(image = "diapo-1.png")
-const d1 = new Diapositiva(image = "diapo-2.png")
-const d2 = new Diapositiva(image = "diapo-3.png")
-const d3 = new Diapositiva(image = "diapo-4.png")
-const d4 = new Diapositiva(image = "diapo-5.png")
-const d5 = new Diapositiva(image = "diapo-6.png")
-const d6 = new Diapositiva(image = "diapo-7.png")
-const d7 = new Diapositiva(image = "diapo-8.png")
-const d8 = new Diapositiva(image = "diapo-9.png")
-const d9 = new Diapositiva(image = "diapo-10.png")
+const d0  = new Diapositiva(image = "diapo-1.png")
+const d1  = new Diapositiva(image = "diapo-2.png")
+const d2  = new Diapositiva(image = "diapo-3.png")
+const d3  = new Diapositiva(image = "diapo-4.png")
+const d4  = new Diapositiva(image = "diapo-5.png")
+const d5  = new Diapositiva(image = "diapo-6.png")
+const d6  = new Diapositiva(image = "diapo-7.png")
+const d7  = new Diapositiva(image = "diapo-8.png")
+const d8  = new Diapositiva(image = "diapo-9.png")
+const d9  = new Diapositiva(image = "diapo-10.png")
 const dg0 = new Diapositiva(image = "granero-diapo2.png")
 const dg1 = new Diapositiva(image = "granero-diapo3.png")
 const dg2 = new Diapositiva(image = "granero-diapo4.png")
-
-
-  
     
 //####################################
 

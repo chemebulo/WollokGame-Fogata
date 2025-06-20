@@ -17,7 +17,7 @@ class Puerta inherits Visual(image=null,position=game.origin()){
   
     var property irHacia       = fogata // por defecto
     const property estaCerrada = false
-    const direccion = null
+    const direccion            = null
 	
     override method esAtravesable(){
 		return true
@@ -38,19 +38,19 @@ class Puerta inherits Visual(image=null,position=game.origin()){
     }
 }
 class PuertaEspecial inherits Puerta{
-  override method interaccion(){
-      self.validarInteraccion()
-      videojuego.cambiarEscenario(irHacia)
-  }
+  	override method interaccion(){
+       self.validarInteraccion()
+       videojuego.cambiarEscenario(irHacia)
+  	}
 }
 
 // #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
 
-const puertaNorte = new Puerta(direccion=arriba,image = "puerta.png",position = norte.ubicacion())    
-const puertaOeste = new Puerta(direccion=izquierda,image = "puerta.png",position = oeste.ubicacion())
-const puertaEste  = new Puerta(direccion=derecha,image = "puerta.png",position = este.ubicacion() )
-const puertaSur   = new Puerta(direccion=abajo,image = "puerta.png",position = sur.ubicacion()  )
+const puertaNorte = new Puerta(direccion = arriba,    image = "puerta.png", position = norte.ubicacion())    
+const puertaOeste = new Puerta(direccion = izquierda, image = "puerta.png", position = oeste.ubicacion())
+const puertaEste  = new Puerta(direccion = derecha,   image = "puerta.png", position = este.ubicacion())
+const puertaSur   = new Puerta(direccion = abajo,     image = "puerta.png", position = sur.ubicacion())
 
-const puertaEntradaCabaña = new PuertaEspecial(image = "puerta-cabaña.png", irHacia= cabaña)
-const puertaEntradaCueva = new PuertaEspecial(image ="puerta-cueva.png",irHacia = cueva)
-const puertaGranero = new PuertaEspecial(image = "puerta-granero.png",irHacia= granero)
+const puertaEntradaCabaña = new PuertaEspecial(image = "puerta-cabaña.png",  irHacia = cabaña)
+const puertaEntradaCueva  = new PuertaEspecial(image = "puerta-cueva.png",   irHacia = cueva)
+const puertaGranero       = new PuertaEspecial(image = "puerta-granero.png", irHacia = granero)

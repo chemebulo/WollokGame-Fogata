@@ -2,21 +2,24 @@ import direccion.*
 import protagonista.*
 import enemigos.*
 import puertas.*
-import visualesExtra.leña
 import acciones.*
 
 object gestorDeEventos{
 
     method gestionarInicio(eventos){
         // Inicia todos los eventos dados, salvo que no haya ningún evento para iniciar.
-        if(not eventos.isEmpty()) { eventos.forEach({e => e.iniciarEvento()}) }
+        if(not eventos.isEmpty()){
+            eventos.forEach({e => e.iniciarEvento()})
+        }
     }
 
     // ========================================================================================================================================= \\
 
     method gestionarFin(eventos){
         // Finaliza todos los eventos dados, salvo que no haya ningún evento para finalizar.
-        if(not eventos.isEmpty()) { eventos.forEach({e => e.finalizarEvento()}) }
+        if(not eventos.isEmpty()){ 
+            eventos.forEach({e => e.finalizarEvento()})
+        }
     }
 }
 
@@ -62,6 +65,7 @@ object gestorDePosiciones{
 // ############################################################################################################################################# \\
 
 object gestorDeColisiones{
+
     method puedeMoverA(direccion, visual){
         // Indica si el visual dado puede moverse hacia la dirección dada.
         const posicionAMover = direccion.siguientePosicion(visual.position())
@@ -211,7 +215,7 @@ object gestorFondoEscenario{
 object gestorDeListasEscenario{
     
     method limpiarListas(esc){
-       self.limpiarListaVisuales(esc)
+        self.limpiarListaVisuales(esc)
         esc.dialogo([])
         esc.eventos([])
     }
@@ -237,7 +241,7 @@ object gestorDeListasEscenario{
 
 object gestorDeLobos{
     const lobosEscenario = []
-    const eventosLobos = []
+    const eventosLobos   = []
     
     method agregarLobos(lobo){
         lobosEscenario.add(lobo);

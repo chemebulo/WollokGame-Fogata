@@ -3,8 +3,6 @@ import enemigos.*
 import visualesExtra.*
 import escenarios.*
 import gestores.*
-import npcEstados.*
-import eventos.*
 import puertas.*
 
 /*
@@ -26,7 +24,6 @@ import puertas.*
           Es importante sobreescribir el método configurarPuertas() con los requerimientos del escenario actual.
 
     [
-
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -36,7 +33,6 @@ import puertas.*
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
-
     ].reverse() 
     
     nombres de variables recomendados = mapa_nombreEscenario
@@ -85,7 +81,7 @@ object v inherits Elemento(visual = carpa){}
 
 object a inherits Elemento(visual = amiga){}
 
-object n inherits Elemento(visual=nota){}
+object n inherits Elemento(visual = nota){}
 // ################################################################################################################# \\
 
 object o{
@@ -104,9 +100,9 @@ object p{
     }
 }
 
-object x inherits Elemento(visual= cabañaOBJ){}
+object x inherits Elemento(visual = cabañaOBJ){}
 object c inherits Elemento(visual = cuevaOBJ){}
-object q inherits Elemento(visual=graneroOBJ){}
+object q inherits Elemento(visual = graneroOBJ){}
 
 // #####################################################################
  //                    ENEMIGOS
@@ -116,7 +112,7 @@ object l inherits ElementoLobo{} //agresivo
 
 object t inherits ElementoLobo{} // pasivo
 
-object j inherits Elemento(visual=loboEspecial){ // lobo especial del granero, al matarlo me spawnea la salida
+object j inherits Elemento(visual = loboEspecial){ // lobo especial del granero, al matarlo me spawnea la salida
     override method construir(posicion){
         super(posicion)
         puertaGranero.irHacia(entradaGranero)
@@ -127,36 +123,37 @@ object j inherits Elemento(visual=loboEspecial){ // lobo especial del granero, a
    
 // #####################################################################
 
-object g inherits Elemento(visual=guardabosques){ // Guardabosques -> No implementado, no usar.
+object g inherits Elemento(visual = guardabosques){ // Guardabosques -> No implementado, no usar.
     
 }
 
+object u inherits Elemento(visual = leña){}
 
-object u inherits Elemento(visual=leña){}
+object h inherits Elemento(visual = hacha){}
 
-object h inherits Elemento(visual=hacha){}
+object tr inherits Elemento(visual = tridente){}
 
-object tr inherits Elemento(visual=tridente){}
+object m inherits Elemento(visual = manopla){}
 
-object m inherits Elemento(visual=manopla){}
+object s inherits Elemento(visual = auto){}
 
-object s inherits Elemento(visual=auto){}
 // ################################################################################################################# \\
 
-object po inherits Elemento(visual=puertaOeste){}
+object po inherits Elemento(visual = puertaOeste){}
 
-object pn inherits Elemento(visual=puertaNorte){}
+object pn inherits Elemento(visual = puertaNorte){}
 
-object pe inherits Elemento(visual=puertaEste){}
+object pe inherits Elemento(visual = puertaEste){}
 
-object ps inherits Elemento(visual=puertaSur){}
+object ps inherits Elemento(visual = puertaSur){}
 
-object pg inherits Elemento(visual= puertaEntradaCabaña){}
+object pg inherits Elemento(visual = puertaEntradaCabaña){}
 
 object pc inherits Elemento(visual = puertaEntradaCueva){}
 
-object pq inherits Elemento(visual=puertaGranero){}
-//###########################################################
+object pq inherits Elemento(visual = puertaGranero){}
+
+// ################################################################################################################# \\
 
 const mapa_comun =
     [
@@ -274,8 +271,8 @@ const mapa_escenarioBifurcacion_v6 =
         [_,_,_,_,_,_,_,_,_,_,_,_,_]
      
     ].reverse()
-// ################################################################################
 
+// ################################################################################################################# \\
 //ENTRADA DE CABAÑA
 
 const mapa_entradaCabaña_v1 = 
@@ -327,13 +324,14 @@ const mapa_EntradaCabaña_v4 =
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-        [ _ , _ , _ , _ , _ ,x  , pg , _ , _ , _ , _ , _ , _ ],
+        [ _ , _ , _ , _ , _ , x , pg, _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
 
     ].reverse() 
+
 // CABAÑA MAPAS 
 const mapa_cabañaInicial_v1 = 
    [
@@ -406,9 +404,6 @@ const mapa_entradaCueva_v3 =
 
 //#### ESCENARIOS CUEVAS (LABERINTO,SON 4)########
 
-
-  
-
 const mapa_cueva_v1 =
    [
         [_,_,_,_,_,_,pc,_,_,_,_,_,_],
@@ -420,7 +415,6 @@ const mapa_cueva_v1 =
         [_,_,_,_,_,_,l,_,_,_,_,o,_],
         [o,_,o,o,_,o,o,o,o,o,o,o,_],
         [_,_,_,_,_,_,z,_,_,_,_,_,_]     ].reverse()
-
 
 const mapa_cueva_v2 =
     [

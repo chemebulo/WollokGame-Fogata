@@ -3,15 +3,15 @@ import puertas.*
 import visualesExtra.*
 import gestores.*
 
-class AccionUnica{  // pequeñas acciones que realiza el guardabosques en 3 puntos de la historia en los eventos
-    const property sujeto   = null
-    const property gestorAC = gestorAccionesGuardabosques
+class AccionUnica{  // Pequeñas acciones que realiza el guardabosques en 3 puntos de la historia en los eventos
+    const property sujeto        = null
+    const property gestorAC      = gestorAccionesGuardabosques
     const property dialogoGestor = gestorDeDialogo
-    var accionHecha = false
+    var accionHecha              = false
 
     // ============================================================================================================== \\
 
-    method hacerAccion(){ // se usa el booleano para que haga la accion una sola vez
+    method hacerAccion(){ // Se usa el booleano para que haga la accion una sola vez
         if(not accionHecha){
             self.hacer()
             accionHecha = true
@@ -25,7 +25,7 @@ class AccionUnica{  // pequeñas acciones que realiza el guardabosques en 3 punt
 
 // ################################################################################################################# \\
 
-object darSalidaGranero inherits AccionUnica(sujeto = loboEspecial){ //accion que hace el lobo cuando lo matas
+object darSalidaGranero inherits AccionUnica(sujeto = loboEspecial){ // Acción que hace el lobo cuando lo matas
     
     override method hacer(){
         game.addVisual(puertaGranero)
@@ -64,7 +64,7 @@ object prepararseParaGranero inherits AccionUnica(sujeto = guardabosques){
 
 // ################################################################################################################# \\
 
-object peleaFinalEstado inherits AccionUnica(sujeto = guardabosques) { // cuidado si cambian nombre, un escenario se llama peleaFinal
+object peleaFinalEstado inherits AccionUnica(sujeto = guardabosques) { // Cuidado si cambian nombre, un escenario se llama peleaFinal
      
     override method hacer(){
         game.addVisual(puertaEntradaCueva)

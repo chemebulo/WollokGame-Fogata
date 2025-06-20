@@ -16,13 +16,14 @@ const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
 const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
 const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
-const armadoProtagonista2 = new ArmadoConTridente(pj = protagonista,imagenActual="prota-armado-", imagenTemporal = "ataque-prota-tridente.png")
-const armadoProtagonista3 = new ArmadoConManopla(pj=protagonista,imagenActual="prota-desarmado-",imagenTemporal ="ataque-prota-manopla.png")
+const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-armado-", imagenTemporal = "ataque-prota-tridente.png")
+const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista, imagenActual = "prota-desarmado-", imagenTemporal ="ataque-prota-manopla.png")
+
 // ########################################################################################################################## \\
 
 class Agresivo{
     const pj
-    const animacion = new AnimacionAtaque(pjAnimado= pj, imagenTemp = pj.imagenTemporal())
+    const animacion = new AnimacionAtaque(pjAnimado = pj, imagenTemp = pj.imagenTemporal())
 
     method atacarEnemigo(){
         // El lobo ataca al enemigo cada 1 segundo.
@@ -95,11 +96,12 @@ class Armado {
         return modoAtaque.posicionesAAtacar()
     }
 }
-class ArmadoConHacha inherits Armado ( modoAtaque   = new AtaqueHacha(atacante = pj)){}
+class ArmadoConHacha inherits Armado(modoAtaque = new AtaqueHacha(atacante = pj)){}
   
-class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante=pj)){}
+class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante = pj)){}
 
-class ArmadoConManopla inherits Armado(modoAtaque = new AtaqueManopla(atacante=pj)){}   
+class ArmadoConManopla inherits Armado(modoAtaque = new AtaqueManopla(atacante = pj)){}   
+
 // ########################################################################################################################## \\
 
 class AnimacionAtaque{
@@ -127,7 +129,6 @@ class Ataque {
     const atacante
 
     method ataqueArma(){
-        
         self.posicionesAAtacar().forEach({pos => self.atacarEnPosicion(pos)})
     }
   
@@ -144,27 +145,25 @@ class Ataque {
 }
 class AtaqueHacha inherits Ataque{
         
-   override method posicionesAAtacar() = [atacante.position().down(1),
-                                  atacante.position().up(1),
-                                  atacante.position().left(1),
-                                  atacante.position().right(1)]
+    override method posicionesAAtacar() = [atacante.position().down(1),
+                                           atacante.position().up(1),
+                                           atacante.position().left(1),
+                                           atacante.position().right(1)]
 }
 
 class AtaqueTridente inherits Ataque{
     
     override method posicionesAAtacar() = [atacante.position().left(1),
-                                  atacante.position().left(2),
-                                  atacante.position().right(1),
-                                  atacante.position().right(2)]
-                                  
+                                           atacante.position().left(2),
+                                           atacante.position().right(1),
+                                           atacante.position().right(2)]
 }
 class AtaqueManopla inherits Ataque{
     override method posicionesAAtacar() = [atacante.position()]
 
-     override method objetosEnPosicion(posicion){
+    override method objetosEnPosicion(posicion){
         return game.getObjectsIn(posicion).copyWithout(atacante)
     } 
-                                  
 }
 
 // ########################################################################################################################## \\

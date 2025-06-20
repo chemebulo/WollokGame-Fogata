@@ -12,17 +12,16 @@ import enemigos.*
 */
 // ---------- DIALOGO ESCENARIO INICIAL -------
 
-const dialogoAmiga = ["Donde quedaba la cabaña?","al Norte y luego a la derecja","Dale, ahi vengo","Dale, te espero"]
+const dialogoAmiga = ["¿Dónde quedaba la cabaña?", "Al Norte y después a la derecha", "Dale, ahí vengo", "Dale, te espero"]
 
-const dialogoEscenarioInicial = [amiga,dialogoAmiga]
+const dialogoEscenarioInicial = [amiga, dialogoAmiga]
 
-//------------DIALOGOS EN ESCENARIO TEST -----
-const dialogoTEST = ["Hola de nuevo","Ya habiamos hablado","Enloqueci verdad?","Si, ya vete"]
-const dialogoEscenarioTest = [amiga,dialogoTEST]
-//--------------------------------------------
+const dialogoCabaña    = ["Hola, ¿cómo va?", "Buenas Juan, ¿cómo va el lugar?", "Excelente, me preguntaba si tendría algo de leña", "Claro, ahí al lado de la chimenea"]
+const dialogoEnCabaña  = [guardabosques, dialogoCabaña]
 
-const dialogoCabaña = ["Hola, como va?","Buenas Juan, como va el lugar?","Excelente, me preguntaba si tendria algo de leña","Claro,ahi al lado de la chimenea"]
-const dialogoEnCabaña = [guardabosques, dialogoCabaña]
-
-const dialogoCabaña2 = ["AUXILIOO!!!?","Que paso chango?","Esta lleno de lobos, mataron a mi amiga","Mierda, no pensé que se acercarian","Que hare ahora?","Tranquilo,iremos al granero","Que hay ahi?","Tengo...armas"]
+const dialogoCabaña2   = ["¡¡¡AUXILIOO!!!", "¿Qué paso chango?", "Esta lleno de lobos, mataron a mi amiga", "Mierda, no pensé que se acercarían", "¿Qué hago ahora?", "Tranquilo, vamos al granero", "¿Qué hay ahi?", "Tengo... armas"]
 const dialogoEnCabaña2 = [guardabosques, dialogoCabaña2]
+
+// ################# DIALOGOS EN ESCENARIO TEST #################
+const dialogoTEST          = ["Hola de nuevo", "Ya habíamos hablado", "Enloquecí, no?", "Sí, andate"]
+const dialogoEscenarioTest = [amiga, dialogoTEST]

@@ -5,7 +5,6 @@ import visualesExtra.*
 import diapositivasManager.*
 import musica.*
 
-
 object videojuego{  
     var property escenario   = inicio
     const gestorDiapositivas = gestorDeDiapositivas

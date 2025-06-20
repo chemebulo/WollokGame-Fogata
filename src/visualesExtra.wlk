@@ -30,9 +30,7 @@ class VisualAtravasable inherits Visual{
 // ########################################################################################################################## \\
 
 class VisualConMovimiento inherits Visual{
-   // var property position       // Describe la posición actual del visual.
     var property vida           // Describe la vida del visual.
-   // var property image  = null  // Describe la imagen del visual.
     const property daño = 1     // Describe el daño del visual.
 
     method cambiarImagen(direccion){
@@ -60,28 +58,17 @@ class VisualConMovimiento inherits Visual{
     }
 
     method imagenNueva(direccion) // Describe la imagen nueva del visual en base a la dirección dada.
-
-    
 }
 
 // ########################################################################################################################## \\
 
-const amiga = new Visual(position  = game.at(2,4),image   = "amiga.png")
-    
-const fogataOBJ = new Visual(position = game.at(3,4),image  = "fogata-apagada.png")
-
-// ########################################################################################################################## \\
-
-const carpa = new Visual(position = game.at(6,4),image  = "carpa.png")
-
-// ########################################################################################################################## \\
-
-
+const amiga     = new Visual(position = game.at(2,4), image = "amiga.png")
+const fogataOBJ = new Visual(position = game.at(3,4), image = "fogata-apagada.png")
+const carpa     = new Visual(position = game.at(6,4), image = "carpa.png")
 
 // ########################################################################################################################## \\
 // VISUALES QUE AL INTERCTUAR HACEN COSAS
 class VisualInteractuable inherits VisualAtravasable{
-    
     const bloqueInteraccion
     
     override method interaccion(){
@@ -89,48 +76,35 @@ class VisualInteractuable inherits VisualAtravasable{
     }
 }
 
-const leña = new VisualInteractuable(image= "leña.png",position=game.at(5,5),bloqueInteraccion=interaccionLeña)
-
-const nota= new VisualInteractuable(image="nota.png",position = game.at(5,5),bloqueInteraccion=interaccionNota)
-
-const auto = new VisualInteractuable(image = "auto.png",position = game.at(5,5),bloqueInteraccion=interaccionAuto)
+const leña = new VisualInteractuable(image = "leña.png", position = game.at(5,5), bloqueInteraccion = interaccionLeña)
+const nota = new VisualInteractuable(image = "nota.png", position = game.at(5,5), bloqueInteraccion = interaccionNota)
+const auto = new VisualInteractuable(image = "auto.png", position = game.at(5,5), bloqueInteraccion = interaccionAuto)
 
 const interaccionLeña = {v => game.removeVisual(v)
-                            game.addVisual(puertaEntradaCabaña)
-                            puertaEntradaCabaña.irHacia(entradaCabaña)
-                            game.say(protagonista,"Gracias por la leña")
-                            game.say(guardabosques,"No hay de que.Tenga cuidado nomas que hay lobos por estos lados")
-                            entradaCabaña.configuradorTotal(entradaCabañaC_v2,entradaCabañaCES_v2)     }
-
+                              game.addVisual(puertaEntradaCabaña)
+                              puertaEntradaCabaña.irHacia(entradaCabaña)
+                              game.say(protagonista,"Gracias por la leña")
+                              game.say(guardabosques,"No hay de que, tenga cuidado nomas que hay lobos por estos lados")
+                              entradaCabaña.configuradorTotal(entradaCabañaC_v2, entradaCabañaCES_v2)}
 
 const interaccionNota = {v => game.removeVisual(v)
-                        game.say(protagonista, "SI SOBREVIVISTE TE ESPERO EN LA CUEVA...")
-                        game.addVisual(puertaEntradaCabaña)
-                         }
-const interaccionAuto = {v => game.removeVisual(v);videojuego.juegoGanado()}
+                              game.say(protagonista, "SI SOBREVIVISTE TE ESPERO EN LA CUEVA...")
+                              game.addVisual(puertaEntradaCabaña)}
 
-
-
-
-
+const interaccionAuto = {v => game.removeVisual(v); videojuego.juegoGanado()}
 
 // ########################################################################################################################## \\
-const cabañaOBJ = new VisualAtravasable(position = game.at(5,6),image = "cabaña_entrada.png")
 
-const cuevaOBJ = new VisualAtravasable(position = game.at(2,5),image = "cueva.png")
-
-const graneroOBJ = new VisualAtravasable(position =game.at(6,6),image= "granero.png")
-// ########################################################################################################################## \\
-
-
-
+const cabañaOBJ  = new VisualAtravasable(position = game.at(5,6), image = "cabaña_entrada.png")
+const cuevaOBJ   = new VisualAtravasable(position = game.at(2,5), image = "cueva.png")
+const graneroOBJ = new VisualAtravasable(position = game.at(6,6), image = "granero.png")
 
 // ####################################################################################################### //
 // ARMAS PROTAGONISTA
 
 class Arma inherits Visual{
-   
     const bloque
+
     override method esAtravesable(){
         return true 
     }
@@ -140,42 +114,41 @@ class Arma inherits Visual{
         bloque.apply(self)
     }
 }
-const hacha = new Arma(image="hacha.png",position=game.at(5,5),bloque=interaccionHacha)
-const tridente = new Arma(image="tridente.png",position=game.at(6,6),bloque=interaccionTridente)
-const manopla = new Arma(image="manopla.png",position=game.at(7,7),bloque=interaccionManopla)
 
-const interaccionHacha = { ar => game.removeVisual(ar);
-                             game.removeVisual(tridente);
-                             game.removeVisual(manopla);
-                              protagonista.estadoCombate(armadoProtagonista);
-                               protagonista.estadoCombateElejido(armadoProtagonista)}
+const hacha    = new Arma(image = "hacha.png",    position = game.at(5,5), bloque = interaccionHacha)
+const tridente = new Arma(image = "tridente.png", position = game.at(6,6), bloque = interaccionTridente)
+const manopla  = new Arma(image = "manopla.png",  position = game.at(7,7), bloque = interaccionManopla)
 
-const interaccionTridente = { ar => game.removeVisual(ar);
-                             game.removeVisual(hacha);
-                             game.removeVisual(manopla);
-                              protagonista.estadoCombate(armadoProtagonista2);
-                               protagonista.estadoCombateElejido(armadoProtagonista2)}
+const interaccionHacha = {ar => game.removeVisual(ar);
+                                game.removeVisual(tridente);
+                                game.removeVisual(manopla);
+                                protagonista.estadoCombate(armadoProtagonista);
+                                protagonista.estadoCombateElejido(armadoProtagonista)}
 
-const interaccionManopla =   { ar => game.removeVisual(ar);
-                             game.removeVisual(hacha);
-                             game.removeVisual(tridente);
-                              protagonista.estadoCombate(armadoProtagonista3);
-                               protagonista.estadoCombateElejido(armadoProtagonista3)}                             
+const interaccionTridente = {ar => game.removeVisual(ar);
+                                   game.removeVisual(hacha);
+                                   game.removeVisual(manopla);
+                                   protagonista.estadoCombate(armadoProtagonista2);
+                                   protagonista.estadoCombateElejido(armadoProtagonista2)}
 
+const interaccionManopla = {ar => game.removeVisual(ar);
+                                  game.removeVisual(hacha);
+                                  game.removeVisual(tridente);
+                                  protagonista.estadoCombate(armadoProtagonista3);
+                                  protagonista.estadoCombateElejido(armadoProtagonista3)}                             
 
 // ########################################################################################################################## \\
+
 class VisualObstaculo inherits Visual{}
+
 class Obstaculo inherits VisualObstaculo(image = "obstaculo.png"){}
 
 class ParedInvisible inherits VisualObstaculo(image = null){}
 
 // ########################################################################################################################## \\
 
-
-// ########################################################################################################################## \\
 const gameover = new Visual(image = "game-over.png")
 
 const juegoGanado = new Visual(image = "game-win.png")
 
 // ########################################################################################################################## \\
-

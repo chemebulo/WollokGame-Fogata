@@ -1,10 +1,6 @@
-import puertas.*
-import direccion.*
 import escenariosManager.*
 import confgEscenarios.*
 import confgEscSig.*
-
-
 
 // CONSTRUCTOR DE ESCENARIOS
 object esc{
@@ -34,6 +30,7 @@ TEMPLATE escenarioDiapositivas:
     )
     
 */
+
 // ########################################### ESCENARIO: inicioJuego ###########################################
 
 const inicio = esc.construir(inicioC_v1, {}, "inicio.png")
@@ -44,40 +41,34 @@ const fogata = esc.construir(fogataC_v1, fogataCES_v1, "fondo-escenario-inicial.
 
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
-const bifurcacion = esc.construir(bifurcacionC_v1,bifurcacionCES_v1,"fondo-escenario-inicial.png")
+const bifurcacion   = esc.construir(bifurcacionC_v1, bifurcacionCES_v1, "fondo-escenario-inicial.png")
 
-const entradaCabaña = esc.construir(entradaCabañaC_v1,entradaCabañaCES_v1,"fondo-escenario-inicial.png" )
+const entradaCabaña = esc.construir(entradaCabañaC_v1, entradaCabañaCES_v1, "fondo-escenario-inicial.png" )
 
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
- const cabaña = esc.construir(cabañaC_v1,cabañaCES_v1,"cabaña.png")   
+const cabaña = esc.construir(cabañaC_v1, cabañaCES_v1, "cabaña.png")   
 
 // ########################################## ESCENARIO: escenarioTEST ##########################################
 
-const entradaCueva = esc.construir(entradaCuevaC_v1,entradaCuevaCES_v1,"fondo-entrada-cueva.png")
+const entradaCueva    = esc.construir(entradaCuevaC_v1, entradaCuevaCES_v1, "fondo-entrada-cueva.png")
 
-const cueva = esc.construir(cuevaC_v1, cuevaCES_v1,"fondo-cueva.png")
+const cueva           = esc.construir(cuevaC_v1, cuevaCES_v1,"fondo-cueva.png")
 
+const escenarioTEST   = esc.construir(escenarioTestC_v1, escenarioTestCES_v1, "fondo-escenario-inicial.png")
 
-const escenarioTEST = esc.construir(escenarioTestC_v1, escenarioTestCES_v1, "fondo-escenario-inicial.png")
+const entradaGranero  = esc.construir(entradaGraneroC_v1, entradaGraneroCES_v1, "fondo-entrada-granero.png")
 
-const entradaGranero = esc.construir(entradaGraneroC_v1, entradaGraneroCES_v1, "fondo-entrada-granero.png")
+const granero         = esc.construir(graneroC_v1, graneroCES_v1, "fondo-granero.png")
 
-const granero = esc.construir(graneroC_v1,graneroCES_v1,"fondo-granero.png")
+const peleaFinal      = esc.construir(peleaFinalC_v1, peleaFinalCES_v1, "fondo-cueva.png") // Recordar borrar la puerta de salida
 
-const peleaFinal = esc.construir(peleaFinalC_v1,peleaFinalCES_v1,"fondo-cueva.png") // recordar borrar la puertade salida
+const estacionamiento = esc.construir(estacionamientoC_v1, {}, "fondo-escenario-final.png")
 
-const estacionamiento = esc.construir(estacionamientoC_v1,{},"fondo-escenario-final.png")
+// ################################# ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS #################################
 
-// ##############################################################################################################
-//  ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS
-// ##############################################################################################################
+const diapoGranero     = esc.construir(diapoGraneroC_v1, {}, "granero-diapo1.png") 
 
-const diapoGranero = esc.construir(diapoGraneroC_v1, {}, "granero-diapo1.png") 
+const diapoAmigaMuerta = esc.construir(diapoAmigaMuertaC_v1, {}, "diapo-amiga-muerta1.png")
 
-
-const diapoAmigaMuerta = esc.construir(diapoAmigaMuertaC_v1,{},"diapo-amiga-muerta1.png")
-
-const diapoPeleaFinal = esc.construir(diapoPeleaFinalC_v1,{},"diapo-pelea-final1.png")
-
-
+const diapoPeleaFinal  = esc.construir(diapoPeleaFinalC_v1, {}, "diapo-pelea-final1.png")
