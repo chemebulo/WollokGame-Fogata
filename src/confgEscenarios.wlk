@@ -2,14 +2,13 @@ import visualesExtra.*
 import protagonista.*
 import enemigos.*
 import escenariosMapas.*
-import dialogos.*
+import dialogosManager.* 
 import eventos.*
 import diapositivasManager.*
 import puertas.*
 import npcEstados.*
-import gestores.gestorAccionesGuardabosques
 import musica.*
-import acciones.*
+
 
 /*
 TEMPLATE CONFIGURADORES:
@@ -34,14 +33,16 @@ const nombreEscenarioC_v* = {e => e.visualesEnEscena();
 
 const inicioC_v1 = {e => e.ost(track_inicio)}
 
-const fogataC_v1 = {e => e.mapa(mapa_escenarioInicial_v1);
-                         e.visualesEnEscena([amiga, carpa, fogataOBJ, puertaNorte, protagonista]);
-                         e.ost(track_fogata);
-                         e.dialogo(dialogoEscenarioInicial)}
+const fogataC_v1 = {e =>  gestorDeDialogo.esTiempoDeDialogo(true)
+                        e.mapa(mapa_escenarioInicial_v1);
+                         e.visualesEnEscena([amiga, carpa, fogataOBJ, protagonista]);
+                         e.ost(track_fogata)}
+                        // e.dialogo(dialogoEscenarioInicial)}
 
 // ########################################## CONFIGURADORES ESCENARIO BIFURCACION ##########################################
 
-const bifurcacionC_v1 = {e => e.mapa(mapa_escenarioBifurcacion_v1);
+const bifurcacionC_v1 = {e => game.removeVisual(puertaNorte)
+                                e.mapa(mapa_escenarioBifurcacion_v1);
                               e.visualesEnEscena([puertaEste, protagonista]);
                               e.ost(track_fogata)}
       
@@ -75,7 +76,8 @@ const entradaCabañaC_v1 = {e => e.mapa(mapa_entradaCabaña_v1);
                                 e.visualesEnEscena([cabañaOBJ, protagonista, puertaEntradaCabaña]);
                                 e.ost(track_fogata)}
 
-const entradaCabañaC_v2 = {e => e.mapa(mapa_entradaCabaña_v2);
+const entradaCabañaC_v2 = {e => game.removeVisual(puertaEntradaCabaña)
+                                e.mapa(mapa_entradaCabaña_v2);
                                 e.visualesEnEscena([cabañaOBJ, protagonista, puertaOeste] );
                                 e.ost(track_suspence);
                                 e.eventos([escucharLobos])}
@@ -121,18 +123,21 @@ const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
 
 // ######################################################### CABAÑA #########################################################
 
-const  cabañaC_v1 = {e => e.mapa(mapa_cabañaInicial_v1);
+const  cabañaC_v1 = {e => gestorDeDialogo.esTiempoDeDialogo(true);
+                            e.mapa(mapa_cabañaInicial_v1);
                           e.visualesEnEscena([guardabosques, protagonista]);
                           e.ost(track_cabaña);
-                          e.dialogo(dialogoEnCabaña);
-                          e.eventos([accionesGuardabosques])}
+                         // e.dialogo(dialogoEnCabaña);
+                          e.eventos([])}
+                          //accionesGuardabosques
 
-const cabañaC_v2 = {e => gestorAccionesGuardabosques.accionesGuardabosques(prepararseParaGranero);
+const cabañaC_v2 = {e => //gestorAccionesGuardabosques.accionesGuardabosques(prepararseParaGranero);
+                        gestorDeDialogo.esTiempoDeDialogo(true);
                          e.mapa(mapa_cabañaInicial_v1);
                          e.visualesEnEscena([guardabosques, protagonista]);
-                         e.ost(track_suspence);
-                         e.dialogo(dialogoEnCabaña2);
-                         e.eventos([accionesGuardabosques])}
+                         e.ost(track_suspence)}
+                        // e.dialogo(dialogoEnCabaña2);}
+                        // e.eventos([accionesGuardabosques])}
 
 const cabañaC_v3 = {e => e.mapa(mapa_cabañaInicial_v2);
                          e.visualesEnEscena([protagonista, nota]);
@@ -188,7 +193,7 @@ const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoComba
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
-                             e.eventos([ ataqueGuardabosques, hablarProta9])}  
+                             e.eventos([ hablarProta9,ataqueGuardabosques])}  
 
 const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
                                   e.visualesEnEscena([protagonista, auto]);

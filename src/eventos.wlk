@@ -36,8 +36,8 @@ const bloqueEventoLobo = {l => l.perseguirEnemigo()}
 // ################################################################################################################# \\
 
 class EventoHablar {
-    const tiempo      = 800
-    const sujetoUnico = null
+    const tiempo      = 1
+    const sujetoUnico = protagonista
     const bloque      = bloqueEventoHablar
     const mensaje 
     
@@ -79,20 +79,17 @@ const hablarProta6  = new EventoHablar(mensaje = "Buehhhh")
 
 const hablarProta7  = new EventoHablar(mensaje = "¡¡¡Ahora si los hago cagar!!!")
 
-const hablarProta8  = new EventoHablar(sujetoUnico = protagonista, mensaje = "Laura....")
+const hablarProta8  = new EventoHablar( mensaje = "Laura....")
 
-const hablarProta9  = new EventoHablar(sujetoUnico = protagonista, mensaje = "¡¡¡AHHHHHHHH!!!")
+const hablarProta9  = new EventoHablar( mensaje = "¡¡¡AHHHHHHHH!!!")
 
 const guardabosquesHabla  = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca al norte está el granero")
 
 const guardabosquesHabla2 = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca adentro, apurate")
 
-// ACCIONES QUE SE REALIZAN EN LOOP
-const accionesGuardabosques = new EventoLoopIndividual(sujetoUnico = gestorAccionesGuardabosques, bloque = bloqueGuardabosques)
-       
+
  
 const ataqueGuardabosques   = new EventoLoopIndividual(sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
 
-const bloqueGuardabosques   = {g => g.comprobarAccion()}
 
 const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}

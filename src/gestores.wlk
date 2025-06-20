@@ -2,7 +2,7 @@ import direccion.*
 import protagonista.*
 import enemigos.*
 import puertas.*
-import acciones.*
+
 
 object gestorDeEventos{
 
@@ -216,7 +216,7 @@ object gestorDeListasEscenario{
     
     method limpiarListas(esc){
         self.limpiarListaVisuales(esc)
-        esc.dialogo([])
+       // esc.dialogo([])
         esc.eventos([])
     }
 
@@ -259,77 +259,4 @@ object gestorDeLobos{
 
 // ############################################################################################################################################# \\
 
-object gestorAccionesGuardabosques{
-    var property accionesGuardabosques = darLaLeña
-     
-    method comprobarAccion(){
-        if (accionesGuardabosques.esTiempoDeRealizarAccion()){
-            accionesGuardabosques.hacerAccion()
-        }
-    }
-}
 
-// ############################################################################################################################################# \\
-
-object gestorDeDialogo{
-
-    method configurarConversacion(escenario, visual){ 
-        //
-        if(escenario.hayDialogo()){
-            const dialogoActual = escenario.dialogo().last().copy()
-            const npcEscenario =  escenario.dialogo().first()
-
-            visual.npcActual(npcEscenario)
-            visual.conversacionNPC(dialogoActual)
-        }
-    }
-
-    method resetearDialogo(visual){
-        visual.conversacionNPC([])
-        visual.conversadorActual(visual)
-    }
-
-    method interactuarNPC(visual){
-        //
-        if (visual.estaAlLadoDelNPC()){
-            self.conversar(visual)
-        }
-    }
-
-    method conversar(visual){
-        //
-        if(not self.esDialogoFinal(visual)){
-            game.say(visual.conversadorActual(), self.dialogoActual(visual))
-            visual.conversacionNPC().remove(self.dialogoActual(visual))
-            self.cambiarConversador(visual)
-        }
-    }
-
-    method dialogoActual(visual){
-        //
-        return visual.conversacionNPC().first()
-    }
-
-    method esDialogoFinal(visual){
-        //
-        return visual.conversacionNPC().isEmpty()
-    }
-
-    method cambiarConversador(visual){
-        // 
-        if (self.esElTurnoDeHablarDe(visual)){ 
-            visual.conversadorActual(visual) 
-        } else { 
-            visual.conversadorActual(visual.npcActual()) 
-        }
-    }
-
-    method esElTurnoDeHablarDe(visual){
-        //
-        return visual.conversacionNPC().size().even()
-    }
-
-    method terminoElDialogo(visual){
-        return self.esDialogoFinal(visual.enemigo())
-    }
-}

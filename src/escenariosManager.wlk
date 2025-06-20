@@ -2,6 +2,7 @@ import protagonista.*
 import gestores.*
 import escenariosMapas.mapa_comun
 
+
 // #############################################################################################################################
 
 class Escenario{ 
@@ -14,24 +15,21 @@ class Escenario{
     var property fondoEscenario    = ""
     var property visualesEnEscena  = []
     var property ost               = game.sound("")
-    var property dialogo           = [] // [npcActual, dialogo] implementar en dialogos.wlk
     var property confgActual       = {} // Un bloque en configuradorEscenarios.wlk
     var property confgEscSiguiente = {}
     
-    const personaje             = protagonista
     const gestorFondo           = gestorFondoEscenario
     const gestorEvento          = gestorDeEventos
     const gestorObstaculos      = gestorDeObstaculos
     const gestorLobos           = gestorDeLobos
     const gestorListasEscenario = gestorDeListasEscenario
-    const gestorDialogo         = gestorDeDialogo
+    
     
     method puestaEnEscena(){ 
         self.configurar()
         self.configurarEscenarioSiguiente()
         self.configurarSonido()
         gestorFondo.visualizarFondo(fondoEscenario)
-        gestorDialogo.configurarConversacion(self, personaje)
         self.dibujarTablero()
         gestorListasEscenario.agregarVisualesEscena(self)
         gestorEvento.gestionarInicio(eventos)
@@ -75,13 +73,9 @@ class Escenario{
         gestorListasEscenario.limpiarListas(self)
         gestorEvento.gestionarFin(eventos);
         gestorObstaculos.limpiarObstaculos()
-        gestorDialogo.resetearDialogo(personaje)
         gestorLobos.limpiarLobos()
     }
   
-    method hayDialogo(){
-        return not dialogo.isEmpty()
-    }
 
     method atacadoPor(visual){}
 }    

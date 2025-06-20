@@ -5,15 +5,14 @@ import videojuego.*
 import gestores.*
 
 object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 50, daño = 2){
-    var property conversadorActual  = self
-    var property conversacionNPC    = []
-    var property npcActual          = null 
+  
+   
     var property estoyAtacando      = false
     var property estadoCombate      = desarmadoProtagonista 
     var property estadoCombateElejido = null //cuando agarrasel arma recuerda el estado porque a veces vuelve a cambiar a desarmado 
     const property vidaGestor       = gestorDeVida
     const property movimientoGestor = gestorDeMovimiento
-    const property dialogoGestor    = gestorDeDialogo
+   
 
     // ============================================================================================================================== \\
 
@@ -43,13 +42,8 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         return estadoCombate.actual() + direccion.toString() + ".png"
     }
 
-    method interactuarNPC(){
-        // El protagonista interactúa con el NPC que tenga al lado (si es que tiene alguno).
-        dialogoGestor.interactuarNPC(self)
-    }
-
-    method estaAlLadoDelNPC(){
-        return ejeY.estaEnMismoEje(self, npcActual) and ejeX.estaAlLado(self, npcActual)
+    method estaAlLadoDelNPC(npc){
+        return ejeY.estaEnMismoEje(self, npc) and ejeX.estaAlLado(self, npc)
     }
 
     method mover(direccion, cantidad){

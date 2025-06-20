@@ -4,6 +4,7 @@ import escenarios.*
 import visualesExtra.*
 import diapositivasManager.*
 import musica.*
+import dialogosManager.*
 
 object videojuego{  
     var property escenario   = inicio
@@ -51,7 +52,7 @@ object videojuego{
         keyboard.a().onPressDo({protagonista.mover(izquierda)})
         keyboard.s().onPressDo({protagonista.mover(abajo)})
         keyboard.d().onPressDo({protagonista.mover(derecha)})
-        keyboard.e().onPressDo({protagonista.interactuarNPC()})
+        keyboard.e().onPressDo({gestorDeDialogo.interactuarNPC()})
         keyboard.f().onPressDo({gestorDeDiapositivas.interactuarDiapositivas()})
         keyboard.m().onPressDo({game.stop()})
         keyboard.y().onPressDo({self.juegoGanado()})
