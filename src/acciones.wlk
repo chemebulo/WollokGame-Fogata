@@ -24,7 +24,7 @@ class AccionUnica{  // Pequeñas acciones que realiza el guardabosques en 3 punt
 }
 
 // ################################################################################################################# \\
-
+/*
 object darSalidaGranero inherits AccionUnica(sujeto = loboEspecial){ // Acción que hace el lobo cuando lo matas
     
     override method hacer(){
@@ -35,7 +35,7 @@ object darSalidaGranero inherits AccionUnica(sujeto = loboEspecial){ // Acción 
         return not sujeto.estaVivo()
     }
 }
-
+*/
 // ################################################################################################################# \\
 
 object darLaLeña inherits AccionUnica(sujeto = guardabosques){
@@ -63,14 +63,3 @@ object prepararseParaGranero inherits AccionUnica(sujeto = guardabosques){
 }
 
 // ################################################################################################################# \\
-
-object peleaFinalEstado inherits AccionUnica(sujeto = guardabosques) { // Cuidado si cambian nombre, un escenario se llama peleaFinal
-     
-    override method hacer(){
-        game.addVisual(puertaEntradaCueva)
-    }    
-               
-    override method esTiempoDeRealizarAccion(){
-        return not sujeto.estaVivo()
-    }
-}

@@ -91,12 +91,9 @@ const guardabosquesHabla2 = new EventoHablar(sujetoUnico = guardabosques, mensaj
 // ACCIONES QUE SE REALIZAN EN LOOP
 const accionesGuardabosques = new EventoLoopIndividual(sujetoUnico = gestorAccionesGuardabosques, bloque = bloqueGuardabosques)
        
-const eventoLoboEspecial    = new EventoLoopIndividual(sujetoUnico = gestorAccionesLobo, bloque = bloqueLoboEspecial)
-    
+ 
 const ataqueGuardabosques   = new EventoLoopIndividual(sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
 
 const bloqueGuardabosques   = {g => g.comprobarAccion()}
-
-const bloqueLoboEspecial    = {l => l.verEntorno()}
 
 const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}

@@ -271,18 +271,6 @@ object gestorAccionesGuardabosques{
 
 // ############################################################################################################################################# \\
 
-object gestorAccionesLobo{
-    var property accionesLobo = darSalidaGranero
-
-    method verEntorno(){
-        if(accionesLobo.esTiempoDeRealizarAccion()){
-            accionesLobo.hacerAccion()
-        }
-    }
-}
-
-// ############################################################################################################################################# \\
-
 object gestorDeDialogo{
 
     method configurarConversacion(escenario, visual){ 

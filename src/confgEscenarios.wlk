@@ -109,8 +109,9 @@ const entradaGraneroC_v1 = {e => e.mapa(mapa_entradaGranero_v1);
 
 const graneroC_v1 ={ e => e.mapa(mapa_peleaGranero);
                           e.visualesEnEscena([protagonista,hacha,loboEspecial,tridente, manopla]);
-                          e.ost(track_pelea_granero);
-                          e.eventos([eventoLoboEspecial])}
+                          e.ost(track_pelea_granero); 
+                          }
+                           /*e.eventos([eventoLoboEspecial])*/
 
 const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
                                  e.mapa(mapa_entradaGranero_v2)
@@ -182,13 +183,12 @@ const cuevaC_v5 = {e => e.mapa(mapa_cueva_v5);
 
 // ###################################################### PELEA FINAL #######################################################
 
-const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElejido());
-                             gestorAccionesGuardabosques.accionesGuardabosques(peleaFinalEstado);
+const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElejido());                         
                              guardabosques.estadoCombate(armadoGuardabosques);
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
-                             e.eventos([accionesGuardabosques, ataqueGuardabosques, hablarProta9])}  
+                             e.eventos([ ataqueGuardabosques, hablarProta9])}  
 
 const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
                                   e.visualesEnEscena([protagonista, auto]);

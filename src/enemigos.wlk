@@ -4,6 +4,7 @@ import npcEstados.*
 import eventos.*
 import videojuego.*
 import musica.*
+import puertas.*
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estadoCombate 
@@ -94,6 +95,7 @@ object loboEspecial inherits Lobo(vida = 30,daño=5){
         return track_loboJefe_derrotado}
 
     override method accionesAdicionalesAlMorir() {
+        game.addVisual(puertaGranero)
        self.escenarioDondeEstoy().bajarVolumen();
         game.sound(track_loboJefe_derrotado).play()
 
@@ -113,6 +115,7 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
     override method accionesAdicionalesAlMorir() {
         self.escenarioDondeEstoy().bajarVolumen();
         game.sound(track_loboJefe_derrotado).play()
+        game.addVisual(puertaEntradaCueva)
 
     }
     
