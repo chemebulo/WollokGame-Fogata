@@ -3,7 +3,7 @@ import visualesExtra.*
 import npcEstados.*
 import eventos.*
 import videojuego.*
-import musica.*
+import escenariosManager.*
 import puertas.*
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){

@@ -1,7 +1,7 @@
 import protagonista.*
 import enemigos.*
 import gestores.*
-import musica.*
+import escenariosManager.*
 
 class EventoLoopIndividual{
     const sujetoUnico
