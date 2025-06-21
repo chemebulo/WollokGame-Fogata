@@ -17,6 +17,7 @@ class Visual{
     method cambiarAAtravesable(){
         esAtravesable = true
     }
+ 
 }
 
 class VisualAtravasable inherits Visual(esAtravesable = true){}

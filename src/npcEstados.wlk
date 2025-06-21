@@ -2,7 +2,9 @@ import protagonista.*
 import enemigos.*
 import npcMovimiento.*
 import gestores.*
-
+import direccion.*
+import visualesExtra.*
+import ataqueGuardabosquesProv.*
 /*
     El protagonista inicia el juego desarmado y solo cuando interactua con el hacha pasa a estar armado el resto del juego hasta 
     el final
@@ -14,7 +16,7 @@ import gestores.*
 
 const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
-const armadoGuardabosques    = new ArmadoConHacha(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "guardabosques-cabaña.png")
+const armadoGuardabosques    = new ArmadoEscopeta(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "ataque-guardabosques-escopeta.png")
 const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
 const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota-tridente.png")
 const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista,  imagenActual = "prota-desarmado-", imagenTemporal = "ataque-prota-manopla.png")
@@ -32,6 +34,9 @@ class Desarmado{
 }
 
 // ########################################################################################################################## \\
+
+
+
 class Armado {
     const pj             = null  // personaje que ataca
     const imagenActual   = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
@@ -52,8 +57,8 @@ class Armado {
     }
 
     method atacarEnemigo(){
-        animacion.animarAtaque()
         modoAtaque.ataqueArma()
+        animacion.animarAtaque()
     }
     
     method modoAtaque(){
@@ -96,6 +101,10 @@ class AnimacionAtaque{
                            pjAnimado.image(imagenActual); 
                            game.addVisual(pjAnimado)})
     }
+    method atacadoPor(visual){}
+
+ 
+    method esAtravesable() = true
 }
 
 // ########################################################################################################################## \\
@@ -172,6 +181,10 @@ class EnemigoVivo{
         // Emite un mensaje cuando el enemigo es atacado por su enemigo.
         vidaGestor.atacadoPor(visual, enemigo)
     }
+
+
+   
+    method esAtravesable() = true
 }
 
 // ########################################################################################################################## \\
@@ -182,4 +195,9 @@ class EnemigoMuerto{
     method atacarEnemigo(){} //
 
     method atacadoPor(enemigo){} //
+
+    
+
+
+    method esAtravesable() = true
 }

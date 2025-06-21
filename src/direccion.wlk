@@ -6,6 +6,8 @@ class Direccion{
         // Devuelve la siguiente posición de la posición dada, según lo almacenado en las constantes "dx" y "dy".
         return game.at(posicion.x() + dx, posicion.y() + dy)
     }
+
+    
 }
 
 object arriba    inherits Direccion(dy =  1){} // Representa la dirección Arriba en el tablero.

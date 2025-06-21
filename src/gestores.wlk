@@ -36,7 +36,35 @@ object gestorDeDirecciones{
                if (ejeSegundo.seSumoEnEje(posicionAntigua,  posicionNueva)) { ejeSegundo.primeraDir() } else
                                                                             { ejeSegundo.segundaDir() }
     }
+
+  //Codigo para la bala, solo la bala deberia llamarlo
+  // se recomienda no factorizar porque esta masomenos optimizado
+
+    method direccionDeBala(posEnemigo,posPropia){
+            const xE = self.xPos(posEnemigo)
+            const xP = self.xPos(posPropia)
+           const yE = self.yPos(posEnemigo)
+            const yP = self.yPos(posPropia)
+
+
+     return  if (self.estaAMiIzquierda(xE, xP)){izquierda} 
+             else if (self.estaAMiDerecha(xE,xP) ) {derecha}
+             else if (self.estaArriba(yE, yP)) {arriba}
+             else {abajo}
+           
+
+    }
+    method estaAMiIzquierda(posEnemigoX, posPropioX) = posEnemigoX < posPropioX
+
+    method estaAMiDerecha(posEnemigoX, posPropioX) = posEnemigoX > posPropioX
+
+    method estaArriba(posEnemigoY,posPropioY) = posEnemigoY > posPropioY
+
+    method xPos(pos) = pos.x()
+
+    method yPos(pos) = pos.y()
 }
+
 // ############################################################################################################################################# \\
 
 object gestorDePosiciones{
@@ -71,6 +99,8 @@ object gestorDeColisiones{
         const posicionAMover = direccion.siguientePosicion(visual.position())
         return self.estaDentroDelTablero(posicionAMover) and not self.hayObstaculoEn(posicionAMover, visual)
     }
+
+  
 
     // ========================================================================================================================================= \\
 
@@ -208,6 +238,8 @@ object gestorFondoEscenario{
     method interaccion(){}
 
     method atacadoPor(visual){}
+
+ 
 }   
 
 // ############################################################################################################################################# \\

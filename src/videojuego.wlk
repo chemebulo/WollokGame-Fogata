@@ -56,6 +56,7 @@ object videojuego{
         keyboard.m().onPressDo({game.stop()})
         keyboard.y().onPressDo({self.juegoGanado()})
         keyboard.k().onPressDo({protagonista.atacar()})
+        keyboard.l().onPressDo({game.say(protagonista,game.allVisuals().toString())})
     }
 
     // ################### Metodo para manejo de diapositivas ##################

@@ -161,4 +161,6 @@ class Diapositiva{
     }
 
     method atacadoPor(visual){}
+
+
 }

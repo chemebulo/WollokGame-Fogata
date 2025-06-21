@@ -80,7 +80,7 @@ describe "Movimiento del personaje con colisiones:"{
         protagonista.position(game.at(0,0))
 
         game.addVisual(amiga)
-        game.addVisual(fogata)
+        game.addVisual(fogataOBJ)
         game.addVisual(carpa)
         game.addVisual(protagonista)
     }
@@ -143,6 +143,7 @@ describe "Movimiento del personaje con colisiones:"{
         protagonista.mover(izquierda,3)
 
         assert.equals(game.at(0,0),protagonista.position())
+       
     }
 }
 
@@ -170,7 +171,7 @@ describe "Funcionamiento de puertas"{
     test  "La puerta norte cambia de escenarioTEST al escenarioInicial"{
         
         puertaOeste.interaccion()
-        assert.equals(fogata,videojuego.escenario())
+        assert.equals(fogataOBJ,videojuego.escenario())
         }
 }
 describe "Ataque sobre lobo"{

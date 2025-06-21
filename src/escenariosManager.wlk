@@ -82,8 +82,12 @@ class Escenario{
         gestorLobos.limpiarLobos()
     }
   
-
+    method esAtravesable() = true
     method atacadoPor(visual){}
+
+
+
+    
 } 
 
 
@@ -348,14 +352,23 @@ const cuevaC_v5 = {e => e.mapa(mapa_cueva_v5);
                         e.ost(track_cueva)}  
 
 // ###################################################### PELEA FINAL #######################################################
-
-const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElejido());                         
+const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElejido());      
+                                guardabosques.soyAtravesable(true) ;                  
                              guardabosques.estadoCombate(armadoGuardabosques);
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
-                             e.eventos([ hablarProta9,ataqueGuardabosques])}  
+                             e.eventos([ hablarProta9,ataqueGuardabosques,ataqueEscopetaGuardabosques])}  
 
+/*
+const peleaFinalC_v1 = {e =>      guardabosques.soyAtravesable(true) ;                   
+                             guardabosques.estadoCombate(armadoGuardabosques);
+                             e.mapa(mapa_FinalJuego)
+                             e.visualesEnEscena([protagonista, guardabosques]);
+                             e.ost(track_pelea_final);
+                             e.eventos([hablarProta9,ataqueGuardabosques, ataqueEscopetaGuardabosques])}
+
+*/
 const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
                                   e.visualesEnEscena([protagonista, auto]);
                                   e.ost(track_tramo_final);

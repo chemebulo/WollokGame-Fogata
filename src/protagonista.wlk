@@ -4,7 +4,7 @@ import npcEstados.*
 import videojuego.*
 import gestores.*
 
-object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 50, daño = 2){
+object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100, daño = 3){
   
    
     var property estoyAtacando      = false
@@ -30,6 +30,7 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         // Representa el comportamiento del protagonista cuando un enemigo suyo lo ataca.
         vidaGestor.atacadoPor(self, visual)
     }
+
 
     override method actualizarAMuerto(){
         // Actualiza el estado del protagonista a muerto, lo cual implica terminar el juego.
