@@ -187,7 +187,7 @@ object gestorDeVida{
     method atacadoPor(visual, enemigo){
         // Actualiza la vida del visual dado con el daño del enemigo dado, y además el visual emite un mensaje describiendo su vida actual.
         self.recibirDaño(visual, enemigo.daño())
-        game.say(visual, "Mi vida es "+visual.vida()+"")
+        game.say(visual, "Vida: "+visual.vida()+"")
     }
 
     method recibirDaño(visual, dañoRecibido){

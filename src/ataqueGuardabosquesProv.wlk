@@ -85,9 +85,6 @@ class Bala inherits VisualAtravasable(position = guardabosques.position()){
         self.muerteBala()
     }
 
-
-
-
     method objetosDondePenetre() = game.getObjectsIn(self.position()).copyWithout(guardabosques)
 
     // #########################################################
@@ -95,7 +92,6 @@ class Bala inherits VisualAtravasable(position = guardabosques.position()){
 
 
     method daño() = 10
-
 
     method seguirHacia(direccion){ 
         // es codigo repetido pero la bala no necesita cambiar su imagen,
