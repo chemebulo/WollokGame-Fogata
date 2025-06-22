@@ -84,10 +84,6 @@ class Escenario{
   
     method esAtravesable() = true
     method atacadoPor(visual){}
-
-
-
-    
 } 
 
 
@@ -112,8 +108,12 @@ object esc{
 // ####################################################################################################################################################################
 /*                                         ESCENARIOS PARA TODO EL JUEGO:
     TEMPLATE escenario:
-    const nombre_escenario = esc.construir(@param,    //configurador implementado en confgEscenarios.wlk
-                                           @param,    //configurador implementado en confgEsSig.wlk
+    const nombre_escenario = esc.construir(@param,    //configuracion actual
+                                           @param,    //configurador para el escenario siguiente:
+                                                          *hacia que escenario iran las puertas
+                                                          *si hay escenarios repetidos, un setter con nuevos 
+                                                          configuradores
+                                                        
                                            @param     // imagen de 1300px * 900 px
                                            )    
 IMPORTANTE!!!
@@ -403,7 +403,7 @@ const escenarioTestC_v1 = {e => e.mapa(mapa_escenarioTest);
  CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
     *tipo: bloque
     En el bloque se debe escribir
-    el setter del irHacia de TODAS LAS PUERTAS delescenario
+    el setter del irHacia de TODAS LAS PUERTAS del escenario actual 
     si se vuelve a un escenario anterior...se deben settear tanto el confgEscSiguiente como el confgActual
     si un escenario tiene dinstintos configuradores, respetar nomenclatura y escribir al final v1,v2,v3 
 
@@ -501,9 +501,7 @@ const entradaCuevaCES_v4 = {puertaEste.irHacia(bifurcacion);
 
 const bifurcacionCES_v6 = {puertaNorte.irHacia(estacionamiento)}       
 
-// Borrar la puertaEntradaCueva cuando se pase al escenario en los configuradores                                        
-// CONTINUAR AQUI....                                           
-// TEXTOS
+// configurador para test
 const escenarioTestCES_v1 = {game.removeVisual(puertaSur)}
 
 //###################################################################

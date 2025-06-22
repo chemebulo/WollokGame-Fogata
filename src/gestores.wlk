@@ -36,24 +36,37 @@ object gestorDeDirecciones{
                if (ejeSegundo.seSumoEnEje(posicionAntigua,  posicionNueva)) { ejeSegundo.primeraDir() } else
                                                                             { ejeSegundo.segundaDir() }
     }
+  
+    //A partir de aqui es codigo para quien instancia una bala
+    method direccionDeBala(posEnemigo,posTirador){
+         /*
+         PROPOSITO: evalua la posicion entre el protagonista y el tirador
+         y retorna la direccion de disparo
+        REQUIERE: 
+            *posEnemigo: posicion del protagonista
+            *posPropia : posicion del tirador
+         */
+            const xEnemigo = self.xPos(posEnemigo)
+            const xTirador = self.xPos(posTirador)
+           const yEnemigo = self.yPos(posEnemigo)
+            const yTirador = self.yPos(posTirador)
 
-  //Codigo para la bala, solo la bala deberia llamarlo
-  // se recomienda no factorizar porque esta masomenos optimizado
 
-    method direccionDeBala(posEnemigo,posPropia){
-            const xE = self.xPos(posEnemigo)
-            const xP = self.xPos(posPropia)
-           const yE = self.yPos(posEnemigo)
-            const yP = self.yPos(posPropia)
+           return self.direccionDeDisparoEvaluada(xEnemigo, yEnemigo, xTirador, yTirador)
 
+    }
 
+    method direccionDeDisparoEvaluada(xE,yE,xP,yP){
+        /*
+            Dados unos pares de valores x,y evalua hacia donde disparar
+        */
      return  if (self.estaAMiIzquierda(xE, xP)){izquierda} 
              else if (self.estaAMiDerecha(xE,xP) ) {derecha}
              else if (self.estaArriba(yE, yP)) {arriba}
              else {abajo}
-           
 
     }
+
     method estaAMiIzquierda(posEnemigoX, posPropioX) = posEnemigoX < posPropioX
 
     method estaAMiDerecha(posEnemigoX, posPropioX) = posEnemigoX > posPropioX
