@@ -26,7 +26,7 @@ class EventoLoopIndividual{
     }
 }
 
-// ####################################### EVENTO PARA PERSECUCION DE LOBO #######################################
+// ####################################### EVENTO LOBOS #######################################
 
 class EventoLoboPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(2000), bloque = bloquePersecucion){}
 
@@ -36,43 +36,44 @@ const bloquePersecucion = {l => l.perseguirEnemigo()}
 
 const bloqueAtaque = {l => l.atacarEnemigo()}
 
-//#################### BALA GUARDABOSQUES ##########################
+//#################### EVENTOS GUARDABOSQUES  ##########################
+ 
+const ataqueGuardabosques   = new EventoLoopIndividual(sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
 
 
-const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,tiempo= 1500,bloque=bloqueEscopeta)
+const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}
+
+
+const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,tiempo= 2000,bloque=bloqueEscopeta)
 
 const bloqueEscopeta= {g => g.atacarEnemigo()}
 
 // ################################# EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO #################################
 
 class EventoHablar {
-    const tiempo      = 1
+  
     const sujetoUnico = protagonista
-    const bloque      = bloqueEventoHablar
     const mensaje 
     
-    method ordenUnica(visual){
-        bloque.apply(visual,mensaje)
-    }
-
     method iniciarEvento(){
-        game.schedule(tiempo, {self.ordenUnica(sujetoUnico)})
+       game.say(sujetoUnico,mensaje)
     }
+    method finalizarEvento(){}
 }
 
-const bloqueEventoHablar = {v,m => game.say(v,m)}
-
-class EventoHablarConSonido inherits EventoHablar(bloque=bloqueEventoHablarSonido){
+class EventoHablarConSonido inherits EventoHablar{
     const ost
 
-    override method ordenUnica(visual){
-        bloque.apply(visual,ost,mensaje)
+    override method iniciarEvento(){
+        super()   
+       game.sound(ost).play()
     }
+
+    
 }
 
 // ############################################# EVENTOS DE DIALOGOS ############################################
 
-const bloqueEventoHablarSonido = {v,o,m => game.sound(o).play();game.say(v,m) }
 
 const escucharLobos = new EventoHablarConSonido(mensaje = "¿¿Qué fue eso??", ost = track_manada)
 
@@ -99,8 +100,3 @@ const guardabosquesHabla  = new EventoHablar(sujetoUnico = guardabosques, mensaj
 const guardabosquesHabla2 = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca adentro, apurate")
 
 
- 
-const ataqueGuardabosques   = new EventoLoopIndividual(sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
-
-
-const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}

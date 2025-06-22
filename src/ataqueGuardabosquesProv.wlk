@@ -17,29 +17,29 @@ import npcEstados.*
 
 
 */
-class ArmadoEscopeta inherits Armado(pj=guardabosques,modoAtaque=escopetazo,imagenTemporal="guardabosques-dispara.png"){
+class ArmadoEscopeta inherits Armado(pj=guardabosques,
+                                     modoAtaque= new Escopetazo(tirador=guardabosques,enemigo=protagonista),
+                                     imagenTemporal="guardabosques-dispara.png"){
 
     // va a disparar en todo momento, no me importa donde este el prota
     override method puedeAtacarAlEnemigo() = true 
-
 }
 
-
-object escopetazo{
-
+class Escopetazo{
+  
     const gestorDireccionBala = gestorDeDirecciones
-    const atacante = guardabosques
-    const enemigo = protagonista
+    const tirador 
+    const enemigo 
     
-    method posPropia() = atacante.position()
+    method posPropia() = tirador.position()
 
     method posEnemigo() = enemigo.position()
 
     method ataqueArma() {
         const direccion = self.direccionADisparar(self.posEnemigo(),self.posPropia())
         const bala = new Bala(dir=direccion)
-        game.addVisual(bala) 
         bala.dispararseHacia(direccion)
+        game.addVisual(bala) 
 
 
     }
@@ -56,18 +56,18 @@ class Bala inherits VisualAtravasable(position = guardabosques.position()){
     // en la posicion guardo esa consulta para que al momento de disparar la bala inicialmente
     //este posicionado donde esta el guardabosques al instanciarse la bala
     const dir
-    override method image() = "bala-"+dir.toString()+".png"
-    
     const gestorColision = gestorDeColisiones
- 
+    const velocidadBala = 200
+    
+    override method image() = "bala-"+dir.toString()+".png"
     
     method dispararseHacia(direccion){
         /*
             La bala se mueve recursivamente hasta que interactue con un visual o salga del tablero
             Al cumplirse alguna de las dos la bala muere
         */
-      game.schedule(self.velocidadBala(),{self.seguirHacia(direccion);
-                                         self.seguirTrayectoriaSiPuede(direccion) })
+      game.schedule(velocidadBala,{self.seguirHacia(direccion);
+                                   self.seguirTrayectoriaSiPuede(direccion) })
      }
     
     method seguirTrayectoriaSiPuede(direccion){
@@ -76,9 +76,7 @@ class Bala inherits VisualAtravasable(position = guardabosques.position()){
           }else{ self.muerteBala()}
     }
     
-    
 
-    method velocidadBala() = 200
 
     method muerteBala(){
       
@@ -101,7 +99,7 @@ class Bala inherits VisualAtravasable(position = guardabosques.position()){
     method seguirHacia(direccion){ 
         // es codigo repetido pero la bala no necesita cambiar su imagen,
         //por ende no uso el gestorDeMovimiento.Se puede refactorizar agregando 
-        //un metodo al gestor que no cambie imagen solo para la bala
+        //un metodo al gestor que no cambie imagen solo para la bala y mandar mensaje directamente
         self.position(direccion.siguientePosicion(self.position()))
     }
 
@@ -115,5 +113,5 @@ class Bala inherits VisualAtravasable(position = guardabosques.position()){
     }
 
   override   method atacadoPor(visual){}
-  //necesario por polimorfismo
+  //necesario por polimorfismo porque podria 
 }
