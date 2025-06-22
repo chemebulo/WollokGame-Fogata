@@ -53,9 +53,9 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         return videojuego.escenario()
     }
 
-    method accionesAdicionalesAlMorir(){ //Dejar vacio porque solo guardabosques y lobo jefe hacen cositas
+    method accionesAdicionalesAlMorir(){ 
         // Acciones que el enemigo realizaría en caso que necesite hacer después de morir.
-        
+        // Solo lo usan el guardabosques y lobo jefe.
     } 
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.

@@ -32,28 +32,26 @@ class EventoLoboPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUp
 
 class EventoLoboAtaque inherits EventoLoopIndividual(tiempo = 1000, bloque = bloqueAtaque){}
     
-const bloquePersecucion = {l => l.perseguirEnemigo()}  
+const bloquePersecucion = {e => e.perseguirEnemigo()}  
 
-const bloqueAtaque = {l => l.atacarEnemigo()}
+const bloqueAtaque = {e => e.atacarEnemigo()}
 
 //#################### EVENTOS GUARDABOSQUES  ##########################
  
-const ataqueGuardabosques   = new EventoLoopIndividual(tiempo=1000.randomUpTo(2000),sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
-
+const ataqueGuardabosques   = new EventoLoopIndividual(tiempo = 1000.randomUpTo(2000), sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
 
 const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}
 
-
-const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,tiempo= 2000,bloque=bloqueEscopeta)
+const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico = guardabosques, tiempo = 2000, bloque = bloqueEscopeta)
 
 const bloqueEscopeta= {g => g.atacarEnemigo()}
 
 // ################################# EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO #################################
 
 class EventoHablar {
-  
     const sujetoUnico = protagonista
     const mensaje 
+    const tiempo      = 1
     
     method iniciarEvento(){
        game.say(sujetoUnico,mensaje)
@@ -68,8 +66,6 @@ class EventoHablarConSonido inherits EventoHablar{
         super()   
        game.sound(ost).play()
     }
-
-    
 }
 
 // ############################################# EVENTOS DE DIALOGOS ############################################
@@ -98,5 +94,3 @@ const hablarProta9  = new EventoHablar( mensaje = "¡¡¡AHHHHHHHH!!!")
 const guardabosquesHabla  = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca al norte está el granero")
 
 const guardabosquesHabla2 = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca adentro, apurate")
-
-

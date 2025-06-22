@@ -75,6 +75,7 @@ class Armado {
         return pj.estaSobreEnemigo()
     }
 }
+
 class ArmadoConHacha inherits Armado(modoAtaque = new AtaqueHacha(atacante = pj)){}
   
 class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante = pj)){}
@@ -102,7 +103,6 @@ class AnimacionAtaque{
                            game.addVisual(pjAnimado)})
     }
     method atacadoPor(visual){}
-
  
     method esAtravesable() = true
 }
@@ -143,7 +143,10 @@ class AtaqueTridente inherits Ataque{
                                            atacante.position().right(2)]
 }
 class AtaqueManopla inherits Ataque{
-    override method posicionesAAtacar() = [atacante.position()]
+    
+    override method posicionesAAtacar(){
+        return [atacante.position()]
+    }
 
     override method objetosEnPosicion(posicion){
         return game.getObjectsIn(posicion).copyWithout(atacante)
@@ -181,10 +184,6 @@ class EnemigoVivo{
         // Emite un mensaje cuando el enemigo es atacado por su enemigo.
         vidaGestor.atacadoPor(visual, enemigo)
     }
-
-
-   
-    method esAtravesable() = true
 }
 
 // ########################################################################################################################## \\
@@ -195,9 +194,4 @@ class EnemigoMuerto{
     method atacarEnemigo(){} //
 
     method atacadoPor(enemigo){} //
-
-    
-
-
-    method esAtravesable() = true
 }

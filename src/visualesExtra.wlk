@@ -6,8 +6,8 @@ import puertas.*
 import videojuego.*
 
 class Visual{
-    var property position =game.at(0,0) // por defecto
-    var property image = null // por defecto
+    var property position      = game.at(0,0) // Por defecto.
+    var property image         = null         // Por defecto.
     var property esAtravesable = false
     
     method interaccion(){}
@@ -20,13 +20,11 @@ class Visual{
  
 }
 
-class VisualAtravasable inherits Visual(esAtravesable = true){}
-
 // ########################################################################################################################## \\
 
 class VisualConMovimiento inherits Visual{
-    var property vida           // Describe la vida del visual.
-    const property daño = 1     // Describe el daño del visual.
+    var property vida       // Describe la vida del visual.
+    const property daño = 1 // Describe el daño del visual.
 
     method cambiarImagen(direccion){
         // Cambia la imagen del visual dependiendo de la dirección dada. 
@@ -62,7 +60,9 @@ const fogataOBJ = new Visual(position = game.at(3,4), image = "fogata-apagada.pn
 const carpa     = new Visual(position = game.at(6,4), image = "carpa.png")
 
 // ########################################################################################################################## \\
-// VISUALES QUE AL INTERCTUAR HACEN COSAS
+
+class VisualAtravasable inherits Visual(esAtravesable = true){}
+
 class VisualInteractuable inherits VisualAtravasable{
     const bloqueInteraccion
     
@@ -70,6 +70,8 @@ class VisualInteractuable inherits VisualAtravasable{
         bloqueInteraccion.apply(self)
     }
 }
+
+// ########################################################################################################################## \\
 
 const leña = new VisualInteractuable(image = "leña.png", position = game.at(5,5), bloqueInteraccion = interaccionLeña)
 const nota = new VisualInteractuable(image = "nota.png", position = game.at(5,5), bloqueInteraccion = interaccionNota)
@@ -94,8 +96,7 @@ const cabañaOBJ  = new VisualAtravasable(position = game.at(5,6), image = "caba
 const cuevaOBJ   = new VisualAtravasable(position = game.at(2,5), image = "cueva.png")
 const graneroOBJ = new VisualAtravasable(position = game.at(6,6), image = "granero.png")
 
-// ####################################################################################################### //
-// ARMAS PROTAGONISTA
+// ########################################################################################################################## \\
 
 class Arma inherits Visual{
     const bloque
