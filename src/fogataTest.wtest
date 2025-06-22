@@ -7,6 +7,7 @@ import videojuego.*
 import npcEstados.*
 import escenariosMapas.*
 import puertas.*
+import enemigos.*
 
 describe "Movimiento del personaje"{
     
@@ -174,13 +175,78 @@ describe "Funcionamiento de puertas"{
         assert.equals(fogataOBJ,videojuego.escenario())
         }
 }
-describe "Ataque sobre lobo"{
-    test"a"{assert.that(true)}
-} //IMPLEMENTAR...
 
-describe "Ataque sobre guardabosques"{
-    test"a"{assert.that(true)}
-}//IMPLEMENTAR...
+describe "Ataque sobre lobo" {
+    const lobo = new Lobo()
+
+    method initialize() {
+        game.width(7)
+        game.height(7)
+        game.cellSize(100)
+
+        protagonista.position(game.at(1,1))
+        lobo.position(game.at(2,1))
+        protagonista.estadoCombate(armadoProtagonista)
+
+        game.addVisual(protagonista)
+        game.addVisual(lobo)
+    }
+
+    test "El protagonista armado derrota al lobo" {
+        assert.equals(10, lobo.vida()) // Vida del lobo antes de ataque
+        assert.equals(armadoProtagonista, protagonista.estadoCombate())
+        protagonista.atacar()
+        lobo.atacarEnemigo()          
+        assert.equals(9, lobo.vida()) // Vida del lobo despues de ataque
+        assert.equals(10, protagonista.vida())
+    }
+
+    test "El protagonista desarmado no puede eliminar al lobo" {
+        protagonista.estadoCombate(desarmadoProtagonista)
+        protagonista.atacar()
+        assert.equals(10, lobo.vida()) // Lobo sigue con la vida en 10
+    }
+}
+
+describe "Ataque sobre guardabosques" {
+
+    method initialize() {
+        game.width(7)
+        game.height(7)
+        game.cellSize(100)
+
+        protagonista.position(game.at(3,3))
+        guardabosques.position(game.at(4,3))
+        protagonista.estadoCombate(armadoProtagonista)
+        guardabosques.estadoCombate(armadoGuardabosques)
+        game.addVisual(protagonista)
+        game.addVisual(guardabosques)
+    }
+
+    test "El protagonista armado le baja la vida al guardabosques al atacarlo" {
+        assert.equals(40, guardabosques.vida())
+        protagonista.atacar()
+        assert.equals(39, guardabosques.vida())
+        assert.equals(10, protagonista.vida()) // Suponiendo que el guardabosques no ataca automáticamente
+    }
+
+    test "El protagonista desarmado no afecta al guardabosques" {
+        protagonista.estadoCombate(desarmadoProtagonista)
+        protagonista.atacar()
+        assert.equals(40, guardabosques.vida()) // No se reduce la vida
+    }
+
+    test "Si el guardabosques ataca, el protagonista pierde vida"{
+        guardabosques.atacarEnemigo()
+        assert.equals(8, protagonista.vida()) // Supongamos que hace 1 de daño
+    }
+
+    test "El guardabosques desarmado no puede atacar" {
+        guardabosques.estadoCombate(desarmadoGuardabosques)
+        guardabosques.atacarEnemigo()
+        assert.equals(10, protagonista.vida()) // No recibió daño
+    }
+}
 
 describe "Cambio de estado desarmado a armado"{ 
      const confg_test ={e=> e.mapa(mapa_TEST);e.visualesEnEscena([protagonista,hacha])}
@@ -203,4 +269,66 @@ describe "Cambio de estado desarmado a armado"{
         assert.equals(armadoProtagonista,protagonista.estadoCombate())
 
         }
+}
+
+describe "Comportamiento del lobo" {
+    const lobo = new Lobo()
+    const obstaculo = new Obstaculo(position = game.at(4, 3))
+    method initialize() {
+        game.width(7)
+        game.height(7)
+        game.cellSize(100)
+
+        protagonista.position(game.at(3, 3))
+        protagonista.estadoCombate(armadoProtagonista)
+
+        lobo.position(game.at(5, 3))
+        game.addVisual(protagonista)
+        game.addVisual(lobo)
+        game.addVisual(obstaculo)
+    }
+
+    test "El lobo no se mueve si ya esta sobre el protagonista" {
+        lobo.position(protagonista.position())
+        const posInicial = lobo.position()
+
+        lobo.perseguirEnemigo()
+
+        assert.equals(posInicial, lobo.position()) // No se mueve
+    }
+
+    test "El lobo no se mueve si esta muerto" {
+        lobo.actualizarAMuerto()
+        const posInicial = lobo.position()
+        lobo.perseguirEnemigo()
+        assert.equals(posInicial, lobo.position())
+    }
+
+    test "El lobo ataca al protagonista si esta sobre el" {
+        protagonista.vida(3)
+        lobo.position(protagonista.position())
+
+        // NOTA: atacarEnemigo usa game.schedule. Para simular, usamos atacadoPor directamente
+        protagonista.atacadoPor(lobo)
+
+        assert.equals(2, protagonista.vida())
+    }
+
+    test "El lobo se mueve hacia el protagonista si no esta sobre el" {
+        // Movimiento simple en línea recta horizontal
+        protagonista.position(game.at(2, 2))
+        lobo.position(game.at(4, 2))
+
+        const posInicial = lobo.position()
+        lobo.perseguirEnemigo()
+        const nuevaPos = lobo.position()
+
+        assert.equals(game.at(3,2), nuevaPos) // Se mueve a (3,2), una celda hacia la izquierda    
+    }
+
+    test "El lobo esquiva obstaculo al perseguir al protagonista" {
+        lobo.perseguirEnemigo()
+    
+        assert.equals(game.at(4,2), lobo.position()) // Se dirige hacia la celda en diagonal al noreste 
+    }
 }
