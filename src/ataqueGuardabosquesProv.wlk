@@ -36,22 +36,23 @@ class Escopetazo{
     const tirador 
     const enemigo 
     
-    method posPropia() = tirador.position()
+    method posTirador() = tirador.position()
 
     method posEnemigo() = enemigo.position()
 
     method ataqueArma() {
-        const direccion = self.direccionDisparo()
-        const bala = new Bala(dir=direccion)
+        const miPosicion = self.posTirador()
+        const direccion = self.direccionDisparo(miPosicion)
+        const bala = new Bala(dir=direccion,position=miPosicion)
+        game.addVisual(self) 
         bala.dispararHacia(direccion)
-        game.addVisual(bala) 
     }
     
 
-    method direccionDisparo()= self.direccionADisparar(self.posEnemigo(),self.posPropia())
+    method direccionDisparo(miPos)= self.direccionADisparar(self.posEnemigo(),miPos)
     
-    method direccionADisparar(posEnemigo,posPropia){
-            return gestorDireccionBala.direccionDeBala(posEnemigo,posPropia)
+    method direccionADisparar(posEnemigo,posTirador){
+            return gestorDireccionBala.direccionDeBala(posEnemigo,posTirador)
         }
             
 }
@@ -63,6 +64,17 @@ class Bala inherits VisualAtravasable{
     const dir
     const gestorColision = gestorDeColisiones
     const velocidadBala = 200  
+    var sigoSinInteractuar= true
+    /*
+    Explicacion de @variable: sigoSinInteractuar: 
+        Cuando la bala interactua con un objeto, esta se borra del escenario,
+        Sin embargo, el metodo recursivo que termina cuando llega al final del escenario sigue activo 
+        hasta el final del escenario. Esto es un uso extra de recursos Debido a esto:
+            *Al interactuar con un objeto la variable sigoSinInteractuar cambia su valor a false
+            *el metodo recursivo evalua todo el tiempo sigoSinInteractuar para que cuando la bala 
+             impacte con un objeto tambien culmine el metodo recursivo
+       
+    */
     
     override method image() = "bala-"+dir.toString()+".png"
     
@@ -72,19 +84,30 @@ class Bala inherits VisualAtravasable{
             a un metodo de orden recursivo que finaliza cuando:
                             *la bala impacta con un visual o el borde del escenario,representado con rocas
         */                  
-        self.position(guardabosques.position())
-
+        
         self.seguirHacia(direccion)                                   
-        self.seguirTrayectoria(direccion)
+        self.gestionarTrayectoria(direccion)
      }
 
-    method seguirTrayectoria(direccion){
+    method gestionarTrayectoria(direccion){
     /*
-        Proposito: la bala se mueve y llama a la funcion recursiva
+        Proposito: la bala se mueve recursivamente hasta que se den las condiciones
+        para terminar su recorrido
     */
-        game.schedule(velocidadBala, {self.seguirHacia(direccion)
-                                  self.seguirTrayectoria(direccion)})
+        
+         if(sigoSinInteractuar and self.puedeSeguirTrayectoria()) {
+            self.continuarTrayectoria(direccion)
+             }
+        else {self.muerteBala()}
     }
+
+    method continuarTrayectoria(direccion){
+
+           game.schedule(velocidadBala, {self.seguirHacia(direccion)
+                                self.gestionarTrayectoria(direccion)
+                                })
+}
+    
     
     method muerteBala(){
       
@@ -94,6 +117,7 @@ class Bala inherits VisualAtravasable{
     override method interaccion(){
         self.objetosDondePenetre().forEach({o => o.atacadoPor(self)})
         self.muerteBala()
+        sigoSinInteractuar= false 
     }
 
     method objetosDondePenetre() = game.getObjectsIn(self.position()).copyWithout(guardabosques)
