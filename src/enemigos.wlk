@@ -22,7 +22,6 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         estado.atacadoPor(visual)
     }
 
-
     override method actualizarAMuerto(){
         // Actualiza el estado del enemigo a muerto y además modifica la imagen del enemigo.
         super()
@@ -54,8 +53,9 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     }
 
     method accionesAdicionalesAlMorir(){ 
-        // Acciones que el enemigo realizaría en caso que necesite hacer después de morir.
-        // Solo lo usan el guardabosques y lobo jefe.
+        // Acciones que el enemigo realizaría en caso que necesite hacer después de morir. Solo lo usan el guardabosques y lobo jefe.
+        self.escenarioDondeEstoy().bajarVolumen()
+        game.sound(track_loboJefe_derrotado).play()
     } 
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
@@ -83,7 +83,6 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", vida = 20, daño = 2){
         // Emite un sonido de enojo del lobo.
         game.sound("lobo-enojado.mp3").play()
     }
-
 }
 
 // ################################################################################################################# \\
@@ -102,11 +101,8 @@ object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da
 
     override method accionesAdicionalesAlMorir(){
         super()
-        self.escenarioDondeEstoy().bajarVolumen()
-        game.sound(track_loboJefe_derrotado).play()
         game.addVisual(puertaGranero)
     }
- 
 }
 
 // ################################################################################################################# \\
@@ -114,16 +110,15 @@ object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida = 50, daño = 2){
     var property estadoCombate = armadoGuardabosques //CAMBIAR DESPUES
     var property soyAtravesable = false // por un tema particular existe esta variable xd
+
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
     override method accionesAdicionalesAlMorir(){
-        self.estadoCombate(desarmadoGuardabosques)
         super()
-         self.escenarioDondeEstoy().bajarVolumen()
-        game.sound(track_loboJefe_derrotado).play()
+        self.estadoCombate(desarmadoGuardabosques)
         game.addVisual(puertaEntradaCueva)
     }
     
@@ -137,9 +132,8 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida 
         
         estadoCombate.atacarEnemigo()
     }
-     override method esAtravesable() = soyAtravesable
 
-  
+    override method esAtravesable() = soyAtravesable
 }    
 
 // ################################################################################################################# \\

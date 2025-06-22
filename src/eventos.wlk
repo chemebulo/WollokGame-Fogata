@@ -50,8 +50,8 @@ const bloqueEscopeta= {g => g.atacarEnemigo()}
 
 class EventoHablar {
     const sujetoUnico = protagonista
-    const mensaje 
     const tiempo      = 1
+    const mensaje 
     
     method iniciarEvento(){
        game.say(sujetoUnico,mensaje)
@@ -75,9 +75,9 @@ const escucharLobos = new EventoHablarConSonido(mensaje = "¿¿Qué fue eso??", 
 
 const hablarProta   = new EventoHablar(mensaje = "Laura está muerta...")
 
-const hablarProta2  = new EventoHablarConSonido(mensaje = "La puta madre... ¡¡¡LAURAAA!!!", ost = track_prota_preocupado)   
+const hablarProta2  = new EventoHablarConSonido(mensaje = "Dios mío... ¡¡¡LAURAAA!!!", ost = track_prota_preocupado)   
 
-const hablarProta3  = new EventoHablar(mensaje = "Ya mismo lo mato a ese hijo de p@ta")  
+const hablarProta3  = new EventoHablar(mensaje = "Ya mismo lo mato a ese #&%&#$%&")  
 
 const hablarProta4  = new EventoHablar(mensaje = "¿¿Qué carajo??")
 
@@ -85,9 +85,9 @@ const hablarProta5  = new EventoHablar(mensaje = "Mierda, voy a esa cueva")
 
 const hablarProta6  = new EventoHablar(mensaje = "AHHHHHH")
 
-const hablarProta7  = new EventoHablar(mensaje = "¡¡¡Ahora si los hago cagar!!!")
+const hablarProta7  = new EventoHablar(mensaje = "¡¡¡Ahora si van a ver!!!")
 
-const hablarProta8  = new EventoHablar( mensaje = "Laura....")
+const hablarProta8  = new EventoHablar( mensaje = "Laura...")
 
 const hablarProta9  = new EventoHablar( mensaje = "¡¡¡AHHHHHHHH!!!")
 

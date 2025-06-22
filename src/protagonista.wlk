@@ -5,15 +5,12 @@ import videojuego.*
 import gestores.*
 
 object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100, daño = 3){
-  
-   
     var property estoyAtacando      = false
     var property estadoCombate      = desarmadoProtagonista 
     var property estadoCombateElejido = null //cuando agarrasel arma recuerda el estado porque a veces vuelve a cambiar a desarmado 
     const property vidaGestor       = gestorDeVida
     const property movimientoGestor = gestorDeMovimiento
    
-
     // ============================================================================================================================== \\
 
     method mover(direccion){
@@ -30,7 +27,6 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         // Representa el comportamiento del protagonista cuando un enemigo suyo lo ataca.
         vidaGestor.atacadoPor(self, visual)
     }
-
 
     override method actualizarAMuerto(){
         // Actualiza el estado del protagonista a muerto, lo cual implica terminar el juego.

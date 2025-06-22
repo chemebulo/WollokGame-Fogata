@@ -17,7 +17,6 @@ class Visual{
     method cambiarAAtravesable(){
         esAtravesable = true
     }
- 
 }
 
 // ########################################################################################################################## \\
@@ -81,7 +80,7 @@ const interaccionLeña = {v => game.removeVisual(v)
                               game.addVisual(puertaEntradaCabaña)
                               puertaEntradaCabaña.irHacia(entradaCabaña)
                               game.say(protagonista,"Gracias por la leña")
-                              game.say(guardabosques,"No hay de que, tenga cuidado nomas que hay lobos por estos lados")
+                              game.say(guardabosques,"No hay de que, tenga cuidado que hay lobos por la zona")
                               entradaCabaña.configuradorTotal(entradaCabañaC_v2, entradaCabañaCES_v2)}
 
 const interaccionNota = {v => game.removeVisual(v)

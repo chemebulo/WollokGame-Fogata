@@ -37,45 +37,43 @@ object gestorDeDirecciones{
                                                                             { ejeSegundo.segundaDir() }
     }
   
-    //A partir de aqui es codigo para quien instancia una bala
-    method direccionDeBala(posEnemigo,posTirador){
-         /*
-         PROPOSITO: evalua la posicion entre el protagonista y el tirador
-         y retorna la direccion de disparo
-        REQUIERE: 
-            *posEnemigo: posicion del protagonista
-            *posPropia : posicion del tirador
-         */
-            const xEnemigo = self.xPos(posEnemigo)
-            const xTirador = self.xPos(posTirador)
-           const yEnemigo = self.yPos(posEnemigo)
-            const yTirador = self.yPos(posTirador)
+    method direccionDeBala(posEnemigo, posTirador){
+        // Evalua la posicion entre el protagonista y el tirador y retorna la direccion de disparo.
+        const xEnemigo = self.xPos(posEnemigo)
+        const xTirador = self.xPos(posTirador)
+        const yEnemigo = self.yPos(posEnemigo)
+        const yTirador = self.yPos(posTirador)
 
-
-           return self.direccionDeDisparoEvaluada(xEnemigo, yEnemigo, xTirador, yTirador)
-
+        return self.direccionDeDisparoEvaluada(xEnemigo, yEnemigo, xTirador, yTirador)
     }
 
-    method direccionDeDisparoEvaluada(xE,yE,xP,yP){
-        /*
-            Dados unos pares de valores x,y evalua hacia donde disparar
-        */
-     return  if (self.estaAMiIzquierda(xE, xP)){izquierda} 
-             else if (self.estaAMiDerecha(xE,xP) ) {derecha}
-             else if (self.estaArriba(yE, yP)) {arriba}
-             else {abajo}
-
+    method direccionDeDisparoEvaluada(xE, yE, xP, yP){
+        // Dados unos pares de valores x,y evalua hacia donde disparar
+        return if (self.estaAMiIzquierda(xE, xP)) {izquierda} else 
+               if (self.estaAMiDerecha(xE,xP))    {derecha}   else 
+               if (self.estaArriba(yE, yP))       {arriba}    else 
+                                                  {abajo}
     }
 
-    method estaAMiIzquierda(posEnemigoX, posPropioX) = posEnemigoX < posPropioX
+    method estaAMiIzquierda(posEnemigoX, posPropioX){
+        return posEnemigoX < posPropioX
+    }
 
-    method estaAMiDerecha(posEnemigoX, posPropioX) = posEnemigoX > posPropioX
+    method estaAMiDerecha(posEnemigoX, posPropioX){
+        return posEnemigoX > posPropioX
+    }
 
-    method estaArriba(posEnemigoY,posPropioY) = posEnemigoY > posPropioY
+    method estaArriba(posEnemigoY, posPropioY){
+        return posEnemigoY > posPropioY
+    }
 
-    method xPos(pos) = pos.x()
+    method xPos(pos){
+        return pos.x()
+    }
 
-    method yPos(pos) = pos.y()
+    method yPos(pos){
+        return pos.y()
+    }
 }
 
 // ############################################################################################################################################# \\
@@ -112,8 +110,6 @@ object gestorDeColisiones{
         const posicionAMover = direccion.siguientePosicion(visual.position())
         return self.estaDentroDelTablero(posicionAMover) and not self.hayObstaculoEn(posicionAMover, visual)
     }
-
-  
 
     // ========================================================================================================================================= \\
 
@@ -213,9 +209,8 @@ object gestorDeMovimiento{
 
     method mover(direccion, visual){
         // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
-        if(colisionesGestor.puedeMoverA(direccion, visual)){
-            self.moverHacia(direccion, visual)
-        }
+        self.validarSiPuedeMover(direccion, visual)
+        self.moverHacia(direccion, visual)
     }
 
     method moverHacia(direccion, visual){
@@ -223,22 +218,24 @@ object gestorDeMovimiento{
         visual.position(direccion.siguientePosicion(visual.position()))
         visual.cambiarImagen(direccion)
     }
-    method moverHaciaSinCambiarImagen(direccion,visual){
-        //Mueve al visual sin modificar su imagen
-        visual.position(direccion.siguientePosicion(visual.position()))
 
+    method validarSiPuedeMover(direccion, visual){
+        if(not colisionesGestor.puedeMoverA(direccion, visual)){
+            self.error("No me puedo mover en esa dirección")
+        }
+    }
+
+    method moverHaciaSinCambiarImagen(direccion,visual){
+        // Mueve al visual sin modificar su imagen
+        visual.position(direccion.siguientePosicion(visual.position()))
     }
 }
 
 // ############################################################################################################################################# \\
 
 object gestorFondoEscenario{
-    /* 
-        INVARIANTE DE REPRESENTACIÓN: 
-            * La imagen tiene el tamaño del tablero 1300px(ancho) x 900px(alto).
-    */
     var property position = game.at(0,0)
-    var property image = ""
+    var property image = "" // La imagen tiene que ser de tamaño 1300px(ancho) x 900px(alto).
     
     method visualizarFondo(nuevoFondo){
         image = nuevoFondo
@@ -256,8 +253,6 @@ object gestorFondoEscenario{
     method interaccion(){}
 
     method atacadoPor(visual){}
-
- 
 }   
 
 // ############################################################################################################################################# \\
