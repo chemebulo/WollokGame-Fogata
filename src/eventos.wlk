@@ -39,7 +39,7 @@ const bloqueAtaque = {l => l.atacarEnemigo()}
 //#################### BALA GUARDABOSQUES ##########################
 
 
-const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,tiempo= 2000,bloque=bloqueEscopeta)
+const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,tiempo= 1500,bloque=bloqueEscopeta)
 
 const bloqueEscopeta= {g => g.atacarEnemigo()}
 

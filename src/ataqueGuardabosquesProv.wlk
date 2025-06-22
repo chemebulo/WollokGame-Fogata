@@ -66,14 +66,19 @@ class Bala inherits VisualAtravasable(position = guardabosques.position()){
             La bala se mueve recursivamente hasta que interactue con un visual o salga del tablero
             Al cumplirse alguna de las dos la bala muere
         */
-      game.schedule(300,{self.seguirHacia(direccion);
-                        if(self.puedeSeguirTrayectoria()){
-                          self.dispararseHacia(direccion)
-                        }else{ self.muerteBala()}
-           })
-       
-       
+      game.schedule(self.velocidadBala(),{self.seguirHacia(direccion);
+                                         self.seguirTrayectoriaSiPuede(direccion) })
+     }
+    
+    method seguirTrayectoriaSiPuede(direccion){
+          if(self.puedeSeguirTrayectoria()){
+                self.dispararseHacia(direccion)
+          }else{ self.muerteBala()}
     }
+    
+    
+
+    method velocidadBala() = 200
 
     method muerteBala(){
       
