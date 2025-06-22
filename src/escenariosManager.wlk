@@ -80,10 +80,17 @@ class Escenario{
         gestorEvento.gestionarFin(eventos);
         gestorObstaculos.limpiarObstaculos()
         gestorLobos.limpiarLobos()
+        
     }
   
     method esAtravesable() = true
     method atacadoPor(visual){}
+
+    method removerSiEsta(visual){
+        if(game.hasVisual(visual)){
+            game.removeVisual(visual)
+        }
+    }
 } 
 
 
@@ -380,6 +387,7 @@ const diapoAmigaMuertaC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true
                                    e.ost(track_amiga_muerta)}
 
 const diapoPeleaFinalC_v1 = {e => protagonista.estadoCombate(desarmadoProtagonista);
+                                  e.removerSiEsta(protagonista)
                                   gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                   e.ost(track_guardabosques_cueva)}
 

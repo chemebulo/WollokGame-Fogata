@@ -43,13 +43,17 @@ class Escopetazo{
     method ataqueArma() {
         const miPosicion = self.posTirador()
         const direccion = self.direccionDisparo(miPosicion)
-        const bala = new Bala(dir=direccion,position=miPosicion)
-        game.addVisual(self) 
-        bala.dispararHacia(direccion)
+        self.dispararEscopeta(miPosicion,direccion)
     }
-    
 
-    method direccionDisparo(miPos)= self.direccionADisparar(self.posEnemigo(),miPos)
+    method dispararEscopeta(pos,direccion){
+        const bala = new Bala(dir=direccion,position=pos)
+        game.addVisual(bala)
+        bala.disparar(direccion)
+
+    }
+
+    method direccionDisparo(posTirador)= self.direccionADisparar(self.posEnemigo(),posTirador)
     
     method direccionADisparar(posEnemigo,posTirador){
             return gestorDireccionBala.direccionDeBala(posEnemigo,posTirador)
@@ -63,52 +67,51 @@ class Bala inherits VisualAtravasable{
 
     const dir
     const gestorColision = gestorDeColisiones
-    const velocidadBala = 200  
-    var sigoSinInteractuar= true
+    const gestorMov = gestorDeMovimiento
+    const velocidadBala = 200 // 
+    var sigoSinHerir= true
     /*
-    Explicacion de @variable: sigoSinInteractuar: 
+    Explicacion de @variable: sigoSinHerir: 
         Cuando la bala interactua con un objeto, esta se borra del escenario,
         Sin embargo, el metodo recursivo que termina cuando llega al final del escenario sigue activo 
         hasta el final del escenario. Esto es un uso extra de recursos Debido a esto:
-            *Al interactuar con un objeto la variable sigoSinInteractuar cambia su valor a false
-            *el metodo recursivo evalua todo el tiempo sigoSinInteractuar para que cuando la bala 
-             impacte con un objeto tambien culmine el metodo recursivo
+            *Al interactuar con un objeto la variable 'sigoSinHerir' cambia su valor a false
+            *el metodo recursivo evalua todo el tiempo 'sigoSinHerir' para que cuando la bala 
+             impacte con un objeto tambien culmine el metodo recursivo y a su bvez se ejecuta la meurte de la bala
        
     */
     
     override method image() = "bala-"+dir.toString()+".png"
-    
-    method dispararHacia(direccion){
-        /*
-            PROPOSITO: La bala partiendo de la posicion del guardabosquesse mueve una vez y luego se invoca 
-            a un metodo de orden recursivo que finaliza cuando:
-                            *la bala impacta con un visual o el borde del escenario,representado con rocas
-        */                  
+
+    method disparar(direccion){
+        gestorMov.moverHaciaSinCambiarImagen(direccion, self)
+        self.gestionarTrayectoria(direccion) // llamado recursivo
+
+    }
         
-        self.seguirHacia(direccion)                                   
-        self.gestionarTrayectoria(direccion)
-     }
 
     method gestionarTrayectoria(direccion){
     /*
         Proposito: la bala se mueve recursivamente hasta que se den las condiciones
-        para terminar su recorrido
+        para terminar su recorrido y morir(borrar visual)
     */
         
-         if(sigoSinInteractuar and self.puedeSeguirTrayectoria()) {
-            self.continuarTrayectoria(direccion)
+         if( self.puedeSeguirTrayectoria()) {
+               self.seguirTrayectoria(direccion)
+             
              }
-        else {self.muerteBala()}
+         else {self.muerteBala()}
     }
-
-    method continuarTrayectoria(direccion){
-
-           game.schedule(velocidadBala, {self.seguirHacia(direccion)
-                                self.gestionarTrayectoria(direccion)
-                                })
-}
-    
-    
+   
+   method seguirTrayectoria(direccion){
+        /*
+            NOTA: el schedule es para que la bala se mueva cada **velocidadBala** mls
+        */
+        gestorMov.moverHaciaSinCambiarImagen(direccion, self)
+        game.schedule(velocidadBala, {self.gestionarTrayectoria(direccion)})
+   }
+   
+   
     method muerteBala(){
       
         game.removeVisual(self)
@@ -116,8 +119,7 @@ class Bala inherits VisualAtravasable{
 
     override method interaccion(){
         self.objetosDondePenetre().forEach({o => o.atacadoPor(self)})
-        self.muerteBala()
-        sigoSinInteractuar= false 
+        sigoSinHerir= false 
     }
 
     method objetosDondePenetre() = game.getObjectsIn(self.position()).copyWithout(guardabosques)
@@ -128,16 +130,10 @@ class Bala inherits VisualAtravasable{
 
     method daño() = 10
 
-    method seguirHacia(direccion){ 
-        // es codigo repetido pero la bala no necesita cambiar su imagen,
-        //por ende no uso el gestorDeMovimiento.Se puede refactorizar agregando 
-        //un metodo al gestor que no cambie imagen solo para la bala y mandar mensaje directamente
-        self.position(direccion.siguientePosicion(self.position()))
-    }
 
     method puedeSeguirTrayectoria(){
         
-        return (gestorColision.estaDentroDelTablero(self.position()))
+        return sigoSinHerir and gestorColision.estaDentroDelTablero(self.position())
     }
 
     method cambiarImagen(imagen){

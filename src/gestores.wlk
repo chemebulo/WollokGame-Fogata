@@ -223,6 +223,11 @@ object gestorDeMovimiento{
         visual.position(direccion.siguientePosicion(visual.position()))
         visual.cambiarImagen(direccion)
     }
+    method moverHaciaSinCambiarImagen(direccion,visual){
+        //Mueve al visual sin modificar su imagen
+        visual.position(direccion.siguientePosicion(visual.position()))
+
+    }
 }
 
 // ############################################################################################################################################# \\
