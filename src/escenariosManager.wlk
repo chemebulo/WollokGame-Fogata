@@ -367,8 +367,8 @@ const peleaFinalC_v1 = {e =>      guardabosques.soyAtravesable(true) ;
                              e.visualesEnEscena([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
                              e.eventos([hablarProta9,ataqueGuardabosques, ataqueEscopetaGuardabosques])}
-
 */
+
 const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
                                   e.visualesEnEscena([protagonista, auto]);
                                   e.ost(track_tramo_final);

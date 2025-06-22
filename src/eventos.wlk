@@ -38,13 +38,13 @@ const bloqueAtaque = {l => l.atacarEnemigo()}
 
 //#################### EVENTOS GUARDABOSQUES  ##########################
  
-const ataqueGuardabosques   = new EventoLoopIndividual(sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
+const ataqueGuardabosques   = new EventoLoopIndividual(tiempo=1000.randomUpTo(2000),sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
 
 
 const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}
 
 
-const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,tiempo= 2000,bloque=bloqueEscopeta)
+const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico=guardabosques,tiempo= 3000,bloque=bloqueEscopeta)
 
 const bloqueEscopeta= {g => g.atacarEnemigo()}
 
