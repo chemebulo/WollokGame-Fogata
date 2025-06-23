@@ -53,7 +53,6 @@ const bloqueEscopeta= {g => g.atacarEnemigo()}
 
 class EventoHablar {
     const sujetoUnico = protagonista
-    const tiempo      = 1
     const mensaje 
     
     method iniciarEvento(){
