@@ -2,6 +2,7 @@ import protagonista.*
 import enemigos.*
 import gestores.*
 import escenariosManager.*
+import ataqueGuardabosquesProv.*
 
 class EventoLoopIndividual{
     const sujetoUnico
@@ -45,6 +46,8 @@ const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}
 const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico = guardabosques, tiempo = 2000, bloque = bloqueEscopeta)
 
 const bloqueEscopeta= {g => g.atacarEnemigo()}
+
+
 
 // ################################# EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO #################################
 

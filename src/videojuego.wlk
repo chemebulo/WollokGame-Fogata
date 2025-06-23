@@ -55,7 +55,8 @@ object videojuego{
         keyboard.f().onPressDo({gestorDeDiapositivas.interactuarDiapositivas()})
         keyboard.m().onPressDo({game.stop()})
         keyboard.k().onPressDo({protagonista.atacar()})
-        keyboard.l().onPressDo({game.say(protagonista,game.allVisuals().toString())})
+        keyboard.l().onPressDo({game.say(protagonista,game.allVisuals().toString())}) 
+        // L: para testear, se borrara antes de entrega
         
     }
 

@@ -94,12 +94,8 @@ class Escenario{
 } 
 
 
-/*
-
-    A PARTIR DE AQUI EL RESTO SON INSTANCIAS DE ESCENARIOS E INSTANCIAS DE LOS DOS CONFIGURADORES
-    QUE REQUIEREN LOS ESCENARIOS Y LA MUSICA 
-
-*/
+/* A PARTIR DE AQUI EL RESTO SON INSTANCIAS DE ESCENARIOS E INSTANCIAS DE LOS DOS CONFIGURADORES
+    QUE REQUIEREN LOS ESCENARIOS Y LA MUSICA */
 
 // #############################################################################################################################
 
@@ -359,22 +355,23 @@ const cuevaC_v5 = {e => e.mapa(mapa_cueva_v5);
                         e.ost(track_cueva)}  
 
 // ###################################################### PELEA FINAL #######################################################
+
 const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElejido());      
-                                guardabosques.soyAtravesable(true) ;                  
+                             guardabosques.cambiarAAtravesable() ;                  
                              guardabosques.estadoCombate(armadoGuardabosques);
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
-                             e.eventos([ hablarProta9,ataqueGuardabosques,ataqueEscopetaGuardabosques])}  
+                             e.eventos([ hablarProta9,ataqueGuardabosques,ataqueEscopetaGuardabosques])} 
 
 /*
-const peleaFinalC_v1 = {e =>      guardabosques.soyAtravesable(true) ;                   
+const peleaFinalC_v1 = {e => guardabosques.cambiarAAtravesable() ;                   
                              guardabosques.estadoCombate(armadoGuardabosques);
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
                              e.eventos([hablarProta9,ataqueGuardabosques, ataqueEscopetaGuardabosques])}
-*/
+                              */
 
 const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
                                   e.visualesEnEscena([protagonista, auto]);

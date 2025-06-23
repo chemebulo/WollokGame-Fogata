@@ -285,7 +285,7 @@ object gestorDeListasEscenario{
 
 object gestorDeLobos{
     const lobosEscenario = []
-    const eventosLobos   = []
+    const  eventosLobos   = []
     
     method agregarLobos(lobo){
         lobosEscenario.add(lobo);
@@ -296,11 +296,21 @@ object gestorDeLobos{
     }
     
     method limpiarLobos(){
-        lobosEscenario.forEach({lobo => game.removeVisual(lobo)})
-        lobosEscenario.clear()
-        eventosLobos.forEach({ev => game.removeTickEvent(ev.nombreEvento())})
-        eventosLobos.clear()
+        lobosEscenario.forEach({lobo => self.resetearLobo(lobo)})
+        eventosLobos.forEach({ev => self.resetearEventoLobo(ev)})
+        
     }
+    method resetearLobo(lobo){
+        game.removeVisual(lobo)
+       lobosEscenario.remove(lobo)
+       
+    }
+    method resetearEventoLobo(ev){
+        game.removeTickEvent(ev.nombreEvento())
+        eventosLobos.remove(ev)
+    }
+    
+
 }
 
 // ############################################################################################################################################# \\

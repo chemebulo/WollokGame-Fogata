@@ -7,34 +7,41 @@ import visualesExtra.*
 import npcEstados.*
 
 /*
-    AVISO!!!
-    *este archiv es provisorio, quizas se mueva a estadosNPC pero se recomienda que se mantenga aqui de momento
-   * El gestorDeDirecciones tiene metodos para indicarle a la bala hacia donde disparar.
+        IMPORTANTE: Por favor no refactorizar este archivo, estoy optimizando la memoria
+        para que solo existan 6 balas y una vez disparadas el cargador de la escopeta
+        funcione como una Cola (dispara la primer bala del cargador y esta al dispararse 
+        va al final del cargador para dispararse despues) ; pero tengo que gestionar bien 
+        las consultas y el manejo de refencias.
+    
 
-   *La bala vive hasta que interactue con un objeto o llegue al fin del escenario(rocas)
-   *La bala tambien daña a los lobos
-   *La baja jamas ataca al guardabosques
-
-   IMPORTANTE: El escenario entero debe tener al borde rocas para culminar su recorrido si 
-              no interactua con ningun visual.Caso contrario la bala continua viviendo fuera del
-              escenario sin morir y se acumularian visuales, malgastando recursos
-              
+        AVISO!!!
+            *este archivo es provisorio, quizas se mueva a estadosNPC pero se recomienda que 
+             se mantenga aqui de momento
+            * El gestorDeDirecciones tiene metodos para indicarle a la bala hacia donde disparar.
+            *La bala vive hasta que interactue con un objeto o llegue al fin del escenario(rocas)
+            *La bala tambien daña a los lobos
+            *La baja jamas ataca al guardabosques
 
 
 */
 class ArmadoEscopeta inherits Armado(pj=guardabosques,
-                                     modoAtaque= new Escopetazo(tirador=guardabosques,enemigo=protagonista),
+                                     modoAtaque= escopetaGuardabosques,
                                      imagenTemporal="guardabosques-dispara.png"){
 
     // va a disparar en todo momento, no me importa donde este el prota
     override method puedeAtacarAlEnemigo() = true 
 }
 
-class Escopetazo{
-  
+object escopetaGuardabosques{
+   
     const gestorDireccionBala = gestorDeDirecciones
-    const tirador 
-    const enemigo 
+    const tirador =guardabosques
+    const enemigo = protagonista
+    
+   const misBalas = [bala1,bala2,bala3,bala4,bala5,bala6]
+   
+   method balaADisparar() = misBalas.first()
+  
     
     method posTirador() = tirador.position()
 
@@ -47,11 +54,23 @@ class Escopetazo{
     }
 
     method dispararEscopeta(pos,direccion){
-        const bala = new Bala(dir=direccion,position=pos)
-        game.addVisual(bala)
-        bala.disparar(direccion)
-
+     
+        self.prepararBala(pos,direccion)
+        self.balaADisparar().disparar()
+        game.addVisual(self.balaADisparar())
+        misBalas.remove(self.balaADisparar())    
+    
     }
+
+    method prepararBala(posicion,direccion){
+        self.balaADisparar().dir(direccion)
+        self.balaADisparar().position(posicion)
+    }
+
+    method recargar(bala){
+        misBalas.add(bala) //encola la bala al final del cargador
+    }
+
 
     method direccionDisparo(posTirador)= self.direccionADisparar(self.posEnemigo(),posTirador)
     
@@ -61,65 +80,47 @@ class Escopetazo{
             
 }
 
-    
-
 class Bala inherits VisualAtravasable{
 
-    const dir
+    var  property dir = null
+    const miArma = escopetaGuardabosques
     const gestorColision = gestorDeColisiones
     const gestorMov = gestorDeMovimiento
-    const velocidadBala = 200 // 
-    var sigoSinHerir= true
-    /*
-    Explicacion de @variable: sigoSinHerir: 
-        Cuando la bala interactua con un objeto, esta se borra del escenario,
-        Sin embargo, el metodo recursivo que termina cuando llega al final del escenario sigue activo 
-        hasta el final del escenario. Esto es un uso extra de recursos Debido a esto:
-            *Al interactuar con un objeto la variable 'sigoSinHerir' cambia su valor a false
-            *el metodo recursivo evalua todo el tiempo 'sigoSinHerir' para que cuando la bala 
-             impacte con un objeto tambien culmine el metodo recursivo y a su bvez se ejecuta la meurte de la bala
-       
-    */
-    
-    override method image() = "bala-"+dir.toString()+".png"
+    const velocidadBala = 200 
+    var sigoSinHerir = false
+   
+    override method image() = "bala-"+ dir.toString()+".png"
 
-    method disparar(direccion){
-        gestorMov.moverHaciaSinCambiarImagen(direccion, self)
-        self.gestionarTrayectoria(direccion) // llamado recursivo
+    method disparar(){
+        
+        gestorMov.moverHaciaSinCambiarImagen(dir, self)
+        miArma.recargar(self)
+        self.gestionarTrayectoria(dir) // llamado recursivo
 
     }
         
-
     method gestionarTrayectoria(direccion){
     /*
         Proposito: la bala se mueve recursivamente hasta que se den las condiciones
         para terminar su recorrido y morir(borrar visual)
     */
-        
-         if( self.puedeSeguirTrayectoria()) {
-               self.seguirTrayectoria(direccion)
-             
-             }
-         else {self.muerteBala()}
+         
+         if( self.puedeSeguirTrayectoria() ) { 
+                gestorMov.moverHaciaSinCambiarImagen(direccion, self)
+                game.schedule(velocidadBala, {self.gestionarTrayectoria(direccion)})
+            
+            }
+          else              { 
+            self.cicloTerminado()
+            }
     }
-   
-   method seguirTrayectoria(direccion){
-        /*
-            NOTA: el schedule es para que la bala se mueva cada **velocidadBala** mls
-        */
-        gestorMov.moverHaciaSinCambiarImagen(direccion, self)
-        game.schedule(velocidadBala, {self.gestionarTrayectoria(direccion)})
-   }
-   
-   
-    method muerteBala(){
-      
-        game.removeVisual(self)
-    }
+   method cicloTerminado(){game.removeVisual(self)}
+    
 
     override method interaccion(){
-        self.objetosDondePenetre().forEach({o => o.atacadoPor(self)})
-        sigoSinHerir= false 
+       
+        self.objetosDondePenetre().forEach({o => o.atacadoPor(self)})  
+        sigoSinHerir = false   
     }
 
     method objetosDondePenetre() = game.getObjectsIn(self.position()).copyWithout(guardabosques)
@@ -127,13 +128,10 @@ class Bala inherits VisualAtravasable{
     // #########################################################
     // #########################################################
 
-
     method daño() = 10
 
-
-    method puedeSeguirTrayectoria(){
-        
-        return sigoSinHerir and gestorColision.estaDentroDelTablero(self.position())
+    method puedeSeguirTrayectoria(){       
+       return  sigoSinHerir || gestorColision.estaDentroDelTablero(self.position())
     }
 
     method cambiarImagen(imagen){
@@ -143,3 +141,11 @@ class Bala inherits VisualAtravasable{
   override   method atacadoPor(visual){}
   //necesario por polimorfismo porque podria 
 }
+
+    const bala1 = new Bala()
+    const bala2 = new Bala()
+    const bala3 = new Bala()
+    const bala4 = new Bala()
+    const bala5 = new Bala()
+    const bala6 = new Bala()
+    
