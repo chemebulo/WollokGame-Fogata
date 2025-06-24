@@ -134,13 +134,13 @@ const inicio = esc.construir(inicioC_v1, {}, "inicio.png")
 
 // ######################################### ESCENARIO: escenarioInicial #########################################
 
-const fogata = esc.construir(fogataC_v1, fogataCES_v1, "fondo-escenario-inicial.png")
+const fogata = esc.construir(fogataC_v1, fogataCES_v1, "fondo-norte.png")
 
 // ###################################### ESCENARIO: escenarioBifurcacion #######################################
 
-const bifurcacion   = esc.construir(bifurcacionC_v1, bifurcacionCES_v1, "fondo-escenario-inicial.png")
+const bifurcacion   = esc.construir(bifurcacionC_v1, bifurcacionCES_v1, "fondo-camino-bifurcacion.png")
 
-const entradaCabaña = esc.construir(entradaCabañaC_v1, entradaCabañaCES_v1, "fondo-escenario-inicial.png" )
+const entradaCabaña = esc.construir(entradaCabañaC_v1, entradaCabañaCES_v1, "fondo-camino-oeste-norte.png" )
 
 // ##################################### ESCENARIO: escenarioEntrarACabaña ######################################
 
@@ -154,7 +154,7 @@ const cueva           = esc.construir(cuevaC_v1, cuevaCES_v1,"fondo-cueva.png")
 
 const escenarioTEST   = esc.construir(escenarioTestC_v1, escenarioTestCES_v1, "fondo-escenario-inicial.png")
 
-const entradaGranero  = esc.construir(entradaGraneroC_v1, entradaGraneroCES_v1, "fondo-entrada-granero.png")
+const entradaGranero  = esc.construir(entradaGraneroC_v1, entradaGraneroCES_v1, "fondo-sur.png")
 
 const granero         = esc.construir(graneroC_v1, graneroCES_v1, "fondo-granero.png")
 
@@ -200,7 +200,6 @@ const fogataC_v1 = {e => gestorDeDialogo.esTiempoDeDialogo(true)
                          e.mapa(mapa_escenarioInicial_v1);
                          e.visualesEnEscena([amiga, carpa, fogataOBJ, protagonista]);
                          e.ost(track_fogata)}
-                        
 
 // ########################################## CONFIGURADORES ESCENARIO BIFURCACION ##########################################
 
@@ -301,23 +300,23 @@ const cabañaC_v3 = {e => e.mapa(mapa_cabañaInicial_v2);
 // ####################################################### ZONA CUEVA #######################################################
 
 const entradaCuevaC_v1 = {e => e.mapa(mapa_entradaCueva_v1);
-                               e.visualesEnEscena([cuevaOBJ, protagonista, puertaEntradaCueva])
+                               e.visualesEnEscena([protagonista, puertaEntradaCueva])
                                e.ost(track_ataque_lobos);
                                e.eventos([hablarProta5])}    
 
 const entradaCuevaC_v2 = {e => e.mapa(mapa_entradaCueva_v2);
-                               e.visualesEnEscena([cuevaOBJ, protagonista, puertaEste]);
+                               e.visualesEnEscena([protagonista, puertaEste]);
                                e.ost(track_suspence)} 
 
 const entradaCuevaC_v3 = {e => e.mapa(mapa_entradaCueva_v3);
-                               e.visualesEnEscena([cuevaOBJ, protagonista, puertaEntradaCueva]);
+                               e.visualesEnEscena([protagonista, puertaEntradaCueva]);
                                e.ost(track_ataque_lobos)}  
 
 const entradaCueva_v4 = {e => protagonista.estadoCombate(desarmadoProtagonista);
                               protagonista.image("prota-desarmado-abajo.png");
                               game.removeVisual(puertaEntradaCueva)
                               e.mapa(mapa_entradaCueva_v2);
-                              e.visualesEnEscena([cuevaOBJ, protagonista, puertaEste]);
+                              e.visualesEnEscena([protagonista, puertaEste]);
                               e.ost(track_tramo_final)}
 
 const cuevaC_v1 = {e => e.mapa(mapa_cueva_v1);
@@ -369,7 +368,7 @@ const diapoAmigaMuertaC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true
                                    e.ost(track_amiga_muerta)}
 
 const diapoPeleaFinalC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                    protagonista.estadoCombate(desarmadoProtagonista);
+                                  protagonista.estadoCombate(desarmadoProtagonista);
                                   e.removerSiEsta(protagonista)
                                   e.ost(track_guardabosques_cueva)}
 
@@ -379,7 +378,7 @@ const diapoGraneroC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
 
 // DEJAR ABAJO DE TODO
 const escenarioTestC_v1 = {e => e.mapa(mapa_escenarioTest);
-                                e.visualesEnEscena([protagonista, hacha, cuevaOBJ]);
+                                e.visualesEnEscena([protagonista, hacha]);
                                 e.ost(track_win)}
 
 

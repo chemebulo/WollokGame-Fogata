@@ -92,7 +92,6 @@ const interaccionAuto = {v => game.removeVisual(v); videojuego.juegoGanado()}
 // ########################################################################################################################## \\
 
 const cabañaOBJ  = new VisualAtravasable(position = game.at(5,6), image = "cabaña_entrada.png")
-const cuevaOBJ   = new VisualAtravasable(position = game.at(2,5), image = "cueva.png")
 const graneroOBJ = new VisualAtravasable(position = game.at(6,6), image = "granero.png")
 
 // ########################################################################################################################## \\

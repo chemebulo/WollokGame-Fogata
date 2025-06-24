@@ -49,10 +49,10 @@ object gestorDeDirecciones{
 
     method direccionDeDisparoEvaluada(xE, yE, xP, yP){
         // Dados unos pares de valores x,y evalua hacia donde disparar
-        return if (self.estaAMiIzquierda(xE, xP)) {izquierda} else 
-               if (self.estaAMiDerecha(xE,xP))    {derecha}   else 
-               if (self.estaArriba(yE, yP))       {arriba}    else 
-                                                  {abajo}
+        return if (self.estaAMiIzquierda(xE, xP)) { izquierda } else 
+               if (self.estaAMiDerecha(xE,xP))    { derecha }   else 
+               if (self.estaArriba(yE, yP))       { arriba }    else 
+                                                  { abajo }
     }
 
     method estaAMiIzquierda(posEnemigoX, posPropioX){
@@ -285,7 +285,7 @@ object gestorDeListasEscenario{
 
 object gestorDeLobos{
     const lobosEscenario = []
-    const  eventosLobos   = []
+    const  eventosLobos  = []
     
     method agregarLobos(lobo){
         lobosEscenario.add(lobo);
@@ -298,19 +298,17 @@ object gestorDeLobos{
     method limpiarLobos(){
         lobosEscenario.forEach({lobo => self.resetearLobo(lobo)})
         eventosLobos.forEach({ev => self.resetearEventoLobo(ev)})
-        
     }
+
     method resetearLobo(lobo){
         game.removeVisual(lobo)
-       lobosEscenario.remove(lobo)
-       
+        lobosEscenario.remove(lobo)
     }
+
     method resetearEventoLobo(ev){
         game.removeTickEvent(ev.nombreEvento())
         eventosLobos.remove(ev)
     }
-    
-
 }
 
 // ############################################################################################################################################# \\

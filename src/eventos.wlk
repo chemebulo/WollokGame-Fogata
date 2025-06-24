@@ -84,11 +84,11 @@ const hablarProta5  = new EventoHablar(mensaje = "Mierda, voy a esa cueva")
 
 const hablarProta6  = new EventoHablar(mensaje = "AHHHHHH")
 
-const hablarProta7  = new EventoHablar(mensaje = "¡¡¡Ahora si van a ver!!!")
+const hablarProta7  = new EventoHablar(mensaje = "¡¡Lo voy a matar!!")
 
-const hablarProta8  = new EventoHablar( mensaje = "Laura...")
+const hablarProta8  = new EventoHablar(mensaje = "Laura...")
 
-const hablarProta9  = new EventoHablar( mensaje = "¡¡¡AHHHHHHHH!!!")
+const hablarProta9  = new EventoHablar(mensaje = "¡¡¡AHHHHHHHH!!!")
 
 const guardabosquesHabla  = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca al norte está el granero")
 
