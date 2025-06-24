@@ -28,8 +28,8 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
     }
            
     method removerTodo(){
-       peliculaAMostrar.peliculaActual().forEach({d => d.borrar()})
-       peliculaAMostrar.peliculaActual().clear() // Deja vacía la lista para liberar recursos.
+    //   peliculaAMostrar.peliculaActual().forEach({d => d.borrar()})
+       peliculaAMostrar.liberarMemoria() //  Deja vacía la lista para liberar recursos.
        peliculaAMostrar = null
     }
 
@@ -91,6 +91,11 @@ class Pelicula{
 
     method iteradorActual(){
         return iteradorPelicula
+    }
+
+    method liberarMemoria(){
+        pelicula.forEach({d => d.borrar()})
+        pelicula.clear()
     }
 }
 

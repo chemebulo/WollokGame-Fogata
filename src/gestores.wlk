@@ -5,7 +5,7 @@ import puertas.*
 
 
 object gestorDeEventos{
-
+    // usado por el escenario para gestionar los eventos de cada escenario
     method gestionarInicio(eventos){
         // Inicia todos los eventos dados, salvo que no haya ningún evento para iniciar.
         if(not eventos.isEmpty()){
@@ -50,9 +50,9 @@ object gestorDeDirecciones{
     method direccionDeDisparoEvaluada(xE, yE, xP, yP){
         // Dados unos pares de valores x,y evalua hacia donde disparar
         return if (self.estaAMiIzquierda(xE, xP)) { izquierda } else 
-               if (self.estaAMiDerecha(xE,xP))    { derecha }   else 
-               if (self.estaArriba(yE, yP))       { arriba }    else 
-                                                  { abajo }
+               if (self.estaAMiDerecha(xE,xP))    { derecha   } else 
+               if (self.estaArriba(yE, yP))       { arriba    } else 
+                                                  { abajo     }
     }
 
     method estaAMiIzquierda(posEnemigoX, posPropioX){
@@ -76,13 +76,6 @@ object gestorDeDirecciones{
     }
 }
 
-// ############################################################################################################################################# \\
-/*
-object gestorDePosiciones{
-    const colisionesGestor  = gestorDeColisiones  // Representa el gestor de colisiones.
-
-}
-*/
 // ############################################################################################################################################# \\
 
 object gestorDeCeldasTablero{
@@ -146,14 +139,17 @@ object gestorDeCeldasTablero{
         /*
             Me quedo como cosa dejar ese if, propongo esta solucion, se puede volver a la anterior si se desea.
             El if se pregunta si la coleccion de lindantes esta vacia, con el minIfEmpty hace lo que hace el return
-            y si esta vacio (basicamente lo que comprueba el if) devuelve la posicion
+            y si esta vacio (basicamente lo que comprueba el if) devuelve la posicion. el metodo hayLindanteSinObstaculo
+            podria usarse para una validacion o podria eliminarse
         */
 
       //  if(self.hayLindanteSinObstaculo(posicion, visual)){
           //  return lindantesSinObstaculo.min({pos => pos.distance(visual.position())})
         //} else {
         //    return posicion
+
         //}
+          
           return  self.lindanteSiHay(lindantesSinObstaculo,posicion,visual)
     }
     
@@ -170,6 +166,8 @@ object gestorDeCeldasTablero{
         return #{posicion.up(1),   posicion.up(1).right(1),  posicion.right(1), posicion.right(1).down(1), 
                  posicion.down(1), posicion.down(1).left(1), posicion.left(1),  posicion.left(1).up(1)}
     }
+
+    
 }
 
 // ############################################################################################################################################# \\
@@ -185,7 +183,7 @@ object gestorDeObstaculos{
     method limpiarObstaculos(){
         // Limpia todos los obstaculos que se encuentren en la lista de obstaculos.
         obstaculos.forEach({elemento => game.removeVisual(elemento)})
-        obstaculos.clear()
+        obstaculos.clear() 
     }
 }
 
@@ -296,16 +294,26 @@ object gestorDeListasEscenario{
 
 // ############################################################################################################################################# \\
 
+
 object gestorDeLobos{
     const lobosEscenario = []
     const  eventosLobos  = []
     
     method agregarLobos(lobo){
-        lobosEscenario.add(lobo);
-        eventosLobos.add(lobo.eventoPersecucion())
-        eventosLobos.add(lobo.eventoAtaque())
+        self.crearLoboGestionable(lobo)
+        self.iniciarCicloAtaque(lobo)
+    }
+
+    method iniciarCicloAtaque(lobo){
         lobo.eventoPersecucion().iniciarEvento()
         lobo.eventoAtaque().iniciarEvento()
+    }
+    
+
+    method crearLoboGestionable(lobo){
+          lobosEscenario.add(lobo);
+          eventosLobos.add(lobo.eventoPersecucion())
+          eventosLobos.add(lobo.eventoAtaque())
     }
     
     method limpiarLobos(){

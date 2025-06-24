@@ -21,11 +21,20 @@ class MovimientoNPC {
         const positionAntiguo = npc.position()
         const positionNuevo   = self.siguientePosicion()
         
-        if(positionAntiguo != positionNuevo){
-            npc.position(positionNuevo) 
-            npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
+        if(self.sonDistintasPosiciones(positionNuevo,positionAntiguo)){ 
+            //Cambie esta parte para mejorar la legibilidad
+           // npc.position(positionNuevo) 
+           // npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
+           self.seguirACeldaCercanaAEnemigo(positionNuevo, positionAntiguo)
         }
     }
+
+    method seguirACeldaCercanaAEnemigo(posNueva,posAntigua){
+            npc.position(posNueva) 
+            npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(posAntigua, posNueva))
+    }
+
+    method sonDistintasPosiciones(pos1,pos2) = pos1 != pos2
     
     method siguientePosicion(){
         // Describe la siguiente posición conveniente para el NPC en base de donde esté parado.

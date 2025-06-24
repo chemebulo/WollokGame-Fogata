@@ -158,7 +158,7 @@ class Bala inherits VisualAtravasable{
     override method image() = "bala-"+ dir.toString()+".png"
 
     method prepararDisparo(direccion,posicion){
-         self.dir(direccion)
+        self.dir(direccion)
         self.position(posicion)
     }
 
@@ -167,7 +167,6 @@ class Bala inherits VisualAtravasable{
         
         gestorMov.moverHaciaSinCambiarImagen(dir, self)
         game.addVisual(self)
-       // miArma.recargar(self)
         self.gestionarTrayectoria() // llamado recursivo
 
     }
@@ -185,10 +184,8 @@ class Bala inherits VisualAtravasable{
               trayectoriaRecursivaBala.apply(self) // se mueve y vuelve a llamar gestionarTrayectoria(dir)
             }
     }
-   method cicloTerminado(){game.removeVisual(self)}
 
-   
-    
+    method cicloTerminado(){game.removeVisual(self)}
 
     override method interaccion(){
         self.hacerDaño()

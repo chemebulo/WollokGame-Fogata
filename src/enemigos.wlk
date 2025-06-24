@@ -83,11 +83,19 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", vida = 20, daño = 2){
 }
 
 // ################################################################################################################# \\
+//                                     BLOQUES DE MUERTE PARA JEFES
+const bloqueAccionesMuerte = {enemigo,salida,ost => enemigo.escenarioDondeEstoy().bajarVolumen();
+                                                    game.sound(ost).play()
+                                                    game.addVisual(salida) }
+
+// ################################################################################################################# \\
 
 
 
 object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 5){
-
+    
+    const bloquePostMuerte = bloqueAccionesMuerte
+    
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.
         return "lobo-jefe-"+direccion.toString()+".png"
@@ -99,10 +107,8 @@ object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da
     }
 
    
-    override method accionesAdicionalesAlMorir(){
-        self.escenarioDondeEstoy().bajarVolumen()
-        game.sound(track_loboJefe_derrotado).play()
-        game.addVisual(puertaGranero)
+    override method accionesAdicionalesAlMorir(){    
+        bloquePostMuerte.apply(self,puertaGranero,self.sonidoMuerte())
     }
 }
 
@@ -112,17 +118,16 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida 
     var property estadoCombate = armadoGuardabosques //CAMBIAR DESPUES
     var property soyAtravesable = false // por un tema particular existe esta variable xd
 
+    const bloquePostMuerte = bloqueAccionesMuerte
+
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
         return estadoCombate.actual()+direccion.toString()+".png"
     }
 
     override method accionesAdicionalesAlMorir(){
-        
-         self.escenarioDondeEstoy().bajarVolumen()
-        game.sound(track_loboJefe_derrotado).play()
-        self.estadoCombate(desarmadoGuardabosques) //
-        game.addVisual(puertaEntradaCueva)
+        self.estadoCombate(desarmadoGuardabosques)       
+        bloquePostMuerte.apply(self,puertaEntradaCueva,self.sonidoMuerte())
     }
 
   

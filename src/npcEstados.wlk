@@ -74,14 +74,13 @@ class Armado {
     }
 }
 
-// ESCOPETA DE GUARDABOSQUES
+// ##################### ESCOPETA DE GUARDABOSQUES ######################
 
-class ArmadoConEscopeta inherits Armado(pj=guardabosques,
-                                     //modoAtaque = escopetaGuardabosques,
-                                     modoAtaque= new Escopeta(tirador=pj,
-                                                 enemigo=protagonista,
-                                                 cartucho = cartuchoGuardabosques),
-                                                imagenTemporal="guardabosques-dispara.png" ){
+class ArmadoConEscopeta inherits Armado(pj=guardabosques,                               
+                                        modoAtaque= new Escopeta(tirador=pj,
+                                        enemigo=protagonista,
+                                        cartucho = cartuchoGuardabosques),
+                                        imagenTemporal="guardabosques-dispara.png" ){
 
     // va a disparar en todo momento, no me importa donde este el prota
     override method puedeAtacarAlEnemigo() = true 
@@ -100,7 +99,7 @@ class ArmadoConEscopeta inherits Armado(pj=guardabosques,
     const bala5 = new Bala()
     const bala6 = new Bala()
 
-// ESCOPETA DE GUARDABOSQUES     
+// ################################################################################
 
 class ArmadoConHacha inherits Armado(modoAtaque = new AtaqueHacha(atacante = pj)){}
   
@@ -126,12 +125,16 @@ class EnemigoVivo{
     }
 
     method atacarEnemigo(){
-        // El lobo ataca al enemigo cada 1 segundo.
+        // El lobo ataca al enemigo si esta en la misma celda, caso contrario no hace nada 
         if (self.puedeAtacarAlEnemigo()){ 
-            animacion.animarAtaque()
-            game.schedule(1, {visual.emitirSonidoEnojado();
-                              visual.enemigo().atacadoPor(visual)})
+            self.atacarAEnemigo()
         }
+    }
+
+    method atacarAEnemigo(){
+         animacion.animarAtaque()
+         visual.emitirSonidoEnojado()
+         visual.enemigo().atacadoPor(visual)
     }
 
     method puedeAtacarAlEnemigo(){
