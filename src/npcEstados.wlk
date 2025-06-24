@@ -35,8 +35,6 @@ class Desarmado{
 
 // ########################################################################################################################## \\
 
-
-
 class Armado {
     const pj             = null  // personaje que ataca
     const imagenActual   = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion

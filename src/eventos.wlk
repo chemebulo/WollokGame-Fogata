@@ -47,8 +47,6 @@ const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico = guard
 
 const bloqueEscopeta= {g => g.atacarEnemigo()}
 
-
-
 // ################################# EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO #################################
 
 class EventoHablar {
@@ -71,7 +69,6 @@ class EventoHablarConSonido inherits EventoHablar{
 }
 
 // ############################################# EVENTOS DE DIALOGOS ############################################
-
 
 const escucharLobos = new EventoHablarConSonido(mensaje = "¿¿Qué fue eso??", ost = track_manada)
 

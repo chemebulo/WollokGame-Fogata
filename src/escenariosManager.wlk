@@ -9,13 +9,9 @@ import diapositivasManager.*
 import puertas.*
 import npcEstados.*
 
-
-
-
 // #############################################################################################################################
 
 class Escenario{ 
-   
     var property eventos           = []
     var property mapa              = mapa_comun
     var property fondoEscenario    = ""
@@ -29,7 +25,6 @@ class Escenario{
     const gestorObstaculos      = gestorDeObstaculos
     const gestorLobos           = gestorDeLobos
     const gestorListasEscenario = gestorDeListasEscenario
-    
     
     method puestaEnEscena(){ 
         self.configurar()
@@ -84,6 +79,7 @@ class Escenario{
     }
   
     method esAtravesable() = true
+
     method atacadoPor(visual){}
 
     method removerSiEsta(visual){
@@ -108,7 +104,7 @@ object esc{
     }
 }
 
-// ####################################################################################################################################################################
+// #############################################################################################################################
 /*                                         ESCENARIOS PARA TODO EL JUEGO:
     TEMPLATE escenario:
     const nombre_escenario = esc.construir(@param,    //configuracion actual
@@ -168,19 +164,15 @@ const estacionamiento = esc.construir(estacionamientoC_v1, {}, "fondo-escenario-
 
 // ################################# ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS #################################
 
-const diapoGranero     = esc.construir(diapoGraneroC_v1, {}, "granero-diapo1.png") 
+const diapoGranero     = esc.construir(diapoGraneroC_v1, {}, "diapo-granero-1.png") 
 
 const diapoAmigaMuerta = esc.construir(diapoAmigaMuertaC_v1, {}, "diapo-amiga-muerta1.png")
 
 const diapoPeleaFinal  = esc.construir(diapoPeleaFinalC_v1, {}, "diapo-pelea-final1.png")
 
-
-//###################################################################
-//###################################################################
-//                    CONFIGURADORES DE ESCENARIOS
-//###################################################################
-//####################################################################
-
+// ###########################################################################################################
+//                                      CONFIGURADORES DE ESCENARIOS
+// ###########################################################################################################
 
 /*
 TEMPLATE CONFIGURADORES:
@@ -204,8 +196,8 @@ const nombreEscenarioC_v* = {e => e.visualesEnEscena();
 
 const inicioC_v1 = {e => e.ost(track_inicio)}
 
-const fogataC_v1 = {e =>  gestorDeDialogo.esTiempoDeDialogo(true)
-                        e.mapa(mapa_escenarioInicial_v1);
+const fogataC_v1 = {e => gestorDeDialogo.esTiempoDeDialogo(true)
+                         e.mapa(mapa_escenarioInicial_v1);
                          e.visualesEnEscena([amiga, carpa, fogataOBJ, protagonista]);
                          e.ost(track_fogata)}
                         
@@ -213,7 +205,7 @@ const fogataC_v1 = {e =>  gestorDeDialogo.esTiempoDeDialogo(true)
 // ########################################## CONFIGURADORES ESCENARIO BIFURCACION ##########################################
 
 const bifurcacionC_v1 = {e => game.removeVisual(puertaNorte)
-                                e.mapa(mapa_escenarioBifurcacion_v1);
+                              e.mapa(mapa_escenarioBifurcacion_v1);
                               e.visualesEnEscena([puertaEste, protagonista]);
                               e.ost(track_fogata)}
       
@@ -282,9 +274,7 @@ const entradaGraneroC_v1 = {e => e.mapa(mapa_entradaGranero_v1);
 
 const graneroC_v1 ={ e => e.mapa(mapa_peleaGranero);
                           e.visualesEnEscena([protagonista,hacha,loboEspecial,tridente, manopla]);
-                          e.ost(track_pelea_granero); 
-                          }
-                          
+                          e.ost(track_pelea_granero)}
 
 const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
                                  e.mapa(mapa_entradaGranero_v2)
@@ -295,14 +285,11 @@ const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
 // ######################################################### CABAÑA #########################################################
 
 const  cabañaC_v1 = {e => gestorDeDialogo.esTiempoDeDialogo(true);
-                            e.mapa(mapa_cabañaInicial_v1);
+                          e.mapa(mapa_cabañaInicial_v1);
                           e.visualesEnEscena([guardabosques, protagonista]);
-                          e.ost(track_cabaña)
-                        }
-                         
+                          e.ost(track_cabaña)}
 
-const cabañaC_v2 = {e => 
-                        gestorDeDialogo.esTiempoDeDialogo(true);
+const cabañaC_v2 = {e => gestorDeDialogo.esTiempoDeDialogo(true);
                          e.mapa(mapa_cabañaInicial_v1);
                          e.visualesEnEscena([guardabosques, protagonista]);
                          e.ost(track_suspence)}
@@ -364,14 +351,12 @@ const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoComba
                              e.ost(track_pelea_final);
                              e.eventos([ hablarProta9,ataqueGuardabosques,ataqueEscopetaGuardabosques])} 
 
-/*
-const peleaFinalC_v1 = {e => guardabosques.cambiarAAtravesable() ;                   
-                             guardabosques.estadoCombate(armadoGuardabosques);
-                             e.mapa(mapa_FinalJuego)
-                             e.visualesEnEscena([protagonista, guardabosques]);
-                             e.ost(track_pelea_final);
-                             e.eventos([hablarProta9,ataqueGuardabosques, ataqueEscopetaGuardabosques])}
-                              */
+// const peleaFinalC_v1 = {e => guardabosques.soyAtravesable(true) ;                   
+//                              guardabosques.estadoCombate(armadoGuardabosques);
+//                              e.mapa(mapa_FinalJuego)
+//                              e.visualesEnEscena([protagonista, guardabosques]);
+//                              e.ost(track_pelea_final);
+//                              e.eventos([hablarProta9,ataqueGuardabosques, ataqueEscopetaGuardabosques])}
 
 const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
                                   e.visualesEnEscena([protagonista, auto]);
@@ -398,24 +383,20 @@ const escenarioTestC_v1 = {e => e.mapa(mapa_escenarioTest);
                                 e.ost(track_win)}
 
 
-//###################################################################
-//###################################################################
-//                    CONFIGURADORES DE ESCENARIOS SIGUIENTESS
-//###################################################################
-//####################################################################                                
+// ###########################################################################################################
+//                                 CONFIGURADORES DE ESCENARIOS SIGUIENTES
+// ###########################################################################################################
 
-/*
- CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
-    *tipo: bloque
-    En el bloque se debe escribir
-    el setter del irHacia de TODAS LAS PUERTAS del escenario actual 
-    si se vuelve a un escenario anterior...se deben settear tanto el confgEscSiguiente como el confgActual
-    si un escenario tiene dinstintos configuradores, respetar nomenclatura y escribir al final v1,v2,v3 
-
-  NOTAS: Los escenarios exclusivos para diapositivas no requieren un configurador de escenario siguiente
-
-  nomenclatura = escenarioCES_v*
-*/
+// CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
+//    *tipo: bloque
+//    En el bloque se debe escribir
+//    el setter del irHacia de TODAS LAS PUERTAS del escenario actual 
+//    si se vuelve a un escenario anterior...se deben settear tanto el confgEscSiguiente como el confgActual
+//    si un escenario tiene dinstintos configuradores, respetar nomenclatura y escribir al final v1,v2,v3 
+//
+//  NOTAS: Los escenarios exclusivos para diapositivas no requieren un configurador de escenario siguiente
+//
+//  nomenclatura = escenarioCES_v*
 
 const fogataCES_v1 = {puertaNorte.irHacia(bifurcacion)}
 
@@ -509,11 +490,9 @@ const bifurcacionCES_v6 = {puertaNorte.irHacia(estacionamiento)}
 // configurador para test
 const escenarioTestCES_v1 = {game.removeVisual(puertaSur)}
 
-//###################################################################
-//###################################################################
-//                    MUSICA 
-//###################################################################
-//####################################################################  
+// ###########################################################################################################
+//                                                  MUSICA 
+// ###########################################################################################################
 
 
 const track_fogata         = game.sound("musica-escenarioInicial-v1.mp3")

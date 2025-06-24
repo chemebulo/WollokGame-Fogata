@@ -58,7 +58,6 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
 const inicioJuegoD = {v,g => g.removerTodo();
                              g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta)                      
                              v.cambiarEscenario(fogata)}
-
    
 const despuesDeAmigaMuerta = {v,g => g.removerTodo();
                                      g.configurarParaSiguiente(peliculaGranero, despuesDeGranero)                               
@@ -114,9 +113,9 @@ const d6  = new Diapositiva(image = "diapo-7.png")
 const d7  = new Diapositiva(image = "diapo-8.png")
 const d8  = new Diapositiva(image = "diapo-9.png")
 const d9  = new Diapositiva(image = "diapo-10.png")
-const dg0 = new Diapositiva(image = "granero-diapo2.png")
-const dg1 = new Diapositiva(image = "granero-diapo3.png")
-const dg2 = new Diapositiva(image = "granero-diapo4.png")
+const dg0 = new Diapositiva(image = "diapo-granero-2.png")
+const dg1 = new Diapositiva(image = "diapo-granero-3.png")
+const dg2 = new Diapositiva(image = "diapo-granero-4.png")
     
 //####################################
 
@@ -161,6 +160,4 @@ class Diapositiva{
     }
 
     method atacadoPor(visual){}
-
-
 }
