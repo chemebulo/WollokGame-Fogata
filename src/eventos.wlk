@@ -2,7 +2,7 @@ import protagonista.*
 import enemigos.*
 import gestores.*
 import escenariosManager.*
-import ataqueGuardabosquesProv.*
+import npcAtaques.*
 
 class EventoLoopIndividual{
     const sujetoUnico

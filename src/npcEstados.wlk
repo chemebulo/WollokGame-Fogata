@@ -4,10 +4,10 @@ import npcMovimiento.*
 import gestores.*
 import direccion.*
 import visualesExtra.*
-import ataqueGuardabosquesProv.*
+import npcAtaques.*
 /*
-    El protagonista inicia el juego desarmado y solo cuando interactua con el hacha pasa a estar armado el resto del juego hasta 
-    el final
+    El protagonista inicia el juego desarmado y solo cuando interactua con el hacha/tridente/manopla pasa a estar armado 
+    el resto del juego hasta el final de la pelea con guardabosques
     El guardabosques pasa a estado armado al final del juego
 */
 
@@ -16,7 +16,7 @@ import ataqueGuardabosquesProv.*
 
 const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
 const desarmadoGuardabosques = new Desarmado(image = "")
-const armadoGuardabosques    = new ArmadoEscopeta(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "ataque-guardabosques-escopeta.png")
+const armadoGuardabosques    = new ArmadoConEscopeta(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "ataque-guardabosques-escopeta.png")
 const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
 const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota-tridente.png")
 const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista,  imagenActual = "prota-desarmado-", imagenTemporal = "ataque-prota-manopla.png")
@@ -74,6 +74,34 @@ class Armado {
     }
 }
 
+// ESCOPETA DE GUARDABOSQUES
+
+class ArmadoConEscopeta inherits Armado(pj=guardabosques,
+                                     //modoAtaque = escopetaGuardabosques,
+                                     modoAtaque= new Escopeta(tirador=pj,
+                                                 enemigo=protagonista,
+                                                 cartucho = cartuchoGuardabosques),
+                                                imagenTemporal="guardabosques-dispara.png" ){
+
+    // va a disparar en todo momento, no me importa donde este el prota
+    override method puedeAtacarAlEnemigo() = true 
+}
+
+    const cartuchoGuardabosques =  new Cartucho(misBalas= [bala1,bala2,bala3,bala4,bala5,bala6])
+
+    class Cartucho {
+        const property misBalas = [] // una lista que funciona como Queue
+    }
+
+    const bala1 = new Bala()
+    const bala2 = new Bala()
+    const bala3 = new Bala()
+    const bala4 = new Bala()
+    const bala5 = new Bala()
+    const bala6 = new Bala()
+
+// ESCOPETA DE GUARDABOSQUES     
+
 class ArmadoConHacha inherits Armado(modoAtaque = new AtaqueHacha(atacante = pj)){}
   
 class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante = pj)){}
@@ -82,74 +110,7 @@ class ArmadoConManopla inherits Armado(modoAtaque = new AtaqueManopla(atacante =
 
 // ########################################################################################################################## \\
 
-class AnimacionAtaque{
-    /*
-        animarAtaque() : realiza una secuencia de de instrucciones que consisten en remover/agregar y settear la imagen de un visual
-                         para dar sensacion de animacion
-    */
-    const imagenTemp = ""   // la imagen que se muestra cuando se ataca
-    const pjAnimado  = null // el visual que ataca
 
-    method animarAtaque(){
-        const imagenActual = pjAnimado.image()
-
-        game.removeVisual(pjAnimado) 
-        pjAnimado.image(imagenTemp)
-        game.addVisual(pjAnimado)
-        game.schedule(200,{game.removeVisual(pjAnimado); 
-                           pjAnimado.image(imagenActual); 
-                           game.addVisual(pjAnimado)})
-    }
-    method atacadoPor(visual){}
- 
-    method esAtravesable() = true
-}
-
-// ########################################################################################################################## \\
-class Ataque {
-    const atacante
-
-    method ataqueArma(){
-        self.posicionesAAtacar().forEach({pos => self.atacarEnPosicion(pos)})
-    }
-  
-    method atacarEnPosicion(pos){
-         self.objetosEnPosicion(pos).forEach({obj => obj.atacadoPor(atacante)})
-    }
- 
-
-    method objetosEnPosicion(posicion){
-        return game.getObjectsIn(posicion)
-    } 
-    
-    method posicionesAAtacar()
-}
-
-class AtaqueHacha inherits Ataque{
-        
-    override method posicionesAAtacar() = [atacante.position().down(1),
-                                           atacante.position().up(1),
-                                           atacante.position().left(1),
-                                           atacante.position().right(1)]
-}
-
-class AtaqueTridente inherits Ataque{
-    
-    override method posicionesAAtacar() = [atacante.position().left(1),
-                                           atacante.position().left(2),
-                                           atacante.position().right(1),
-                                           atacante.position().right(2)]
-}
-class AtaqueManopla inherits Ataque{
-    
-    override method posicionesAAtacar(){
-        return [atacante.position()]
-    }
-
-    override method objetosEnPosicion(posicion){
-        return game.getObjectsIn(posicion).copyWithout(atacante)
-    } 
-}
 
 // ########################################################################################################################## \\
 

@@ -368,9 +368,9 @@ const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
 const diapoAmigaMuertaC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                    e.ost(track_amiga_muerta)}
 
-const diapoPeleaFinalC_v1 = {e => protagonista.estadoCombate(desarmadoProtagonista);
+const diapoPeleaFinalC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
+                                    protagonista.estadoCombate(desarmadoProtagonista);
                                   e.removerSiEsta(protagonista)
-                                  gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                   e.ost(track_guardabosques_cueva)}
 
 const diapoGraneroC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);

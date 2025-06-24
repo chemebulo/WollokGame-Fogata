@@ -30,6 +30,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         self.cambiarAAtravesable()
         game.sound(self.sonidoMuerte()).play()
         self.accionesAdicionalesAlMorir()
+        
     }
 
     method estaSobreEnemigo(){
@@ -52,11 +53,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         return videojuego.escenario()
     }
 
-    method accionesAdicionalesAlMorir(){ 
-        // Acciones que el enemigo realizaría en caso que necesite hacer después de morir. Solo lo usan el guardabosques y lobo jefe.
-        self.escenarioDondeEstoy().bajarVolumen()
-        game.sound(track_loboJefe_derrotado).play()
-    } 
+   method accionesAdicionalesAlMorir() {}
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
 }
@@ -87,6 +84,8 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", vida = 20, daño = 2){
 
 // ################################################################################################################# \\
 
+
+
 object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 5){
 
     override method imagenNueva(direccion){
@@ -99,8 +98,10 @@ object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da
         return track_loboJefe_derrotado
     }
 
+   
     override method accionesAdicionalesAlMorir(){
-        super()
+        self.escenarioDondeEstoy().bajarVolumen()
+        game.sound(track_loboJefe_derrotado).play()
         game.addVisual(puertaGranero)
     }
 }
@@ -117,10 +118,14 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida 
     }
 
     override method accionesAdicionalesAlMorir(){
-        super()
-        self.estadoCombate(desarmadoGuardabosques)
+        
+         self.escenarioDondeEstoy().bajarVolumen()
+        game.sound(track_loboJefe_derrotado).play()
+        self.estadoCombate(desarmadoGuardabosques) //
         game.addVisual(puertaEntradaCueva)
     }
+
+  
     
     override method sonidoMuerte(){
         // Describe el sonido de muerte del guardabosques.
