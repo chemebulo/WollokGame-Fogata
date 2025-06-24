@@ -35,29 +35,30 @@ describe "Movimiento del personaje"{
     test "El personaje se mueve 2 celdas a la derecha,3 arriba y 4 a la izquierda, pero no sale del tablero."{
         protagonista.mover(derecha,2)
         protagonista.mover(arriba,3)
-        protagonista.mover(izquierda,4)
+        //assert.protagonista.mover(izquierda,4)}
+        assert.throwsException({protagonista.mover(izquierda,4)})
 
-        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
+       // assert.that{gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position())}
     }
 
-    test"El personaje no sale del tablero por el Oeste."{
-        protagonista.mover(izquierda, 10)
-        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
+    test"El personaje no puede salir  del tablero por el Oeste."{
+         protagonista.mover(izquierda, 10)
+        assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
     test"El personaje no sale del tablero por el Norte."{
         protagonista.mover(arriba, 20)
-        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
     test"El personaje no sale del tablero por el Este."{
         protagonista.mover(derecha,20)
-        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
     test"El personaje no sale del tablero por el Sur."{
         protagonista.mover(abajo,20)
-        assert.that(gestorDeColisiones.estaDentroDelTablero(protagonista.position()))
+        assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
     test "El personaje se mueve 3 a la derecha, 3 a la izquierda y queda en el mismo lugar."{

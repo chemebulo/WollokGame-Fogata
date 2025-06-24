@@ -148,7 +148,7 @@ class Escopeta{
 class Bala inherits VisualAtravasable{
 
     var  property dir = null
-    const gestorColision = gestorDeColisiones
+    const gestorColision = gestorDeCeldasTablero
     const gestorMov = gestorDeMovimiento
     var sigoSinHerir = false
 

@@ -77,33 +77,15 @@ object gestorDeDirecciones{
 }
 
 // ############################################################################################################################################# \\
-
+/*
 object gestorDePosiciones{
     const colisionesGestor  = gestorDeColisiones  // Representa el gestor de colisiones.
 
-    method lindanteConvenienteHacia(posicion, visual){
-        // Describe la celda lindante que más cerca está del visual dado.
-        const lindantesSinObstaculo = colisionesGestor.lindantesSinObstaculos(posicion, visual)
-
-        if(colisionesGestor.hayLindanteSinObstaculo(posicion, visual)){
-            return lindantesSinObstaculo.min({pos => pos.distance(visual.position())})
-        } else {
-            return posicion
-        }
-    }
-
-    // ========================================================================================================================================= \\
-
-    method lindantesDe(posicion){
-        // Describe todas las celdas lindantes ortogonales y diagonales de la posición dada.
-        return #{posicion.up(1),   posicion.up(1).right(1),  posicion.right(1), posicion.right(1).down(1), 
-                 posicion.down(1), posicion.down(1).left(1), posicion.left(1),  posicion.left(1).up(1)}
-    }
 }
-
+*/
 // ############################################################################################################################################# \\
 
-object gestorDeColisiones{
+object gestorDeCeldasTablero{
 
     method puedeMoverA(direccion, visual){
         // Indica si el visual dado puede moverse hacia la dirección dada.
@@ -149,13 +131,44 @@ object gestorDeColisiones{
 
     method lindantesSinObstaculos(posicion, visual){
         // Describe todas las posiciones lindantes (ortogonales y diagonales) que no tienen obstaculos sin incluir al visual dado en las mismas.
-        return gestorDePosiciones.lindantesDe(posicion).filter({pos => not self.hayObstaculoEn(pos, visual)})
+        return self.lindantesDe(posicion).filter({pos => not self.hayObstaculoEn(pos, visual)})
     }
 
     // ========================================================================================================================================= \\
 
     method hayLindanteSinObstaculo(posicion, visual){
         return not self.lindantesSinObstaculos(posicion, visual).isEmpty()
+    }
+
+    method lindanteConvenienteHacia(posicion, visual){
+        // Describe la celda lindante que más cerca está del visual dado.
+        const lindantesSinObstaculo = self.lindantesSinObstaculos(posicion, visual)
+        /*
+            Me quedo como cosa dejar ese if, propongo esta solucion, se puede volver a la anterior si se desea.
+            El if se pregunta si la coleccion de lindantes esta vacia, con el minIfEmpty hace lo que hace el return
+            y si esta vacio (basicamente lo que comprueba el if) devuelve la posicion
+        */
+
+      //  if(self.hayLindanteSinObstaculo(posicion, visual)){
+          //  return lindantesSinObstaculo.min({pos => pos.distance(visual.position())})
+        //} else {
+        //    return posicion
+        //}
+          return  self.lindanteSiHay(lindantesSinObstaculo,posicion,visual)
+    }
+    
+    method lindanteSiHay(lindantes,posicion,visual){
+             return lindantes.minIfEmpty({pos => pos.distance(visual.position())},{posicion})
+     }
+
+    
+
+    // ========================================================================================================================================= \\
+
+    method lindantesDe(posicion){
+        // Describe todas las celdas lindantes ortogonales y diagonales de la posición dada.
+        return #{posicion.up(1),   posicion.up(1).right(1),  posicion.right(1), posicion.right(1).down(1), 
+                 posicion.down(1), posicion.down(1).left(1), posicion.left(1),  posicion.left(1).up(1)}
     }
 }
 
@@ -205,7 +218,7 @@ object gestorDeVida{
 // ############################################################################################################################################# \\
 
 object gestorDeMovimiento{
-    const colisionesGestor = gestorDeColisiones // Representa al gestor de colisiones que se va a tomar de referencia.
+    const colisionesGestor = gestorDeCeldasTablero // Representa al gestor de colisiones que se va a tomar de referencia.
 
     method mover(direccion, visual){
         // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
