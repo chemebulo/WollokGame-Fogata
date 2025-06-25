@@ -19,8 +19,8 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     }
 
     method atacar(){
-        // Representa el comportamiento del ataque del protagonista hacia su enemigo.
-        estadoCombate.atacarEnemigo()
+        // Representa el comportamiento del ataque del protagonista hacia su enemigo.   
+        estadoCombate.atacarEnemigo()   
     }
 
     override method atacadoPor(visual){

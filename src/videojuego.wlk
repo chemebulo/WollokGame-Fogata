@@ -53,12 +53,14 @@ object videojuego{
         keyboard.d().onPressDo({protagonista.mover(derecha)})
         keyboard.e().onPressDo({gestorDeDialogo.interactuarNPC()})
         keyboard.f().onPressDo({gestorDeDiapositivas.interactuarDiapositivas()})
+        keyboard.k().onPressDo({game.schedule(500, {protagonista.atacar()})})
+
+        // Para testear cosas, se borrara antes de entrega
         keyboard.m().onPressDo({game.stop()})
-        keyboard.k().onPressDo({protagonista.atacar()})
         keyboard.l().onPressDo({game.say(protagonista,game.allVisuals().toString())}) 
-        // L: para testear, se borrara antes de entrega
         
     }
+  
 
     // ################### Metodo para manejo de diapositivas ##################
 
