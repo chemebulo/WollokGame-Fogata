@@ -7,7 +7,7 @@ import gestores.*
 object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100, daño = 3){
     var property estoyAtacando      = false
     var property estadoCombate      = desarmadoProtagonista 
-    var property estadoCombateElejido = null //cuando agarrasel arma recuerda el estado porque a veces vuelve a cambiar a desarmado 
+    var property estadoCombateElegido = null //cuando agarrasel arma recuerda el estado porque a veces vuelve a cambiar a desarmado 
     const property vidaGestor       = gestorDeVida
     const property movimientoGestor = gestorDeMovimiento
    
@@ -36,7 +36,7 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     
     override method imagenNueva(direccion){
         // Describe la imagen nueva del protagonista en base al estado de combate y a la dirección dada.
-        return estadoCombate.actual() + direccion.toString() + ".png"
+        return estadoCombate.actual()+direccion.toString()+".png"
     }
 
     method estaAlLadoDelNPC(npc){

@@ -249,7 +249,7 @@ const entradaCabañaC_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
                                 e.ost(track_tramo_a_cabaña)}
 
 const entradaCabañaC_v4 = {e => game.removeVisual(puertaEntradaCabaña);
-                                guardabosques.image("guardabosques-abajo.png");
+                                guardabosques.image("guardabosques-desarmado-abajo.png");
                                 e.mapa(mapa_EntradaCabaña_v3);
                                 e.visualesEnEscena([cabañaOBJ, protagonista, puertaNorte, guardabosques]);
                                 e.ost(track_suspence);
@@ -272,7 +272,7 @@ const entradaGraneroC_v1 = {e => e.mapa(mapa_entradaGranero_v1);
                                  e.eventos([guardabosquesHabla2])}
 
 const graneroC_v1 ={ e => e.mapa(mapa_peleaGranero);
-                          e.visualesEnEscena([protagonista,hacha,loboEspecial,tridente, manopla]);
+                          e.visualesEnEscena([protagonista, hacha, loboEspecial, tridente, manopla]);
                           e.ost(track_pelea_granero)}
 
 const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
@@ -342,13 +342,13 @@ const cuevaC_v5 = {e => e.mapa(mapa_cueva_v5);
 
 // ###################################################### PELEA FINAL #######################################################
 
-const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElejido());      
+const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElegido());      
                              guardabosques.cambiarAAtravesable() ;                  
                              guardabosques.estadoCombate(armadoGuardabosques);
                              e.mapa(mapa_FinalJuego)
                              e.visualesEnEscena([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
-                             e.eventos([ hablarProta9,ataqueGuardabosques,ataqueEscopetaGuardabosques])} 
+                             e.eventos([hablarProta9, ataqueGuardabosques, ataqueEscopetaGuardabosques])} 
 
 // const peleaFinalC_v1 = {e => guardabosques.soyAtravesable(true) ;                   
 //                              guardabosques.estadoCombate(armadoGuardabosques);

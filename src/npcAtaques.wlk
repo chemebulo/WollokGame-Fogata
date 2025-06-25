@@ -12,7 +12,6 @@ import npcEstados.*
         funcione como una Cola (dispara la primer bala del cargador y esta al dispararse 
         va al final del cargador para dispararse despues) ; pero tengo que gestionar bien 
         las consultas y el manejo de refencias.
-    
 
         AVISO!!!
             *este archivo es provisorio, quizas se mueva a estadosNPC pero se recomienda que 
@@ -21,14 +20,13 @@ import npcEstados.*
             *La bala vive hasta que interactue con un objeto o llegue al fin del escenario(rocas)
             *La bala tambien daña a los lobos
             *La baja jamas ataca al guardabosques
-
-
 */
 
 
 // ########################################################################################################################## \\
 //                                                   ATAQUES CUERPO A CUERPO
 // ########################################################################################################################## \\
+
 class Ataque {
     const atacante
 
@@ -63,6 +61,7 @@ class AtaqueTridente inherits Ataque{
                                            atacante.position().right(1),
                                            atacante.position().right(2)]
 }
+
 class AtaqueManopla inherits Ataque{
     
     override method posicionesAAtacar(){
@@ -73,23 +72,23 @@ class AtaqueManopla inherits Ataque{
         return game.getObjectsIn(posicion).copyWithout(atacante)
     } 
 }
+
 class AnimacionAtaque{
     /*
         animarAtaque() : realiza una secuencia de de instrucciones que consisten en remover/agregar y settear la imagen de un visual
                          para dar sensacion de animacion
     */
-    const imagenTemp = ""   // la imagen que se muestra cuando se ataca
     const pjAnimado  = null // el visual que ataca
 
     method animarAtaque(){
         const imagenActual = pjAnimado.image()
 
         game.removeVisual(pjAnimado) 
-        pjAnimado.image(imagenTemp)
+        pjAnimado.image(pjAnimado.imagenTemporal())
         game.addVisual(pjAnimado)
-        game.schedule(200,{game.removeVisual(pjAnimado); 
-                           pjAnimado.image(imagenActual); 
-                           game.addVisual(pjAnimado)})
+        game.schedule(200, {game.removeVisual(pjAnimado); 
+                            pjAnimado.image(imagenActual); 
+                            game.addVisual(pjAnimado)})
     }
     method atacadoPor(visual){}
  
@@ -101,18 +100,15 @@ class AnimacionAtaque{
 //                                                   ATAQUES CON ARMA DE FUEGO
 // ########################################################################################################################## \\
 class Escopeta{
-
-
     const gestorDireccionBala = gestorDeDirecciones
     const tirador // quien dispara la escopeta
     const enemigo //personaje al que dispara
     
-   const cartucho // una instancia de Cartucho
-   const cargador = cartucho.misBalas()
+    const cartucho // una instancia de Cartucho
+    const cargador = cartucho.misBalas()
    
-   method balaADisparar() = cargador.first()
-  
-    
+    method balaADisparar() = cargador.first()
+
     method posTirador() = tirador.position()
 
     method posEnemigo() = enemigo.position()
@@ -136,13 +132,11 @@ class Escopeta{
         cargador.add(bala)   
     }
 
-
     method direccionDisparo(posTirador)= self.direccionADisparar(self.posEnemigo(),posTirador)
     
     method direccionADisparar(posEnemigo,posTirador){
-            return gestorDireccionBala.direccionDeBala(posEnemigo,posTirador)
-        }
-            
+        return gestorDireccionBala.direccionDeBala(posEnemigo,posTirador)
+    }
 }
 
 class Bala inherits VisualAtravasable{

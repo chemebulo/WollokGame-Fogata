@@ -30,7 +30,6 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         self.cambiarAAtravesable()
         game.sound(self.sonidoMuerte()).play()
         self.accionesAdicionalesAlMorir()
-        
     }
 
     method estaSobreEnemigo(){
@@ -53,7 +52,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         return videojuego.escenario()
     }
 
-   method accionesAdicionalesAlMorir() {}
+    method accionesAdicionalesAlMorir(){}
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
 }
@@ -83,14 +82,13 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", vida = 20, daño = 2){
 }
 
 // ################################################################################################################# \\
-//                                     BLOQUES DE MUERTE PARA JEFES
+// BLOQUES DE MUERTE PARA JEFES
+
 const bloqueAccionesMuerte = {enemigo,salida,ost => enemigo.escenarioDondeEstoy().bajarVolumen();
                                                     game.sound(ost).play()
                                                     game.addVisual(salida) }
 
 // ################################################################################################################# \\
-
-
 
 object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 5){
     
@@ -105,7 +103,6 @@ object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da
         // Describe el sonido de muerte del lobo especial.
         return track_loboJefe_derrotado
     }
-
    
     override method accionesAdicionalesAlMorir(){    
         bloquePostMuerte.apply(self,puertaGranero,self.sonidoMuerte())
@@ -115,7 +112,7 @@ object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da
 // ################################################################################################################# \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida = 50, daño = 2){
-    var property estadoCombate = armadoGuardabosques //CAMBIAR DESPUES
+    var property estadoCombate  = armadoGuardabosques //CAMBIAR DESPUES
     var property soyAtravesable = false // por un tema particular existe esta variable xd
 
     const bloquePostMuerte = bloqueAccionesMuerte
@@ -129,9 +126,7 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida 
         self.estadoCombate(desarmadoGuardabosques)       
         bloquePostMuerte.apply(self,puertaEntradaCueva,self.sonidoMuerte())
     }
-
   
-    
     override method sonidoMuerte(){
         // Describe el sonido de muerte del guardabosques.
         return track_guardabosques_muerte
@@ -139,7 +134,6 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida 
 
     override method atacarEnemigo(){
         // Representa el comportamiento del ataque del enemigo hacia su enemigo.
-        
         estadoCombate.atacarEnemigo()
     }
 

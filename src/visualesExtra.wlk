@@ -117,19 +117,19 @@ const interaccionHacha = {ar => game.removeVisual(ar);
                                 game.removeVisual(tridente);
                                 game.removeVisual(manopla);
                                 protagonista.estadoCombate(armadoProtagonista);
-                                protagonista.estadoCombateElejido(armadoProtagonista)}
+                                protagonista.estadoCombateElegido(armadoProtagonista)}
 
 const interaccionTridente = {ar => game.removeVisual(ar);
                                    game.removeVisual(hacha);
                                    game.removeVisual(manopla);
                                    protagonista.estadoCombate(armadoProtagonista2);
-                                   protagonista.estadoCombateElejido(armadoProtagonista2)}
+                                   protagonista.estadoCombateElegido(armadoProtagonista2)}
 
 const interaccionManopla = {ar => game.removeVisual(ar);
                                   game.removeVisual(hacha);
                                   game.removeVisual(tridente);
                                   protagonista.estadoCombate(armadoProtagonista3);
-                                  protagonista.estadoCombateElejido(armadoProtagonista3)}                             
+                                  protagonista.estadoCombateElegido(armadoProtagonista3)}                             
 
 // ########################################################################################################################## \\
 

@@ -15,11 +15,11 @@ import npcAtaques.*
 // ESTADOS DEL PROTAGONISTA Y GUARDABOSQUES
 
 const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
-const desarmadoGuardabosques = new Desarmado(image = "")
-const armadoGuardabosques    = new ArmadoConEscopeta(pj = guardabosques, imagenActual = "guardabosques-", imagenTemporal = "ataque-guardabosques-escopeta.png")
-const armadoProtagonista     = new ArmadoConHacha(pj = protagonista,  imagenActual = "prota-armado-",  imagenTemporal = "ataque-prota.png")
-const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-armado-",    imagenTemporal = "ataque-prota-tridente.png")
-const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista,  imagenActual = "prota-desarmado-", imagenTemporal = "ataque-prota-manopla.png")
+const desarmadoGuardabosques = new Desarmado(image = "guardabosques-desarmado-")
+const armadoGuardabosques    = new ArmadoConEscopeta(pj = guardabosques, imagenActual = "guardabosques-escopeta-")
+const armadoProtagonista     = new ArmadoConHacha(pj = protagonista, imagenActual = "prota-hacha-")
+const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-tridente-")
+const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista, imagenActual = "prota-manopla-")
 
 // ########################################################################################################################## \\
 
@@ -36,15 +36,10 @@ class Desarmado{
 // ########################################################################################################################## \\
 
 class Armado {
-    const pj             = null  // personaje que ataca
-    const imagenActual   = "" // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
-    const modoAtaque     
-    const animacion      = new AnimacionAtaque(imagenTemp = imagenTemporal, pjAnimado= pj)
-    const imagenTemporal // la imagen que se muestra al atacar
-
-    method imagenTemporal(){
-        return imagenTemporal
-    }
+    const pj           = null  // Personaje que ataca
+    const imagenActual = ""    // Parte del nombre de una imagen necesario para dibujar dependiendo la direccion
+    const modoAtaque   
+    const animacion    = new AnimacionAtaque(pjAnimado = pj)
 
     method actual(){
         return imagenActual
@@ -76,28 +71,27 @@ class Armado {
 
 // ##################### ESCOPETA DE GUARDABOSQUES ######################
 
-class ArmadoConEscopeta inherits Armado(pj=guardabosques,                               
-                                        modoAtaque= new Escopeta(tirador=pj,
-                                        enemigo=protagonista,
-                                        cartucho = cartuchoGuardabosques),
-                                        imagenTemporal="guardabosques-dispara.png" ){
+class ArmadoConEscopeta inherits Armado(pj = guardabosques, 
+                                        modoAtaque = new Escopeta(tirador = pj, enemigo = protagonista, cartucho = cartuchoGuardabosques)){
 
     // va a disparar en todo momento, no me importa donde este el prota
-    override method puedeAtacarAlEnemigo() = true 
+    override method puedeAtacarAlEnemigo(){
+        return true
+    } 
 }
 
-    const cartuchoGuardabosques =  new Cartucho(misBalas= [bala1,bala2,bala3,bala4,bala5,bala6])
+const cartuchoGuardabosques =  new Cartucho(misBalas= [bala1,bala2,bala3,bala4,bala5,bala6])
 
-    class Cartucho {
-        const property misBalas = [] // una lista que funciona como Queue
-    }
+class Cartucho {
+    const property misBalas = [] // una lista que funciona como Queue
+}
 
-    const bala1 = new Bala()
-    const bala2 = new Bala()
-    const bala3 = new Bala()
-    const bala4 = new Bala()
-    const bala5 = new Bala()
-    const bala6 = new Bala()
+const bala1 = new Bala()
+const bala2 = new Bala()
+const bala3 = new Bala()
+const bala4 = new Bala()
+const bala5 = new Bala()
+const bala6 = new Bala()
 
 // ################################################################################
 
@@ -117,7 +111,7 @@ class EnemigoVivo{
     const visual //
     const vidaGestor    = gestorDeVida //
     const movimientoNPC = new MovimientoNPC(npc = visual) //
-    const animacion     = new AnimacionAtaque(pjAnimado = visual, imagenTemp = visual.imagenTemporal())
+    const animacion     = new AnimacionAtaque(pjAnimado = visual)
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo.
