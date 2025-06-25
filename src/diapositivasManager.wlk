@@ -129,8 +129,9 @@ class IteradorDiapositiva{
         Al dibujar una diapositiva, se dibuja el primer elemento de una lista y lo borra de la lista.
         Al pedir devuelta que dibuje una diapositiva, dibujaría el segundo, y así hasta que quede la lista vacia.
         El problema es cuando luego tengo que remover los visuales de cada diapositiva cuando termina la presentación,
-        ya que se perdió la referencia de los visuales (quedó vacia la lista).
-        Debido a este problema se crea la Clase Iterador de Diapositivas que trabaja sobre una copoa de las diapositivas.
+        como borre todas se perdió la referencia de los visuales (quedó vacia la lista).
+        Debido a este problema se crea la Clase Iterador de Diapositivas que trabaja sobre una copia de las diapositivas
+        para mostrarlas. Luego cuando se borran se hace desde la lsita original
     */
     const listaAIterar
 
