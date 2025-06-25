@@ -5,43 +5,49 @@ import puertas.*
 import visualesExtra.*
 
 object gestorDeDialogo{
+    
     var property esTiempoDeDialogo = false
-
+    const conversador = protagonista
     var property dialogo = dialogoEscenarioInicial
   
     method interactuarNPC(){
-        if (esTiempoDeDialogo){
-            dialogo.conversar()
+        if (self.sePuedeConversar()){
+           self.conversar()
         }
     }     
+
+    method sePuedeConversar() = esTiempoDeDialogo and conversador.estaAlLadoDelNPC(dialogo.npcDialogo())
+
+    method conversar(){
+        if( not dialogo.esUltimoDialogo()){
+               dialogo.decirDialogo()
+        }
+        else{
+           self.accionFinalDialogo()
+        }
+    }
+
+    method accionFinalDialogo(){
+        self.esTiempoDeDialogo(false)
+       self.hacerLoQueIndicaMiDialogo()
+
+    }
+
+    method hacerLoQueIndicaMiDialogo(){
+        dialogo.bloque().apply(dialogo.npcDialogo(),self)
+    }
 }
 
 class Dialogo{
-    const miGestor = gestorDeDialogo
-    const prota    = protagonista
-    const property npcDialogo 
-    const property dialogoEscenario
+
+    const property npcDialogo = null
+    const property dialogoEscenario = []
     var property conversadorActual = protagonista
-    const bloque = {}
-
-    method conversar(){
-        if(prota.estaAlLadoDelNPC(npcDialogo)){
-           self.gestionarDialogo()
-        }
-    }
-
-    method gestionarDialogo(){
-        if(not self.esUltimoDialogo()){
-            self.decirDialogo()
-            self.cambiarConversador()
-        }
-        else{ 
-            self.accionFinalDialogo()
-        }
-    }
+    const property bloque = {}
 
     method actualizarADialogoSiguiente(){
-        dialogoEscenario.remove(dialogoEscenario.first())
+        dialogoEscenario.remove(self.dialogoActual())
+        self.cambiarConversador()
     }
 
     method esUltimoDialogo(){
@@ -49,9 +55,11 @@ class Dialogo{
     }
 
     method decirDialogo(){
-         game.say(self.conversadorActual(), dialogoEscenario.first())
+         game.say(self.conversadorActual(), self.dialogoActual())
              self.actualizarADialogoSiguiente()
     }
+
+    method dialogoActual() = dialogoEscenario.first()
 
     method cambiarConversador(){
         if (self.esElTurnoDelProta()){ 
@@ -64,12 +72,7 @@ class Dialogo{
     method esElTurnoDelProta(){
         return dialogoEscenario.size().even()
     }
-
-    method accionFinalDialogo(){
-        miGestor.esTiempoDeDialogo(false)
-        
-        bloque.apply(npcDialogo,miGestor)
-    }
+  
 }
 
 // DIALOGOS:
