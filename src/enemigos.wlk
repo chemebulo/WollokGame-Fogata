@@ -124,6 +124,7 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", vida 
 
     override method accionesAdicionalesAlMorir(){
         self.estadoCombate(desarmadoGuardabosques)       
+        game.sound(track_guardabosques_derrotado).play() // por ahora vemos que sucede, esto se va a refactorizar
         bloquePostMuerte.apply(self,puertaEntradaCueva,self.sonidoMuerte())
     }
   

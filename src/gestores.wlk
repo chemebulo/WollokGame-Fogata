@@ -138,9 +138,11 @@ object gestorDeCeldasTablero{
         const lindantesSinObstaculo = self.lindantesSinObstaculos(posicion, visual)
         /*
             Me quedo como cosa dejar ese if, propongo esta solucion, se puede volver a la anterior si se desea.
-            El if se pregunta si la coleccion de lindantes esta vacia, con el minIfEmpty hace lo que hace el return
+            El if se pregunta si la coleccion de lindantes esta vacia y luego le pedia el minimo a lindanteSinObstaculos,
+             con el minIfEmpty hace internamente lo que hace el if,si hay posiciones, devuelve la minima
             y si esta vacio (basicamente lo que comprueba el if) devuelve la posicion. el metodo hayLindanteSinObstaculo
-            podria usarse para una validacion o podria eliminarse
+            podria usarse para una validacion o podria eliminarse.
+            El lindanteSiHay es para lejibilidad
         */
 
       //  if(self.hayLindanteSinObstaculo(posicion, visual)){
