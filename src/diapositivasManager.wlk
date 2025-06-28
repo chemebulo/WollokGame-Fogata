@@ -1,41 +1,12 @@
 import videojuego.*
 import escenariosManager.*
 
-object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapositivas
+object gestorDeDiapositivas{ 
+
     var property peliculaAMostrar    = peliculaInicioJuego
     var property bloqueAEjecutar     = inicioJuegoD
     const juego                      = videojuego
     var property esHoraDeDiapositiva = true
-
-    method gestionarDiapositivas(){
-        if(self.esLaUltimaDiapositiva()){
-            juego.culminarDiapositivasYContinuar(self.bloqueAEjecutar())
-        } else {
-           self.diapositivaActual().procesarDiapositiva()
-        }
-    } 
-
-    method diapositivaActual(){
-        return peliculaAMostrar.iteradorActual()
-    }
-    
-    method esLaUltimaDiapositiva(){
-        return peliculaAMostrar.iteradorActual().terminoPelicula()
-    }
-
-    method ultimaDiapositiva(){
-        return peliculaAMostrar.peliculaActual().size()
-    }
-           
-    method removerTodo(){
-        //  Deja vacía la lista para liberar recursos
-       peliculaAMostrar.liberarMemoria() 
-       peliculaAMostrar = null
-    }
-
-    method esTiempoDeDiapositiva(){
-        return esHoraDeDiapositiva
-    }
 
      method interactuarDiapositivas(){
         if(esHoraDeDiapositiva){ 
@@ -43,10 +14,24 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
         }
     }
 
+    method gestionarDiapositivas(){
+        if(peliculaAMostrar.esLaUltimaDiapositiva()){
+            peliculaAMostrar.borrarDiapositivasDelTablero()
+            juego.culminarDiapositivasYContinuar(self.bloqueAEjecutar())
+        } else {
+            peliculaAMostrar.procesarDiapositiva()
+        }
+    } 
+   
     method configurarParaSiguiente(nuevaPelicula,nuevoBloque){
         self.esHoraDeDiapositiva(false)
         self.peliculaAMostrar(nuevaPelicula)
         self.bloqueAEjecutar(nuevoBloque)
+    }
+
+    method configuracionFinal(){
+        self.esHoraDeDiapositiva(false)
+        peliculaAMostrar = null
     }
 }
 
@@ -55,51 +40,85 @@ object gestorDeDiapositivas{ // Objeto que usa videojuego para gestion de diapos
     v=videojuego
     g=gestorDeDiapositivas
 */
-const inicioJuegoD = {v,g => g.removerTodo();
-                             g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta)                      
+const inicioJuegoD = {v,g => g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta)                      
                              v.cambiarEscenario(fogata)}
    
-const despuesDeAmigaMuerta = {v,g => g.removerTodo();
-                                     g.configurarParaSiguiente(peliculaGranero, despuesDeGranero)                               
+const despuesDeAmigaMuerta = {v,g => g.configurarParaSiguiente(peliculaGranero, despuesDeGranero)                               
                                      bifurcacion.configuradorTotal(bifurcacionC_v4, bifurcacionCES_v4)                       
                                      v.cambiarEscenario(bifurcacion)}                                         
 
-const despuesDeGranero = {v,g => g.removerTodo(); 
-                                 g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal)
+const despuesDeGranero = {v,g => g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal)
                                  v.cambiarEscenario(granero)}        
 
-const despuesDePeleaFinal = {v,g => g.removerTodo(); 
-                                    g.configurarParaSiguiente(finalJuego, despuesFinalJuego)                              
+const despuesDePeleaFinal = {v,g => g.configuracionFinal()                          
                                     v.cambiarEscenario(peleaFinal)}      
 
-const despuesFinalJuego = {} // COMPLETAR                                              
-
-// LAS PELICULAS QUE SE MUESTRAN
-const peliculaInicioJuego = new Pelicula(pelicula = [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
-const peliculaGranero     = new Pelicula(pelicula = [dg0, dg1, dg2])
-const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1, dam2, dam3])
-const peliculaPeleaFinal  = new Pelicula(pelicula = [dpf1, dpf2, dpf3])
-const finalJuego          = new Pelicula(pelicula = []) // completar
+                                          
+/*#############################################################################
+                               PELICULAS
+##############################################################################*/
 
 class Pelicula{
+    /*
+        @param pelicula = una lista de diapositivas.Requerida para luego remover los visuales de diapositivas
+        @iteradorPelicula = un Iterador que recibe una @pelicula. Muestra las diapositivas funcionando 
+        como una cola y al terminar queda vacia. 
+
+    */
     const pelicula
-    const iteradorPelicula = new IteradorDiapositiva(listaAIterar = self.peliculaActual().copy())
+   const iteradorPelicula = pelicula.copy()
 
-    method peliculaActual(){
-        return pelicula
+    method esLaUltimaDiapositiva(){
+       return iteradorPelicula.isEmpty()
     }
 
-    method iteradorActual(){
-        return iteradorPelicula
+    method procesarDiapositiva(){
+
+       self.dibujarYActualizar(self.diapositivaActual())
     }
 
-    method liberarMemoria(){
+     method diapositivaActual(){
+        return iteradorPelicula.first()
+    }
+
+     method dibujarYActualizar(elem){
+        game.addVisual(elem)
+        iteradorPelicula.remove(elem)
+    }
+
+
+    method borrarDiapositivasDelTablero(){
         pelicula.forEach({d => d.borrar()})
         pelicula.clear()
     }
 }
 
-// DIAPOSITIVAS PARA TODO EL JUEGO                                        
+
+const peliculaInicioJuego = new Pelicula(pelicula = [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
+const peliculaGranero     = new Pelicula(pelicula = [dg0, dg1, dg2])
+const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1, dam2, dam3])
+const peliculaPeleaFinal  = new Pelicula(pelicula = [dpf1, dpf2, dpf3])
+
+/*#############################################################################
+                            DIAPOSITIVAS
+##############################################################################*/
+
+class Diapositiva{
+    var property position = game.at(0,0)
+    var property image 
+    
+    method esAtravesable(){
+        return true
+    }
+    
+    method borrar(){
+        return game.removeVisual(self)
+    }
+
+    method atacadoPor(visual){}
+}
+
+                                     
 const dpf1 = new Diapositiva(image ="diapo-pelea-final2.png")
 const dpf2 = new Diapositiva(image ="diapo-pelea-final3.png")
 const dpf3 = new Diapositiva(image ="diapo-pelea-final4.png")
@@ -123,47 +142,3 @@ const dg1 = new Diapositiva(image = "diapo-granero-3.png")
 const dg2 = new Diapositiva(image = "diapo-granero-4.png")
     
 //####################################
-
-class IteradorDiapositiva{
-    /*
-        Al dibujar una diapositiva, se dibuja el primer elemento de una lista y lo borra de la lista.
-        Al pedir devuelta que dibuje una diapositiva, dibujaría el segundo, y así hasta que quede la lista vacia.
-        El problema es cuando luego tengo que remover los visuales de cada diapositiva cuando termina la presentación,
-        como borre todas se perdió la referencia de los visuales (quedó vacia la lista).
-        Debido a este problema se crea la Clase Iterador de Diapositivas que trabaja sobre una copia de las diapositivas
-        para mostrarlas. Luego cuando se borran se hace desde la lsita original
-    */
-    const listaAIterar
-
-    method procesarDiapositiva(){
-        self.dibujarYActualizar(self.elementoAProcesar())
-    }
-        
-    method dibujarYActualizar(elem){
-        game.addVisual(elem)
-        listaAIterar.remove(elem)
-    }
-
-    method terminoPelicula(){
-        return listaAIterar.isEmpty()
-    }
-
-    method elementoAProcesar(){
-        return listaAIterar.first()
-    }
-}
-
-class Diapositiva{
-    var property position = game.at(0,0)
-    var property image 
-    
-    method esAtravesable(){
-        return true
-    }
-    
-    method borrar(){
-        return game.removeVisual(self)
-    }
-
-    method atacadoPor(visual){}
-}
