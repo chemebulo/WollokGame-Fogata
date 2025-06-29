@@ -4,25 +4,6 @@ import enemigos.*
 import puertas.*
 
 
-object gestorDeEventos{
-    // usado por el escenario para gestionar los eventos de cada escenario
-    method gestionarInicio(eventos){
-        // Inicia todos los eventos dados, salvo que no haya ningún evento para iniciar.
-        if(not eventos.isEmpty()){
-            eventos.forEach({e => e.iniciarEvento()})
-        }
-    }
-
-    // ========================================================================================================================================= \\
-
-    method gestionarFin(eventos){
-        // Finaliza todos los eventos dados, salvo que no haya ningún evento para finalizar.
-        if(not eventos.isEmpty()){ 
-            eventos.forEach({e => e.finalizarEvento()})
-        }
-    }
-}
-
 // ############################################################################################################################################# \\
 
 object gestorDeDirecciones{
@@ -270,31 +251,6 @@ object gestorFondoEscenario{
 
 // ############################################################################################################################################# \\
 
-object gestorDeListasEscenario{
-    
-    method limpiarListas(esc){
-        self.limpiarListaVisuales(esc)
-        esc.eventos([])
-    }
-
-    method limpiarListaVisuales(esc){
-        self.limpiezaDeVisuales(esc.visualesEnEscena())
-    }
-
-    method limpiezaDeVisuales(visuales){
-        visuales.forEach({visual => game.removeVisual(visual)})
-    }
-
-    method agregarVisualesEscena(esc){
-        self.agregarVisuales(esc.visualesEnEscena())
-    }
-
-    method agregarVisuales(visuales){
-        visuales.forEach({v => game.addVisual(v)})
-    } 
-}
-
-// ############################################################################################################################################# \\
 
 
 object gestorDeLobos{

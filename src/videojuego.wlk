@@ -7,7 +7,7 @@ import dialogosManager.*
 
 object videojuego{  
     var property escenario   = inicio
-    const gestorDiapositivas = gestorDeDiapositivas
+   
     
     method iniciar(){ 
         escenario.puestaEnEscena()
@@ -60,11 +60,5 @@ object videojuego{
         keyboard.l().onPressDo({game.say(protagonista,game.allVisuals().toString())}) 
         
     }
-  
-
-    // ################### Metodo para manejo de diapositivas ##################
-
-    method culminarDiapositivasYContinuar(bloque){
-        bloque.apply(self,gestorDiapositivas)
-    }
 }
+   

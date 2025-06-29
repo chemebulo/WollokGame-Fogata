@@ -5,7 +5,7 @@ object gestorDeDiapositivas{
 
     var property peliculaAMostrar    = peliculaInicioJuego
     var property bloqueAEjecutar     = inicioJuegoD
-    const juego                      = videojuego
+   //const juego                      = videojuego
     var property esHoraDeDiapositiva = true
 
      method interactuarDiapositivas(){
@@ -17,7 +17,7 @@ object gestorDeDiapositivas{
     method gestionarDiapositivas(){
         if(peliculaAMostrar.esLaUltimaDiapositiva()){
             peliculaAMostrar.borrarDiapositivasDelTablero()
-            juego.culminarDiapositivasYContinuar(self.bloqueAEjecutar())
+            self.culminarDiapositivasYContinuar()
         } else {
             peliculaAMostrar.procesarDiapositiva()
         }
@@ -33,10 +33,15 @@ object gestorDeDiapositivas{
         self.esHoraDeDiapositiva(false)
         peliculaAMostrar = null
     }
+     method culminarDiapositivasYContinuar(){
+        bloqueAEjecutar.apply(videojuego,self)
+    }
 }
 
 /*
     BLOQUES QUE EJECUTAN LO QUE SUCEDE AL FINALIZAR LA ULTIMA DIAPOSITIVA DE LA ESCENA EN UN ESCENARIO
+    LUEGO DE EJECUTAR LAS ORDENES SE PASA A OTRO ESCENARIO
+
     v=videojuego
     g=gestorDeDiapositivas
 */

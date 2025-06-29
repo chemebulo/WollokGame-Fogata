@@ -12,28 +12,28 @@ import npcEstados.*
 // #############################################################################################################################
 
 class Escenario{ 
-    var property eventos           = []
+   
+    const eventos           = []
+    const visualesEnEscena = []
     var property mapa              = mapa_comun
-    var property fondoEscenario    = ""
-    var property visualesEnEscena  = []
+    var property fondoEscenario    = ""  
     var property ost               = game.sound("")
-    var property confgActual       = {} 
-    var property confgEscSiguiente = {}
+    var property confgActual       = {} // bloque 
+    var property confgEscSiguiente = {} //bloque
     
     const gestorFondo           = gestorFondoEscenario
-    const gestorEvento          = gestorDeEventos
     const gestorObstaculos      = gestorDeObstaculos
     const gestorLobos           = gestorDeLobos
-    const gestorListasEscenario = gestorDeListasEscenario
-    
+   
+    // ############### Metodos para inicializar el escenario ###################
     method puestaEnEscena(){ 
         self.configurar()
         self.configurarEscenarioSiguiente()
         self.configurarSonido()
         gestorFondo.visualizarFondo(fondoEscenario)
         self.dibujarTablero()
-        gestorListasEscenario.agregarVisualesEscena(self)
-        gestorEvento.gestionarInicio(eventos)
+        self.agregarVisualesEscena()
+        self.gestionarInicioEventos()
     }
 
     method configurarSonido(){
@@ -51,10 +51,12 @@ class Escenario{
         })
     }
 
-    method bajarVolumen(){
+    method bajarVolumen(){ 
+        //Cuando se mata al loboJefe y Guardabosques la musica del escenario se baja dando lugar a otra
         ost.volume(0)
     }
-
+    // ======================== METODOS PARA GESTIONAR LOS BLOQUES DE CONFIGURACION===================================
+    
     method configuradorTotal(confgAct,confgEscenarioSiguiente){
         self.confgActual(confgAct);
         self.confgEscSiguiente(confgEscenarioSiguiente) 
@@ -67,26 +69,71 @@ class Escenario{
     method configurarEscenarioSiguiente(){
         confgEscSiguiente.apply()
     }
- 
+    // ======================== METODO PARA FINALIZAR ESCENARIO ======================================================
+    
     method limpiar(){     
         gestorFondo.borrarFondo()
         ost.stop()
-        gestorListasEscenario.limpiarListas(self)
-        gestorEvento.gestionarFin(eventos);
+        self.borrarVisualesEscena()
+        self.gestionarFinEventos()
         gestorObstaculos.limpiarObstaculos()
         gestorLobos.limpiarLobos()
         
     }
   
+    // ======================== METODOS POLIMORFICOS SIN USO ======================================================
+
     method esAtravesable() = true
 
     method atacadoPor(visual){}
 
-    method removerSiEsta(visual){
+    method removerSiEsta(visual){ // para evitar lo que sucede en los escenarios diapositivas
         if(game.hasVisual(visual)){
             game.removeVisual(visual)
         }
     }
+    // ======================== METODOS PARA GESTIONAR EVENTOS ======================================================
+
+     method gestionarInicioEventos(){
+        // Inicia todos los eventos dados, salvo que no haya ningún evento para iniciar.
+        if(not eventos.isEmpty()){
+            eventos.forEach({e => e.iniciarEvento()})
+        }
+    }
+
+
+    method gestionarFinEventos(){
+        // Finaliza todos los eventos dados, salvo que no haya ningún evento para finalizar.
+        if(not eventos.isEmpty()){ 
+            eventos.forEach({e => e.finalizarEvento()})
+            eventos.clear() // necesario por proteccion
+        }
+    }
+
+   method actualizarEventos(listaEventos){
+        const reemplazo = listaEventos
+        eventos.clear()
+        reemplazo.forEach({v => eventos.add(v)})
+   }
+
+    // ======================== METODOS PARA GESTIONAR LOS VISUALES ======================================================
+
+
+    method agregarVisualesEscena(){
+        visualesEnEscena.forEach({v => game.addVisual(v)})
+    }
+
+    method borrarVisualesEscena(){
+         visualesEnEscena.forEach({visual => game.removeVisual(visual)})
+         visualesEnEscena.clear()  // necesario por proteccion
+    }
+
+   method actualizarVisuales(listaVisuales){
+        const reemplazo = listaVisuales
+        visualesEnEscena.clear()
+        reemplazo.forEach({v => visualesEnEscena.add(v)})
+
+   }
 } 
 
 
@@ -198,146 +245,146 @@ const inicioC_v1 = {e => e.ost(track_inicio)}
 
 const fogataC_v1 = {e => gestorDeDialogo.esTiempoDeDialogo(true)
                          e.mapa(mapa_escenarioInicial_v1);
-                         e.visualesEnEscena([amiga, carpa, fogataOBJ, protagonista]);
+                         e.actualizarVisuales([amiga, carpa, fogataOBJ, protagonista]);
                          e.ost(track_fogata)}
 
 // ########################################## CONFIGURADORES ESCENARIO BIFURCACION ##########################################
 
 const bifurcacionC_v1 = {e => game.removeVisual(puertaNorte)
                               e.mapa(mapa_escenarioBifurcacion_v1);
-                              e.visualesEnEscena([puertaEste, protagonista]);
+                              e.actualizarVisuales([puertaEste, protagonista]);
                               e.ost(track_fogata)}
       
 const bifurcacionC_v2 = {e => e.mapa(mapa_escenarioBifurcacion_v2);
-                              e.visualesEnEscena([protagonista, puertaOeste]);
+                              e.actualizarVisuales([protagonista, puertaOeste]);
                               e.ost(track_ataque_lobos);
-                              e.eventos([hablarProta4])}
+                              e.actualizarEventos([hablarProta4])}
 
 const bifurcacionC_v3 = {e => e.mapa(mapa_escenarioBifurcacion_v3);
-                              e.visualesEnEscena([protagonista, puertaSur]);
+                              e.actualizarVisuales([protagonista, puertaSur]);
                               e.ost(track_suspence);
-                              e.eventos([hablarProta2])}
+                              e.actualizarEventos([hablarProta2])}
 
-const bifurcacionC_v4 = {e => e.visualesEnEscena([protagonista, puertaEste]);
+const bifurcacionC_v4 = {e => e.actualizarVisuales([protagonista, puertaEste]);
                               e.mapa(mapa_escenarioBifurcacion_v4);
                               e.ost(track_tramo_a_cabaña);
-                              e.eventos([hablarProta])}
+                              e.actualizarEventos([hablarProta])}
 
-const bifurcacionC_v5 = {e => e.visualesEnEscena([protagonista, puertaOeste]);
+const bifurcacionC_v5 = {e => e.actualizarVisuales([protagonista, puertaOeste]);
                               e.mapa(mapa_escenarioBifurcacion_v5);
                               e.ost(track_ataque_lobos);
-                              e.eventos([hablarProta7])}
+                              e.actualizarEventos([hablarProta7])}
 
 const bifurcacionC_v6 = {e => e.mapa(mapa_escenarioBifurcacion_v6);
-                              e.visualesEnEscena([protagonista, puertaNorte]);
+                              e.actualizarVisuales([protagonista, puertaNorte]);
                               e.ost(track_tramo_final)}          
 
 // ############################################## CONFIGURADORES ENTRADA CABAÑA ##############################################
 
 const entradaCabañaC_v1 = {e => e.mapa(mapa_entradaCabaña_v1);
-                                e.visualesEnEscena([cabañaOBJ, protagonista, puertaEntradaCabaña]);
+                                e.actualizarVisuales([cabañaOBJ, protagonista, puertaEntradaCabaña]);
                                 e.ost(track_fogata)}
 
 const entradaCabañaC_v2 = {e => game.removeVisual(puertaEntradaCabaña)
                                 e.mapa(mapa_entradaCabaña_v2);
-                                e.visualesEnEscena([cabañaOBJ, protagonista, puertaOeste] );
+                                e.actualizarVisuales([cabañaOBJ, protagonista, puertaOeste] );
                                 e.ost(track_suspence);
-                                e.eventos([escucharLobos])}
+                                e.actualizarEventos([escucharLobos])}
 
 const entradaCabañaC_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
-                                e.visualesEnEscena([cabañaOBJ, protagonista, puertaEntradaCabaña]);
+                                e.actualizarVisuales([cabañaOBJ, protagonista, puertaEntradaCabaña]);
                                 e.ost(track_tramo_a_cabaña)}
 
 const entradaCabañaC_v4 = {e => game.removeVisual(puertaEntradaCabaña);
                                 guardabosques.image("guardabosques-desarmado-abajo.png");
                                 e.mapa(mapa_EntradaCabaña_v3);
-                                e.visualesEnEscena([cabañaOBJ, protagonista, puertaNorte, guardabosques]);
+                                e.actualizarVisuales([cabañaOBJ, protagonista, puertaNorte, guardabosques]);
                                 e.ost(track_suspence);
-                                e.eventos([guardabosquesHabla])}
+                                e.actualizarEventos([guardabosquesHabla])}
 
 const entradaCabañaC_v5 = {e => e.mapa(mapa_EntradaCabaña_v4);
-                                e.visualesEnEscena([cabañaOBJ, protagonista, puertaEntradaCabaña]);
+                                e.actualizarVisuales([cabañaOBJ, protagonista, puertaEntradaCabaña]);
                                 e.ost(track_suspence)}
 
 const entradaCabañaC_v6 = {e => game.removeVisual(puertaEntradaCabaña);
                                 e.mapa(mapa_EntradaCabaña_v3);
-                                e.visualesEnEscena([cabañaOBJ, protagonista, puertaOeste]);
+                                e.actualizarVisuales([cabañaOBJ, protagonista, puertaOeste]);
                                 e.ost(track_suspence)}
 
 // ################################### CONFIGURADORES  PARA TODA LA SECUENCIA DEL  GRANERO ###################################
 
 const entradaGraneroC_v1 = {e => e.mapa(mapa_entradaGranero_v1);
-                                 e.visualesEnEscena([graneroOBJ, protagonista, guardabosques, puertaGranero]);
+                                 e.actualizarVisuales([graneroOBJ, protagonista, guardabosques, puertaGranero]);
                                  e.ost(track_suspence);
-                                 e.eventos([guardabosquesHabla2])}
+                                 e.actualizarEventos([guardabosquesHabla2])}
 
 const graneroC_v1 ={ e => e.mapa(mapa_peleaGranero);
-                          e.visualesEnEscena([protagonista, hacha, loboEspecial, tridente, manopla]);
+                          e.actualizarVisuales([protagonista, hacha, loboEspecial, tridente, manopla]);
                           e.ost(track_pelea_granero)}
 
 const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
                                  e.mapa(mapa_entradaGranero_v2)
-                                 e.visualesEnEscena([graneroOBJ, protagonista, puertaSur]);
+                                 e.actualizarVisuales([graneroOBJ, protagonista, puertaSur]);
                                  e.ost(track_suspence);
-                                 e.eventos([hablarProta3])}
+                                 e.actualizarEventos([hablarProta3])}
 
 // ######################################################### CABAÑA #########################################################
 
 const  cabañaC_v1 = {e => gestorDeDialogo.esTiempoDeDialogo(true);
                           e.mapa(mapa_cabañaInicial_v1);
-                          e.visualesEnEscena([guardabosques, protagonista]);
+                          e.actualizarVisuales([guardabosques, protagonista]);
                           e.ost(track_cabaña)}
 
 const cabañaC_v2 = {e => gestorDeDialogo.esTiempoDeDialogo(true);
                          e.mapa(mapa_cabañaInicial_v1);
-                         e.visualesEnEscena([guardabosques, protagonista]);
+                         e.actualizarVisuales([guardabosques, protagonista]);
                          e.ost(track_suspence)}
                        
 const cabañaC_v3 = {e => e.mapa(mapa_cabañaInicial_v2);
-                         e.visualesEnEscena([protagonista, nota]);
+                         e.actualizarVisuales([protagonista, nota]);
                          e.ost(track_suspence)}                      
 
 // ####################################################### ZONA CUEVA #######################################################
 
 const entradaCuevaC_v1 = {e => e.mapa(mapa_entradaCueva_v1);
-                               e.visualesEnEscena([protagonista, puertaEntradaCueva])
+                               e.actualizarVisuales([protagonista, puertaEntradaCueva])
                                e.ost(track_ataque_lobos);
-                               e.eventos([hablarProta5])}    
+                               e.actualizarEventos([hablarProta5])}    
 
 const entradaCuevaC_v2 = {e => e.mapa(mapa_entradaCueva_v2);
-                               e.visualesEnEscena([protagonista, puertaEste]);
+                               e.actualizarVisuales([protagonista, puertaEste]);
                                e.ost(track_suspence)} 
 
 const entradaCuevaC_v3 = {e => e.mapa(mapa_entradaCueva_v3);
-                               e.visualesEnEscena([protagonista, puertaEntradaCueva]);
+                               e.actualizarVisuales([protagonista, puertaEntradaCueva]);
                                e.ost(track_ataque_lobos)}  
 
 const entradaCueva_v4 = {e => protagonista.estadoCombate(desarmadoProtagonista);
                               protagonista.image("prota-desarmado-abajo.png");
                               game.removeVisual(puertaEntradaCueva)
                               e.mapa(mapa_entradaCueva_v2);
-                              e.visualesEnEscena([protagonista, puertaEste]);
+                              e.actualizarVisuales([protagonista, puertaEste]);
                               e.ost(track_tramo_final)}
 
 const cuevaC_v1 = {e => e.mapa(mapa_cueva_v1);
-                        e.visualesEnEscena([protagonista, puertaEntradaCueva]);
+                        e.actualizarVisuales([protagonista, puertaEntradaCueva]);
                         e.ost(track_cueva);
-                        e.eventos([hablarProta6])}
+                        e.actualizarEventos([hablarProta6])}
 
 const cuevaC_v2 = {e => e.mapa(mapa_cueva_v2);
-                        e.visualesEnEscena([protagonista, puertaEntradaCueva]);
+                        e.actualizarVisuales([protagonista, puertaEntradaCueva]);
                         e.ost(track_cueva)}
 
 const cuevaC_v3 = {e => e.mapa(mapa_cueva_v3);
-                        e.visualesEnEscena([protagonista, puertaEntradaCueva]);
+                        e.actualizarVisuales([protagonista, puertaEntradaCueva]);
                         e.ost(track_cueva)}
 
 const cuevaC_v4 = {e => e.mapa(mapa_cueva_v4);
-                        e.visualesEnEscena([protagonista, puertaEntradaCueva]);
+                        e.actualizarVisuales([protagonista, puertaEntradaCueva]);
                         e.ost(track_cueva)}      
                                        
 const cuevaC_v5 = {e => e.mapa(mapa_cueva_v5);
-                        e.visualesEnEscena([protagonista, puertaEntradaCueva]);
+                        e.actualizarVisuales([protagonista, puertaEntradaCueva]);
                         e.ost(track_cueva)}  
 
 // ###################################################### PELEA FINAL #######################################################
@@ -346,9 +393,9 @@ const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoComba
                              guardabosques.cambiarAAtravesable() ;                  
                              guardabosques.estadoCombate(armadoGuardabosques);
                              e.mapa(mapa_FinalJuego)
-                             e.visualesEnEscena([protagonista, guardabosques]);
+                             e.actualizarVisuales([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
-                             e.eventos([hablarProta9, ataqueGuardabosques, ataqueEscopetaGuardabosques])} 
+                             e.actualizarEventos([hablarProta9, ataqueGuardabosques, ataqueEscopetaGuardabosques])} 
 
 // const peleaFinalC_v1 = {e => guardabosques.soyAtravesable(true) ;                   
 //                              guardabosques.estadoCombate(armadoGuardabosques);
@@ -358,13 +405,13 @@ const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoComba
 //                              e.eventos([hablarProta9,ataqueGuardabosques, ataqueEscopetaGuardabosques])}
 
 const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
-                                  e.visualesEnEscena([protagonista, auto]);
+                                  e.actualizarVisuales([protagonista, auto]);
                                   e.ost(track_tramo_final);
-                                  e.eventos([hablarProta8])}
+                                  e.actualizarEventos([hablarProta8])}
 
 // ################################### CONFIGURADORES EXCLUSIVOS PARA ESCENARIOS CON DIAPOS ##################################
 
-const diapoAmigaMuertaC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
+const diapoAmigaMuertaC_v1 = {e => e.removerSiEsta(protagonista);gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                    e.ost(track_amiga_muerta)}
 
 const diapoPeleaFinalC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
@@ -372,13 +419,14 @@ const diapoPeleaFinalC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true)
                                   e.removerSiEsta(protagonista)
                                   e.ost(track_guardabosques_cueva)}
 
-const diapoGraneroC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
+const diapoGraneroC_v1 = {e => e.removerSiEsta(protagonista);
+                               gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                game.removeVisual(puertaGranero);
                                e.ost(traicion_granero)}
 
 // DEJAR ABAJO DE TODO
 const escenarioTestC_v1 = {e => e.mapa(mapa_escenarioTest);
-                                e.visualesEnEscena([protagonista, hacha]);
+                                e.actualizarVisuales([protagonista, hacha]);
                                 e.ost(track_win)}
 
 
