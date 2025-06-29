@@ -1,4 +1,3 @@
-import diapositivasManager.*
 import enemigos.*
 import protagonista.*
 import puertas.*
@@ -6,9 +5,11 @@ import visualesExtra.*
 
 object gestorDeDialogo{
     var property esTiempoDeDialogo = false
-    const conversador    = protagonista
     var property dialogo = dialogoEscenarioInicial
+    const conversador    = protagonista
   
+    // =============================================================================================================================== \\
+
     method interactuarNPC(){
         if (self.sePuedeConversar()){
            self.conversar()
@@ -20,7 +21,7 @@ object gestorDeDialogo{
     }
 
     method conversar(){
-        if( not dialogo.esUltimoDialogo()){
+        if(not dialogo.esUltimoDialogo()){
             dialogo.decirDialogo()
         } else {
            self.accionFinalDialogo()
@@ -37,11 +38,15 @@ object gestorDeDialogo{
     }
 }
 
+// ################################################################################################################################### \\
+
 class Dialogo{
+    var property conversadorActual  = protagonista
     const property npcDialogo       = null
     const property dialogoEscenario = []
     const property bloque           = {}
-    var property conversadorActual  = protagonista
+
+    // =============================================================================================================================== \\
 
     method actualizarADialogoSiguiente(){
         dialogoEscenario.remove(self.dialogoActual())
@@ -62,11 +67,8 @@ class Dialogo{
     }
 
     method cambiarConversador(){
-        if (self.esElTurnoDelProta()){ 
-            self.conversadorActual(protagonista) 
-        } else { 
-            self.conversadorActual(npcDialogo) 
-        }
+        if (self.esElTurnoDelProta()){ self.conversadorActual(protagonista) } else 
+                                     { self.conversadorActual(npcDialogo)   }
     }
 
     method esElTurnoDelProta(){
@@ -74,7 +76,7 @@ class Dialogo{
     }
 }
 
-// DIALOGOS:
+// ############################################################ DIALOGOS ############################################################# \\
 
 const dialogoEnCabaña  = new Dialogo(npcDialogo = guardabosques, dialogoEscenario = dialogoCabaña, bloque = accionCabaña1)
 
@@ -82,7 +84,7 @@ const dialogoEnCabaña2 = new Dialogo(npcDialogo = guardabosques, dialogoEscenar
 
 const  dialogoEscenarioInicial = new Dialogo(npcDialogo = amiga, dialogoEscenario = dialogoAmiga, bloque = accionAmiga)
 
-// GUION DE DIALOGOS:
+// ######################################################## GUION DE DIALOGOS ######################################################## \\
 
 const dialogoCabaña  = ["Hola, ¿cómo va?", "Buenas Juan, ¿cómo va el lugar?", "Excelente, me preguntaba si tendría algo de leña", "Claro"]
 
@@ -90,15 +92,18 @@ const dialogoCabaña2 = ["¡¡¡AUXILIOO!!!", "¿Qué paso Juan?", "Esta lleno d
 
 const dialogoAmiga   = ["¿Dónde quedaba la cabaña?", "Al Norte y después a la derecha", "Dale, ahí vengo", "Dale, te espero"]
 
-// BLOQUES FINAL DIALOGO:
+// ###################################################### BLOQUES FINAL DIALOGO ###################################################### \\
 
-const accionAmiga   = {a,g => game.say(a,"Adiosss"); g.dialogo(dialogoEnCabaña); game.addVisual(puertaNorte);}
+const accionAmiga   = {a, g => game.say(a, "Adiosss"); g.dialogo(dialogoEnCabaña); game.addVisual(puertaNorte);}
 
-const accionCabaña1 = {gu,g => game.addVisual(leña); game.say(gu,"Agarrá la que está en la chimenea"); g.dialogo(dialogoEnCabaña2)}
+const accionCabaña1 = {gu, g => game.addVisual(leña); game.say(gu, "Agarrá la que está en la chimenea"); g.dialogo(dialogoEnCabaña2)}
 
-const accionCabaña2 = {gu,g => game.addVisual(puertaEntradaCabaña); game.say(gu,"Vamos ya mismo hacia allá")}
+const accionCabaña2 = {gu, g => game.addVisual(puertaEntradaCabaña); game.say(gu, "Vamos ya mismo hacia allá")}
 
-// ################# DIALOGOS EN ESCENARIO TEST #################
+// #################################################### DIALOGOS EN ESCENARIO TEST ################################################### \\
 
 const dialogoTEST          = ["Hola de nuevo", "Ya habíamos hablado", "Enloquecí, ¿no?", "Sí, andate"]
+
 const dialogoEscenarioTest = [amiga, dialogoTEST]
+
+// ################################################################################################################################### \\

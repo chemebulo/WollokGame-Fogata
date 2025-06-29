@@ -1,14 +1,14 @@
 import protagonista.*
 import enemigos.*
-import gestores.*
 import escenariosManager.*
-import npcAtaques.*
 
 class EventoLoopIndividual{
-    const sujetoUnico
     const nombreEvento = self.toString()
+    const tiempo       = 800
+    const sujetoUnico
     const bloque
-    const tiempo = 800
+
+    // ====================================================================================================================== \\
 
     method iniciarEvento(){
         game.onTick(tiempo, nombreEvento, {self.orden(sujetoUnico)})
@@ -27,7 +27,7 @@ class EventoLoopIndividual{
     }
 }
 
-// ########################################################################################################################## \\
+// ########################################################################################################################### \\
 
 class EventoEnemigoPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(1500), bloque = bloquePersecucion){}
 
@@ -39,20 +39,27 @@ const ataqueEscopetaGuardabosques = new EventoEnemigoAtaque(sujetoUnico = guarda
 const bloquePersecucion = {e => e.perseguirEnemigo()}  
 const bloqueAtaque      = {e => e.atacarEnemigo()}
 
-// ####################################### EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO ###################################### \\
+// ####################################### EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO ####################################### \\
 
-class EventoHablar {
+class EventoHablar{
     const sujetoUnico = protagonista
     const mensaje 
     
+    // ====================================================================================================================== \\
+
     method iniciarEvento(){
        game.say(sujetoUnico,mensaje)
     }
+
     method finalizarEvento(){}
 }
 
+// ########################################################################################################################## \\
+
 class EventoHablarConSonido inherits EventoHablar{
     const ost
+
+    // ====================================================================================================================== \\
 
     override method iniciarEvento(){
         super()   
@@ -60,7 +67,7 @@ class EventoHablarConSonido inherits EventoHablar{
     }
 }
 
-// ############################################# EVENTOS DE DIALOGOS ############################################
+// ################################################## EVENTOS DE DIALOGOS ################################################### \\
 
 const escucharLobos = new EventoHablarConSonido(mensaje = "¿¿Qué fue eso??", ost = track_manada)
 
@@ -74,7 +81,7 @@ const hablarProta4  = new EventoHablar(mensaje = "¿¿Qué carajo??")
 
 const hablarProta5  = new EventoHablar(mensaje = "Mierda, voy a esa cueva")
 
-const hablarProta6  = new EventoHablar(mensaje = "AHHHHHH")
+const hablarProta6  = new EventoHablar(mensaje = "¡¡AHHHHH!!")
 
 const hablarProta7  = new EventoHablar(mensaje = "¡¡Lo voy a matar!!")
 
@@ -85,3 +92,5 @@ const hablarProta9  = new EventoHablar(mensaje = "¡¡¡AHHHHHHHH!!!")
 const guardabosquesHabla  = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca al norte está el granero")
 
 const guardabosquesHabla2 = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca adentro, apurate")
+
+// ########################################################################################################################## \\

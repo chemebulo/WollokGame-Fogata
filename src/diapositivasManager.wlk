@@ -2,13 +2,13 @@ import videojuego.*
 import escenariosManager.*
 
 object gestorDeDiapositivas{ 
-
     var property peliculaAMostrar    = peliculaInicioJuego
     var property bloqueAEjecutar     = inicioJuegoD
-   //const juego                      = videojuego
     var property esHoraDeDiapositiva = true
 
-     method interactuarDiapositivas(){
+    // =============================================================================================================================== \\
+
+    method interactuarDiapositivas(){
         if(esHoraDeDiapositiva){ 
             self.gestionarDiapositivas()
         }
@@ -33,18 +33,20 @@ object gestorDeDiapositivas{
         self.esHoraDeDiapositiva(false)
         peliculaAMostrar = null
     }
-     method culminarDiapositivasYContinuar(){
+
+    method culminarDiapositivasYContinuar(){
         bloqueAEjecutar.apply(videojuego,self)
     }
 }
 
-/*
-    BLOQUES QUE EJECUTAN LO QUE SUCEDE AL FINALIZAR LA ULTIMA DIAPOSITIVA DE LA ESCENA EN UN ESCENARIO
-    LUEGO DE EJECUTAR LAS ORDENES SE PASA A OTRO ESCENARIO
+// ################################################################################################################################### \\
 
-    v=videojuego
-    g=gestorDeDiapositivas
-*/
+//    BLOQUES QUE EJECUTAN LO QUE SUCEDE AL FINALIZAR LA ULTIMA DIAPOSITIVA DE LA ESCENA EN UN ESCENARIO
+//    LUEGO DE EJECUTAR LAS ORDENES SE PASA A OTRO ESCENARIO
+//
+//    v=videojuego
+//    g=gestorDeDiapositivas
+
 const inicioJuegoD = {v,g => g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta)                      
                              v.cambiarEscenario(fogata)}
    
@@ -58,39 +60,33 @@ const despuesDeGranero = {v,g => g.configurarParaSiguiente(peliculaPeleaFinal, d
 const despuesDePeleaFinal = {v,g => g.configuracionFinal()                          
                                     v.cambiarEscenario(peleaFinal)}      
 
-                                          
-/*#############################################################################
-                               PELICULAS
-##############################################################################*/
+// ############################################################ PELICULA ############################################################ \\ 
 
 class Pelicula{
-    /*
-        @param pelicula = una lista de diapositivas.Requerida para luego remover los visuales de diapositivas
-        @iteradorPelicula = un Iterador que recibe una @pelicula. Muestra las diapositivas funcionando 
-        como una cola y al terminar queda vacia. 
-
-    */
+    //    @param pelicula = una lista de diapositivas.Requerida para luego remover los visuales de diapositivas
+    //    @iteradorPelicula = un Iterador que recibe una @pelicula. Muestra las diapositivas funcionando 
+    //    como una cola y al terminar queda vacia. 
     const pelicula
-   const iteradorPelicula = pelicula.copy()
+    const iteradorPelicula = pelicula.copy()
+
+    // =============================================================================================================================== \\
 
     method esLaUltimaDiapositiva(){
        return iteradorPelicula.isEmpty()
     }
 
     method procesarDiapositiva(){
-
        self.dibujarYActualizar(self.diapositivaActual())
     }
 
-     method diapositivaActual(){
+    method diapositivaActual(){
         return iteradorPelicula.first()
     }
 
-     method dibujarYActualizar(elem){
+    method dibujarYActualizar(elem){
         game.addVisual(elem)
         iteradorPelicula.remove(elem)
     }
-
 
     method borrarDiapositivasDelTablero(){
         pelicula.forEach({d => d.borrar()})
@@ -98,20 +94,21 @@ class Pelicula{
     }
 }
 
+// ################################################################################################################################### \\
 
 const peliculaInicioJuego = new Pelicula(pelicula = [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9])
 const peliculaGranero     = new Pelicula(pelicula = [dg0, dg1, dg2])
 const peliculaAmigaMuerta = new Pelicula(pelicula = [dam1, dam2, dam3])
 const peliculaPeleaFinal  = new Pelicula(pelicula = [dpf1, dpf2, dpf3])
 
-/*#############################################################################
-                            DIAPOSITIVAS
-##############################################################################*/
+// ########################################################## DIAPOSITIVAS ########################################################### \\
 
 class Diapositiva{
     var property position = game.at(0,0)
     var property image 
     
+    // =============================================================================================================================== \\
+
     method esAtravesable(){
         return true
     }
@@ -123,7 +120,8 @@ class Diapositiva{
     method atacadoPor(visual){}
 }
 
-                                     
+// ################################################################################################################################### \\
+          
 const dpf1 = new Diapositiva(image ="diapo-pelea-final2.png")
 const dpf2 = new Diapositiva(image ="diapo-pelea-final3.png")
 const dpf3 = new Diapositiva(image ="diapo-pelea-final4.png")
@@ -145,5 +143,5 @@ const d9  = new Diapositiva(image = "diapo-10.png")
 const dg0 = new Diapositiva(image = "diapo-granero-2.png")
 const dg1 = new Diapositiva(image = "diapo-granero-3.png")
 const dg2 = new Diapositiva(image = "diapo-granero-4.png")
-    
-//####################################
+
+// ################################################################################################################################### \\

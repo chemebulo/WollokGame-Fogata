@@ -8,6 +8,8 @@ import dialogosManager.*
 object videojuego{  
     var property escenario   = inicio
     
+    // ========================================================================================== \\
+
     method iniciar(){ 
         escenario.puestaEnEscena()
     }
@@ -34,7 +36,7 @@ object videojuego{
         game.onTick(5000, "fin", {game.stop()})
     }
 
-    // ############################### TABLERO ###############################
+    // ========================================================================================== \\
     
     method tablero(){
         game.width(13)
@@ -43,7 +45,7 @@ object videojuego{
         game.onCollideDo(protagonista, {objeto => objeto.interaccion()})
     }
 
-    // ############################## CONTROLES ##############################
+    // ========================================================================================== \\
     
     method controles(){
         keyboard.w().onPressDo({protagonista.mover(arriba)})

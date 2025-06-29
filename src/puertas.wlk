@@ -4,20 +4,16 @@ import visualesExtra.*
 import direccion.*
 import escenariosManager.*
 
-// ###############################################################################################
-
-class Puerta inherits Visual(image=null,position=game.origin()){
-	/*
-    	Se descarto lo de la puerta cerrada.Se requiere quitar la funcionalidad
-    	Se recomienda pasar la herencia a visualInteractuable,
-    	 y pasar la interaccion a un bloque como en esa clase
-    	 Lo mismo con la puerta especial
-  	*/
-  
-    var property irHacia       = fogata // por defecto
+class Puerta inherits Visual(image = null, position = game.origin()){
+    //	Se descarto lo de la puerta cerrada. Se requiere quitar la funcionalidad
+    //	Se recomienda pasar la herencia a visualInteractuable, y pasar la interaccion a un bloque como en esa clase
+    //	Lo mismo con la puerta especial.
+    var property irHacia       = fogata // Por defecto.
     const property estaCerrada = false
     const direccion            = null
 	
+    // ========================================================================================================= \\
+
     override method esAtravesable(){
 		return true
 	} 
@@ -37,6 +33,8 @@ class Puerta inherits Visual(image=null,position=game.origin()){
     }
 }
 
+// ############################################################################################################# \\
+
 class PuertaEspecial inherits Puerta{
   	override method interaccion(){
        self.validarInteraccion()
@@ -44,7 +42,7 @@ class PuertaEspecial inherits Puerta{
   	}
 }
 
-// #################################################################### PUERTAS PARA TODO EL JUEGO ####################################################################
+// ############################################################################################################# \\
 
 const puertaNorte = new Puerta(direccion = arriba,    image = "puerta.png", position = norte.ubicacion())    
 const puertaOeste = new Puerta(direccion = izquierda, image = "puerta.png", position = oeste.ubicacion())
@@ -54,3 +52,5 @@ const puertaSur   = new Puerta(direccion = abajo,     image = "puerta.png", posi
 const puertaEntradaCabaña = new PuertaEspecial(image = "puerta-cabaña.png",  irHacia = cabaña)
 const puertaEntradaCueva  = new PuertaEspecial(image = "puerta-cueva.png",   irHacia = cueva)
 const puertaGranero       = new PuertaEspecial(image = "puerta-granero.png", irHacia = granero)
+
+// ############################################################################################################# \\

@@ -2,10 +2,10 @@ import gestores.*
 import protagonista.*
 
 class MovimientoNPC {
-    const direccionesGestor = gestorDeDirecciones // Representa el gestor de direcciones.
-    const posicionesGestor  = gestorDeCeldasTablero  // Representa el gestor de posiciones.
-    const npc                                     // Representa al NPC que realiza el movimiento.
-    const enemigo = protagonista                  // Representa al enemigo que tiene el NPC.
+    const direccionesGestor = gestorDeDirecciones   // Representa el gestor de direcciones.
+    const posicionesGestor  = gestorDeCeldasTablero // Representa el gestor de posiciones.
+    const npc                                       // Representa al NPC que realiza el movimiento.
+    const enemigo = protagonista                    // Representa al enemigo que tiene el NPC.
 
     // ============================================================================================================= \\
 
@@ -32,10 +32,12 @@ class MovimientoNPC {
     }
 
     method sonDistintasPosiciones(primeraPosition, segundaPosition){
+        //
         return primeraPosition != segundaPosition
     }
 
     method seguirACeldaCercanaAEnemigo(positionNuevo, positionAntiguo){
+        //
         npc.position(positionNuevo) 
         npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
     }

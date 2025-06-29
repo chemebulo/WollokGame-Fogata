@@ -12,7 +12,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estado        = new EstadoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
     const property enemigo     = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
 
-    // ============================================================================================================== \\
+    // ==================================================================================================================================================== \\
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo dependiendo de su estado.
@@ -59,7 +59,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
 }
 
-// ################################################################################################################# \\
+// ####################################################################################################################################################### \\
 
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new EstadoAgresivoLobo(imagen = image, visual = self, modoAtaque = new AtaqueEnLugar(atacante = self)), vida = 20, daño = 2){
     const property eventoPersecucion = new EventoEnemigoPersecucion(sujetoUnico = self)
@@ -81,12 +81,12 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Esta
     }
 }
 
-// ################################################################################################################# \\
+// ####################################################################################################################################################### \\
 
 object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 5){
     const bloquePostMuerte = bloqueAccionesMuerte
     
-    // ============================================================================================================== \\
+    // ==================================================================================================================================================== \\
 
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.
@@ -103,13 +103,13 @@ object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da
     }
 }
 
-// ################################################################################################################# \\
+// ####################################################################################################################################################### \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = agresivoGuardabosques, vida = 50, daño = 2){
     var property soyAtravesable = false
     const bloquePostMuerte      = bloqueAccionesMuerte
 
-    // ============================================================================================================== \\
+    // ==================================================================================================================================================== \\
 
     override method imagenNueva(direccion){ 
         // Describe la imagen nueva del guardabosques en base a la dirección dada.
@@ -132,11 +132,11 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
     }
 }    
 
-// ################################################################################################################# \\
+// ####################################################################################################################################################### \\
 // BLOQUES DE MUERTE PARA JEFES
 
 const bloqueAccionesMuerte = {enemigo, salida, ost => enemigo.escenarioDondeEstoy().bajarVolumen();
                                                       game.sound(ost).play()
                                                       game.addVisual(salida)}
 
-// ################################################################################################################# \\
+// ####################################################################################################################################################### \\

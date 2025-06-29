@@ -1,10 +1,4 @@
 import direccion.*
-import protagonista.*
-import enemigos.*
-import puertas.*
-
-
-// ############################################################################################################################################# \\
 
 object gestorDeDirecciones{
     const ejePrimero = ejeX // Representa el primer eje del tablero, en este caso es el eje X.
@@ -31,7 +25,7 @@ object gestorDeDirecciones{
     method direccionDeDisparoEvaluada(xE, yE, xP, yP){
         // Dados unos pares de valores x,y evalua hacia donde disparar
         return if (self.estaAMiIzquierda(xE, xP)) { izquierda } else 
-               if (self.estaAMiDerecha(xE,xP))    { derecha   } else 
+               if (self.estaAMiDerecha(xE, xP))   { derecha   } else 
                if (self.estaArriba(yE, yP))       { arriba    } else 
                                                   { abajo     }
     }
@@ -168,11 +162,8 @@ object gestorDeVida{
 
     method actualizarVidaYEstado(visual, vidaActualizada){
         // Actualiza la vida y el estado del visual dado. Si la vida actualizada es menor o igual a cero, el visual muere.
-        if(vidaActualizada <= 0){ 
-            visual.actualizarAMuerto() 
-        } else {
-            visual.vida(vidaActualizada)
-        }
+        if(vidaActualizada <= 0){ visual.actualizarAMuerto()   } else 
+                                { visual.vida(vidaActualizada) }
     }
 }
 
@@ -231,11 +222,9 @@ object gestorFondoEscenario{
 
 // ############################################################################################################################################# \\
 
-
-
 object gestorDeLobos{
     const lobosEscenario = []
-    const  eventosLobos  = []
+    const eventosLobos  = []
     
     method agregarLobos(lobo){
         self.crearLoboGestionable(lobo)
