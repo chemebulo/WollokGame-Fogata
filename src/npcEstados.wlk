@@ -2,152 +2,151 @@ import protagonista.*
 import enemigos.*
 import npcMovimiento.*
 import gestores.*
-import direccion.*
-import visualesExtra.*
 import npcAtaques.*
-/*
-    El protagonista inicia el juego desarmado y solo cuando interactua con el hacha/tridente/manopla pasa a estar armado 
-    el resto del juego hasta el final de la pelea con guardabosques
-    El guardabosques pasa a estado armado al final del juego
-*/
 
-// ########################################################################################################################## \\
-// ESTADOS DEL PROTAGONISTA Y GUARDABOSQUES
+// ######################################################################################################################################################### \\
 
-const desarmadoProtagonista  = new Desarmado(image = "prota-desarmado-")
-const desarmadoGuardabosques = new Desarmado(image = "guardabosques-desarmado-")
-const armadoGuardabosques    = new ArmadoConEscopeta(pj = guardabosques, imagenActual = "guardabosques-escopeta-")
-const armadoProtagonista     = new ArmadoConHacha(pj = protagonista, imagenActual = "prota-hacha-")
-const armadoProtagonista2    = new ArmadoConTridente(pj = protagonista, imagenActual = "prota-tridente-")
-const armadoProtagonista3    = new ArmadoConManopla(pj = protagonista, imagenActual = "prota-manopla-")
+const pasivoGuardabosques = new EstadoPasivoGuardabosques(visual = guardabosques, imagen = "guardabosques-desarmado-")  // Representa al estado de combate pasivo del guardabosques.
+const pasivoProtagonista  = new EstadoPasivoProtagonista(visual = protagonista, imagen = "prota-desarmado-")            // Representa al estado de combate pasivo del protagonista.
 
-// ########################################################################################################################## \\
+const agresivoGuardabosques  = new EstadoAgresivoGuardabosques(visual = guardabosques, imagen = "guardabosques-escopeta-", modoAtaque = ataqueEscopeta) // Representa al estado de combate agresivo del guardabosques.
+const agresivoProtagonistaH  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-hacha-", modoAtaque = ataqueHacha)       // Representa al estado de combate agresivo del protagonista con hacha.
+const agresivoProtagonistaT  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-tridente-", modoAtaque = ataqueTridente) // Representa al estado de combate agresivo del protagonista con tridente.
+const agresivoProtagonistaM  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-manopla-", modoAtaque = ataqueManopla)   // Representa al estado de combate agresivo del protagonista con manopla.
 
-class Desarmado{
-    const image // parte del nombre de una imagen necesario para dibujar dependiendo la direccion
-    
-    method actual(){
-        return image
-    }
-    
-    method atacarEnemigo(){}
-}
+const ataqueHacha    = new AtaqueHacha(atacante = protagonista)     // Representa al modo de ataque para el hacha. 
+const ataqueTridente = new AtaqueTridente(atacante = protagonista)  // Representa al modo de ataque para el tridente. 
+const ataqueManopla  = new AtaqueEnLugar(atacante = protagonista)   // Representa al modo de ataque para la manopla. 
+const ataqueEscopeta = new Escopeta(tirador = guardabosques, enemigo = protagonista, cartucho = cartuchoGuardabosques) // Representa al modo de ataque de escopeta.
 
-// ########################################################################################################################## \\
-
-class Armado {
-    const pj           = null  // Personaje que ataca
-    const imagenActual = ""    // Parte del nombre de una imagen necesario para dibujar dependiendo la direccion
-    const modoAtaque   
-    const animacion    = new AnimacionAtaque(pjAnimado = pj)
-
-    method actual(){
-        return imagenActual
-    } 
-
-    method pj(){
-        return pj
-    }
-
-    method atacarEnemigo(){
-        modoAtaque.ataqueArma()
-        animacion.animarAtaque()
-    }
-    
-    method modoAtaque(){
-        // Llamado por protagonista.
-        return modoAtaque
-    } 
-
-    method posicionesParaCalcularAtaque(){
-        return modoAtaque.posicionesAAtacar()
-    }
-
-    method puedeAtacarAlEnemigo(){
-        // Indica si el lobo puede atacar a su enemigo. En este caso, no puede. 
-        return pj.estaSobreEnemigo()
-    }
-}
-
-// ##################### ESCOPETA DE GUARDABOSQUES ######################
-
-class ArmadoConEscopeta inherits Armado(pj = guardabosques, 
-                                        modoAtaque = new Escopeta(tirador = pj, enemigo = protagonista, cartucho = cartuchoGuardabosques)){
-
-    // va a disparar en todo momento, no me importa donde este el prota
-    override method puedeAtacarAlEnemigo(){
-        return true
-    } 
-}
-
-const cartuchoGuardabosques =  new Cartucho(misBalas= [bala1,bala2,bala3,bala4,bala5,bala6])
+const cartuchoGuardabosques = new Cartucho(misBalas = [bala1, bala2, bala3, bala4, bala5, bala6]) // Representa un cartucho que contiene balas.
+const bala1 = new Bala() // Representa una bala.
+const bala2 = new Bala() // Representa una bala.
+const bala3 = new Bala() // Representa una bala.
+const bala4 = new Bala() // Representa una bala.
+const bala5 = new Bala() // Representa una bala.
+const bala6 = new Bala() // Representa una bala.
 
 class Cartucho {
-    const property misBalas = [] // una lista que funciona como Queue
+    const property misBalas = [] // Describe las balas que estan en el cartucho. Su funcionamiento es como una Queue.
 }
 
-const bala1 = new Bala()
-const bala2 = new Bala()
-const bala3 = new Bala()
-const bala4 = new Bala()
-const bala5 = new Bala()
-const bala6 = new Bala()
+// ######################################################################################################################################################### \\
 
-// ################################################################################
-
-class ArmadoConHacha inherits Armado(modoAtaque = new AtaqueHacha(atacante = pj)){}
-  
-class ArmadoConTridente inherits Armado(modoAtaque = new AtaqueTridente(atacante = pj)){}
-
-class ArmadoConManopla inherits Armado(modoAtaque = new AtaqueManopla(atacante = pj)){}   
-
-// ########################################################################################################################## \\
-
-
-
-// ########################################################################################################################## \\
-
-class EnemigoVivo{
-    const visual //
-    const vidaGestor    = gestorDeVida //
-    const movimientoNPC = new MovimientoNPC(npc = visual) //
-    const animacion     = new AnimacionAtaque(pjAnimado = visual)
+class EstadoVivo{
+    const visual                                          // Describe el visual que se encuentra vivo.
+    const vidaGestor    = gestorDeVida                    // Representa al gestor de vida.
+    const movimientoNPC = new MovimientoNPC(npc = visual) // Representa al movimiento automatizado del visual.
 
     method perseguirEnemigo(){
-        // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo.
+        // El visual persigue a su enemigo hasta estar sobre él para poder atacarlo.
         movimientoNPC.perseguirEnemigo()
     }
 
     method atacarEnemigo(){
-        // El lobo ataca al enemigo si esta en la misma celda, caso contrario no hace nada 
+        // El visual ataca a su enemigo dependiendo del comportamiento asignado en su estado de combate. 
+        visual.estadoCombate().atacarEnemigo()
+    }
+
+    method atacadoPor(enemigo){
+        // Emite un mensaje cuando el visual es atacado por su enemigo, y se le actualiza la vida.
+        vidaGestor.atacadoPor(visual, enemigo)
+    }
+}
+
+// ######################################################################################################################################################### \\
+
+class EstadoMuerto{
+    method perseguirEnemigo(){}  // Al estar muerto, no tiene comportamiento asignado.
+
+    method atacarEnemigo(){}     // Al estar muerto, no tiene comportamiento asignado.
+
+    method atacadoPor(enemigo){} // Al estar muerto, no tiene comportamiento asignado.
+}
+
+// ######################################################################################################################################################### \\
+
+class EstadoCombate{
+    const visual // Describe el visual que tiene el estado de combate.
+    const imagen // Describe la nueva imagen apartir del estado de combate que va a tener el visual.
+
+    method actual(){
+        // Describe la imagen que se encuentra en dicho atributo.
+        return imagen
+    }
+}
+
+// ######################################################################################################################################################### \\
+
+class EstadoPasivo inherits EstadoCombate{
+    
+    method atacarEnemigo(){} // En el estado de combate pasivo, no hay un comportamiento definido para atacar a un enemigo.
+} 
+
+// ######################################################################################################################################################### \\
+
+class EstadoPasivoLobo inherits EstadoPasivo{} // Representa al estado de combate pasivo del lobo.
+
+// ######################################################################################################################################################### \\
+
+class EstadoPasivoGuardabosques inherits EstadoPasivo{} // Representa al estado de combate pasivo del guardabosques.
+
+// ######################################################################################################################################################### \\
+
+class EstadoPasivoProtagonista inherits EstadoPasivo{} // Representa al estado de combate pasivo del protagonista.
+
+// ######################################################################################################################################################### \\
+
+class EstadoAgresivo inherits EstadoCombate{
+    const animacion = new AnimacionAtaque(npc = visual) // Representa la animación que realiza el visual a la hora de atacar.
+    const modoAtaque // Representa en la forma que puede atacar el visual: en el lugar, en una celda lindante, en dos celdas lindantes, etc.
+
+    method atacarEnemigo(){
+        // El visual en su estado de combate enemigo ataca al enemigo.
+        self.atacarAEnemigo()
+    }
+
+    method puedeAtacarAlEnemigo(){
+        // Indica si el visual en su estado de combate agresivo puede atacar a su enemigo. 
+        return true
+    }
+
+    method atacarAEnemigo(){
+        // Representa el comportamiento del visual en su estado de combate agresivo.
+        modoAtaque.ataqueArma()
+        animacion.animarAtaque()
+    }
+}
+
+// ######################################################################################################################################################### \\
+
+class EstadoAgresivoLobo inherits EstadoAgresivo{ // Representa al estado de combate agresivo del lobo.
+
+    override method atacarEnemigo(){
+        // El lobo en su estado de combate enemigo ataca al enemigo si esta en la misma celda, caso contrario no hace nada.
         if (self.puedeAtacarAlEnemigo()){ 
             self.atacarAEnemigo()
         }
     }
 
-    method atacarAEnemigo(){
-         animacion.animarAtaque()
-         visual.emitirSonidoEnojado()
-         visual.enemigo().atacadoPor(visual)
-    }
-
-    method puedeAtacarAlEnemigo(){
-        // Indica si el lobo puede atacar a su enemigo. 
+    override method puedeAtacarAlEnemigo(){
+        // Indica si el lobo en su estado de combate agresivo puede atacar a su enemigo. 
         return visual.estaSobreEnemigo()
-    } 
+    }
 
-    method atacadoPor(enemigo){
-        // Emite un mensaje cuando el enemigo es atacado por su enemigo.
-        vidaGestor.atacadoPor(visual, enemigo)
+    override method atacarAEnemigo(){
+        // Representa el comportamiento del lobo en su estado de combate agresivo.
+        super()
+        visual.emitirSonidoEnojado()
     }
 }
 
-// ########################################################################################################################## \\
+// ######################################################################################################################################################### \\
 
-class EnemigoMuerto{
-    method perseguirEnemigo(){} //
+class EstadoAgresivoGuardabosques inherits EstadoAgresivo{} // Representa al estado de combate agresivo del guardabosques.
 
-    method atacarEnemigo(){} //
+// ######################################################################################################################################################### \\
 
-    method atacadoPor(enemigo){} //
-}
+class EstadoAgresivoProtagonista inherits EstadoAgresivo{} // Representa al estado de combate agresivo del protagonista.
+
+// ######################################################################################################################################################### \\

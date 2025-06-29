@@ -117,30 +117,12 @@ object gestorDeCeldasTablero{
     method lindanteConvenienteHacia(posicion, visual){
         // Describe la celda lindante que más cerca está del visual dado.
         const lindantesSinObstaculo = self.lindantesSinObstaculos(posicion, visual)
-        /*
-            Me quedo como cosa dejar ese if, propongo esta solucion, se puede volver a la anterior si se desea.
-            El if se pregunta si la coleccion de lindantes esta vacia y luego le pedia el minimo a lindanteSinObstaculos,
-             con el minIfEmpty hace internamente lo que hace el if,si hay posiciones, devuelve la minima
-            y si esta vacio (basicamente lo que comprueba el if) devuelve la posicion. el metodo hayLindanteSinObstaculo
-            podria usarse para una validacion o podria eliminarse.
-            El lindanteSiHay es para lejibilidad
-        */
-
-      //  if(self.hayLindanteSinObstaculo(posicion, visual)){
-          //  return lindantesSinObstaculo.min({pos => pos.distance(visual.position())})
-        //} else {
-        //    return posicion
-
-        //}
-          
-          return  self.lindanteSiHay(lindantesSinObstaculo,posicion,visual)
+        return self.lindanteSiHay(lindantesSinObstaculo, posicion, visual)
     }
     
     method lindanteSiHay(lindantes,posicion,visual){
-             return lindantes.minIfEmpty({pos => pos.distance(visual.position())},{posicion})
-     }
-
-    
+        return lindantes.minIfEmpty({pos => pos.distance(visual.position())}, {posicion})
+    }
 
     // ========================================================================================================================================= \\
 
@@ -149,8 +131,6 @@ object gestorDeCeldasTablero{
         return #{posicion.up(1),   posicion.up(1).right(1),  posicion.right(1), posicion.right(1).down(1), 
                  posicion.down(1), posicion.down(1).left(1), posicion.left(1),  posicion.left(1).up(1)}
     }
-
-    
 }
 
 // ############################################################################################################################################# \\
@@ -266,12 +246,11 @@ object gestorDeLobos{
         lobo.eventoPersecucion().iniciarEvento()
         lobo.eventoAtaque().iniciarEvento()
     }
-    
 
     method crearLoboGestionable(lobo){
-          lobosEscenario.add(lobo);
-          eventosLobos.add(lobo.eventoPersecucion())
-          eventosLobos.add(lobo.eventoAtaque())
+        lobosEscenario.add(lobo);
+        eventosLobos.add(lobo.eventoPersecucion())
+        eventosLobos.add(lobo.eventoAtaque())
     }
     
     method limpiarLobos(){

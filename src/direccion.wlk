@@ -6,8 +6,6 @@ class Direccion{
         // Devuelve la siguiente posición de la posición dada, según lo almacenado en las constantes "dx" y "dy".
         return game.at(posicion.x() + dx, posicion.y() + dy)
     }
-
-    
 }
 
 object arriba    inherits Direccion(dy =  1){} // Representa la dirección Arriba en el tablero.
@@ -71,14 +69,21 @@ class Eje{
 
     method positionEnEje(posicion) // Describe la posición en el eje.
 
-    method primeraDir() = primeraDir // Describe la primera dirección del eje.
+    method primeraDir(){
+    // Describe la primera dirección del eje.
+        return primeraDir
+    }
 
-    method segundaDir() = segundaDir // Describe la segunda dirección del eje.
+    method segundaDir(){
+    // Describe la segunda dirección del eje.
+        return segundaDir
+    }
 }
 
 // ###################################################################################################################### \\
 
 object ejeX inherits Eje(primeraDir = derecha, segundaDir = izquierda){
+
     override method positionEnEje(posicion){
         // Describe la posición en el eje.
         return posicion.x()
@@ -88,6 +93,7 @@ object ejeX inherits Eje(primeraDir = derecha, segundaDir = izquierda){
 // ###################################################################################################################### \\
 
 object ejeY inherits Eje(primeraDir = arriba, segundaDir = abajo){
+    
     override method positionEnEje(posicion){
         // Describe la posición en el eje.
         return posicion.y()

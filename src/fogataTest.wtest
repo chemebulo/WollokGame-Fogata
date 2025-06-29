@@ -35,10 +35,7 @@ describe "Movimiento del personaje"{
     test "El personaje se mueve 2 celdas a la derecha,3 arriba y 4 a la izquierda, pero no sale del tablero."{
         protagonista.mover(derecha,2)
         protagonista.mover(arriba,3)
-        //assert.protagonista.mover(izquierda,4)}
         assert.throwsException({protagonista.mover(izquierda,4)})
-
-       // assert.that{gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position())}
     }
 
     test"El personaje no puede salir  del tablero por el Oeste."{
@@ -126,37 +123,33 @@ describe "Movimiento del personaje con colisiones:"{
     }
 
     test "El personaje (0,0) va hasta la izquierda de la carpa, luego va hasta la derecha de la fogata (2,2) y vuelve a su posicion inicial."{
-        assert.equals(game.at(0,0),protagonista.position()) 
-        assert.equals(game.at(5,5),carpa.position())
-        assert.equals(game.at(2,2),fogata.position())
+        assert.equals(game.at(0,0), protagonista.position()) 
+        assert.equals(game.at(5,5), carpa.position())
+        assert.equals(game.at(2,2), fogata.position())
 
         protagonista.mover(derecha,4)
         protagonista.mover(arriba,5)
         protagonista.mover(derecha) // No atravieso la carpa.
 
-        assert.equals(game.at(4,5),protagonista.position()) // Estoy a la izquierda de carpa.
+        assert.equals(game.at(4,5), protagonista.position()) // Estoy a la izquierda de carpa.
         
         protagonista.mover(abajo,3)
         protagonista.mover(izquierda,4) // No atravieso la fogata.
 
-        assert.equals(game.at(3,2),protagonista.position()) // Estoy a la derecha de fogata.
+        assert.equals(game.at(3,2), protagonista.position()) // Estoy a la derecha de fogata.
         
         protagonista.mover(abajo,2)
         protagonista.mover(izquierda,3)
 
-        assert.equals(game.at(0,0),protagonista.position())
-       
+        assert.equals(game.at(0,0), protagonista.position())
     }
 }
 
 describe "Funcionamiento de puertas"{
+    const confg_test = {e=> e.mapa(mapa_TEST);e.visualesEnEscena([puertaNorte, puertaOeste])}
+    const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
+    const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")
 
-    const confg_test ={e=> e.mapa(mapa_TEST);e.visualesEnEscena([puertaNorte,puertaOeste])}
-    const confg_escsig = {puertaNorte.irHacia(bifurcacion);
-                           puertaOeste.irHacia(fogata)}
-   
-
-    const escenarioParaTestear = esc.construir(confg_test,confg_escsig,"")
     method initialize(){
         game.width(7)
         game.height(7)
@@ -166,15 +159,14 @@ describe "Funcionamiento de puertas"{
     }
    
     test "La puerta norte cambia de escenarioTEST al escenarioBifurcacion"{
-        
         puertaNorte.interaccion()
         assert.equals(bifurcacion,videojuego.escenario())
-        }
+    }
+    
     test  "La puerta norte cambia de escenarioTEST al escenarioInicial"{
-        
         puertaOeste.interaccion()
         assert.equals(fogataOBJ,videojuego.escenario())
-        }
+    }
 }
 
 describe "Ataque sobre lobo" {
@@ -187,7 +179,7 @@ describe "Ataque sobre lobo" {
 
         protagonista.position(game.at(1,1))
         lobo.position(game.at(2,1))
-        protagonista.estadoCombate(armadoProtagonista)
+        protagonista.estadoCombate(agresivoProtagonistaH)
 
         game.addVisual(protagonista)
         game.addVisual(lobo)
@@ -195,7 +187,7 @@ describe "Ataque sobre lobo" {
 
     test "El protagonista armado derrota al lobo" {
         assert.equals(10, lobo.vida()) // Vida del lobo antes de ataque
-        assert.equals(armadoProtagonista, protagonista.estadoCombate())
+        assert.equals(agresivoProtagonistaH, protagonista.estadoCombate())
         protagonista.atacar()
         lobo.atacarEnemigo()          
         assert.equals(9, lobo.vida()) // Vida del lobo despues de ataque
@@ -203,7 +195,7 @@ describe "Ataque sobre lobo" {
     }
 
     test "El protagonista desarmado no puede eliminar al lobo" {
-        protagonista.estadoCombate(desarmadoProtagonista)
+        protagonista.estadoCombate(pasivoProtagonista)
         protagonista.atacar()
         assert.equals(10, lobo.vida()) // Lobo sigue con la vida en 10
     }
@@ -218,8 +210,8 @@ describe "Ataque sobre guardabosques" {
 
         protagonista.position(game.at(3,3))
         guardabosques.position(game.at(4,3))
-        protagonista.estadoCombate(armadoProtagonista)
-        guardabosques.estadoCombate(armadoGuardabosques)
+        protagonista.estadoCombate(agresivoProtagonistaH)
+        guardabosques.estadoCombate(agresivoGuardabosques)
         game.addVisual(protagonista)
         game.addVisual(guardabosques)
     }
@@ -232,7 +224,7 @@ describe "Ataque sobre guardabosques" {
     }
 
     test "El protagonista desarmado no afecta al guardabosques" {
-        protagonista.estadoCombate(desarmadoProtagonista)
+        protagonista.estadoCombate(pasivoProtagonista)
         protagonista.atacar()
         assert.equals(40, guardabosques.vida()) // No se reduce la vida
     }
@@ -243,19 +235,16 @@ describe "Ataque sobre guardabosques" {
     }
 
     test "El guardabosques desarmado no puede atacar" {
-        guardabosques.estadoCombate(desarmadoGuardabosques)
+        guardabosques.estadoCombate(pasivoProtagonista)
         guardabosques.atacarEnemigo()
         assert.equals(10, protagonista.vida()) // No recibió daño
     }
 }
 
 describe "Cambio de estado desarmado a armado"{ 
-     const confg_test ={e=> e.mapa(mapa_TEST);e.visualesEnEscena([protagonista,hacha])}
-    const confg_escsig = {puertaNorte.irHacia(bifurcacion);
-                           puertaOeste.irHacia(fogata)}
-   
-
-    const escenarioParaTestear = esc.construir(confg_test,confg_escsig,"")
+    const confg_test   = {e=> e.mapa(mapa_TEST); e.visualesEnEscena([protagonista, hacha])}
+    const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
+    const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")
 
     method initialize(){
         game.width(7)
@@ -264,24 +253,25 @@ describe "Cambio de estado desarmado a armado"{
         videojuego.escenario(escenarioParaTestear)
         escenarioParaTestear.puestaEnEscena()  
     }
-    test"Al interactuar con el hacha el protagonista cambia de estado desarmado a armado"{
-        assert.equals(desarmadoProtagonista,protagonista.estadoCombate())
-        hacha.interaccion()
-        assert.equals(armadoProtagonista,protagonista.estadoCombate())
 
-        }
+    test"Al interactuar con el hacha el protagonista cambia de estado desarmado a armado"{
+        assert.equals(pasivoProtagonista, protagonista.estadoCombate())
+        hacha.interaccion()
+        assert.equals(agresivoProtagonistaH, protagonista.estadoCombate())
+    }
 }
 
 describe "Comportamiento del lobo" {
     const lobo = new Lobo()
     const obstaculo = new Obstaculo(position = game.at(4, 3))
+
     method initialize() {
         game.width(7)
         game.height(7)
         game.cellSize(100)
 
         protagonista.position(game.at(3, 3))
-        protagonista.estadoCombate(armadoProtagonista)
+        protagonista.estadoCombate(agresivoProtagonistaH)
 
         lobo.position(game.at(5, 3))
         game.addVisual(protagonista)

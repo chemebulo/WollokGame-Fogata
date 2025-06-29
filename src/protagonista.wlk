@@ -5,11 +5,10 @@ import videojuego.*
 import gestores.*
 
 object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100, daño = 3){
-    var property estoyAtacando      = false
-    var property estadoCombate      = desarmadoProtagonista 
-    var property estadoCombateElegido = null //cuando agarrasel arma recuerda el estado porque a veces vuelve a cambiar a desarmado 
-    const property vidaGestor       = gestorDeVida
-    const property movimientoGestor = gestorDeMovimiento
+    var property estadoCombate        = pasivoProtagonista
+    var property estadoCombateElegido = null
+    const property vidaGestor         = gestorDeVida
+    const property movimientoGestor   = gestorDeMovimiento
    
     // ============================================================================================================================== \\
 

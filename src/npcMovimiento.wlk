@@ -19,23 +19,24 @@ class MovimientoNPC {
     method avanzarHaciaEnemigo(){
         // Mueve al NPC hacia la siguiente posición y modifica su imagen en base a la dirección a la que se movió.
         const positionAntiguo = npc.position()
-        const positionNuevo   = self.siguientePosicion()
+        const positionNuevo   = self.siguientePosicion(positionAntiguo)
         
         if(self.sonDistintasPosiciones(positionNuevo,positionAntiguo)){ 
-            
            self.seguirACeldaCercanaAEnemigo(positionNuevo, positionAntiguo)
         }
     }
 
-    method seguirACeldaCercanaAEnemigo(posNueva,posAntigua){
-            npc.position(posNueva) 
-            npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(posAntigua, posNueva))
+    method siguientePosicion(position){
+        // Describe la siguiente posición conveniente para el NPC en base de donde esté parado.
+        return posicionesGestor.lindanteConvenienteHacia(position, enemigo)
     }
 
-    method sonDistintasPosiciones(pos1,pos2) = pos1 != pos2
-    
-    method siguientePosicion(){
-        // Describe la siguiente posición conveniente para el NPC en base de donde esté parado.
-        return posicionesGestor.lindanteConvenienteHacia(npc.position(), enemigo)
+    method sonDistintasPosiciones(primeraPosition, segundaPosition){
+        return primeraPosition != segundaPosition
+    }
+
+    method seguirACeldaCercanaAEnemigo(positionNuevo, positionAntiguo){
+        npc.position(positionNuevo) 
+        npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
     }
 }

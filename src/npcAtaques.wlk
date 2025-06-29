@@ -22,9 +22,6 @@ import npcEstados.*
             *La baja jamas ataca al guardabosques
 */
 
-
-// ########################################################################################################################## \\
-//                                                   ATAQUES CUERPO A CUERPO
 // ########################################################################################################################## \\
 
 class Ataque {
@@ -38,7 +35,6 @@ class Ataque {
          self.objetosEnPosicion(pos).forEach({obj => obj.atacadoPor(atacante)})
     }
  
-
     method objetosEnPosicion(posicion){
         return game.getObjectsIn(posicion)
     } 
@@ -46,7 +42,9 @@ class Ataque {
     method posicionesAAtacar()
 }
 
-class AtaqueHacha inherits Ataque{
+// ########################################################################################################################## \\
+
+class AtaqueHacha inherits Ataque(){
         
     override method posicionesAAtacar() = [atacante.position().down(1),
                                            atacante.position().up(1),
@@ -54,7 +52,9 @@ class AtaqueHacha inherits Ataque{
                                            atacante.position().right(1)]
 }
 
-class AtaqueTridente inherits Ataque{
+// ########################################################################################################################## \\
+
+class AtaqueTridente inherits Ataque(){
     
     override method posicionesAAtacar() = [atacante.position().left(1),
                                            atacante.position().left(2),
@@ -62,7 +62,9 @@ class AtaqueTridente inherits Ataque{
                                            atacante.position().right(2)]
 }
 
-class AtaqueManopla inherits Ataque{
+// ########################################################################################################################## \\
+
+class AtaqueEnLugar inherits Ataque(){
     
     override method posicionesAAtacar(){
         return [atacante.position()]
@@ -73,26 +75,30 @@ class AtaqueManopla inherits Ataque{
     } 
 }
 
+// ########################################################################################################################## \\
+
 class AnimacionAtaque{
     /*
         animarAtaque() : realiza una secuencia de de instrucciones que consisten en remover/agregar y settear la imagen de un visual
                          para dar sensacion de animacion
     */
-    const pjAnimado  = null // el visual que ataca
+    const npc  = null // el visual que ataca
 
     method animarAtaque(){
-        const imagenActual = pjAnimado.image()
-
-        game.removeVisual(pjAnimado) 
-        pjAnimado.image(pjAnimado.imagenTemporal())
-        game.addVisual(pjAnimado)
-        game.schedule(200, {game.removeVisual(pjAnimado); 
-                            pjAnimado.image(imagenActual); 
-                            game.addVisual(pjAnimado)})
+        const imagenActual = npc.image()
+        game.removeVisual(npc) 
+        npc.image(npc.imagenTemporal())
+        game.addVisual(npc)
+        game.schedule(200, {game.removeVisual(npc); 
+                            npc.image(imagenActual); 
+                            game.addVisual(npc)})
     }
+
     method atacadoPor(visual){}
  
-    method esAtravesable() = true
+    method esAtravesable(){
+        return true
+    }
 }
 
 
@@ -103,27 +109,31 @@ class Escopeta{
     const gestorDireccionBala = gestorDeDirecciones
     const tirador // quien dispara la escopeta
     const enemigo //personaje al que dispara
-    
     const cartucho // una instancia de Cartucho
     const cargador = cartucho.misBalas()
    
-    method balaADisparar() = cargador.first()
+    method balaADisparar(){
+        return cargador.first()
+    }
 
-    method posTirador() = tirador.position()
+    method posTirador(){
+        return tirador.position()
+    }
 
-    method posEnemigo() = enemigo.position()
+    method posEnemigo(){
+        return enemigo.position()
+    }
 
     method ataqueArma() {
         const miPosicion = self.posTirador()
         const direccion = self.direccionDisparo(miPosicion)
-        self.dispararEscopeta(miPosicion,direccion)
+        self.dispararEscopeta(miPosicion, direccion)
     }
 
     method dispararEscopeta(pos,direccion){
         const balaRecamara = self.balaADisparar()       
         balaRecamara.dispararse(direccion, pos)       
         self.recargar(balaRecamara)  
-    
     }
 
     method recargar(bala){
@@ -132,22 +142,23 @@ class Escopeta{
         cargador.add(bala)   
     }
 
-    method direccionDisparo(posTirador)= self.direccionADisparar(self.posEnemigo(),posTirador)
+    method direccionDisparo(posTirador){
+        return self.direccionADisparar(self.posEnemigo(), posTirador)
+    }
     
-    method direccionADisparar(posEnemigo,posTirador){
-        return gestorDireccionBala.direccionDeBala(posEnemigo,posTirador)
+    method direccionADisparar(posEnemigo, posTirador){
+        return gestorDireccionBala.direccionDeBala(posEnemigo, posTirador)
     }
 }
 
 class Bala inherits VisualAtravasable{
-
-    var  property dir = null
+    var property dir = null
     const gestorColision = gestorDeCeldasTablero
-    const gestorMov = gestorDeMovimiento
+    const gestorMov  = gestorDeMovimiento
     var sigoSinHerir = false
 
-    const trayectoriaRecursivaBala = {bala=> gestorMov.moverHaciaSinCambiarImagen(bala.dir(), bala) ;
-                                                 game.schedule(bala.velocidad(), {bala.gestionarTrayectoria()})}
+    const trayectoriaRecursivaBala = {bala => gestorMov.moverHaciaSinCambiarImagen(bala.dir(), bala);
+                                              game.schedule(bala.velocidad(), {bala.gestionarTrayectoria()})}
    
     override method image() = "bala-"+ dir.toString()+".png"
 
@@ -162,7 +173,6 @@ class Bala inherits VisualAtravasable{
         gestorMov.moverHaciaSinCambiarImagen(dir, self)
         game.addVisual(self)
         self.gestionarTrayectoria() // llamado recursivo
-
     }
         
     method gestionarTrayectoria(){
@@ -171,12 +181,12 @@ class Bala inherits VisualAtravasable{
         para terminar su recorrido y morir(borrar visual)
     */
          
-         if(not self.puedeSeguirTrayectoria() ) {              
+        if(not self.puedeSeguirTrayectoria() ) {              
             self.cicloTerminado()
-            }
-          else { 
-              trayectoriaRecursivaBala.apply(self) // se mueve y vuelve a llamar gestionarTrayectoria(dir)
-            }
+        }
+        else { 
+            trayectoriaRecursivaBala.apply(self) // se mueve y vuelve a llamar gestionarTrayectoria(dir)
+        }
     }
 
     method cicloTerminado(){game.removeVisual(self)}
@@ -188,7 +198,9 @@ class Bala inherits VisualAtravasable{
 
     method hacerDaño(){self.objetosDondePenetre().forEach({o => o.atacadoPor(self)})} 
 
-    method objetosDondePenetre() = game.getObjectsIn(self.position()).copyWithout(guardabosques)
+    method objetosDondePenetre(){
+        return game.getObjectsIn(self.position()).copyWithout(guardabosques)
+    }
 
     // #########################################################
     // #########################################################
@@ -207,6 +219,3 @@ class Bala inherits VisualAtravasable{
     override   method atacadoPor(visual){}
     //necesario por polimorfismo porque podria 
 }
-
-   
-    

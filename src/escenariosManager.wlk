@@ -12,20 +12,19 @@ import npcEstados.*
 // #############################################################################################################################
 
 class Escenario{ 
-   
-    const eventos           = []
-    const visualesEnEscena = []
     var property mapa              = mapa_comun
     var property fondoEscenario    = ""  
     var property ost               = game.sound("")
     var property confgActual       = {} // bloque 
     var property confgEscSiguiente = {} //bloque
-    
-    const gestorFondo           = gestorFondoEscenario
-    const gestorObstaculos      = gestorDeObstaculos
-    const gestorLobos           = gestorDeLobos
+    const eventos          = []
+    const visualesEnEscena = []
+    const gestorFondo      = gestorFondoEscenario
+    const gestorObstaculos = gestorDeObstaculos
+    const gestorLobos      = gestorDeLobos
    
     // ############### Metodos para inicializar el escenario ###################
+
     method puestaEnEscena(){ 
         self.configurar()
         self.configurarEscenarioSiguiente()
@@ -55,6 +54,7 @@ class Escenario{
         //Cuando se mata al loboJefe y Guardabosques la musica del escenario se baja dando lugar a otra
         ost.volume(0)
     }
+
     // ======================== METODOS PARA GESTIONAR LOS BLOQUES DE CONFIGURACION===================================
     
     method configuradorTotal(confgAct,confgEscenarioSiguiente){
@@ -69,6 +69,7 @@ class Escenario{
     method configurarEscenarioSiguiente(){
         confgEscSiguiente.apply()
     }
+
     // ======================== METODO PARA FINALIZAR ESCENARIO ======================================================
     
     method limpiar(){     
@@ -78,7 +79,6 @@ class Escenario{
         self.gestionarFinEventos()
         gestorObstaculos.limpiarObstaculos()
         gestorLobos.limpiarLobos()
-        
     }
   
     // ======================== METODOS POLIMORFICOS SIN USO ======================================================
@@ -92,9 +92,10 @@ class Escenario{
             game.removeVisual(visual)
         }
     }
+    
     // ======================== METODOS PARA GESTIONAR EVENTOS ======================================================
 
-     method gestionarInicioEventos(){
+    method gestionarInicioEventos(){
         // Inicia todos los eventos dados, salvo que no haya ningún evento para iniciar.
         if(not eventos.isEmpty()){
             eventos.forEach({e => e.iniciarEvento()})
@@ -144,7 +145,7 @@ class Escenario{
 
 // CONSTRUCTOR DE ESCENARIOS
 object esc{
-    method construir (confg_esc,confg_esc_sig,fondoEsc){
+    method construir (confg_esc, confg_esc_sig, fondoEsc){
         return new Escenario(confgActual = confg_esc,
                              confgEscSiguiente = confg_esc_sig,
                              fondoEscenario = fondoEsc)
@@ -359,7 +360,7 @@ const entradaCuevaC_v3 = {e => e.mapa(mapa_entradaCueva_v3);
                                e.actualizarVisuales([protagonista, puertaEntradaCueva]);
                                e.ost(track_ataque_lobos)}  
 
-const entradaCueva_v4 = {e => protagonista.estadoCombate(desarmadoProtagonista);
+const entradaCueva_v4 = {e => protagonista.estadoCombate(pasivoProtagonista);
                               protagonista.image("prota-desarmado-abajo.png");
                               game.removeVisual(puertaEntradaCueva)
                               e.mapa(mapa_entradaCueva_v2);
@@ -390,8 +391,8 @@ const cuevaC_v5 = {e => e.mapa(mapa_cueva_v5);
 // ###################################################### PELEA FINAL #######################################################
 
 const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElegido());      
-                             guardabosques.cambiarAAtravesable() ;                  
-                             guardabosques.estadoCombate(armadoGuardabosques);
+                             guardabosques.cambiarAAtravesable();                  
+                             guardabosques.estadoCombate(agresivoGuardabosques);
                              e.mapa(mapa_FinalJuego)
                              e.actualizarVisuales([protagonista, guardabosques]);
                              e.ost(track_pelea_final);
@@ -415,7 +416,7 @@ const diapoAmigaMuertaC_v1 = {e => e.removerSiEsta(protagonista);gestorDeDiaposi
                                    e.ost(track_amiga_muerta)}
 
 const diapoPeleaFinalC_v1 = {e => gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                  protagonista.estadoCombate(desarmadoProtagonista);
+                                  protagonista.estadoCombate(pasivoProtagonista);
                                   e.removerSiEsta(protagonista)
                                   e.ost(track_guardabosques_cueva)}
 
@@ -579,7 +580,6 @@ const track_manada           = "manada-lobo.mp3"
 const track_game_over        = "gameover.mp3"
 
 const track_win              = "game-win.mp3"
-
 
 const track_guardabosques_derrotado = "victoria-guardabosques.mp3"
 

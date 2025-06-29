@@ -5,9 +5,8 @@ import puertas.*
 import visualesExtra.*
 
 object gestorDeDialogo{
-    
     var property esTiempoDeDialogo = false
-    const conversador = protagonista
+    const conversador    = protagonista
     var property dialogo = dialogoEscenarioInicial
   
     method interactuarNPC(){
@@ -16,21 +15,21 @@ object gestorDeDialogo{
         }
     }     
 
-    method sePuedeConversar() = esTiempoDeDialogo and conversador.estaAlLadoDelNPC(dialogo.npcDialogo())
+    method sePuedeConversar(){
+        return esTiempoDeDialogo and conversador.estaAlLadoDelNPC(dialogo.npcDialogo())
+    }
 
     method conversar(){
         if( not dialogo.esUltimoDialogo()){
-               dialogo.decirDialogo()
-        }
-        else{
+            dialogo.decirDialogo()
+        } else {
            self.accionFinalDialogo()
         }
     }
 
     method accionFinalDialogo(){
         self.esTiempoDeDialogo(false)
-       self.hacerLoQueIndicaMiDialogo()
-
+        self.hacerLoQueIndicaMiDialogo()
     }
 
     method hacerLoQueIndicaMiDialogo(){
@@ -39,11 +38,10 @@ object gestorDeDialogo{
 }
 
 class Dialogo{
-
-    const property npcDialogo = null
+    const property npcDialogo       = null
     const property dialogoEscenario = []
-    var property conversadorActual = protagonista
-    const property bloque = {}
+    const property bloque           = {}
+    var property conversadorActual  = protagonista
 
     method actualizarADialogoSiguiente(){
         dialogoEscenario.remove(self.dialogoActual())
@@ -55,11 +53,13 @@ class Dialogo{
     }
 
     method decirDialogo(){
-         game.say(self.conversadorActual(), self.dialogoActual())
-             self.actualizarADialogoSiguiente()
+        game.say(self.conversadorActual(), self.dialogoActual())
+        self.actualizarADialogoSiguiente()
     }
 
-    method dialogoActual() = dialogoEscenario.first()
+    method dialogoActual(){
+        return dialogoEscenario.first()
+    }
 
     method cambiarConversador(){
         if (self.esElTurnoDelProta()){ 
@@ -72,7 +72,6 @@ class Dialogo{
     method esElTurnoDelProta(){
         return dialogoEscenario.size().even()
     }
-  
 }
 
 // DIALOGOS:

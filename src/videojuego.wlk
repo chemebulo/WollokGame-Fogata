@@ -7,7 +7,6 @@ import dialogosManager.*
 
 object videojuego{  
     var property escenario   = inicio
-   
     
     method iniciar(){ 
         escenario.puestaEnEscena()
@@ -20,11 +19,11 @@ object videojuego{
     }
 
     method finalizarJuego(){      
-        self.finalizarYMostrar(gameover,track_game_over)
+        self.finalizarYMostrar(gameover, track_game_over)
     }
 
     method juegoGanado(){      
-        self.finalizarYMostrar(juegoGanado,track_win)
+        self.finalizarYMostrar(juegoGanado, track_win)
     }
     
     method finalizarYMostrar(visual,sonido){
@@ -53,12 +52,10 @@ object videojuego{
         keyboard.d().onPressDo({protagonista.mover(derecha)})
         keyboard.e().onPressDo({gestorDeDialogo.interactuarNPC()})
         keyboard.f().onPressDo({gestorDeDiapositivas.interactuarDiapositivas()})
-        keyboard.k().onPressDo({game.schedule(500, {protagonista.atacar()})})
+        keyboard.k().onPressDo({protagonista.atacar()})
 
-        // Para testear cosas, se borrara antes de entrega
+        // Para testear cosas, se borrara antes de entrega.
         keyboard.m().onPressDo({game.stop()})
-        keyboard.l().onPressDo({game.say(protagonista,game.allVisuals().toString())}) 
-        
+        keyboard.l().onPressDo({game.say(protagonista, game.allVisuals().toString())}) 
     }
 }
-   

@@ -27,27 +27,19 @@ class EventoLoopIndividual{
     }
 }
 
-// ####################################### EVENTO LOBOS #######################################
+// ########################################################################################################################## \\
 
-class EventoLoboPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(2000), bloque = bloquePersecucion){}
+class EventoEnemigoPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(1500), bloque = bloquePersecucion){}
 
-class EventoLoboAtaque inherits EventoLoopIndividual(tiempo = 1000, bloque = bloqueAtaque){}
+class EventoEnemigoAtaque inherits EventoLoopIndividual(tiempo = 1200, bloque = bloqueAtaque){}
     
+const ataqueGuardabosques         = new EventoEnemigoPersecucion(sujetoUnico = guardabosques)
+const ataqueEscopetaGuardabosques = new EventoEnemigoAtaque(sujetoUnico = guardabosques)
+
 const bloquePersecucion = {e => e.perseguirEnemigo()}  
+const bloqueAtaque      = {e => e.atacarEnemigo()}
 
-const bloqueAtaque = {e => e.atacarEnemigo()}
-
-//#################### EVENTOS GUARDABOSQUES  ##########################
- 
-const ataqueGuardabosques = new EventoLoopIndividual(tiempo = 1000.randomUpTo(2000), sujetoUnico = guardabosques, bloque = bloqueAtaqueGuardabosques)
-
-const bloqueAtaqueGuardabosques = {g => g.perseguirEnemigo()}
-
-const ataqueEscopetaGuardabosques = new EventoLoopIndividual(sujetoUnico = guardabosques, tiempo = 1500, bloque = bloqueEscopeta)
-
-const bloqueEscopeta= {g => g.atacarEnemigo()}
-
-// ################################# EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO #################################
+// ####################################### EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO ###################################### \\
 
 class EventoHablar {
     const sujetoUnico = protagonista
@@ -64,7 +56,7 @@ class EventoHablarConSonido inherits EventoHablar{
 
     override method iniciarEvento(){
         super()   
-       game.sound(ost).play()
+        game.sound(ost).play()
     }
 }
 
