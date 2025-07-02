@@ -8,6 +8,19 @@ import npcEstados.*
 import escenariosMapas.*
 import puertas.*
 import enemigos.*
+import eventos.*
+
+// VARIABLES PARA TESTEO DE CONFIGURADORES DE ESCENARIOS 
+  const escenarioX = esc.construir({},{},"")
+  const eventoX = new EventoLoopIndividual(sujetoUnico=protagonista,bloque={})
+  const configuradorTEST = {e => e.actualizarVisuales([protagonista,puertaNorte]);
+                                         e.actualizarEventos([eventoX])}
+  const configuradorSigTEST = {puertaNorte.irHacia(granero)}
+
+//VARIABLES PARA TESTEO DE FUNCIONAMIENTO DE PUERTAS 
+ const confg_test = {e=> e.mapa(mapa_TEST);e.actualizarVisuales([puertaNorte, puertaOeste])}
+    const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
+    const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")          
 
 describe "Movimiento del personaje"{
     
@@ -114,9 +127,7 @@ describe "Movimiento del personaje con colisiones:"{
 }
 
 describe "Funcionamiento de puertas"{
-    const confg_test = {e=> e.mapa(mapa_TEST);e.actualizarVisuales([puertaNorte, puertaOeste])}
-    const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
-    const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")
+   
 
     method initialize(){
         game.width(7)
@@ -292,4 +303,46 @@ describe "Comportamiento del lobo" {
     }
 }
 
+//TESTEO DE CONFIGURADOR DE ESCENARIOS 
+describe "Funcionamiento de los configuradores de escenario"{
+    
+
+    test "el configurador de escenarios modifica el estado del escenario"{
+
+        assert.equals([],escenarioX.visualesEnEscena())
+        assert.equals([],escenarioX.eventos())
+        escenarioX.configuradorTotal(configuradorTEST,{})
+        escenarioX.configurar()
+        assert.equals([protagonista,puertaNorte],escenarioX.visualesEnEscena())
+        assert.equals([eventoX],escenarioX.eventos())
+
+    }
+
+    test "El configurador de escenario Siguiente modifica las puertas"{
+        puertaNorte.irHacia(fogata)
+        assert.equals(fogata,puertaNorte.irHacia())
+        escenarioX.configuradorTotal({},configuradorSigTEST )
+        escenarioX.configurarEscenarioSiguiente()
+        puertaNorte.irHacia(granero)
+        
+    }
+    test "el configurador de escenario siguiente modifica a otros escenarios"{
+        const nuevoEscenario = esc.construir({},{},"")
+        const nuevoConfigurador = {e => e.actualizarVisuales([protagonista]); e.actualizarEventos([eventoX])}
+        const confg_next_x = {nuevoEscenario.configuradorTotal(nuevoConfigurador,{})}
+        //se le da al escenarioX un configurador para el escenario siguiente a este
+        escenarioX.configuradorTotal({},confg_next_x)
+        //el escenario "nuevoEscenario" comienza con visuales y eventos vacios
+        assert.equals([],nuevoEscenario.visualesEnEscena())
+        assert.equals([],nuevoEscenario.eventos())
+        //el escenarioX le modifica a nuevoEscenario sus configuradores
+        escenarioX.configurarEscenarioSiguiente() 
+        //el nuevoEscenario se modifica a si mismo con los configuradores que le dio el escenarioX
+        nuevoEscenario.configurar()
+         assert.equals([protagonista],nuevoEscenario.visualesEnEscena())
+        assert.equals([eventoX],nuevoEscenario.eventos())
+
+    }
+}
+//testeo de gestores
 

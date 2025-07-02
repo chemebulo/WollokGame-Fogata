@@ -17,8 +17,8 @@ class Escenario{
     var property ost               = game.sound("")
     var property confgActual       = {} // Bloque. 
     var property confgEscSiguiente = {} // Bloque.
-    const eventos          = []
-    const visualesEnEscena = []
+    const property eventos          = [] // solo se les pide sus eventos en los TEST
+    const property visualesEnEscena = [] // solo se les pide sus visuales en los TEST
     const gestorFondo      = gestorFondoEscenario
     const gestorObstaculos = gestorDeObstaculos
     const gestorLobos      = gestorDeLobos
