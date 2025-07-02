@@ -12,8 +12,8 @@ import npcEstados.*
 // ############################################################################################################################## \\
 
 class Escenario{ 
-    var property mapa              = mapa_comun
-    var property fondoEscenario    = ""  
+    var property mapa              = mapa_comun // al instanciar los Escenarios se les brinda mapa
+    var property fondoEscenario    = ""   // al instanciar los Escenarios se les brinda fondo
     var property ost               = game.sound("")
     var property confgActual       = {} // Bloque. 
     var property confgEscSiguiente = {} // Bloque.
@@ -191,7 +191,6 @@ const entradaCueva    = esc.construir(entradaCuevaC_v1, entradaCuevaCES_v1, "fon
 
 const cueva           = esc.construir(cuevaC_v1, cuevaCES_v1,"fondo-cueva.png")
 
-const escenarioTEST   = esc.construir(escenarioTestC_v1, escenarioTestCES_v1, "fondo-escenario-inicial.png")
 
 const entradaGranero  = esc.construir(entradaGraneroC_v1, entradaGraneroCES_v1, "fondo-sur.png")
 
@@ -209,6 +208,7 @@ const diapoAmigaMuerta = esc.construir(diapoAmigaMuertaC_v1, {}, "diapo-amiga-mu
 
 const diapoPeleaFinal  = esc.construir(diapoPeleaFinalC_v1, {}, "diapo-pelea-final1.png")
 
+//const escenarioTEST   = esc.construir(escenarioTestC_v1, escenarioTestCES_v1, "fondo-escenario-inicial.png")
 // ################################################ CONFIGURADORES DE ESCENARIOS ################################################ \\
 
 // TEMPLATE CONFIGURADORES:
@@ -412,10 +412,6 @@ const diapoGraneroC_v1 = {e => e.removerSiEsta(protagonista);
                                game.removeVisual(puertaGranero);
                                e.ost(traicion_granero)}
 
-const escenarioTestC_v1 = {e => e.mapa(mapa_escenarioTest);
-                                e.actualizarVisuales([protagonista, hacha]);
-                                e.ost(track_win)}
-
 // ########################################### CONFIGURADORES DE ESCENARIOS SIGUIENTES ############################################ \\
 
 // CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
@@ -516,7 +512,6 @@ const entradaCuevaCES_v4 = {puertaEste.irHacia(bifurcacion);
 
 const bifurcacionCES_v6 = {puertaNorte.irHacia(estacionamiento)}       
 
-const escenarioTestCES_v1 = {game.removeVisual(puertaSur)}
 
 // ############################################################ MUSICA ############################################################ \\
 

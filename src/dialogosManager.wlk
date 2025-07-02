@@ -100,10 +100,3 @@ const accionCabaña1 = {gu, g => game.addVisual(leña); game.say(gu, "Agarrá la
 
 const accionCabaña2 = {gu, g => game.addVisual(puertaEntradaCabaña); game.say(gu, "Vamos ya mismo hacia allá")}
 
-// #################################################### DIALOGOS EN ESCENARIO TEST ################################################### \\
-
-const dialogoTEST          = ["Hola de nuevo", "Ya habíamos hablado", "Enloquecí, ¿no?", "Sí, andate"]
-
-const dialogoEscenarioTest = [amiga, dialogoTEST]
-
-// ################################################################################################################################### \\
