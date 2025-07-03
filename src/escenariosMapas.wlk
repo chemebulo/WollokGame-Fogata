@@ -50,30 +50,37 @@ class Elemento{
 // ################################################################################################################# \\
 
 class ElementoAgregado{
+
+    const gestorAgregador
+
     method construir(posicion) {
         const elemento = self.crearElemento(posicion)
         game.addVisual(elemento)
-        self.gestor().agregar(elemento) 
+       gestorAgregador.agregar(elemento)
     }
 
     method crearElemento(posicion)
-     method gestor()
 }
-class ElementoLobo inherits ElementoAgregado{
+class ElementoLobo inherits ElementoAgregado(gestorAgregador=gestorDeLobos){
+
     override method crearElemento(posicion) = new Lobo(position=posicion)
-    override method gestor()= gestorDeLobos
+  
 }
 
-class ElementoObstaculo inherits ElementoAgregado{
+class ElementoObstaculo inherits ElementoAgregado(gestorAgregador=gestorDeObstaculos){
+
     override method crearElemento(posicion) = new Obstaculo(position=posicion)
-    override method gestor()= gestorDeObstaculos
+  
 }
 class ElementoPared inherits ElementoObstaculo{
+
     override method crearElemento(posicion) = new ParedInvisible(position = posicion)
 }
 
 class ElementoLoboEspecial inherits ElementoLobo{
+
     override method crearElemento(posicion) = new LoboEspecial(position = posicion)
+
     override method construir(posicion){
         super(posicion)
         puertaGranero.irHacia(entradaGranero)
@@ -82,6 +89,7 @@ class ElementoLoboEspecial inherits ElementoLobo{
 // ################################################################################################################# \\
 
 object _ inherits Elemento{
+    
     override method construir(position){} // Por polimorfismo.
 }
 
