@@ -20,9 +20,9 @@ import eventos.*
   const configuradorSigTEST = {puertaNorte.irHacia(granero)}
 
 //VARIABLES PARA TESTEO DE FUNCIONAMIENTO DE PUERTAS 
- const confg_test = {e=> e.actualizarVisuales([puertaNorte, puertaOeste])}
-    const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
-    const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")          
+  const confg_test = {e=> e.actualizarVisuales([puertaNorte, puertaOeste])}
+  const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
+  const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")          
 
 describe "Movimiento del personaje"{
     
