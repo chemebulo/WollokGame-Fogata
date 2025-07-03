@@ -49,49 +49,55 @@ class Elemento{
 
 // ################################################################################################################# \\
 
-class ElementoLobo{
-    method construir(posicion){
-        const loboTemp = new Lobo(position = posicion)
-        game.addVisual(loboTemp)
-        gestorDeLobos.agregarLobos(loboTemp)
+class ElementoAgregado{
+    method construir(posicion) {
+        const elemento = self.crearElemento(posicion)
+        game.addVisual(elemento)
+        self.gestor().agregar(elemento) 
     }
+
+    method crearElemento(posicion)
+     method gestor()
+}
+class ElementoLobo inherits ElementoAgregado{
+    override method crearElemento(posicion) = new Lobo(position=posicion)
+    override method gestor()= gestorDeLobos
 }
 
-// ################################################################################################################# \\
-
-object _ inherits Elemento{
-    override method construir(position){} // Por las dudas.
+class ElementoObstaculo inherits ElementoAgregado{
+    override method crearElemento(posicion) = new Obstaculo(position=posicion)
+    override method gestor()= gestorDeObstaculos
+}
+class ElementoPared inherits ElementoObstaculo{
+    override method crearElemento(posicion) = new ParedInvisible(position = posicion)
 }
 
-// ################################################################################################################# \\
-
-object o{
-    method construir(posicion){
-        const temp = new Obstaculo(position = posicion)
-        game.addVisual(temp)
-        gestorDeObstaculos.agregar(temp)
-    }
-}
-
-object p{
-    method construir(posicion){
-        const temp = new ParedInvisible(position = posicion)
-        game.addVisual(temp)
-        gestorDeObstaculos.agregar(temp)
-    }
-}
-
-// ################################################################################################################# \\
-
-object l inherits ElementoLobo{} // Lobo agresivo.
-
-object j inherits Elemento(visual = loboEspecial){ // Lobo especial del granero, al matarlo me spawnea la salida.
+class ElementoLoboEspecial inherits ElementoLobo{
+    override method crearElemento(posicion) = new LoboEspecial(position = posicion)
     override method construir(posicion){
         super(posicion)
         puertaGranero.irHacia(entradaGranero)
-        gestorDeLobos.agregarLobos(loboEspecial)
     }
 }
+// ################################################################################################################# \\
+
+object _ inherits Elemento{
+    override method construir(position){} // Por polimorfismo.
+}
+
+// ################################################################################################################# \\
+
+object o inherits ElementoObstaculo{}
+
+
+object p inherits ElementoPared{}
+
+
+// ################################################################################################################# \\
+
+object l inherits ElementoLobo{} // Lobos agresivos.
+
+object j inherits ElementoLoboEspecial{}// El jefe del granero
    
 // ################################################################################################################# \\
 
@@ -122,6 +128,7 @@ object m inherits Elemento(visual = manopla){}
 object s inherits Elemento(visual = auto){}
 
 // ################################################################################################################# \\
+// ------------------------------------------- PUERTAS -------------------------------------------------------------
 
 object po inherits Elemento(visual = puertaOeste){}
 

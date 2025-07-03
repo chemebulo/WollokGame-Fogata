@@ -83,7 +83,7 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Esta
 
 // ####################################################################################################################################################### \\
 
-object loboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 5){
+class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 5){
     const bloquePostMuerte = bloqueAccionesMuerte
     
     // ==================================================================================================================================================== \\

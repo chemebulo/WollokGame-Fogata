@@ -307,7 +307,7 @@ const entradaGraneroC_v1 = {e => e.mapa(mapa_entradaGranero_v1);
                                  e.actualizarEventos([guardabosquesHabla2])}
 
 const graneroC_v1 ={ e => e.mapa(mapa_peleaGranero);
-                          e.actualizarVisuales([protagonista, hacha, loboEspecial, tridente, manopla]);
+                          e.actualizarVisuales([protagonista, hacha, tridente, manopla]); 
                           e.ost(track_pelea_granero)}
 
 const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);

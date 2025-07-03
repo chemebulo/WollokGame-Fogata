@@ -226,7 +226,7 @@ object gestorDeLobos{
     const lobosEscenario = []
     const eventosLobos  = []
     
-    method agregarLobos(lobo){
+    method agregar(lobo){
         self.crearLoboGestionable(lobo)
         self.iniciarCicloAtaque(lobo)
     }
