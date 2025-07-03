@@ -2,6 +2,8 @@ import protagonista.*
 import enemigos.*
 import escenariosManager.*
 
+// ############################################################################################################################ \\
+
 class EventoLoopIndividual{
     const nombreEvento = self.toString()
     const tiempo       = 800

@@ -5,6 +5,8 @@ import enemigos.*
 import puertas.*
 import videojuego.*
 
+// ########################################################################################################################## \\
+
 class Visual{
     var property position      = game.at(0,0) // Por defecto.
     var property image         = null         // Por defecto.

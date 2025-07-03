@@ -3,6 +3,8 @@ import protagonista.*
 import puertas.*
 import visualesExtra.*
 
+// ################################################################################################################################### \\
+
 object gestorDeDialogo{
     var property esTiempoDeDialogo = false
     var property dialogo = dialogoEscenarioInicial
@@ -70,7 +72,6 @@ class Dialogo{
 
     method esElTurnoDelProta(){
         // Si la cantidad de frases de dialogo es par, es turno del protagonista
-        
         return dialogoEscenario.size().even()
     }
 
@@ -91,7 +92,8 @@ const  dialogoEscenarioInicial = new Dialogo(npcDialogo = amiga, dialogoEscenari
 
 const dialogoCabaña  = ["Hola, ¿cómo va?", " Juan..emm.. ¿Todo en orden?", "Excelente, me preguntaba si tendría algo de leña", "Claro"]
 
-const dialogoCabaña2 = ["¡¡¡AUXILIOO!!!", "¿Qué pasó Juan?", "Esta lleno de lobos, mataron a mi amiga", "Carajo. No pensé que se acercarían", "¿Qué hago ahora?...Laura...", "Tranquilo, vamos al granero", "¿Porqué?, ¿Qué hay ahi?", "Tengo... armas"]
+const dialogoCabaña2 = ["¡¡¡AUXILIOO!!!", "¿Qué pasó Juan?", "Esta lleno de lobos, mataron a mi amiga", "Carajo. No pensé que se acercarían", 
+                        "¿Qué hago ahora?...Laura...", "Tranquilo, vamos al granero", "¿Porqué?, ¿Qué hay ahi?", "Tengo... armas"]
 
 const dialogoAmiga   = ["¿Dónde quedaba la cabaña?", "Al Norte y a la derecha", "Dale, ahí vengo", "Dale, te espero"]
 
@@ -102,4 +104,3 @@ const accionAmiga   = {a, g => game.say(a, "Ve con cuidado"); g.dialogo(dialogoE
 const accionCabaña1 = {gu, g => game.addVisual(leña); game.say(gu, "Agarrá de la chimenea un poco"); g.dialogo(dialogoEnCabaña2)}
 
 const accionCabaña2 = {gu, g => game.addVisual(puertaEntradaCabaña); game.say(gu, "Vamos ya mismo hacia allá")}
-

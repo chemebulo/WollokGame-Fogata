@@ -5,6 +5,8 @@ import escenariosManager.*
 import gestores.*
 import puertas.*
 
+// ################################################################################################################# \\
+
 //    USAR ESTAS MEDIDAS PARA TODOS LOS ESCENARIOS:
 //        * 9 listas     -> Formando el alto del escenario.
 //        * 13 elementos -> Formando el ancho del escenario.
@@ -50,36 +52,50 @@ class Elemento{
 // ################################################################################################################# \\
 
 class ElementoAgregado{
-
     const gestorAgregador
 
     method construir(posicion) {
         const elemento = self.crearElemento(posicion)
         game.addVisual(elemento)
-       gestorAgregador.agregar(elemento)
+        gestorAgregador.agregar(elemento)
     }
 
     method crearElemento(posicion)
 }
-class ElementoLobo inherits ElementoAgregado(gestorAgregador=gestorDeLobos){
 
-    override method crearElemento(posicion) = new Lobo(position=posicion)
-  
+// ################################################################################################################# \\
+
+class ElementoLobo inherits ElementoAgregado(gestorAgregador = gestorDeLobos){
+
+    override method crearElemento(posicion){
+        return new Lobo(position = posicion)
+    }
 }
 
-class ElementoObstaculo inherits ElementoAgregado(gestorAgregador=gestorDeObstaculos){
+// ################################################################################################################# \\
 
-    override method crearElemento(posicion) = new Obstaculo(position=posicion)
-  
+class ElementoObstaculo inherits ElementoAgregado(gestorAgregador = gestorDeObstaculos){
+
+    override method crearElemento(posicion){
+        return new Obstaculo(position = posicion)
+    }
 }
+// ################################################################################################################# \\
+
 class ElementoPared inherits ElementoObstaculo{
 
-    override method crearElemento(posicion) = new ParedInvisible(position = posicion)
+    override method crearElemento(posicion){
+        return new ParedInvisible(position = posicion)
+    }
 }
+
+// ################################################################################################################# \\
 
 class ElementoLoboEspecial inherits ElementoLobo{
 
-    override method crearElemento(posicion) = new LoboEspecial(position = posicion)
+    override method crearElemento(posicion){
+        return new LoboEspecial(position = posicion)
+    }
 
     override method construir(posicion){
         super(posicion)
@@ -97,19 +113,17 @@ object _ inherits Elemento{
 
 object o inherits ElementoObstaculo{}
 
-
 object p inherits ElementoPared{}
-
 
 // ################################################################################################################# \\
 
 object l inherits ElementoLobo{} // Lobos agresivos.
 
-object j inherits ElementoLoboEspecial{}// El jefe del granero
+object j inherits ElementoLoboEspecial{} // El jefe del granero.
    
 // ################################################################################################################# \\
 
-object g inherits Elemento(visual = guardabosques){} // Guardabosques -> No implementado, no usar.
+object g inherits Elemento(visual = guardabosques){}
 
 object z inherits Elemento(visual = protagonista){} 
 
@@ -136,7 +150,6 @@ object m inherits Elemento(visual = manopla){}
 object s inherits Elemento(visual = auto){}
 
 // ################################################################################################################# \\
-// ------------------------------------------- PUERTAS -------------------------------------------------------------
 
 object po inherits Elemento(visual = puertaOeste){}
 
@@ -154,7 +167,7 @@ object pq inherits Elemento(visual = puertaGranero){}
 
 // ################################################################################################################# \\
 
-const mapa_comun = // mapa por defecto, se usa solo en test
+const mapa_comun = // Mapa por defecto, se usa solo en test.
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -215,7 +228,7 @@ const mapa_escenarioBifurcacion_v2 =
 // ################################################################################################################# \\
 
 const mapa_escenarioBifurcacion_v3 =
-     [
+    [
         [ p , p , p , p , _ , _ , _ , _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
         [ p , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , p , p ],
@@ -230,7 +243,7 @@ const mapa_escenarioBifurcacion_v3 =
 // ################################################################################################################# \\
 
 const mapa_escenarioBifurcacion_v4 = 
-     [
+    [
         [ p , p , p , p , _ , _ , _ , _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
         [ p , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , p , p ],
@@ -261,7 +274,7 @@ const mapa_escenarioBifurcacion_v5 =
 
 const mapa_escenarioBifurcacion_v6 =
     [
-        [ p , p , p , p , _ , _ , pn , _ , _ , p , p , p , p ],
+        [ p , p , p , p , _ , _ , pn, _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
         [ p , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , p , p ],
         [ p , _ , _ , o , o , _ , _ , _ , _ , _ , _ , _ , p ],
@@ -290,7 +303,7 @@ const mapa_entradaCabaña_v1 =
 // ################################################################################################################# \\
 
 const mapa_entradaCabaña_v2 = 
-      [
+    [
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , p , _ ],
@@ -305,7 +318,7 @@ const mapa_entradaCabaña_v2 =
 // ################################################################################################################# \\
 
 const mapa_EntradaCabaña_v3 = 
-     [
+    [
         [ p , p , p , _ , g , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , p , _ ],
@@ -320,7 +333,7 @@ const mapa_EntradaCabaña_v3 =
 // ################################################################################################################# \\
 
 const mapa_EntradaCabaña_v4 =   
-   [
+    [
         [ p , p , p , _ , _ , _ , z , _ , p , p , p , p , _ ],
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , p , _ ],
@@ -365,8 +378,7 @@ const mapa_cabañaInicial_v2 =
 // ################################################################################################################# \\
 
 const mapa_entradaCueva_v1 =
-
-      [
+    [
         [ _ , _ , p , p , p , p , p , p , p , p , _ , p , p ],
         [ _ , _ , p , _ , _ , _ , p , _ , _ , _ , p , p , p ],
         [ _ , p , p , p , p , p , p , _ , _ , _ , _ , _ , _ ],
@@ -385,7 +397,7 @@ const mapa_entradaCueva_v2 =
         [ _ , _ , p , p , p , p , p , p , p , p , _ , p , p ],
         [ _ , _ , p , _ , _ , _ , p , _ , _ , _ , p , p , p ],
         [ _ , p , p , p , p , p , p , _ , _ , _ , _ , _ , _ ],
-        [ p , _ , _ , _ , _ , z, _ , _ , _ , _ , _ , _ , _ ],
+        [ p , _ , _ , _ , _ , z , _ , _ , _ , _ , _ , _ , _ ],
         [ p , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ p , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ p , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -396,7 +408,7 @@ const mapa_entradaCueva_v2 =
 // ################################################################################################################# \\
 
 const mapa_entradaCueva_v3 =
-      [
+    [
         [ _ , _ , p , p , p , p , p , p , p , p , _ , p , p ],
         [ _ , _ , p , _ , _ , _ , p , _ , _ , _ , p , p , p ],
         [ _ , p , p , p , p , p , p , _ , _ , _ , _ , _ , _ ],
@@ -409,7 +421,6 @@ const mapa_entradaCueva_v3 =
     ].reverse()
 
 // ################################################################################################################# \\
-// ESCENARIOS CUEVAS:
 
 const mapa_cueva_v1 =
     [
@@ -485,7 +496,6 @@ const mapa_cueva_v5 =
     ].reverse()  
 
 // ################################################################################################################# \\
-// GRANERO:
 
 const mapa_entradaGranero_v1 = 
     [
@@ -503,7 +513,7 @@ const mapa_entradaGranero_v1 =
 // ################################################################################################################# \\
 
 const mapa_entradaGranero_v2 =    
-   [
+    [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ p , p , p , p , p , p , p , p , p , p , p , p , p ],
         [ p , _ , _ , _ , _ , p , p , p , p , _ , _ , p , p ],
@@ -531,7 +541,6 @@ const mapa_peleaGranero =
     ].reverse()
 
 // ################################################################################################################# \\
-// FINAL:
 
 const mapa_FinalJuego =
     [
@@ -562,6 +571,3 @@ const mapa_estacionamiento_v1 =
     ].reverse()
 
 // ################################################################################################################# \\
-
-
-

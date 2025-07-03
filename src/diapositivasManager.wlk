@@ -1,6 +1,8 @@
 import videojuego.*
 import escenariosManager.*
 
+// ################################################################################################################################### \\
+
 object gestorDeDiapositivas{ 
     var property peliculaAMostrar    = peliculaInicioJuego
     var property bloqueAEjecutar     = inicioJuegoD
@@ -35,7 +37,7 @@ object gestorDeDiapositivas{
     }
 
     method culminarDiapositivasYContinuar(){
-        bloqueAEjecutar.apply(videojuego,self)
+        bloqueAEjecutar.apply(videojuego, self)
     }
 }
 
@@ -72,11 +74,11 @@ class Pelicula{
     // =============================================================================================================================== \\
 
     method esLaUltimaDiapositiva(){
-       return iteradorPelicula.isEmpty()
+        return iteradorPelicula.isEmpty()
     }
 
     method procesarDiapositiva(){
-       self.dibujarYActualizar(self.diapositivaActual())
+        self.dibujarYActualizar(self.diapositivaActual())
     }
 
     method diapositivaActual(){

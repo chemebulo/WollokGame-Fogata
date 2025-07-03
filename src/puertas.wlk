@@ -4,6 +4,8 @@ import visualesExtra.*
 import direccion.*
 import escenariosManager.*
 
+// ############################################################################################################# \\
+
 class Puerta inherits Visual(image = null, position = game.origin()){
     //	Se descarto lo de la puerta cerrada. Se requiere quitar la funcionalidad
     //	Se recomienda pasar la herencia a visualInteractuable, y pasar la interaccion a un bloque como en esa clase
@@ -15,19 +17,18 @@ class Puerta inherits Visual(image = null, position = game.origin()){
     // ========================================================================================================= \\
 
     override method esAtravesable(){
-		return true
+		  return true
 	} 
 
-   	override  method interaccion(){
+   	override method interaccion(){
       	self.validarInteraccion()
         const imagenRetorno = protagonista.imagenNueva(direccion)
-        protagonista.image(imagenRetorno) // para que al atravesar la puerta el prota quede con la imagen bien
+        protagonista.image(imagenRetorno) // Para que al atravesar la puerta el prota quede con la imagen bien.
       	videojuego.cambiarEscenario(irHacia)
     }
 
     method validarInteraccion(){
       	if (estaCerrada){
-      	  	//self.error("No puedo tomar este camino") // esto para el juego 
             game.say(protagonista,"No puedo tomar este camino")
       	}
     }
@@ -37,8 +38,8 @@ class Puerta inherits Visual(image = null, position = game.origin()){
 
 class PuertaEspecial inherits Puerta{
   	override method interaccion(){
-       self.validarInteraccion()
-       videojuego.cambiarEscenario(irHacia)
+       	self.validarInteraccion()
+       	videojuego.cambiarEscenario(irHacia)
   	}
 }
 

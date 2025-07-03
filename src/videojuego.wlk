@@ -5,6 +5,8 @@ import visualesExtra.*
 import diapositivasManager.*
 import dialogosManager.*
 
+// ############################################################################################## \\
+
 object videojuego{  
     var property escenario   = inicio
     
@@ -61,3 +63,5 @@ object videojuego{
         keyboard.l().onPressDo({game.say(protagonista, game.allVisuals().toString())}) 
     }
 }
+
+// ############################################################################################## \\

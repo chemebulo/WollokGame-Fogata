@@ -1,6 +1,8 @@
 import gestores.*
 import protagonista.*
 
+// ################################################################################################################# \\
+
 class MovimientoNPC {
     const direccionesGestor = gestorDeDirecciones   // Representa el gestor de direcciones.
     const posicionesGestor  = gestorDeCeldasTablero // Representa el gestor de posiciones.
@@ -42,3 +44,5 @@ class MovimientoNPC {
         npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
     }
 }
+
+// ################################################################################################################# \\

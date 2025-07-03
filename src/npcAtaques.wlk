@@ -2,6 +2,8 @@ import enemigos.*
 import gestores.*
 import visualesExtra.*
 
+// ########################################################################################################################## \\
+
 //  IMPORTANTE: Por favor no refactorizar este archivo, estoy optimizando la memoria
 //  para que solo existan 6 balas y una vez disparadas el cargador de la escopeta
 //  funcione como una Cola (dispara la primer bala del cargador y esta al dispararse 
@@ -26,7 +28,7 @@ class Ataque {
     }
   
     method atacarEnPosicion(pos){
-         self.objetosEnPosicion(pos).forEach({obj => obj.atacadoPor(atacante)})
+        self.objetosEnPosicion(pos).forEach({obj => obj.atacadoPor(atacante)})
     }
  
     method objetosEnPosicion(posicion){
@@ -75,8 +77,7 @@ class AnimacionAtaque{
     const npc  = null // el visual que ataca
 
     method animarAtaque(){
-        // Realiza una secuencia de de instrucciones que consisten en remover/agregar y settear la imagen de un visual
-        // para dar sensacion de animacion.
+        // Realiza una secuencia de instrucciones que consisten en remover/agregar la imagen de un visual para dar sensación de animación.
         const imagenActual = npc.image()
         game.removeVisual(npc) 
         npc.image(npc.imagenTemporal())
@@ -97,9 +98,9 @@ class AnimacionAtaque{
 
 class Escopeta{
     const gestorDireccionBala = gestorDeDirecciones
-    const tirador // quien dispara la escopeta
-    const enemigo //personaje al que dispara
-    const cartucho // una instancia de Cartucho
+    const tirador  // Quien dispara la escopeta.
+    const enemigo  // Personaje al que dispara.
+    const cartucho // Una instancia de Cartucho.
     const cargador = cartucho.misBalas()
 
     // ====================================================================================================================== \\
@@ -172,12 +173,11 @@ class Bala inherits VisualAtravasable{
     }
         
     method gestionarTrayectoria(){
-        // La bala se mueve recursivamente hasta que se den las condiciones para terminar su recorrido y morir(borrar visual)
-        if(not self.puedeSeguirTrayectoria() ) {              
+        // La bala se mueve recursivamente hasta que se den las condiciones para terminar su recorrido y morir(borrar visual).
+        if(not self.puedeSeguirTrayectoria()){              
             self.cicloTerminado()
-        }
-        else { 
-            trayectoriaRecursivaBala.apply(self) // Se mueve y vuelve a llamar gestionarTrayectoria(dir)
+        } else { 
+            trayectoriaRecursivaBala.apply(self) // Se mueve y vuelve a llamar gestionarTrayectoria(dir).
         }
     }
 
@@ -208,13 +208,12 @@ class Bala inherits VisualAtravasable{
     }
 
     method puedeSeguirTrayectoria(){       
-        return  sigoSinHerir or gestorColision.estaDentroDelTablero(self.position())
+        return sigoSinHerir or gestorColision.estaDentroDelTablero(self.position())
     }
 
     method cambiarImagen(imagen){
-        // la bala nunca cambia su imagen pero es necesario este metodo por polimorfismo
+        // Necesario solamente por polimorfismo.
     }
 
-    override method atacadoPor(visual){}
-    //necesario por polimorfismo porque podria 
+    override method atacadoPor(visual){} // Necesario solamente por polimorfismo.
 }

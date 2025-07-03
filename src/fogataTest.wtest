@@ -5,46 +5,45 @@ import gestores.*
 import escenariosManager.*
 import videojuego.*
 import npcEstados.*
-import escenariosMapas.*
 import puertas.*
 import enemigos.*
-import npcAtaques.*
 import dialogosManager.*
 import eventos.*
 
-// VARIABLES PARA TESTEO DE CONFIGURADORES DE ESCENARIOS 
-  const escenarioX = esc.construir({},{},"")
-  const eventoX = new EventoLoopIndividual(sujetoUnico=protagonista,bloque={})
-  const configuradorTEST = {e => e.actualizarVisuales([protagonista,puertaNorte]); // mapa test
-                                         e.actualizarEventos([eventoX])}
-  const configuradorSigTEST = {puertaNorte.irHacia(granero)}
+// ############################################################################################################################ \\
 
-//VARIABLES PARA TESTEO DE FUNCIONAMIENTO DE PUERTAS 
-  const confg_test = {e=> e.actualizarVisuales([puertaNorte, puertaOeste])}
-  const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
-  const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")          
+// VARIABLES PARA TESTEO DE CONFIGURADORES DE ESCENARIOS:
+	const escenarioX = esc.construir({}, {}, "")
+	const eventoX    = new EventoLoopIndividual( sujetoUnico = protagonista, bloque = {})
+	const configuradorTEST    = {e => e.actualizarVisuales([protagonista, puertaNorte]); e.actualizarEventos([eventoX])} // Mapa test.
+	const configuradorSigTEST = {puertaNorte.irHacia(granero)}
 
-describe "Movimiento del personaje"{
+//VARIABLES PARA TESTEO DE FUNCIONAMIENTO DE PUERTAS:
+	const confg_test   = {e => e.actualizarVisuales([puertaNorte, puertaOeste])}
+	const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
+	const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")          
+
+// ############################################################################################################################ \\
+
+describe "Movimiento del personaje:"{
     
     method initialize(){
         game.width(7)
         game.height(7)
         game.cellSize(100)
-
         protagonista.position(game.at(0,0))
         game.addVisual(protagonista)
     }   
 
     test "El personaje parte de la posicion (0,0) hacia la posicion (2,0) sin problemas."{
         protagonista.mover(derecha,2)
-        assert.equals(game.at(2,0),protagonista.position())
+        assert.equals(game.at(2,0), protagonista.position())
     }
 
     test "El personaje se mueve 2 celdas arriba, 2 celdas a la derecha y la posicion coincide."{
         protagonista.mover(arriba,2)
         protagonista.mover(derecha,2)
-
-        assert.equals(game.at(2,2),protagonista.position())
+        assert.equals(game.at(2,2), protagonista.position())
     }
 
     test "El personaje se mueve 2 celdas a la derecha,3 arriba y 4 a la izquierda, pero no sale del tablero."{
@@ -53,34 +52,34 @@ describe "Movimiento del personaje"{
         assert.throwsException({protagonista.mover(izquierda,4)})
     }
 
-    test "El personaje no puede salir del tablero por el Oeste"{
+    test "El personaje no puede salir del tablero por el Oeste."{
         assert.throwsException({protagonista.mover(izquierda, 10)})
         assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
-    test "El personaje no sale del tablero por el Norte"{
-         assert.throwsException({protagonista.mover(arriba, 20)})
-         assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
+    test "El personaje no sale del tablero por el Norte."{
+		assert.throwsException({protagonista.mover(arriba, 20)})
+		assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
-    test "El personaje no sale del tablero por el Este"{
-         assert.throwsException({protagonista.mover(derecha, 20)})         
-         assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
+    test "El personaje no sale del tablero por el Este."{
+		assert.throwsException({protagonista.mover(derecha, 20)})         
+		assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
     test "El personaje no sale del tablero por el Sur."{
-       
-         assert.throwsException({protagonista.mover(abajo, 20)})
+		assert.throwsException({protagonista.mover(abajo, 20)})
         assert.that(gestorDeCeldasTablero.estaDentroDelTablero(protagonista.position()))
     }
 
     test "El personaje se mueve 3 a la derecha, 3 a la izquierda y queda en el mismo lugar."{
         protagonista.mover(derecha,3)
         protagonista.mover(izquierda,3)
-
-        assert.equals(game.at(0,0),protagonista.position())
+        assert.equals(game.at(0,0), protagonista.position())
     }
 }
+
+// ############################################################################################################################ \\
 
 describe "Movimiento del personaje con colisiones:"{
 
@@ -93,39 +92,37 @@ describe "Movimiento del personaje con colisiones:"{
         fogataOBJ.position(game.at(2,2))
         carpa.position(game.at(5,5))
         protagonista.position(game.at(0,0))
-      
 
         game.addVisual(amiga)
         game.addVisual(fogataOBJ)
         game.addVisual(carpa)
         game.addVisual(protagonista)
-        
     }
     
     test "El personaje se mueve 7 pasos hacia la derecha pero no puede atravesar a la amiga y queda a su izquierda."{
         assert.equals(game.at(5,0),amiga.position())
-
         protagonista.mover(derecha,4)
-        assert.equals(game.at(4,0),protagonista.position())
-        // el personaje intenta moverse pero no puede atravesar a la amiga
-        assert.throwsException({protagonista.mover(derecha)})
-        assert.equals(game.at(4,0),protagonista.position())
+        assert.equals(game.at(4,0), protagonista.position())
+
+        assert.throwsException({protagonista.mover(derecha)}) // El personaje intenta moverse, pero no puede atravesar a la amiga.
+        assert.equals(game.at(4,0), protagonista.position())
     }
 
-    test "El personaje no puede atravesar obstaculos"{
+    test "El personaje no puede atravesar obstaculos."{
         const obs = new Obstaculo()
         obs.position(game.at(0,3))
         game.addVisual(obs)
         protagonista.mover(arriba,2)
-        assert.equals(game.at(0,2),protagonista.position())
-        assert.equals(game.at(0,3),obs.position())
+        assert.equals(game.at(0,2), protagonista.position())
+        assert.equals(game.at(0,3), obs.position())
         assert.throwsException({protagonista.mover(arriba)})
     }
 }
 
-describe "Funcionamiento de puertas"{
-   
+// ############################################################################################################################ \\
 
+describe "Funcionamiento de puertas:"{
+   
     method initialize(){
         game.width(7)
         game.height(7)
@@ -134,18 +131,20 @@ describe "Funcionamiento de puertas"{
         escenarioParaTestear.puestaEnEscena()    
     }
    
-    test "La puerta norte cambia de escenarioTEST al escenarioBifurcacion"{
+    test "La puerta norte cambia de escenarioTEST al escenarioBifurcacion."{
         puertaNorte.interaccion()
         assert.equals(bifurcacion,videojuego.escenario())
     }
     
-    test  "La puerta norte cambia de escenarioTEST al escenarioInicial"{
+    test  "La puerta norte cambia de escenarioTEST al escenarioInicial."{
         puertaOeste.interaccion()
         assert.equals(fogata,videojuego.escenario())
     }
 }
 
-describe "Funcionamiento de dialogo inicial" {
+// ############################################################################################################################ \\
+
+describe "Funcionamiento de dialogo inicial:" {
     method initialize() {
         game.width(5)
         game.height(5)
@@ -161,28 +160,26 @@ describe "Funcionamiento de dialogo inicial" {
         gestorDeDialogo.esTiempoDeDialogo(true)
     }
 
-    test "No se interactua si NO es tiempo de diálogo" {
+    test "No se interactua si NO es tiempo de diálogo." {
         gestorDeDialogo.esTiempoDeDialogo(false)
         const initialSize = gestorDeDialogo.dialogo().dialogoEscenario().size()
 
         gestorDeDialogo.interactuarNPC()
-
-        // El tamaño del dialogo no debería cambiar
-        assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size())
+        assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size()) // El tamaño del dialogo no debería cambiar.
     }
 
-    test "No se interactua si el protagonista está lejos" {
+    test "No se interactua si el protagonista está lejos." {
         protagonista.position(game.at(4, 4))
         const initialSize = gestorDeDialogo.dialogo().dialogoEscenario().size()
 
         gestorDeDialogo.interactuarNPC()
-
-        // El tamaño del diálogo no debería cambiar
-        assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size())
+        assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size()) // El tamaño del diálogo no debería cambiar.
     }
 }
 
-describe "Ataque sobre lobo" {
+// ############################################################################################################################ \\
+
+describe "Ataque sobre lobo:" {
     const lobo = new Lobo()
 
     method initialize() {
@@ -198,23 +195,25 @@ describe "Ataque sobre lobo" {
         game.addVisual(lobo)
     }
 
-    test "El protagonista armado derrota al lobo" {
-        assert.equals(20, lobo.vida()) // Vida del lobo antes de ataque
+    test "El protagonista armado derrota al lobo." {
+        assert.equals(20, lobo.vida()) // Vida del lobo antes de ataque.
         assert.equals(agresivoProtagonistaH, protagonista.estadoCombate())
         protagonista.atacar()
         lobo.atacarEnemigo()          
-        assert.equals(17, lobo.vida()) // Vida del lobo despues de ataque
+        assert.equals(17, lobo.vida()) // Vida del lobo despues de ataque.
         assert.equals(100, protagonista.vida())
     }
 
-    test "El protagonista desarmado no puede eliminar al lobo" {
+    test "El protagonista desarmado no puede eliminar al lobo." {
         protagonista.estadoCombate(pasivoProtagonista)
         protagonista.atacar()
-        assert.equals(20, lobo.vida()) // Lobo sigue con la vida en 10
+        assert.equals(20, lobo.vida()) // Lobo sigue con la vida en 10.
     }
 }
 
-describe "Ataque sobre guardabosques" {
+// ############################################################################################################################ \\
+
+describe "Ataque sobre guardabosques:" {
     method initialize() {
         game.width(7)
         game.height(7)
@@ -228,34 +227,35 @@ describe "Ataque sobre guardabosques" {
         game.addVisual(guardabosques)
     }
 
-    test "El protagonista armado le baja la vida al guardabosques al atacarlo" {
+    test "El protagonista armado le baja la vida al guardabosques al atacarlo." {
         assert.equals(50, guardabosques.vida())
         protagonista.atacar()
         assert.equals(47, guardabosques.vida())
-        assert.equals(100, protagonista.vida()) // El guardabosques no ataca automaticamente
+        assert.equals(100, protagonista.vida()) // El guardabosques no ataca automaticamente.
     }
 
-    test "El protagonista desarmado no afecta al guardabosques" {
+    test "El protagonista desarmado no afecta al guardabosques." {
         protagonista.estadoCombate(pasivoProtagonista)
         protagonista.atacar()
-        assert.equals(50, guardabosques.vida()) // No se reduce la vida
+        assert.equals(50, guardabosques.vida()) // No se reduce la vida.
     }
 
-    test "Si el guardabosques ataca, el protagonista pierde vida"{
-        protagonista.atacadoPor(guardabosques) //NOTA: atacarEnemigo usa game.schedule. Para simular, usamos atacadoPor directamente
+    test "Si el guardabosques ataca, el protagonista pierde vida."{
+        protagonista.atacadoPor(guardabosques) //NOTA: atacarEnemigo usa game.schedule. Para simular, usamos atacadoPor directamente.
         assert.equals(98, protagonista.vida())
     }
 
-    test "El guardabosques desarmado no puede atacar" {
+    test "El guardabosques desarmado no puede atacar." {
         guardabosques.estadoCombate(pasivoProtagonista)
         guardabosques.atacarEnemigo()
-        assert.equals(100, protagonista.vida()) // No recibio  daño
+        assert.equals(100, protagonista.vida()) // No recibió  daño.
     }
 }
 
+// ############################################################################################################################ \\
 
-describe "Cambio de estado desarmado a armado"{ //mapa test
-    const confg_test   = {e=>e.actualizarVisuales([protagonista, hacha])}
+describe "Cambio de estado desarmado a armado:"{ // Mapa test.
+    const confg_test   = {e => e.actualizarVisuales([protagonista, hacha])}
     const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
     const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")
 
@@ -267,15 +267,17 @@ describe "Cambio de estado desarmado a armado"{ //mapa test
         escenarioParaTestear.puestaEnEscena()  
     }
 
-    test"Al interactuar con el hacha el protagonista cambia de estado desarmado a armado"{
+    test"Al interactuar con el hacha el protagonista cambia de estado desarmado a armado."{
         assert.equals(pasivoProtagonista, protagonista.estadoCombate())
         hacha.interaccion()
         assert.equals(agresivoProtagonistaH, protagonista.estadoCombate())
     }
 }
 
-describe "Comportamiento del lobo" {
-    const lobo = new Lobo()
+// ############################################################################################################################ \\
+
+describe "Comportamiento del lobo:" {
+    const lobo      = new Lobo()
     const obstaculo = new Obstaculo(position = game.at(4, 3))
 
     method initialize() {
@@ -292,34 +294,33 @@ describe "Comportamiento del lobo" {
         game.addVisual(obstaculo)
     }
 
-    test "El lobo no se mueve si ya esta sobre el protagonista" {
+    test "El lobo no se mueve si ya esta sobre el protagonista." {
         lobo.position(protagonista.position())
         const posInicial = lobo.position()
 
         lobo.perseguirEnemigo()
 
-        assert.equals(posInicial, lobo.position()) // No se mueve
+        assert.equals(posInicial, lobo.position()) // No se mueve.
     }
 
-    test "El lobo no se mueve si esta muerto" {
+    test "El lobo no se mueve si esta muerto." {
         lobo.actualizarAMuerto()
         const posInicial = lobo.position()
         lobo.perseguirEnemigo()
         assert.equals(posInicial, lobo.position())
     }
 
-    test "El lobo ataca al protagonista si esta sobre el" {
+    test "El lobo ataca al protagonista si esta sobre el." {
         protagonista.vida(3)
         lobo.position(protagonista.position())
 
-        // NOTA: Usamos atacadoPor(visual) directamente
-        protagonista.atacadoPor(lobo)
+        protagonista.atacadoPor(lobo) // NOTA: Usamos atacadoPor(visual) directamente.
 
         assert.equals(1, protagonista.vida())
     }
 
-    test "El lobo se mueve hacia el protagonista si no esta sobre el" {
-        // Movimiento simple en línea recta horizontal
+    test "El lobo se mueve hacia el protagonista si no esta sobre el." {
+        // Movimiento simple en línea recta horizontal.
         protagonista.position(game.at(2, 2))
         lobo.position(game.at(4, 2))
 
@@ -327,19 +328,20 @@ describe "Comportamiento del lobo" {
         lobo.perseguirEnemigo()
         const nuevaPos = lobo.position()
 
-        assert.equals(game.at(3,2), nuevaPos) // Se mueve a (3,2), una celda hacia la izquierda    
+        assert.equals(game.at(3,2), nuevaPos) // Se mueve a (3,2), una celda hacia la izquierda.   
     }
 
-    test "El lobo esquiva obstaculo al perseguir al protagonista" {
+    test "El lobo esquiva obstaculo al perseguir al protagonista." {
         lobo.perseguirEnemigo()
-    
-        assert.equals(game.at(4,2), lobo.position()) // Se dirige hacia la celda en diagonal al noreste 
+        assert.equals(game.at(4,2), lobo.position()) // Se dirige hacia la celda en diagonal al noreste.
     }
 }
 
-describe "Comportamiento del guardabosque"{
+// ############################################################################################################################ \\
 
-        method initialize() {
+describe "Comportamiento del guardabosque:"{
+
+	method initialize() {
         game.width(7)
         game.height(7)
         game.cellSize(100)
@@ -351,38 +353,37 @@ describe "Comportamiento del guardabosque"{
         game.addVisual(protagonista)
         game.addVisual(guardabosques)
     }
-    test"El guardabosque no se mueve si esta muerto"{
+
+    test"El guardabosque no se mueve si esta muerto."{
         const posInicial= guardabosques.position()
         guardabosques.actualizarAMuerto()
         guardabosques.perseguirEnemigo()
         assert.equals(posInicial, guardabosques.position())
     }
 
-    test "El guardabosques dispara con la escopeta y daña al protagonista"{
+    test "El guardabosques dispara con la escopeta y daña al protagonista."{
         assert.equals(100, protagonista.vida())
 
-        protagonista.atacadoPor(bala1)    // Ejecutamos el daño de forma directa simulando el impacto
+        protagonista.atacadoPor(bala1) // Ejecutamos el daño de forma directa simulando el impacto.
         assert.equals(90, protagonista.vida())
     }
 
-    test "La bala no daña al guardabosques" {
-        bala1.position(guardabosques.position())  // Forzamos a la bala a estar sobre el guardabosques
+    test "La bala no daña al guardabosques." {
+        bala1.position(guardabosques.position()) // Forzamos a la bala a estar sobre el guardabosques.
         game.addVisual(bala1)
         
         bala1.interaccion()
-
         assert.equals(50, guardabosques.vida())
     }
 
-    test "La bala desaparece al salir del tablero" {
-       
+    test "La bala desaparece al salir del tablero." {
         protagonista.atacadoPor(bala1)
 
-        game.removeVisual(bala1) // Simulamos que la bala fue eliminada del juego
+        game.removeVisual(bala1) // Simulamos que la bala fue eliminada del juego.
         assert.equals([], game.getObjectsIn(bala1.position()).filter({v => v == bala1}))
     }
 
-    test "Varias balas dañan al protagonista acumulativamente" {
+    test "Varias balas dañan al protagonista acumulativamente." {
         protagonista.atacadoPor(bala1)
         assert.equals(90, protagonista.vida())
 
@@ -390,7 +391,7 @@ describe "Comportamiento del guardabosque"{
         assert.equals(80, protagonista.vida())
     }
 
-    test "La bala daña al lobo si lo alcanza" {
+    test "La bala daña al lobo si lo alcanza." {
         const lobo = new Lobo()
         lobo.vida(20)
         lobo.position(game.at(2,2))
@@ -399,63 +400,70 @@ describe "Comportamiento del guardabosque"{
         game.addVisual(lobo)
         game.addVisual(bala1)
 
-        bala1.interaccion() // Simulamos que la bala impacta
-
-        assert.equals(10, lobo.vida()) // Recibe 10 de daño
+        bala1.interaccion() // Simulamos que la bala impacta.
+        assert.equals(10, lobo.vida()) // Recibe 10 de daño.
     }
 }
-describe "Fin del juego cuando muere el protagonista" {
+
+// ############################################################################################################################ \\
+
+describe "Fin del juego cuando muere el protagonista:" {
+
     method initialize() {
         game.width(7)
         game.height(7)
         game.cellSize(100)
     }
 
-    test"El juego finaliza al morir el protagonista"{
+    test"El juego finaliza al morir el protagonista."{
         assert.equals(0,0)
     }
 }
 
-//TESTEO DE CONFIGURADOR DE ESCENARIOS 
-describe "Funcionamiento de los configuradores de escenario"{
+// ############################################################################################################################ \\
+// TESTEO DE CONFIGURADOR DE ESCENARIOS 
+
+describe "Funcionamiento de los configuradores de escenario:"{
     
-
-    test "el configurador de escenarios modifica el estado del escenario"{
-
+    test "El configurador de escenarios modifica el estado del escenario."{
         assert.equals([],escenarioX.visualesEnEscena())
         assert.equals([],escenarioX.eventos())
-        escenarioX.configuradorTotal(configuradorTEST,{})
+        escenarioX.configuradorTotal(configuradorTEST, {})
         escenarioX.configurar()
-        assert.equals([protagonista,puertaNorte],escenarioX.visualesEnEscena())
-        assert.equals([eventoX],escenarioX.eventos())
-
+        assert.equals([protagonista,puertaNorte], escenarioX.visualesEnEscena())
+        assert.equals([eventoX], escenarioX.eventos())
     }
 
-    test "El configurador de escenario Siguiente modifica las puertas"{
+    test "El configurador de escenario Siguiente modifica las puertas."{
         puertaNorte.irHacia(fogata)
         assert.equals(fogata,puertaNorte.irHacia())
-        escenarioX.configuradorTotal({},configuradorSigTEST )
+        escenarioX.configuradorTotal({}, configuradorSigTEST)
         escenarioX.configurarEscenarioSiguiente()
         puertaNorte.irHacia(granero)
-        
     }
-    test "el configurador de escenario siguiente modifica a otros escenarios"{
-        const nuevoEscenario = esc.construir({},{},"")
-        const nuevoConfigurador = {e => e.actualizarVisuales([protagonista]); e.actualizarEventos([eventoX])}
-        const confg_next_x = {nuevoEscenario.configuradorTotal(nuevoConfigurador,{})}
-        //se le da al escenarioX un configurador para el escenario siguiente a este
-        escenarioX.configuradorTotal({},confg_next_x)
-        //el escenario "nuevoEscenario" comienza con visuales y eventos vacios
-        assert.equals([],nuevoEscenario.visualesEnEscena())
-        assert.equals([],nuevoEscenario.eventos())
-        //el escenarioX le modifica a nuevoEscenario sus configuradores
-        escenarioX.configurarEscenarioSiguiente() 
-        //el nuevoEscenario se modifica a si mismo con los configuradores que le dio el escenarioX
-        nuevoEscenario.configurar()
-         assert.equals([protagonista],nuevoEscenario.visualesEnEscena())
-        assert.equals([eventoX],nuevoEscenario.eventos())
 
+    test "El configurador de escenario siguiente modifica a otros escenarios."{
+        const nuevoEscenario    = esc.construir({}, {}, "")
+        const nuevoConfigurador = {e => e.actualizarVisuales([protagonista]); e.actualizarEventos([eventoX])}
+        const configuracionSiguienteX = {nuevoEscenario.configuradorTotal(nuevoConfigurador, {})}
+
+        // Se le da al escenarioX un configurador para el escenario siguiente a este.
+        escenarioX.configuradorTotal({}, configuracionSiguienteX)
+
+        // El escenario "nuevoEscenario" comienza con visuales y eventos vacios.
+        assert.equals([], nuevoEscenario.visualesEnEscena())
+        assert.equals([], nuevoEscenario.eventos())
+
+        // El escenarioX le modifica a nuevoEscenario sus configuradores.
+        escenarioX.configurarEscenarioSiguiente() 
+
+        // El nuevoEscenario se modifica a si mismo con los configuradores que le dio el escenarioX.
+        nuevoEscenario.configurar()
+		assert.equals([protagonista], nuevoEscenario.visualesEnEscena())
+        assert.equals([eventoX], nuevoEscenario.eventos())
     }
 }
-//testeo de gestores
 
+// ############################################################################################################################ \\
+
+// Testeo de gestores

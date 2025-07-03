@@ -1,5 +1,7 @@
 import direccion.*
 
+// ############################################################################################################################################# \\
+
 object gestorDeDirecciones{
     const ejePrimero = ejeX // Representa el primer eje del tablero, en este caso es el eje X.
     const ejeSegundo = ejeY // Representa el segundo eje del tablero, en este caso es el eje Y.
@@ -23,7 +25,7 @@ object gestorDeDirecciones{
     }
 
     method direccionDeDisparoEvaluada(xE, yE, xP, yP){
-        // Dados unos pares de valores x,y evalua hacia donde disparar
+        // Dados unos pares de valores x,y evalua hacia donde disparar.
         return if (self.estaAMiIzquierda(xE, xP)) { izquierda } else 
                if (self.estaAMiDerecha(xE, xP))   { derecha   } else 
                if (self.estaArriba(yE, yP))       { arriba    } else 
@@ -191,7 +193,7 @@ object gestorDeMovimiento{
     }
 
     method moverHaciaSinCambiarImagen(direccion,visual){
-        // Mueve al visual sin modificar su imagen
+        // Mueve al visual sin modificar su imagen.
         visual.position(direccion.siguientePosicion(visual.position()))
     }
 }

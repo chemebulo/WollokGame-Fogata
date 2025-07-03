@@ -7,6 +7,8 @@ import videojuego.*
 import escenariosManager.*
 import puertas.*
 
+// ####################################################################################################################################################### \\
+
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estadoCombate
     var property estado        = new EstadoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
@@ -133,7 +135,7 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
 }    
 
 // ####################################################################################################################################################### \\
-// BLOQUES DE MUERTE PARA JEFES
+// BLOQUE DE MUERTE PARA JEFES
 
 const bloqueAccionesMuerte = {enemigo, salida, ost => enemigo.escenarioDondeEstoy().bajarVolumen();
                                                       game.sound(ost).play()

@@ -4,6 +4,8 @@ import npcEstados.*
 import videojuego.*
 import gestores.*
 
+// ################################################################################################################################## \\
+
 object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100, daño = 3){
     var property estadoCombate        = pasivoProtagonista
     var property estadoCombateElegido = null
@@ -43,8 +45,9 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     }
 
     method mover(direccion, cantidad){
-        // Hace que el personaje se mueva la cantidad de veces dada en la direccion dada.
-        // Solo para testear. 
+        // Hace que el personaje se mueva la cantidad de veces dada en la direccion dada. Solo se utiliza para testear. 
         (1 .. cantidad).forEach({n => self.mover(direccion)}) 
     }
 }
+
+// ################################################################################################################################## \\

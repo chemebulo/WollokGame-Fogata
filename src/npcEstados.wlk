@@ -74,6 +74,10 @@ class EstadoCombate{
         // Describe la imagen que se encuentra en dicho atributo.
         return imagen
     }
+
+    method visual(){
+        return visual
+    }
 }
 
 // ######################################################################################################################################################### \\
