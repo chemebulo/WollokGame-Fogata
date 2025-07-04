@@ -117,9 +117,9 @@ object p inherits ElementoPared{}
 
 // ################################################################################################################# \\
 
-object l inherits ElementoLobo{} // Lobos agresivos.
+object l inherits ElementoLobo{}
 
-object j inherits ElementoLoboEspecial{} // El jefe del granero.
+object j inherits ElementoLoboEspecial{}
    
 // ################################################################################################################# \\
 
@@ -143,11 +143,11 @@ object u inherits Elemento(visual = leña){}
 
 object h inherits Elemento(visual = hacha){}
 
-object tr inherits Elemento(visual = tridente){}
-
 object m inherits Elemento(visual = manopla){}
 
 object s inherits Elemento(visual = auto){}
+
+object tr inherits Elemento(visual = tridente){}
 
 // ################################################################################################################# \\
 

@@ -8,20 +8,20 @@ class EventoLoopIndividual{
     const nombreEvento = self.toString()
     const tiempo       = 800
     const sujetoUnico
-    const bloque
+    const comportamiento
 
     // ====================================================================================================================== \\
 
     method iniciarEvento(){
-        game.onTick(tiempo, nombreEvento, {self.orden(sujetoUnico)})
+        game.onTick(tiempo, nombreEvento, {self.aplicarEventoEn(sujetoUnico)})
     }
 
     method finalizarEvento(){
         game.removeTickEvent(nombreEvento)
     }
     
-    method orden(visual){
-        bloque.apply(visual)
+    method aplicarEventoEn(visual){
+        comportamiento.apply(visual)
     }
 
     method nombreEvento(){
@@ -31,15 +31,15 @@ class EventoLoopIndividual{
 
 // ########################################################################################################################### \\
 
-class EventoEnemigoPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(1500), bloque = bloquePersecucion){}
+class EventoEnemigoPersecucion inherits EventoLoopIndividual(tiempo = 1000.randomUpTo(1500), comportamiento = bloquePersecucion){}
 
-class EventoEnemigoAtaque inherits EventoLoopIndividual(tiempo = 1200, bloque = bloqueAtaque){}
+class EventoEnemigoAtaque inherits EventoLoopIndividual(tiempo = 1200, comportamiento = bloqueAtaque){}
     
 const ataqueGuardabosques         = new EventoEnemigoPersecucion(sujetoUnico = guardabosques)
 const ataqueEscopetaGuardabosques = new EventoEnemigoAtaque(sujetoUnico = guardabosques)
 
-const bloquePersecucion = {e => e.perseguirEnemigo()}  
-const bloqueAtaque      = {e => e.atacarEnemigo()}
+const bloquePersecucion = {npc => npc.perseguirEnemigo()}  
+const bloqueAtaque      = {npc => npc.atacarEnemigo()}
 
 // ####################################### EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO ####################################### \\
 
@@ -50,7 +50,7 @@ class EventoHablar{
     // ====================================================================================================================== \\
 
     method iniciarEvento(){
-       game.say(sujetoUnico,mensaje)
+       game.say(sujetoUnico, mensaje)
     }
 
     method finalizarEvento(){}
@@ -81,7 +81,7 @@ const hablarProta3  = new EventoHablar(mensaje = "Ya mismo lo mato a ese #&%&#$%
 
 const hablarProta4  = new EventoHablar(mensaje = "¿¿Qué carajo??")
 
-const hablarProta5  = new EventoHablar(mensaje = "Mierda, voy a esa cueva")
+const hablarProta5  = new EventoHablar(mensaje = "Mierda, voy a esa cueva.")
 
 const hablarProta6  = new EventoHablar(mensaje = "¡¡AHHHHH!!")
 
@@ -91,8 +91,8 @@ const hablarProta8  = new EventoHablar(mensaje = "Laura...")
 
 const hablarProta9  = new EventoHablar(mensaje = "¡¡¡AHHHHHHHH!!!")
 
-const guardabosquesHabla  = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca al norte está el granero")
+const guardabosquesHabla  = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca al norte está el granero.")
 
-const guardabosquesHabla2 = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca adentro, apurate")
+const guardabosquesHabla2 = new EventoHablar(sujetoUnico = guardabosques, mensaje = "Aca adentro, apurate.")
 
 // ########################################################################################################################## \\

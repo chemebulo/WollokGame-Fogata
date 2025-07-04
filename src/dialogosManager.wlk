@@ -6,32 +6,30 @@ import visualesExtra.*
 // ################################################################################################################################### \\
 
 object gestorDeDialogo{
-    var property esTiempoDeDialogo = false
+    var property esMomentoDeDialogar = false
     var property dialogo = dialogoEscenarioInicial
     const conversador    = protagonista
   
     // =============================================================================================================================== \\
 
-    method interactuarNPC(){
-        if (self.sePuedeConversar()){
-           self.conversar()
-        }
+    method interactuarConNPC(){
+        if (self.sePuedeConversar()){ self.conversar() }
     }     
 
     method sePuedeConversar(){
-        return esTiempoDeDialogo and conversador.estaAlLadoDelNPC(dialogo.npcDialogo())
+        return esMomentoDeDialogar and conversador.estaAlLadoDelNPC(dialogo.npcDialogo())
     }
 
     method conversar(){
         if(not dialogo.esUltimoDialogo()){
-            dialogo.decirDialogo()
+            dialogo.decirDialogoActual()
         } else {
-           self.accionFinalDialogo()
+           self.terminarDialogo()
         }
     }
 
-    method accionFinalDialogo(){
-        self.esTiempoDeDialogo(false)       
+    method terminarDialogo(){
+        self.esMomentoDeDialogar(false)       
         dialogo.finalizarDialogo()
     }
 }
@@ -40,24 +38,15 @@ object gestorDeDialogo{
 
 class Dialogo{
     var property conversadorActual  = protagonista
-    const property npcDialogo       = null
-    const property dialogoEscenario = []
-    const property bloque           = {}
-    const miGestorDialogo = gestorDeDialogo
+    const bloque           = {}
+    const npcDialogo       = null
+    const dialogoEscenario = []
+    const dialogoGestor    = gestorDeDialogo
 
     // =============================================================================================================================== \\
 
-    method actualizarADialogoSiguiente(){
-        dialogoEscenario.remove(self.dialogoActual())
-        self.actualizarConversador()
-    }
-
-    method esUltimoDialogo(){
-        return dialogoEscenario.isEmpty()
-    }
-
-    method decirDialogo(){
-        game.say(self.conversadorActual(), self.dialogoActual())
+    method decirDialogoActual(){
+        game.say(conversadorActual, self.dialogoActual())
         self.actualizarADialogoSiguiente()
     }
 
@@ -65,18 +54,37 @@ class Dialogo{
         return dialogoEscenario.first()
     }
 
-    method actualizarConversador(){
-        if (self.esElTurnoDelProta()){ self.conversadorActual(protagonista) } else 
-                                     { self.conversadorActual(npcDialogo)   }
+    method actualizarADialogoSiguiente(){
+        dialogoEscenario.remove(self.dialogoActual())
+        self.actualizarConversador()
     }
 
-    method esElTurnoDelProta(){
+    method actualizarConversador(){
+        if (self.esElTurnoDelProtagonista()){ self.conversadorActual(protagonista) } else 
+                                            { self.conversadorActual(npcDialogo)   }
+    }
+
+    method esElTurnoDelProtagonista(){
         // Si la cantidad de frases de dialogo es par, es turno del protagonista
         return dialogoEscenario.size().even()
     }
 
+    method esUltimoDialogo(){
+        return dialogoEscenario.isEmpty()
+    }
+
     method finalizarDialogo(){
-        bloque.apply(npcDialogo,miGestorDialogo)
+        bloque.apply(npcDialogo, dialogoGestor)
+    }
+
+    // =============================================================================================================================== \\
+
+    method npcDialogo(){
+        return npcDialogo
+    }
+
+    method dialogoEscenario(){
+        return dialogoEscenario
     }
 }
 
@@ -86,21 +94,23 @@ const dialogoEnCabaña  = new Dialogo(npcDialogo = guardabosques, dialogoEscenar
 
 const dialogoEnCabaña2 = new Dialogo(npcDialogo = guardabosques, dialogoEscenario = dialogoCabaña2, bloque = accionCabaña2)
 
-const  dialogoEscenarioInicial = new Dialogo(npcDialogo = amiga, dialogoEscenario = dialogoAmiga, bloque = accionAmiga)
+const dialogoEscenarioInicial = new Dialogo(npcDialogo = amiga, dialogoEscenario = dialogoAmiga, bloque = accionAmiga)
 
 // ######################################################## GUION DE DIALOGOS ######################################################## \\
 
-const dialogoCabaña  = ["Hola, ¿cómo va?", " Juan..emm.. ¿Todo en orden?", "Excelente, me preguntaba si tendría algo de leña", "Claro"]
+const dialogoCabaña  = ["Hola, ¿cómo va?", " Juan... emm... ¿todo en orden?", "Excelente, me preguntaba si tendría algo de leña.", "Claro."]
 
-const dialogoCabaña2 = ["¡¡¡AUXILIOO!!!", "¿Qué pasó Juan?", "Esta lleno de lobos, mataron a mi amiga", "Carajo. No pensé que se acercarían", 
-                        "¿Qué hago ahora?...Laura...", "Tranquilo, vamos al granero", "¿Porqué?, ¿Qué hay ahi?", "Tengo... armas"]
+const dialogoCabaña2 = ["¡¡¡AUXILIOO!!!", "¿Qué pasó Juan?", "Esta lleno de lobos, mataron a mi amiga.", "Carajo. No pensé que se acercarían.", 
+                        "¿Qué hago ahora? Laura...", "Tranquilo, vamos al granero.", "¿Por qué? ¿qué hay ahí?", "Tengo... armas."]
 
-const dialogoAmiga   = ["¿Dónde quedaba la cabaña?", "Al Norte y a la derecha", "Dale, ahí vengo", "Dale, te espero"]
+const dialogoAmiga   = ["¿Dónde quedaba la cabaña?", "Hacia el Norte y al Este.", "Dale, ahí vengo.", "Dale, te espero."]
 
 // ###################################################### BLOQUES FINAL DIALOGO ###################################################### \\
 
-const accionAmiga   = {a, g => game.say(a, "Ve con cuidado"); g.dialogo(dialogoEnCabaña); game.addVisual(puertaNorte);}
+const accionAmiga   = {a, g => game.say(a, "Andá con cuidado."); g.dialogo(dialogoEnCabaña); game.addVisual(puertaNorte);}
 
-const accionCabaña1 = {gu, g => game.addVisual(leña); game.say(gu, "Agarrá de la chimenea un poco"); g.dialogo(dialogoEnCabaña2)}
+const accionCabaña1 = {gu, g => game.addVisual(leña); game.say(gu, "Agarrá un poco de la chimenea."); g.dialogo(dialogoEnCabaña2)}
 
-const accionCabaña2 = {gu, g => game.addVisual(puertaEntradaCabaña); game.say(gu, "Vamos ya mismo hacia allá")}
+const accionCabaña2 = {gu, g => game.addVisual(puertaEntradaCabaña); game.say(gu, "Vamos ya mismo hacia allá.")}
+
+// ################################################################################################################################### \\

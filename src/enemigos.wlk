@@ -11,8 +11,8 @@ import puertas.*
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     var property estadoCombate
-    var property estado        = new EstadoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
-    const property enemigo     = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
+    var estado    = new EstadoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
+    const enemigo = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
 
     // ==================================================================================================================================================== \\
 
@@ -30,7 +30,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         // Actualiza el estado del enemigo a muerto, cambiando su imagen y su estado de colisión (sumado a unas cuantas cosas más).
         super()
         estado = new EstadoMuerto()
-        image = self.imagenMuerto()
+        self.image(self.imagenMuerto())
         self.cambiarAAtravesable()
         game.sound(self.sonidoMuerte()).play()
         self.accionesAdicionalesAlMorir()
@@ -59,13 +59,23 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
     method accionesAdicionalesAlMorir(){}
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
+
+    // ==================================================================================================================================================== \\
+
+    method estado(){
+        return estado
+    }
+
+    method enemigo(){
+        return enemigo
+    }
 }
 
 // ####################################################################################################################################################### \\
 
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new EstadoAgresivoLobo(imagen = image, visual = self, modoAtaque = new AtaqueEnLugar(atacante = self)), vida = 20, daño = 2){
-    const property eventoPersecucion = new EventoEnemigoPersecucion(sujetoUnico = self)
-    const property eventoAtaque      = new EventoEnemigoAtaque(sujetoUnico = self)
+    const eventoPersecucion = new EventoEnemigoPersecucion(sujetoUnico = self)
+    const eventoAtaque      = new EventoEnemigoAtaque(sujetoUnico = self)
 
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.
@@ -80,6 +90,16 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Esta
     method emitirSonidoEnojado(){
         // Emite un sonido de enojo del lobo.
         game.sound("lobo-enojado.mp3").play()
+    }
+
+    // ==================================================================================================================================================== \\
+
+    method eventoPersecucion(){
+        return eventoPersecucion
+    }
+
+    method eventoAtaque(){
+        return eventoAtaque
     }
 }
 
@@ -108,8 +128,7 @@ class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da�
 // ####################################################################################################################################################### \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = agresivoGuardabosques, vida = 50, daño = 2){
-    var property soyAtravesable = false
-    const bloquePostMuerte      = bloqueAccionesMuerte
+    const bloquePostMuerte = bloqueAccionesMuerte
 
     // ==================================================================================================================================================== \\
 
@@ -130,15 +149,15 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
     }
 
     override method esAtravesable(){
-        return soyAtravesable
+        return false
     }
 }    
 
 // ####################################################################################################################################################### \\
-// BLOQUE DE MUERTE PARA JEFES
+// BLOQUE DE MUERTE PARA JEFES:
 
 const bloqueAccionesMuerte = {enemigo, salida, ost => enemigo.escenarioDondeEstoy().bajarVolumen();
-                                                      game.sound(ost).play()
+                                                      game.sound(ost).play();
                                                       game.addVisual(salida)}
 
 // ####################################################################################################################################################### \\

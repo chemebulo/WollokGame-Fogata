@@ -14,34 +14,34 @@ object gestorDeDirecciones{
                                                                             { ejeSegundo.segundaDir() }
     }
   
-    method direccionDeBala(posEnemigo, posTirador){
+    method direccionDeBala(positionEnemigo, positionTirador){
         // Evalua la posicion entre el protagonista y el tirador y retorna la direccion de disparo.
-        const xEnemigo = self.xPos(posEnemigo)
-        const xTirador = self.xPos(posTirador)
-        const yEnemigo = self.yPos(posEnemigo)
-        const yTirador = self.yPos(posTirador)
+        const positionXEnemigo = self.xPos(positionEnemigo)
+        const positionYEnemigo = self.yPos(positionEnemigo)
+        const positionXTirador = self.xPos(positionTirador)
+        const positionYTirador = self.yPos(positionTirador)
 
-        return self.direccionDeDisparoEvaluada(xEnemigo, yEnemigo, xTirador, yTirador)
+        return self.direccionDeDisparoEvaluada(positionXEnemigo, positionYEnemigo, positionXTirador, positionYTirador)
     }
 
-    method direccionDeDisparoEvaluada(xE, yE, xP, yP){
+    method direccionDeDisparoEvaluada(positionXEnemigo, positionYEnemigo, positionXTirador, positionYTirador){
         // Dados unos pares de valores x,y evalua hacia donde disparar.
-        return if (self.estaAMiIzquierda(xE, xP)) { izquierda } else 
-               if (self.estaAMiDerecha(xE, xP))   { derecha   } else 
-               if (self.estaArriba(yE, yP))       { arriba    } else 
-                                                  { abajo     }
+        return if (self.estaAMiIzquierda(positionXEnemigo, positionXTirador)) { izquierda } else 
+               if (self.estaAMiDerecha(positionXEnemigo, positionXTirador))   {  derecha  } else 
+               if (self.estaArriba(positionYEnemigo, positionYTirador))       {   arriba  } else 
+                                                                              {   abajo   }
     }
 
-    method estaAMiIzquierda(posEnemigoX, posPropioX){
-        return posEnemigoX < posPropioX
+    method estaAMiIzquierda(positionXEnemigo, positionXPropio){
+        return positionXEnemigo < positionXPropio
     }
 
-    method estaAMiDerecha(posEnemigoX, posPropioX){
-        return posEnemigoX > posPropioX
+    method estaAMiDerecha(positionXEnemigo, positionXPropio){
+        return positionXEnemigo > positionXPropio
     }
 
-    method estaArriba(posEnemigoY, posPropioY){
-        return posEnemigoY > posPropioY
+    method estaArriba(positionYEnemigo, positionYPropio){
+        return positionYEnemigo > positionYPropio
     }
 
     method xPos(pos){
@@ -67,7 +67,7 @@ object gestorDeCeldasTablero{
 
     method hayObstaculoEn(posicion, visual){
         // Indica si algún obstáculo en la posicion dada sin incluir al visual dado.
-        return not self.objetosEnPosicion(posicion, visual).all({vis => vis.esAtravesable()})
+        return not self.objetosEnPosicion(posicion, visual).all({visualARevisar => visualARevisar.esAtravesable()})
     }
 
     method objetosEnPosicion(posicion, visual){
@@ -79,29 +79,29 @@ object gestorDeCeldasTablero{
 
     method estaDentroDelTablero(posicion){
         // Indica si la posición dada se encuentra dentro del tablero del juego.
-        return self.existeX(posicion.x()) and self.existeY(posicion.y())
+        return self.estaXDentroDelTablero(posicion.x()) and self.estaYDentroDelTablero(posicion.y())
     }
 
-    method existeX(x){
+    method estaXDentroDelTablero(positionX){
         // Indica si la posición x se encuentra dentro del eje X.
-		return self.enLimite(x, game.width())
+		return self.estaDentroDelLimite(positionX, game.width())
 	} 
 
-	method existeY(y){
+	method estaYDentroDelTablero(positionY){
         // Indica si la posición y se encuentra dentro del eje Y.
-		return self.enLimite(y, game.height())
+		return self.estaDentroDelLimite(positionY, game.height())
 	}                                                                                              
     
-    method enLimite(coord, max){
+    method estaDentroDelLimite(coordenada, limite){
         // Indica si la coordenada dada se encuentra entre el máximo dado.
-		return coord.between(0, max - 1) 
+		return coordenada.between(0, limite - 1) 
 	}
 
     // ========================================================================================================================================= \\
 
     method lindantesSinObstaculos(posicion, visual){
         // Describe todas las posiciones lindantes (ortogonales y diagonales) que no tienen obstaculos sin incluir al visual dado en las mismas.
-        return self.lindantesDe(posicion).filter({pos => not self.hayObstaculoEn(pos, visual)})
+        return self.lindantesDe(posicion).filter({posicionARevisar => not self.hayObstaculoEn(posicionARevisar, visual)})
     }
 
     // ========================================================================================================================================= \\
@@ -116,8 +116,8 @@ object gestorDeCeldasTablero{
         return self.lindanteSiHay(lindantesSinObstaculo, posicion, visual)
     }
     
-    method lindanteSiHay(lindantes,posicion,visual){
-        return lindantes.minIfEmpty({pos => pos.distance(visual.position())}, {posicion})
+    method lindanteSiHay(lindantes, posicion, visual){
+        return lindantes.minIfEmpty({posicionARevisar => posicionARevisar.distance(visual.position())}, {posicion})
     }
 
     // ========================================================================================================================================= \\
@@ -192,7 +192,7 @@ object gestorDeMovimiento{
         }
     }
 
-    method moverHaciaSinCambiarImagen(direccion,visual){
+    method moverHaciaSinCambiarImagen(direccion, visual){
         // Mueve al visual sin modificar su imagen.
         visual.position(direccion.siguientePosicion(visual.position()))
     }
@@ -201,11 +201,11 @@ object gestorDeMovimiento{
 // ############################################################################################################################################# \\
 
 object gestorFondoEscenario{
-    var property position = game.at(0,0)
     var property image = "" // La imagen tiene que ser de tamaño 1300px(ancho) x 900px(alto).
+    const position     = game.at(0,0)
     
     method visualizarFondo(nuevoFondo){
-        image = nuevoFondo
+        self.image(nuevoFondo)
         game.addVisual(self)    
     }
 
@@ -220,13 +220,19 @@ object gestorFondoEscenario{
     method interaccion(){}
 
     method atacadoPor(visual){}
+
+    // ========================================================================================================================================= \\
+
+    method position(){
+        return position
+    }
 }   
 
 // ############################################################################################################################################# \\
 
 object gestorDeLobos{
     const lobosEscenario = []
-    const eventosLobos  = []
+    const eventosLobos   = []
     
     method agregar(lobo){
         self.crearLoboGestionable(lobo)
@@ -246,7 +252,7 @@ object gestorDeLobos{
     
     method limpiarLobos(){
         lobosEscenario.forEach({lobo => self.resetearLobo(lobo)})
-        eventosLobos.forEach({ev => self.resetearEventoLobo(ev)})
+        eventosLobos.forEach({evento => self.resetearEventoLobo(evento)})
     }
 
     method resetearLobo(lobo){
@@ -254,9 +260,9 @@ object gestorDeLobos{
         lobosEscenario.remove(lobo)
     }
 
-    method resetearEventoLobo(ev){
-        game.removeTickEvent(ev.nombreEvento())
-        eventosLobos.remove(ev)
+    method resetearEventoLobo(evento){
+        game.removeTickEvent(evento.nombreEvento())
+        eventosLobos.remove(evento)
     }
 }
 

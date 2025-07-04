@@ -76,6 +76,7 @@ class EstadoCombate{
     }
 
     method visual(){
+        // Describe el visual que se encuentra en dicho atributo.
         return visual
     }
 }

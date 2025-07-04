@@ -70,12 +70,12 @@ class Eje{
     method positionEnEje(posicion) // Describe la posición en el eje.
 
     method primeraDir(){
-    // Describe la primera dirección del eje.
+        // Describe la primera dirección del eje.
         return primeraDir
     }
 
     method segundaDir(){
-    // Describe la segunda dirección del eje.
+        // Describe la segunda dirección del eje.
         return segundaDir
     }
 }

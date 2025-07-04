@@ -7,21 +7,22 @@ import videojuego.*
 import npcEstados.*
 import puertas.*
 import enemigos.*
+import npcAtaques.*
 import dialogosManager.*
 import eventos.*
 
 // ############################################################################################################################ \\
 
 // VARIABLES PARA TESTEO DE CONFIGURADORES DE ESCENARIOS:
-	const escenarioX = esc.construir({}, {}, "")
-	const eventoX    = new EventoLoopIndividual( sujetoUnico = protagonista, bloque = {})
+	const escenarioX = constructorEscenario.construir({}, {}, "")
+	const eventoX    = new EventoLoopIndividual( sujetoUnico = protagonista, comportamiento = {})
 	const configuradorTEST    = {e => e.actualizarVisuales([protagonista, puertaNorte]); e.actualizarEventos([eventoX])} // Mapa test.
 	const configuradorSigTEST = {puertaNorte.irHacia(granero)}
 
 //VARIABLES PARA TESTEO DE FUNCIONAMIENTO DE PUERTAS:
-	const confg_test   = {e => e.actualizarVisuales([puertaNorte, puertaOeste])}
-	const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
-	const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")          
+	const configuracionActualTEST    = {e => e.actualizarVisuales([puertaNorte, puertaOeste])}
+	const configuracionSiguienteTEST = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
+	const escenarioParaTestear = constructorEscenario.construir(configuracionActualTEST, configuracionSiguienteTEST, "")          
 
 // ############################################################################################################################ \\
 
@@ -133,12 +134,12 @@ describe "Funcionamiento de puertas:"{
    
     test "La puerta norte cambia de escenarioTEST al escenarioBifurcacion."{
         puertaNorte.interaccion()
-        assert.equals(bifurcacion,videojuego.escenario())
+        assert.equals(bifurcacion, videojuego.escenario())
     }
     
     test  "La puerta norte cambia de escenarioTEST al escenarioInicial."{
         puertaOeste.interaccion()
-        assert.equals(fogata,videojuego.escenario())
+        assert.equals(fogata, videojuego.escenario())
     }
 }
 
@@ -157,14 +158,14 @@ describe "Funcionamiento de dialogo inicial:" {
         game.addVisual(amiga)
 
         gestorDeDialogo.dialogo(dialogoEscenarioInicial)
-        gestorDeDialogo.esTiempoDeDialogo(true)
+        gestorDeDialogo.esMomentoDeDialogar(true)
     }
 
     test "No se interactua si NO es tiempo de diálogo." {
-        gestorDeDialogo.esTiempoDeDialogo(false)
+        gestorDeDialogo.esMomentoDeDialogar(false)
         const initialSize = gestorDeDialogo.dialogo().dialogoEscenario().size()
 
-        gestorDeDialogo.interactuarNPC()
+        gestorDeDialogo.interactuarConNPC()
         assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size()) // El tamaño del dialogo no debería cambiar.
     }
 
@@ -172,7 +173,7 @@ describe "Funcionamiento de dialogo inicial:" {
         protagonista.position(game.at(4, 4))
         const initialSize = gestorDeDialogo.dialogo().dialogoEscenario().size()
 
-        gestorDeDialogo.interactuarNPC()
+        gestorDeDialogo.interactuarConNPC()
         assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size()) // El tamaño del diálogo no debería cambiar.
     }
 }
@@ -255,9 +256,9 @@ describe "Ataque sobre guardabosques:" {
 // ############################################################################################################################ \\
 
 describe "Cambio de estado desarmado a armado:"{ // Mapa test.
-    const confg_test   = {e => e.actualizarVisuales([protagonista, hacha])}
-    const confg_escsig = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
-    const escenarioParaTestear = esc.construir(confg_test, confg_escsig, "")
+    const configuracionActualTEST    = {e => e.actualizarVisuales([protagonista, hacha])}
+    const configuracionSiguienteTEST = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
+    const escenarioParaTestear = constructorEscenario.construir(configuracionActualTEST, configuracionSiguienteTEST, "")
 
     method initialize(){
         game.width(7)
@@ -443,7 +444,7 @@ describe "Funcionamiento de los configuradores de escenario:"{
     }
 
     test "El configurador de escenario siguiente modifica a otros escenarios."{
-        const nuevoEscenario    = esc.construir({}, {}, "")
+        const nuevoEscenario    = constructorEscenario.construir({}, {}, "")
         const nuevoConfigurador = {e => e.actualizarVisuales([protagonista]); e.actualizarEventos([eventoX])}
         const configuracionSiguienteX = {nuevoEscenario.configuradorTotal(nuevoConfigurador, {})}
 

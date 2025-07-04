@@ -11,7 +11,7 @@ object gestorDeDiapositivas{
     // =============================================================================================================================== \\
 
     method interactuarDiapositivas(){
-        if(esHoraDeDiapositiva){ 
+        if(self.esHoraDeDiapositiva()){ 
             self.gestionarDiapositivas()
         }
     }
@@ -25,7 +25,7 @@ object gestorDeDiapositivas{
         }
     } 
    
-    method configurarParaSiguiente(nuevaPelicula,nuevoBloque){
+    method configurarParaSiguiente(nuevaPelicula, nuevoBloque){
         self.esHoraDeDiapositiva(false)
         self.peliculaAMostrar(nuevaPelicula)
         self.bloqueAEjecutar(nuevoBloque)
@@ -33,7 +33,7 @@ object gestorDeDiapositivas{
 
     method configuracionFinal(){
         self.esHoraDeDiapositiva(false)
-        peliculaAMostrar = null
+        self.peliculaAMostrar(null)
     }
 
     method culminarDiapositivasYContinuar(){
@@ -49,18 +49,18 @@ object gestorDeDiapositivas{
 //    v=videojuego
 //    g=gestorDeDiapositivas
 
-const inicioJuegoD = {v,g => g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta)                      
-                             v.cambiarEscenario(fogata)}
+const inicioJuegoD = {v, g => g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta);
+                              v.cambiarEscenario(fogata)}
    
-const despuesDeAmigaMuerta = {v,g => g.configurarParaSiguiente(peliculaGranero, despuesDeGranero)                               
-                                     bifurcacion.configuradorTotal(bifurcacionC_v4, bifurcacionCES_v4)                       
-                                     v.cambiarEscenario(bifurcacion)}                                         
+const despuesDeAmigaMuerta = {v, g => g.configurarParaSiguiente(peliculaGranero, despuesDeGranero);
+                                      bifurcacion.configuradorTotal(bifurcacionC_v4, bifurcacionCES_v4);
+                                      v.cambiarEscenario(bifurcacion)}
 
-const despuesDeGranero = {v,g => g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal)
-                                 v.cambiarEscenario(granero)}        
+const despuesDeGranero = {v, g => g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal);
+                                  v.cambiarEscenario(granero)}
 
-const despuesDePeleaFinal = {v,g => g.configuracionFinal()                          
-                                    v.cambiarEscenario(peleaFinal)}      
+const despuesDePeleaFinal = {v, g => g.configuracionFinal();
+                                     v.cambiarEscenario(peleaFinal)}
 
 // ############################################################ PELICULA ############################################################ \\ 
 
@@ -106,8 +106,8 @@ const peliculaPeleaFinal  = new Pelicula(pelicula = [dpf1, dpf2, dpf3])
 // ########################################################## DIAPOSITIVAS ########################################################### \\
 
 class Diapositiva{
-    var property position = game.at(0,0)
-    var property image 
+    const position = game.at(0,0)
+    const image 
     
     // =============================================================================================================================== \\
 
@@ -120,17 +120,27 @@ class Diapositiva{
     }
 
     method atacadoPor(visual){}
+
+    // =============================================================================================================================== \\
+
+    method position(){
+        return position
+    }
+
+    method image(){
+        return image
+    }
 }
 
 // ################################################################################################################################### \\
           
-const dpf1 = new Diapositiva(image ="diapo-pelea-final2.png")
-const dpf2 = new Diapositiva(image ="diapo-pelea-final3.png")
-const dpf3 = new Diapositiva(image ="diapo-pelea-final4.png")
+const dpf1 = new Diapositiva(image = "diapo-pelea-final2.png")
+const dpf2 = new Diapositiva(image = "diapo-pelea-final3.png")
+const dpf3 = new Diapositiva(image = "diapo-pelea-final4.png")
 
-const dam1 = new Diapositiva(image ="diapo-amiga-muerta2.png")
-const dam2 = new Diapositiva(image ="diapo-amiga-muerta3.png")
-const dam3 = new Diapositiva(image ="diapo-amiga-muerta4.png")
+const dam1 = new Diapositiva(image = "diapo-amiga-muerta2.png")
+const dam2 = new Diapositiva(image = "diapo-amiga-muerta3.png")
+const dam3 = new Diapositiva(image = "diapo-amiga-muerta4.png")
 
 const d0  = new Diapositiva(image = "diapo-1.png")
 const d1  = new Diapositiva(image = "diapo-2.png")

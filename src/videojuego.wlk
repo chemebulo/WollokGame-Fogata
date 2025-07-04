@@ -8,7 +8,7 @@ import dialogosManager.*
 // ############################################################################################## \\
 
 object videojuego{  
-    var property escenario   = inicio
+    var property escenario = inicio
     
     // ========================================================================================== \\
 
@@ -54,7 +54,7 @@ object videojuego{
         keyboard.a().onPressDo({protagonista.mover(izquierda)})
         keyboard.s().onPressDo({protagonista.mover(abajo)})
         keyboard.d().onPressDo({protagonista.mover(derecha)})
-        keyboard.e().onPressDo({gestorDeDialogo.interactuarNPC()})
+        keyboard.e().onPressDo({gestorDeDialogo.interactuarConNPC()})
         keyboard.f().onPressDo({gestorDeDiapositivas.interactuarDiapositivas()})
         keyboard.k().onPressDo({protagonista.atacar()})
 

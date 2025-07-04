@@ -24,11 +24,11 @@ class Ataque {
     const atacante
 
     method ataqueArma(){
-        self.posicionesAAtacar().forEach({pos => self.atacarEnPosicion(pos)})
+        self.posicionesAAtacar().forEach({posicion => self.atacarEnPosicion(posicion)})
     }
   
-    method atacarEnPosicion(pos){
-        self.objetosEnPosicion(pos).forEach({obj => obj.atacadoPor(atacante)})
+    method atacarEnPosicion(posicion){
+        self.objetosEnPosicion(posicion).forEach({objeto => objeto.atacadoPor(atacante)})
     }
  
     method objetosEnPosicion(posicion){
@@ -97,7 +97,7 @@ class AnimacionAtaque{
 // ################################################ ATAQUES CON ARMA DE FUEGO ############################################### \\
 
 class Escopeta{
-    const gestorDireccionBala = gestorDeDirecciones
+    const direccionesGestor = gestorDeDirecciones
     const tirador  // Quien dispara la escopeta.
     const enemigo  // Personaje al que dispara.
     const cartucho // Una instancia de Cartucho.
@@ -109,23 +109,23 @@ class Escopeta{
         return cargador.first()
     }
 
-    method posTirador(){
+    method posicionTirador(){
         return tirador.position()
     }
 
-    method posEnemigo(){
+    method posicionEnemigo(){
         return enemigo.position()
     }
 
     method ataqueArma() {
-        const miPosicion = self.posTirador()
-        const direccion = self.direccionDisparo(miPosicion)
-        self.dispararEscopeta(miPosicion, direccion)
+        const miPosicion = self.posicionTirador()
+        const direccionDestino = self.direccionDisparo(miPosicion)
+        self.dispararEscopetaDesdeA(miPosicion, direccionDestino)
     }
 
-    method dispararEscopeta(pos,direccion){
+    method dispararEscopetaDesdeA(posicion, direccion){
         const balaRecamara = self.balaADisparar()       
-        balaRecamara.dispararse(direccion, pos)       
+        balaRecamara.dispararse(direccion, posicion)       
         self.recargar(balaRecamara)  
     }
 
@@ -135,50 +135,51 @@ class Escopeta{
         cargador.add(bala)   
     }
 
-    method direccionDisparo(posTirador){
-        return self.direccionADisparar(self.posEnemigo(), posTirador)
+    method direccionDisparo(posicionTirador){
+        return self.direccionADisparar(self.posicionEnemigo(), posicionTirador)
     }
     
-    method direccionADisparar(posEnemigo, posTirador){
-        return gestorDireccionBala.direccionDeBala(posEnemigo, posTirador)
+    method direccionADisparar(posicionEnemigo, posicionTirador){
+        return direccionesGestor.direccionDeBala(posicionEnemigo, posicionTirador)
     }
 }
 
 // ########################################################################################################################## \\
 
 class Bala inherits VisualAtravasable{
-    var property dir = null
-    var sigoSinHerir = false
-    const gestorColision = gestorDeCeldasTablero
-    const gestorMov      = gestorDeMovimiento
-    const trayectoriaRecursivaBala = {bala => gestorMov.moverHaciaSinCambiarImagen(bala.dir(), bala);
+    var property direccion = null
+    var sigoSinHerir       = false
+    const colisionesGestor = gestorDeCeldasTablero
+    const movimientoGestor = gestorDeMovimiento
+    const trayectoriaRecursivaBala = {bala => movimientoGestor.moverHaciaSinCambiarImagen(bala.direccion(), bala);
                                               game.schedule(bala.velocidad(), {bala.gestionarTrayectoria()})}
    
     // ====================================================================================================================== \\
 
     override method image(){
-        return "bala-"+ dir.toString()+".png"
+        return "bala-"+direccion.toString()+".png"
     }
 
-    method prepararDisparo(direccion,posicion){
-        self.dir(direccion)
+    method prepararDisparo(nuevaDireccion, posicion){
+        self.direccion(nuevaDireccion)
         self.position(posicion)
     }
 
-    method dispararse(direccion,posicion){
-        self.prepararDisparo(direccion, posicion)
-        gestorMov.moverHaciaSinCambiarImagen(dir, self)
+    method dispararse(nuevaDireccion, posicion){
+        self.prepararDisparo(nuevaDireccion, posicion)
+        movimientoGestor.moverHaciaSinCambiarImagen(direccion, self)
         game.addVisual(self)
         self.gestionarTrayectoria() // llamado recursivo
     }
-        
+
     method gestionarTrayectoria(){
         // La bala se mueve recursivamente hasta que se den las condiciones para terminar su recorrido y morir(borrar visual).
-        if(not self.puedeSeguirTrayectoria()){              
-            self.cicloTerminado()
-        } else { 
-            trayectoriaRecursivaBala.apply(self) // Se mueve y vuelve a llamar gestionarTrayectoria(dir).
-        }
+        if(not self.puedeSeguirTrayectoria()) { self.cicloTerminado() } else 
+                                              { self.aplicarTrayectoria() } // Se mueve y vuelve a llamar gestionarTrayectoria(dir).
+    }
+
+    method aplicarTrayectoria(){
+        trayectoriaRecursivaBala.apply(self)
     }
 
     method cicloTerminado(){
@@ -191,11 +192,11 @@ class Bala inherits VisualAtravasable{
     }
 
     method hacerDaño(){
-        self.objetosDondePenetre().forEach({o => o.atacadoPor(self)})
+        self.objetosDondePenetre().forEach({objeto => objeto.atacadoPor(self)})
     } 
 
     method objetosDondePenetre(){
-        return game.getObjectsIn(self.position()).copyWithout(guardabosques)
+        return game.getObjectsIn(position).copyWithout(guardabosques)
     }
 
     // ====================================================================================================================== \\
@@ -208,12 +209,10 @@ class Bala inherits VisualAtravasable{
     }
 
     method puedeSeguirTrayectoria(){       
-        return sigoSinHerir or gestorColision.estaDentroDelTablero(self.position())
+        return sigoSinHerir or colisionesGestor.estaDentroDelTablero(self.position())
     }
 
-    method cambiarImagen(imagen){
-        // Necesario solamente por polimorfismo.
-    }
+    method cambiarImagen(imagen){} // Necesario solamente por polimorfismo.
 
     override method atacadoPor(visual){} // Necesario solamente por polimorfismo.
 }

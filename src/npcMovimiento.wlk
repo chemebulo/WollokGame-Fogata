@@ -23,8 +23,8 @@ class MovimientoNPC {
         const positionAntiguo = npc.position()
         const positionNuevo   = self.siguientePosicion(positionAntiguo)
         
-        if(self.sonDistintasPosiciones(positionNuevo,positionAntiguo)){ 
-           self.seguirACeldaCercanaAEnemigo(positionNuevo, positionAntiguo)
+        if(self.sonDistintasPosiciones(positionNuevo, positionAntiguo)){ 
+           self.irACeldaCercanaAEnemigo(positionNuevo, positionAntiguo)
         }
     }
 
@@ -38,7 +38,7 @@ class MovimientoNPC {
         return primeraPosition != segundaPosition
     }
 
-    method seguirACeldaCercanaAEnemigo(positionNuevo, positionAntiguo){
+    method irACeldaCercanaAEnemigo(positionNuevo, positionAntiguo){
         //
         npc.position(positionNuevo) 
         npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))

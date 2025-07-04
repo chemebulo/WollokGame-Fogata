@@ -10,14 +10,14 @@ class Puerta inherits Visual(image = null, position = game.origin()){
     //	Se descarto lo de la puerta cerrada. Se requiere quitar la funcionalidad
     //	Se recomienda pasar la herencia a visualInteractuable, y pasar la interaccion a un bloque como en esa clase
     //	Lo mismo con la puerta especial.
-    var property irHacia       = fogata // Por defecto.
-    const property estaCerrada = false
-    const direccion            = null
+    var property irHacia = fogata // Por defecto.
+    const estaCerrada    = false
+    const direccion      = null
 	
     // ========================================================================================================= \\
 
     override method esAtravesable(){
-		  return true
+		return true 
 	} 
 
    	override method interaccion(){
@@ -37,6 +37,7 @@ class Puerta inherits Visual(image = null, position = game.origin()){
 // ############################################################################################################# \\
 
 class PuertaEspecial inherits Puerta{
+
   	override method interaccion(){
        	self.validarInteraccion()
        	videojuego.cambiarEscenario(irHacia)

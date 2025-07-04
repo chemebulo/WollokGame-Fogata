@@ -8,9 +8,9 @@ import videojuego.*
 // ########################################################################################################################## \\
 
 class Visual{
-    var property position      = game.at(0,0) // Por defecto.
-    var property image         = null         // Por defecto.
-    var property esAtravesable = false
+    var property position = game.at(0,0) // Por defecto.
+    var property image    = null         // Por defecto.
+    var esAtravesable     = false
     
     // ====================================================================================================================== \\
 
@@ -20,6 +20,12 @@ class Visual{
 
     method cambiarAAtravesable(){
         esAtravesable = true
+    }
+
+    // ====================================================================================================================== \\
+
+    method esAtravesable(){
+        return esAtravesable
     }
 }
 
@@ -79,11 +85,11 @@ class VisualObstaculo inherits Visual{}
 const leña        = new VisualInteractuable(image = "leña.png", position = game.at(5,5), bloqueInteraccion = interaccionLeña)
 const nota        = new VisualInteractuable(image = "nota.png", position = game.at(5,5), bloqueInteraccion = interaccionNota)
 const auto        = new VisualInteractuable(image = "auto.png", position = game.at(5,5), bloqueInteraccion = interaccionAuto)
-const cabañaOBJ   = new VisualAtravasable(position = game.at(5,6), image = "cabaña_entrada.png")
-const graneroOBJ  = new VisualAtravasable(position = game.at(6,6), image = "granero.png")
-const amiga       = new Visual(position = game.at(2,4), image = "amiga.png")
-const fogataOBJ   = new Visual(position = game.at(3,4), image = "fogata-apagada.png")
-const carpa       = new Visual(position = game.at(6,4), image = "carpa.png")
+const cabañaOBJ   = new VisualAtravasable(image = "cabaña_entrada.png", position = game.at(5,6))
+const graneroOBJ  = new VisualAtravasable(image = "granero.png",        position = game.at(6,6))
+const fogataOBJ   = new Visual(image = "fogata.png", position = game.at(3,4))
+const amiga       = new Visual(image = "amiga.png",  position = game.at(2,4))
+const carpa       = new Visual(image = "carpa.png",  position = game.at(6,4))
 const gameover    = new Visual(image = "game-over.png")
 const juegoGanado = new Visual(image = "game-win.png")
 const hacha       = new Arma(image = "hacha.png",    position = game.at(5,5), bloque = interaccionHacha)
@@ -113,8 +119,8 @@ const interaccionManopla = {ar => game.removeVisual(ar);
 const interaccionLeña = {v => game.removeVisual(v)
                               game.addVisual(puertaEntradaCabaña)
                               puertaEntradaCabaña.irHacia(entradaCabaña)
-                              game.say(protagonista, "Gracias por la leña")
-                              game.say(guardabosques, "No hay de que, tenga cuidado que hay lobos por la zona")
+                              game.say(protagonista, "Gracias por la leña.")
+                              game.say(guardabosques, "No hay de que, tenga cuidado que hay lobos por la zona.")
                               entradaCabaña.configuradorTotal(entradaCabañaC_v2, entradaCabañaCES_v2)}
 
 const interaccionNota = {v => game.removeVisual(v)
