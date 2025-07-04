@@ -6,7 +6,7 @@ import gestores.*
 
 // ################################################################################################################################## \\
 
-object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100, daño = 3){
+object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100){
     var property estadoCombate        = pasivoProtagonista
     var property estadoCombateElegido = null
     const property vidaGestor         = gestorDeVida
@@ -22,6 +22,10 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     method atacar(){
         // Representa el comportamiento del ataque del protagonista hacia su enemigo.   
         estadoCombate.atacarEnemigo()   
+    }
+
+    override method daño(){
+        return estadoCombate.daño()
     }
 
     override method atacadoPor(visual){

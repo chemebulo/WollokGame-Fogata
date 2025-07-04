@@ -17,8 +17,8 @@ class Puerta inherits Visual(image = null, position = game.origin()){
     // ========================================================================================================= \\
 
     override method esAtravesable(){
-		return true 
-	} 
+		    return true 
+	  } 
 
    	override method interaccion(){
       	self.validarInteraccion()

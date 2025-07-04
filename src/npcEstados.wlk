@@ -10,13 +10,13 @@ const pasivoGuardabosques = new EstadoPasivoGuardabosques(visual = guardabosques
 const pasivoProtagonista  = new EstadoPasivoProtagonista(visual = protagonista, imagen = "prota-desarmado-")            // Representa al estado de combate pasivo del protagonista.
 
 const agresivoGuardabosques  = new EstadoAgresivoGuardabosques(visual = guardabosques, imagen = "guardabosques-escopeta-", modoAtaque = ataqueEscopeta) // Representa al estado de combate agresivo del guardabosques.
-const agresivoProtagonistaH  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-hacha-", modoAtaque = ataqueHacha)       // Representa al estado de combate agresivo del protagonista con hacha.
+const agresivoProtagonistaH  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-hacha-",    modoAtaque = ataqueHacha)    // Representa al estado de combate agresivo del protagonista con hacha.
 const agresivoProtagonistaT  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-tridente-", modoAtaque = ataqueTridente) // Representa al estado de combate agresivo del protagonista con tridente.
-const agresivoProtagonistaM  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-manopla-", modoAtaque = ataqueManopla)   // Representa al estado de combate agresivo del protagonista con manopla.
+const agresivoProtagonistaM  = new EstadoAgresivoProtagonista(visual = protagonista, imagen = "prota-manopla-",  modoAtaque = ataqueManopla)  // Representa al estado de combate agresivo del protagonista con manopla.
 
-const ataqueHacha    = new AtaqueHacha(atacante = protagonista)     // Representa al modo de ataque para el hacha. 
-const ataqueTridente = new AtaqueTridente(atacante = protagonista)  // Representa al modo de ataque para el tridente. 
-const ataqueManopla  = new AtaqueEnLugar(atacante = protagonista)   // Representa al modo de ataque para la manopla. 
+const ataqueHacha    = new AtaqueHacha(atacante    = protagonista) // Representa al modo de ataque para el hacha. 
+const ataqueTridente = new AtaqueTridente(atacante = protagonista) // Representa al modo de ataque para el tridente. 
+const ataqueManopla  = new AtaqueEnLugar(atacante  = protagonista) // Representa al modo de ataque para la manopla. 
 const ataqueEscopeta = new Escopeta(tirador = guardabosques, enemigo = protagonista, cartucho = cartuchoGuardabosques) // Representa al modo de ataque de escopeta.
 
 const cartuchoGuardabosques = new Cartucho(misBalas = [bala1, bala2, bala3, bala4, bala5, bala6]) // Representa un cartucho que contiene balas.
@@ -79,6 +79,8 @@ class EstadoCombate{
         // Describe el visual que se encuentra en dicho atributo.
         return visual
     }
+
+    method daño()
 }
 
 // ######################################################################################################################################################### \\
@@ -86,6 +88,10 @@ class EstadoCombate{
 class EstadoPasivo inherits EstadoCombate{
     
     method atacarEnemigo(){} // En el estado de combate pasivo, no hay un comportamiento definido para atacar a un enemigo.
+
+    override method daño(){
+        return 0
+    }
 } 
 
 // ######################################################################################################################################################### \\
@@ -108,7 +114,9 @@ class EstadoAgresivo inherits EstadoCombate{
 
     method atacarEnemigo(){
         // El visual en su estado de combate enemigo ataca al enemigo.
-        self.atacarAEnemigo()
+        if (self.puedeAtacarAlEnemigo()){ 
+            self.atacarAEnemigo()
+        }
     }
 
     method puedeAtacarAlEnemigo(){
@@ -121,18 +129,15 @@ class EstadoAgresivo inherits EstadoCombate{
         modoAtaque.ataqueArma()
         animacion.animarAtaque()
     }
+
+    override method daño(){
+        return modoAtaque.daño()
+    }
 }
 
 // ######################################################################################################################################################### \\
 
 class EstadoAgresivoLobo inherits EstadoAgresivo{ // Representa al estado de combate agresivo del lobo.
-
-    override method atacarEnemigo(){
-        // El lobo en su estado de combate enemigo ataca al enemigo si esta en la misma celda, caso contrario no hace nada.
-        if (self.puedeAtacarAlEnemigo()){ 
-            self.atacarAEnemigo()
-        }
-    }
 
     override method puedeAtacarAlEnemigo(){
         // Indica si el lobo en su estado de combate agresivo puede atacar a su enemigo. 
@@ -148,10 +153,35 @@ class EstadoAgresivoLobo inherits EstadoAgresivo{ // Representa al estado de com
 
 // ######################################################################################################################################################### \\
 
-class EstadoAgresivoGuardabosques inherits EstadoAgresivo{} // Representa al estado de combate agresivo del guardabosques.
+class EstadoAgresivoGuardabosques inherits EstadoAgresivo{ // Representa al estado de combate agresivo del guardabosques.
+
+    override method atacarEnemigo(){
+        // El guardabosques en su estado de combate enemigo siempre ataca a su enemigo.
+        self.atacarAEnemigo()
+    }
+} 
 
 // ######################################################################################################################################################### \\
 
-class EstadoAgresivoProtagonista inherits EstadoAgresivo{} // Representa al estado de combate agresivo del protagonista.
+class EstadoAgresivoProtagonista inherits EstadoAgresivo{ // Representa al estado de combate agresivo del protagonista.
+    var property estaAtacando = false // Representa el estado de ataque, si está atacando no va poder atacar, en caso contrario si.
+
+    override method atacarAEnemigo(){
+        // Representa el comportamiento del protagonista en su estado de combate agresivo.
+        super()
+        self.actualizarEstadoAtacando()
+    }
+
+    override method puedeAtacarAlEnemigo(){
+        // Indica si el protagonista en su estado de combate agresivo puede atacar a su enemigo. 
+        return not self.estaAtacando()
+    }
+
+    method actualizarEstadoAtacando(){
+        // Actualiza el estado de ataque al protagonista, logrando un efecto de cooldown a la hora de atacar.
+        self.estaAtacando(true)
+        game.schedule(200, {self.estaAtacando(false)})
+    }
+} 
 
 // ######################################################################################################################################################### \\

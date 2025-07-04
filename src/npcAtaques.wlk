@@ -36,26 +36,40 @@ class Ataque {
     } 
     
     method posicionesAAtacar()
-}
 
-// ########################################################################################################################## \\
-
-class AtaqueHacha inherits Ataque(){
-        
-    override method posicionesAAtacar() = [atacante.position().down(1),
-                                           atacante.position().up(1),
-                                           atacante.position().left(1),
-                                           atacante.position().right(1)]
+    method daño()
 }
 
 // ########################################################################################################################## \\
 
 class AtaqueTridente inherits Ataque(){
     
-    override method posicionesAAtacar() = [atacante.position().left(1),
-                                           atacante.position().left(2),
-                                           atacante.position().right(1),
-                                           atacante.position().right(2)]
+    override method posicionesAAtacar(){
+        return [atacante.position().left(1),
+                atacante.position().left(2),
+                atacante.position().right(1),
+                atacante.position().right(2)]
+    }
+
+    override method daño(){
+        return 2
+    }
+}
+
+// ########################################################################################################################## \\
+
+class AtaqueHacha inherits Ataque(){
+        
+    override method posicionesAAtacar(){
+        return [atacante.position().down(1),
+                atacante.position().up(1),
+                atacante.position().left(1),
+                atacante.position().right(1)]
+    }
+
+    override method daño(){
+        return 4
+    }
 }
 
 // ########################################################################################################################## \\
@@ -68,7 +82,11 @@ class AtaqueEnLugar inherits Ataque(){
 
     override method objetosEnPosicion(posicion){
         return game.getObjectsIn(posicion).copyWithout(atacante)
-    } 
+    }
+
+    override method daño(){
+        return 6
+    }
 }
 
 // ########################################################################################################################## \\
@@ -204,6 +222,7 @@ class Bala inherits VisualAtravasable{
     method daño(){
         return 10
     } 
+
     method velocidad(){
         return 200
     }

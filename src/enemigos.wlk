@@ -73,7 +73,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 
 // ####################################################################################################################################################### \\
 
-class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new EstadoAgresivoLobo(imagen = image, visual = self, modoAtaque = new AtaqueEnLugar(atacante = self)), vida = 20, daño = 2){
+class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new EstadoAgresivoLobo(imagen = image, visual = self, modoAtaque = new AtaqueEnLugar(atacante = self)), vida = 20, daño = 4){
     const eventoPersecucion = new EventoEnemigoPersecucion(sujetoUnico = self)
     const eventoAtaque      = new EventoEnemigoAtaque(sujetoUnico = self)
 
@@ -105,7 +105,7 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Esta
 
 // ####################################################################################################################################################### \\
 
-class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 5){
+class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 8){
     const bloquePostMuerte = bloqueAccionesMuerte
     
     // ==================================================================================================================================================== \\
