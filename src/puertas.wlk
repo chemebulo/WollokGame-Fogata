@@ -4,55 +4,29 @@ import visualesExtra.*
 import direccion.*
 import escenariosManager.*
 
-// ############################################################################################################# \\
+// #################################################################################################################################### \\
 
-class Puerta inherits Visual(image = null, position = game.origin()){
-    //	Se descarto lo de la puerta cerrada. Se requiere quitar la funcionalidad
-    //	Se recomienda pasar la herencia a visualInteractuable, y pasar la interaccion a un bloque como en esa clase
-    //	Lo mismo con la puerta especial.
+class Puerta inherits VisualInteractuable(image = "puerta.png", bloqueInteraccion = puertaBloque, position = game.origin()){
     var property irHacia = fogata // Por defecto.
-    const estaCerrada    = false
-    const direccion      = null
-	
-    // ========================================================================================================= \\
-
-    override method esAtravesable(){
-		    return true 
-	  } 
-
-   	override method interaccion(){
-      	self.validarInteraccion()
-        const imagenRetorno = protagonista.imagenNueva(direccion)
-        protagonista.image(imagenRetorno) // Para que al atravesar la puerta el prota quede con la imagen bien.
-      	videojuego.cambiarEscenario(irHacia)
-    }
-
-    method validarInteraccion(){
-      	if (estaCerrada){
-            game.say(protagonista,"No puedo tomar este camino")
-      	}
-    }
 }
 
-// ############################################################################################################# \\
+// #################################################################################################################################### \\
 
-class PuertaEspecial inherits Puerta{
+class PuertaEspecial inherits Puerta{}
 
-  	override method interaccion(){
-       	self.validarInteraccion()
-       	videojuego.cambiarEscenario(irHacia)
-  	}
-}
+// #################################################################################################################################### \\
 
-// ############################################################################################################# \\
-
-const puertaNorte = new Puerta(direccion = arriba,    image = "puerta.png", position = norte.ubicacion())    
-const puertaOeste = new Puerta(direccion = izquierda, image = "puerta.png", position = oeste.ubicacion())
-const puertaEste  = new Puerta(direccion = derecha,   image = "puerta.png", position = este.ubicacion())
-const puertaSur   = new Puerta(direccion = abajo,     image = "puerta.png", position = sur.ubicacion())
+const puertaNorte = new Puerta(position = norte.ubicacion())    
+const puertaOeste = new Puerta(position = oeste.ubicacion())
+const puertaEste  = new Puerta(position = este.ubicacion())
+const puertaSur   = new Puerta(position = sur.ubicacion())
 
 const puertaEntradaCabaña = new PuertaEspecial(image = "puerta-cabaña.png",  irHacia = cabaña)
 const puertaEntradaCueva  = new PuertaEspecial(image = "puerta-cueva.png",   irHacia = cueva)
 const puertaGranero       = new PuertaEspecial(image = "puerta-granero.png", irHacia = granero)
 
-// ############################################################################################################# \\
+// #################################################################################################################################### \\
+
+const puertaBloque = {puerta => videojuego.cambiarEscenario(puerta.irHacia())}
+
+// #################################################################################################################################### \\

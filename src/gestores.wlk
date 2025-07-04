@@ -245,7 +245,7 @@ object gestorDeLobos{
     }
 
     method crearLoboGestionable(lobo){
-        lobosEscenario.add(lobo);
+        lobosEscenario.add(lobo)
         eventosLobos.add(lobo.eventoPersecucion())
         eventosLobos.add(lobo.eventoAtaque())
     }
