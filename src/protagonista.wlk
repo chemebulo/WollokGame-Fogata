@@ -52,6 +52,11 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         // Hace que el personaje se mueva la cantidad de veces dada en la direccion dada. Solo se utiliza para testear. 
         (1 .. cantidad).forEach({n => self.mover(direccion)}) 
     }
+
+    method agarrarArma(arma){
+        self.estadoCombate(arma.nuevoEstado())
+        self.estadoCombateElegido(arma.nuevoEstado()) 
+    }
 }
 
 // ################################################################################################################################## \\

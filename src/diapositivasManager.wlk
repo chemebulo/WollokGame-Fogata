@@ -49,18 +49,18 @@ object gestorDeDiapositivas{
 //    v=videojuego
 //    g=gestorDeDiapositivas
 
-const inicioJuegoD = {v, g => g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta);
-                              v.cambiarEscenario(fogata)}
+const inicioJuegoD =         {v, g => g.configurarParaSiguiente(peliculaAmigaMuerta, despuesDeAmigaMuerta);
+                                      v.cambiarEscenario(fogata)}
    
 const despuesDeAmigaMuerta = {v, g => g.configurarParaSiguiente(peliculaGranero, despuesDeGranero);
                                       bifurcacion.configuradorTotal(bifurcacionC_v4, bifurcacionCES_v4);
                                       v.cambiarEscenario(bifurcacion)}
 
-const despuesDeGranero = {v, g => g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal);
-                                  v.cambiarEscenario(granero)}
+const despuesDeGranero =     {v, g => g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal);
+                                      v.cambiarEscenario(granero)}
 
-const despuesDePeleaFinal = {v, g => g.configuracionFinal();
-                                     v.cambiarEscenario(peleaFinal)}
+const despuesDePeleaFinal =  {v, g => g.configuracionFinal();
+                                      v.cambiarEscenario(peleaFinal)}
 
 // ############################################################ PELICULA ############################################################ \\ 
 
@@ -142,18 +142,18 @@ const dam1 = new Diapositiva(image = "diapo-amiga-muerta2.png")
 const dam2 = new Diapositiva(image = "diapo-amiga-muerta3.png")
 const dam3 = new Diapositiva(image = "diapo-amiga-muerta4.png")
 
-const d0  = new Diapositiva(image = "diapo-1.png")
-const d1  = new Diapositiva(image = "diapo-2.png")
-const d2  = new Diapositiva(image = "diapo-3.png")
-const d3  = new Diapositiva(image = "diapo-4.png")
-const d4  = new Diapositiva(image = "diapo-5.png")
-const d5  = new Diapositiva(image = "diapo-6.png")
-const d6  = new Diapositiva(image = "diapo-7.png")
-const d7  = new Diapositiva(image = "diapo-8.png")
-const d8  = new Diapositiva(image = "diapo-9.png")
-const d9  = new Diapositiva(image = "diapo-10.png")
-const dg0 = new Diapositiva(image = "diapo-granero-2.png")
-const dg1 = new Diapositiva(image = "diapo-granero-3.png")
-const dg2 = new Diapositiva(image = "diapo-granero-4.png")
+const d0   = new Diapositiva(image = "diapo-1.png")
+const d1   = new Diapositiva(image = "diapo-2.png")
+const d2   = new Diapositiva(image = "diapo-3.png")
+const d3   = new Diapositiva(image = "diapo-4.png")
+const d4   = new Diapositiva(image = "diapo-5.png")
+const d5   = new Diapositiva(image = "diapo-6.png")
+const d6   = new Diapositiva(image = "diapo-7.png")
+const d7   = new Diapositiva(image = "diapo-8.png")
+const d8   = new Diapositiva(image = "diapo-9.png")
+const d9   = new Diapositiva(image = "diapo-10.png")
+const dg0  = new Diapositiva(image = "diapo-granero-2.png")
+const dg1  = new Diapositiva(image = "diapo-granero-3.png")
+const dg2  = new Diapositiva(image = "diapo-granero-4.png")
 
 // ################################################################################################################################### \\

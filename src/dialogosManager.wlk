@@ -37,11 +37,13 @@ object gestorDeDialogo{
 // ################################################################################################################################### \\
 
 class Dialogo{
-    var property conversadorActual  = protagonista
-    const bloque           = {}
-    const npcDialogo       = null
-    const dialogoEscenario = []
+    var property conversadorActual  = protagonista 
+    const bloque           = {} // 
+    const dialogoEscenario = [] // represnta el guion de la conversacion
     const dialogoGestor    = gestorDeDialogo
+    // Conversadores
+    const iniciadorDialogo = protagonista
+    const npcDialogo       = null
 
     // =============================================================================================================================== \\
 
@@ -60,11 +62,14 @@ class Dialogo{
     }
 
     method actualizarConversador(){
-        if (self.esElTurnoDelProtagonista()){ self.conversadorActual(protagonista) } else 
-                                            { self.conversadorActual(npcDialogo)   }
+        if (self.esElTurnoDelIniciadorDialogo()){ 
+            self.conversadorActual(iniciadorDialogo) 
+        } else { 
+            self.conversadorActual(npcDialogo)       
+        }
     }
 
-    method esElTurnoDelProtagonista(){
+    method esElTurnoDelIniciadorDialogo(){
         // Si la cantidad de frases de dialogo es par, es turno del protagonista
         return dialogoEscenario.size().even()
     }

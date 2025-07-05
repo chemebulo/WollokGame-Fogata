@@ -9,6 +9,7 @@ import dialogosManager.*
 
 object videojuego{  
     var property escenario = inicio
+    const armasDisponibles = [tridente,manopla,hacha]
     
     // ========================================================================================== \\
 
@@ -36,6 +37,11 @@ object videojuego{
         game.addVisual(visual) 
         game.sound(sonido).play()
         game.onTick(5000, "fin", {game.stop()})
+    }
+    
+
+    method removerVisualesArmas(){
+        armasDisponibles.forEach({v =>game.removeVisual(v)})
     }
 
     // ========================================================================================== \\

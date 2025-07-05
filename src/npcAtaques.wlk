@@ -164,7 +164,7 @@ class Escopeta{
 
 // ########################################################################################################################## \\
 
-class Bala inherits VisualAtravasable{
+class Bala inherits VisualAtravesable{
     var property direccion = null
     var sigoSinHerir       = false
     const colisionesGestor = gestorDeCeldasTablero

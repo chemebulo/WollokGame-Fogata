@@ -8,7 +8,7 @@ import eventos.*
 import diapositivasManager.*
 import puertas.*
 import npcEstados.*
-
+import videojuego.*
 // ################################################################################################################################### \\
 
 class Escenario{ 
@@ -319,9 +319,9 @@ const entradaGraneroC_v1 = {e => e.mapa(mapa_entradaGranero_v1);
                                  e.ost(track_suspence);
                                  e.actualizarEventos([guardabosquesHabla2])}
 
-const graneroC_v1 = { e => e.mapa(mapa_peleaGranero);
-                           e.actualizarVisuales([protagonista, hacha, tridente, manopla]); 
-                           e.ost(track_pelea_granero)}
+const graneroC_v1        = {e => e.mapa(mapa_peleaGranero);
+                                 e.actualizarVisuales([protagonista,manopla,hacha,tridente]); 
+                                 e.ost(track_pelea_granero)}
 
 const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
                                  e.mapa(mapa_entradaGranero_v2);

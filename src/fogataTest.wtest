@@ -201,7 +201,7 @@ describe "Ataque sobre lobo:" {
         assert.equals(agresivoProtagonistaH, protagonista.estadoCombate())
         protagonista.atacar()
         lobo.atacarEnemigo()          
-        assert.equals(17, lobo.vida()) // Vida del lobo despues de ataque.
+        assert.equals(16, lobo.vida()) // Vida del lobo despues de ataque.
         assert.equals(100, protagonista.vida())
     }
 
@@ -231,7 +231,7 @@ describe "Ataque sobre guardabosques:" {
     test "El protagonista armado le baja la vida al guardabosques al atacarlo." {
         assert.equals(50, guardabosques.vida())
         protagonista.atacar()
-        assert.equals(47, guardabosques.vida())
+        assert.equals(46, guardabosques.vida())
         assert.equals(100, protagonista.vida()) // El guardabosques no ataca automaticamente.
     }
 
@@ -312,12 +312,12 @@ describe "Comportamiento del lobo:" {
     }
 
     test "El lobo ataca al protagonista si esta sobre el." {
-        protagonista.vida(3)
+        protagonista.vida(10)
         lobo.position(protagonista.position())
 
         protagonista.atacadoPor(lobo) // NOTA: Usamos atacadoPor(visual) directamente.
 
-        assert.equals(1, protagonista.vida())
+        assert.equals(6, protagonista.vida())
     }
 
     test "El lobo se mueve hacia el protagonista si no esta sobre el." {
@@ -467,4 +467,3 @@ describe "Funcionamiento de los configuradores de escenario:"{
 
 // ############################################################################################################################ \\
 
-// Testeo de gestores
