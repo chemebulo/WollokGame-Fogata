@@ -103,7 +103,7 @@ const interaccionLeña = {v => game.removeVisual(v)
                               puertaEntradaCabaña.irHacia(entradaCabaña)
                               game.say(protagonista, "Gracias por la leña.")
                               game.say(guardabosques, "No hay de que, tenga cuidado que hay lobos por la zona.")
-                              entradaCabaña.configuradorTotal(entradaCabañaC_v2, entradaCabañaCES_v2)}
+                              entradaCabaña.configuradorTotal(entradaCabañaConfgV2, entradaCabañaCESv2)}
 
 const interaccionNota = {v => game.removeVisual(v)
                               game.say(protagonista, "SI SOBREVIVISTE TE ESPERO EN LA CUEVA...")

@@ -71,11 +71,11 @@ class EventoHablarConSonido inherits EventoHablar{
 
 // ################################################## EVENTOS DE DIALOGOS ################################################### \\
 
-const escucharLobos = new EventoHablarConSonido(mensaje = "¿¿Qué fue eso??", ost = track_manada)
+const escucharLobos = new EventoHablarConSonido(mensaje = "¿¿Qué fue eso??", ost = trackManada)
 
 const hablarProta   = new EventoHablar(mensaje = "Laura está muerta...")
 
-const hablarProta2  = new EventoHablarConSonido(mensaje = "Dios mío... ¡¡¡LAURAAA!!!", ost = track_prota_preocupado)   
+const hablarProta2  = new EventoHablarConSonido(mensaje = "Dios mío... ¡¡¡LAURAAA!!!", ost = trackProtaPreocupado)   
 
 const hablarProta3  = new EventoHablar(mensaje = "Ya mismo lo mato a ese #&%&#$%&")  
 

@@ -12,7 +12,7 @@ import videojuego.*
 // ################################################################################################################################### \\
 
 class Escenario{ 
-    var property mapa      = mapa_comun // Al instanciar los Escenarios se les brinda mapa.
+    var property mapa      = mapaComun // Al instanciar los Escenarios se les brinda mapa.
     var property ost       = game.sound("")
     var property configuradorActual    = {} // Bloque. 
     var property configuradorSiguiente = {} // Bloque.
@@ -192,35 +192,35 @@ object constructorEscenario{
 
 // ############################################################################################################################## \\
 
-const inicio = constructorEscenario.construir(inicioC_v1, {}, "inicio.png")
+const inicio = constructorEscenario.construir(inicioConfgV1, {}, "inicio.png")
 
-const fogata = constructorEscenario.construir(fogataC_v1, fogataCES_v1, "fondo-norte.png")
+const fogata = constructorEscenario.construir(fogataConfgV1, fogataCESv1, "fondo-norte.png")
 
-const bifurcacion      = constructorEscenario.construir(bifurcacionC_v1, bifurcacionCES_v1, "fondo-camino-bifurcacion.png")
+const bifurcacion      = constructorEscenario.construir(bifurcacionConfgV1, bifurcacionCESv1, "fondo-camino-bifurcacion.png")
 
-const entradaCabaña    = constructorEscenario.construir(entradaCabañaC_v1, entradaCabañaCES_v1, "fondo-camino-oeste-norte.png" )
+const entradaCabaña    = constructorEscenario.construir(entradaCabañaConfgV1, entradaCabañaCESv1, "fondo-camino-oeste-norte.png" )
 
-const cabaña           = constructorEscenario.construir(cabañaC_v1, cabañaCES_v1, "cabaña.png")   
+const cabaña           = constructorEscenario.construir(cabañaConfgV1, cabañaCESv1, "cabaña.png")   
 
-const entradaCueva     = constructorEscenario.construir(entradaCuevaC_v1, entradaCuevaCES_v1, "fondo-entrada-cueva.png")
+const entradaCueva     = constructorEscenario.construir(entradaCuevaConfgV1, entradaCuevaCESv1, "fondo-entrada-cueva.png")
 
-const cueva            = constructorEscenario.construir(cuevaC_v1, cuevaCES_v1, "fondo-cueva.png")
+const cueva            = constructorEscenario.construir(cuevaConfgV1, cuevaCESv1, "fondo-cueva.png")
 
-const entradaGranero   = constructorEscenario.construir(entradaGraneroC_v1, entradaGraneroCES_v1, "fondo-sur.png")
+const entradaGranero   = constructorEscenario.construir(entradaGraneroConfgV1, entradaGraneroCESv1, "fondo-sur.png")
 
-const granero          = constructorEscenario.construir(graneroC_v1, graneroCES_v1, "fondo-granero.png")
+const granero          = constructorEscenario.construir(graneroConfgV1, graneroCESv1, "fondo-granero.png")
 
-const peleaFinal       = constructorEscenario.construir(peleaFinalC_v1, peleaFinalCES_v1, "fondo-cueva.png") // Recordar borrar la puerta de salida
+const peleaFinal       = constructorEscenario.construir(peleaFinalConfgV1, peleaFinalCESv1, "fondo-cueva.png") // Recordar borrar la puerta de salida
 
-const estacionamiento  = constructorEscenario.construir(estacionamientoC_v1, {}, "fondo-escenario-final.png")
+const estacionamiento  = constructorEscenario.construir(estacionamientoConfgV1, {}, "fondo-escenario-final.png")
 
 // ######################################## ESCENARIOS EXCLUSIVOS PARA LAS DIAPOSITIVAS ######################################### \\
 
-const diapoGranero     = constructorEscenario.construir(diapoGraneroC_v1, {}, "diapo-granero-1.png") 
+const diapoGranero     = constructorEscenario.construir(diapoGraneroConfgV1, {}, "diapo-granero-1.png") 
 
-const diapoAmigaMuerta = constructorEscenario.construir(diapoAmigaMuertaC_v1, {}, "diapo-amiga-muerta1.png")
+const diapoAmigaMuerta = constructorEscenario.construir(diapoAmigaMuertaConfgV1, {}, "diapo-amiga-muerta1.png")
 
-const diapoPeleaFinal  = constructorEscenario.construir(diapoPeleaFinalC_v1, {}, "diapo-pelea-final1.png")
+const diapoPeleaFinal  = constructorEscenario.construir(diapoPeleaFinalConfgV1, {}, "diapo-pelea-final1.png")
 
 // ################################################ CONFIGURADORES DE ESCENARIOS ################################################ \\
 
@@ -242,182 +242,182 @@ const diapoPeleaFinal  = constructorEscenario.construir(diapoPeleaFinalC_v1, {},
 
 // ############################################################################################################################## \\
 
-const inicioC_v1 = {e => e.ost(track_inicio)}
+const inicioConfgV1 = {e => e.ost(trackInicio)}
 
-const fogataC_v1 = {e => gestorDeDialogo.esMomentoDeDialogar(true);
-                         e.mapa(mapa_escenarioInicial_v1);
+const fogataConfgV1 = {e => gestorDeDialogo.esMomentoDeDialogar(true);
+                         e.mapa(mapaEscenarioInicialV1);
                          e.actualizarVisuales([amiga, carpa, fogataOBJ, protagonista]);
-                         e.ost(track_fogata)}
+                         e.ost(trackFogata)}
 
 // ############################################ CONFIGURADORES ESCENARIO BIFURCACION ############################################# \\
 
-const bifurcacionC_v1 = {e => game.removeVisual(puertaNorte);
-                              e.mapa(mapa_escenarioBifurcacion_v1);
+const bifurcacionConfgV1 = {e => game.removeVisual(puertaNorte);
+                              e.mapa(mapaEscenarioBifurcacionV1);
                               e.actualizarVisuales([puertaEste, protagonista]);
-                              e.ost(track_fogata)}
+                              e.ost(trackFogata)}
       
-const bifurcacionC_v2 = {e => e.mapa(mapa_escenarioBifurcacion_v2);
+const bifurcacionConfgV2 = {e => e.mapa(mapaEscenarioBifurcacionV2);
                               e.actualizarVisuales([protagonista, puertaOeste]);
-                              e.ost(track_ataque_lobos);
+                              e.ost(trackAtaqueLobos);
                               e.actualizarEventos([hablarProta4])}
 
-const bifurcacionC_v3 = {e => e.mapa(mapa_escenarioBifurcacion_v3);
+const bifurcacionConfgV3 = {e => e.mapa(mapaEscenarioBifurcacionV3);
                               e.actualizarVisuales([protagonista, puertaSur]);
-                              e.ost(track_suspence);
+                              e.ost(trackSuspence);
                               e.actualizarEventos([hablarProta2])}
 
-const bifurcacionC_v4 = {e => e.actualizarVisuales([protagonista, puertaEste]);
-                              e.mapa(mapa_escenarioBifurcacion_v4);
-                              e.ost(track_tramo_a_cabaña);
+const bifurcacionConfgV4 = {e => e.actualizarVisuales([protagonista, puertaEste]);
+                              e.mapa(mapaEscenarioBifurcacionV4);
+                              e.ost(trackTramoACabaña);
                               e.actualizarEventos([hablarProta])}
 
-const bifurcacionC_v5 = {e => e.actualizarVisuales([protagonista, puertaOeste]);
-                              e.mapa(mapa_escenarioBifurcacion_v5);
-                              e.ost(track_ataque_lobos);
+const bifurcacionConfgV5 = {e => e.actualizarVisuales([protagonista, puertaOeste]);
+                              e.mapa(mapaEscenarioBifurcacionV5);
+                              e.ost(trackAtaqueLobos);
                               e.actualizarEventos([hablarProta7])}
 
-const bifurcacionC_v6 = {e => e.mapa(mapa_escenarioBifurcacion_v6);
+const bifurcacionConfgV6 = {e => e.mapa(mapaEscenarioBifurcacionV6);
                               e.actualizarVisuales([protagonista, puertaNorte]);
-                              e.ost(track_tramo_final)}          
+                              e.ost(trackTramoFinal)}          
 
 // ################################################ CONFIGURADORES ENTRADA CABAÑA ################################################ \\
 
-const entradaCabañaC_v1 = {e => e.mapa(mapa_entradaCabaña_v1);
+const entradaCabañaConfgV1 = {e => e.mapa(mapaEntradaCabañaV1);
                                 e.actualizarVisuales([cabañaOBJ, protagonista, puertaEntradaCabaña]);
-                                e.ost(track_fogata)}
+                                e.ost(trackFogata)}
 
-const entradaCabañaC_v2 = {e => game.removeVisual(puertaEntradaCabaña);
-                                e.mapa(mapa_entradaCabaña_v2);
+const entradaCabañaConfgV2 = {e => game.removeVisual(puertaEntradaCabaña);
+                                e.mapa(mapaEntradaCabañaV2);
                                 e.actualizarVisuales([cabañaOBJ, protagonista, puertaOeste] );
-                                e.ost(track_suspence);
+                                e.ost(trackSuspence);
                                 e.actualizarEventos([escucharLobos])}
 
-const entradaCabañaC_v3 = {e => e.mapa(mapa_entradaCabaña_v1);
+const entradaCabañaConfgV3 = {e => e.mapa(mapaEntradaCabañaV1);
                                 e.actualizarVisuales([cabañaOBJ, protagonista, puertaEntradaCabaña]);
-                                e.ost(track_tramo_a_cabaña)}
+                                e.ost(trackTramoACabaña)}
 
-const entradaCabañaC_v4 = {e => game.removeVisual(puertaEntradaCabaña);
+const entradaCabañaConfgV4 = {e => game.removeVisual(puertaEntradaCabaña);
                                 guardabosques.image("guardabosques-desarmado-abajo.png");
-                                e.mapa(mapa_EntradaCabaña_v3);
+                                e.mapa(mapaEntradaCabañaV3);
                                 e.actualizarVisuales([cabañaOBJ, protagonista, puertaNorte, guardabosques]);
-                                e.ost(track_suspence);
+                                e.ost(trackSuspence);
                                 e.actualizarEventos([guardabosquesHabla])}
 
-const entradaCabañaC_v5 = {e => e.mapa(mapa_EntradaCabaña_v4);
+const entradaCabañaConfgV5 = {e => e.mapa(mapaEntradaCabañaV4);
                                 e.actualizarVisuales([cabañaOBJ, protagonista, puertaEntradaCabaña]);
-                                e.ost(track_suspence)}
+                                e.ost(trackSuspence)}
 
-const entradaCabañaC_v6 = {e => game.removeVisual(puertaEntradaCabaña);
-                                e.mapa(mapa_EntradaCabaña_v3);
+const entradaCabañaConfgV6 = {e => game.removeVisual(puertaEntradaCabaña);
+                                e.mapa(mapaEntradaCabañaV3);
                                 e.actualizarVisuales([cabañaOBJ, protagonista, puertaOeste]);
-                                e.ost(track_suspence)}
+                                e.ost(trackSuspence)}
 
 // ##################################### CONFIGURADORES  PARA TODA LA SECUENCIA DEL  GRANERO ##################################### \\
 
-const entradaGraneroC_v1 = {e => e.mapa(mapa_entradaGranero_v1);
+const entradaGraneroConfgV1 = {e => e.mapa(mapaEntradaGraneroV1);
                                  e.actualizarVisuales([graneroOBJ, protagonista, guardabosques, puertaGranero]);
-                                 e.ost(track_suspence);
+                                 e.ost(trackSuspence);
                                  e.actualizarEventos([guardabosquesHabla2])}
 
-const graneroC_v1        = {e => e.mapa(mapa_peleaGranero);
+const graneroConfgV1        = {e => e.mapa(mapaPeleaGranero);
                                  e.actualizarVisuales([protagonista,manopla,hacha,tridente]); 
-                                 e.ost(track_pelea_granero)}
+                                 e.ost(trackPeleaGranero)}
 
-const entradaGraneroC_v2 = {e => game.removeVisual(puertaGranero);
-                                 e.mapa(mapa_entradaGranero_v2);
+const entradaGraneroConfgV2 = {e => game.removeVisual(puertaGranero);
+                                 e.mapa(mapaEntradaGraneroV2);
                                  e.actualizarVisuales([graneroOBJ, protagonista, puertaSur]);
-                                 e.ost(track_suspence);
+                                 e.ost(trackSuspence);
                                  e.actualizarEventos([hablarProta3])}
 
 // ########################################################### CABAÑA ############################################################ \\
 
-const  cabañaC_v1 = {e => gestorDeDialogo.esMomentoDeDialogar(true);
-                          e.mapa(mapa_cabañaInicial_v1);
+const  cabañaConfgV1 = {e => gestorDeDialogo.esMomentoDeDialogar(true);
+                          e.mapa(mapaCabañaInicialV1);
                           e.actualizarVisuales([guardabosques, protagonista]);
-                          e.ost(track_cabaña)}
+                          e.ost(trackCabaña)}
 
-const cabañaC_v2 = {e => gestorDeDialogo.esMomentoDeDialogar(true);
-                         e.mapa(mapa_cabañaInicial_v1);
+const cabañaConfgV2 = {e => gestorDeDialogo.esMomentoDeDialogar(true);
+                         e.mapa(mapaCabañaInicialV1);
                          e.actualizarVisuales([guardabosques, protagonista]);
-                         e.ost(track_suspence)}
+                         e.ost(trackSuspence)}
                        
-const cabañaC_v3 = {e => e.mapa(mapa_cabañaInicial_v2);
+const cabañaConfgV3 = {e => e.mapa(mapaCabañaInicialV2);
                          e.actualizarVisuales([protagonista, nota]);
-                         e.ost(track_suspence)}                      
+                         e.ost(trackSuspence)}                      
 
 // ########################################################## ZONA CUEVA ######################################################### \\
 
-const entradaCuevaC_v1 = {e => e.mapa(mapa_entradaCueva_v1);
+const entradaCuevaConfgV1 = {e => e.mapa(mapaEntradaCuevaV1);
                                e.actualizarVisuales([protagonista, puertaEntradaCueva]);
-                               e.ost(track_ataque_lobos);
+                               e.ost(trackAtaqueLobos);
                                e.actualizarEventos([hablarProta5])}    
 
-const entradaCuevaC_v2 = {e => e.mapa(mapa_entradaCueva_v2);
+const entradaCuevaConfgV2 = {e => e.mapa(mapaEntradaCuevaV2);
                                e.actualizarVisuales([protagonista, puertaEste]);
-                               e.ost(track_suspence)} 
+                               e.ost(trackSuspence)} 
 
-const entradaCuevaC_v3 = {e => e.mapa(mapa_entradaCueva_v3);
+const entradaCuevaConfgV3 = {e => e.mapa(mapaEntradaCuevaV3);
                                e.actualizarVisuales([protagonista, puertaEntradaCueva]);
-                               e.ost(track_ataque_lobos)}  
+                               e.ost(trackAtaqueLobos)}  
 
-const entradaCueva_v4 = {e => protagonista.estadoCombate(pasivoProtagonista);
+const entradaCuevaConfgV4 = {e => protagonista.estadoCombate(pasivoProtagonista);
                               protagonista.image("prota-desarmado-abajo.png");
                               game.removeVisual(puertaEntradaCueva);
-                              e.mapa(mapa_entradaCueva_v2);
+                              e.mapa(mapaEntradaCuevaV2);
                               e.actualizarVisuales([protagonista, puertaEste]);
-                              e.ost(track_tramo_final)}
+                              e.ost(trackTramoFinal)}
 
-const cuevaC_v1 = {e => e.mapa(mapa_cueva_v1);
+const cuevaConfgV1 = {e => e.mapa(mapaCuevaV1);
                         e.actualizarVisuales([protagonista, puertaEntradaCueva]);
-                        e.ost(track_cueva);
+                        e.ost(trackCueva);
                         e.actualizarEventos([hablarProta6])}
 
-const cuevaC_v2 = {e => e.mapa(mapa_cueva_v2);
+const cuevaConfgV2 = {e => e.mapa(mapaCuevaV2);
                         e.actualizarVisuales([protagonista, puertaEntradaCueva]);
-                        e.ost(track_cueva)}
+                        e.ost(trackCueva)}
 
-const cuevaC_v3 = {e => e.mapa(mapa_cueva_v3);
+const cuevaConfgV3 = {e => e.mapa(mapaCuevaV3);
                         e.actualizarVisuales([protagonista, puertaEntradaCueva]);
-                        e.ost(track_cueva)}
+                        e.ost(trackCueva)}
 
-const cuevaC_v4 = {e => e.mapa(mapa_cueva_v4);
+const cuevaConfgV4 = {e => e.mapa(mapaCuevaV4);
                         e.actualizarVisuales([protagonista, puertaEntradaCueva]);
-                        e.ost(track_cueva)}      
+                        e.ost(trackCueva)}      
                                        
-const cuevaC_v5 = {e => e.mapa(mapa_cueva_v5);
+const cuevaConfgV5 = {e => e.mapa(mapaCuevaV5);
                         e.actualizarVisuales([protagonista, puertaEntradaCueva]);
-                        e.ost(track_cueva)}  
+                        e.ost(trackCueva)}  
 
 // ######################################################### PELEA FINAL ######################################################### \\
 
-const peleaFinalC_v1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElegido());      
+const peleaFinalConfgV1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElegido());      
                              guardabosques.cambiarAAtravesable();                  
                              guardabosques.estadoCombate(agresivoGuardabosques);
-                             e.mapa(mapa_FinalJuego);
+                             e.mapa(mapaFinalJuego);
                              e.actualizarVisuales([protagonista, guardabosques]);
-                             e.ost(track_pelea_final);
+                             e.ost(trackPeleaFinal);
                              e.actualizarEventos([hablarProta9, ataqueGuardabosques, ataqueEscopetaGuardabosques])} 
 
-const estacionamientoC_v1 = {e => e.mapa(mapa_estacionamiento_v1);
+const estacionamientoConfgV1 = {e => e.mapa(mapaEstacionamientoV1);
                                   e.actualizarVisuales([protagonista, auto]);
-                                  e.ost(track_tramo_final);
+                                  e.ost(trackTramoFinal);
                                   e.actualizarEventos([hablarProta8])}
 
 // #################################### CONFIGURADORES EXCLUSIVOS PARA ESCENARIOS CON DIAPOS #################################### \\
 
-const diapoAmigaMuertaC_v1 = {e => e.removerSiEsta(protagonista);
+const diapoAmigaMuertaConfgV1 = {e => e.removerSiEsta(protagonista);
                                    gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                   e.ost(track_amiga_muerta)}
+                                   e.ost(trackAmigaMuerta)}
 
-const diapoPeleaFinalC_v1 = {e => e.removerSiEsta(protagonista);
+const diapoPeleaFinalConfgV1 = {e => e.removerSiEsta(protagonista);
                                   gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                   protagonista.estadoCombate(pasivoProtagonista);
-                                  e.ost(track_guardabosques_cueva)}
+                                  e.ost(trackGuardabosquesCueva)}
 
-const diapoGraneroC_v1 = {e => e.removerSiEsta(protagonista);
+const diapoGraneroConfgV1 = {e => e.removerSiEsta(protagonista);
                                gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                game.removeVisual(puertaGranero);
-                               e.ost(traicion_granero)}
+                               e.ost(traicionGranero)}
 
 // ######################################### CONFIGURADORES DE ESCENARIOS SIGUIENTES ########################################### \\
 
@@ -432,151 +432,151 @@ const diapoGraneroC_v1 = {e => e.removerSiEsta(protagonista);
 //
 //  nomenclatura = escenarioCES_v*
 
-const fogataCES_v1 = {puertaNorte.irHacia(bifurcacion)}
+const fogataCESv1 = {puertaNorte.irHacia(bifurcacion)}
 
-const bifurcacionCES_v1   = {puertaEste.irHacia(entradaCabaña)}
+const bifurcacionCESv1   = {puertaEste.irHacia(entradaCabaña)}
 
-const bifurcacionCES_v2   = {puertaOeste.irHacia(entradaCueva)}
+const bifurcacionCESv2   = {puertaOeste.irHacia(entradaCueva)}
 
-const entradaCabañaCES_v1 = {puertaEntradaCabaña.irHacia(cabaña)}
+const entradaCabañaCESv1 = {puertaEntradaCabaña.irHacia(cabaña)}
 
-const entradaCabañaCES_v2 = {game.removeVisual(puertaEntradaCabaña); 
+const entradaCabañaCESv2 = {game.removeVisual(puertaEntradaCabaña); 
                              puertaOeste.irHacia(bifurcacion);
-                             bifurcacion.configuradorTotal(bifurcacionC_v2, bifurcacionCES_v2)}
+                             bifurcacion.configuradorTotal(bifurcacionConfgV2, bifurcacionCESv2)}
                                                 
-const cabañaCES_v1 = {puertaOeste.irHacia(entradaCabaña);
-                      entradaCabaña.configuradorTotal(entradaCabañaC_v2, entradaCabañaCES_v2)}
+const cabañaCESv1 = {puertaOeste.irHacia(entradaCabaña);
+                      entradaCabaña.configuradorTotal(entradaCabañaConfgV2, entradaCabañaCESv2)}
                                                
-const entradaCuevaCES_v1 = {puertaEntradaCueva.irHacia(cueva)}       
+const entradaCuevaCESv1 = {puertaEntradaCueva.irHacia(cueva)}       
 
-const cuevaCES_v1 = {puertaEntradaCueva.irHacia(cueva);
-                     cueva.configuradorTotal(cuevaC_v2, cuevaCES_v2)}
+const cuevaCESv1 = {puertaEntradaCueva.irHacia(cueva);
+                     cueva.configuradorTotal(cuevaConfgV2, cuevaCESv2)}
                           
-const cuevaCES_v2 = {puertaEntradaCueva.irHacia(cueva);
-                     cueva.configuradorTotal(cuevaC_v3, cuevaCES_v3)}
+const cuevaCESv2 = {puertaEntradaCueva.irHacia(cueva);
+                     cueva.configuradorTotal(cuevaConfgV3, cuevaCESv3)}
 
-const cuevaCES_v3 = {puertaEntradaCueva.irHacia(cueva);
-                     cueva.configuradorTotal(cuevaC_v4, cuevaCES_v4)}
+const cuevaCESv3 = {puertaEntradaCueva.irHacia(cueva);
+                     cueva.configuradorTotal(cuevaConfgV4, cuevaCESv4)}
 
-const cuevaCES_v4 = {puertaEntradaCueva.irHacia(entradaCueva);
-                     entradaCueva.configuradorTotal(entradaCuevaC_v2, entradaCuevaCES_v2)}
+const cuevaCESv4 = {puertaEntradaCueva.irHacia(entradaCueva);
+                     entradaCueva.configuradorTotal(entradaCuevaConfgV2, entradaCuevaCESv2)}
 
-const entradaCuevaCES_v2  = {puertaEste.irHacia(bifurcacion);
-                             bifurcacion.configuradorTotal(bifurcacionC_v3, bifurcacionCES_v3)}
+const entradaCuevaCESv2  = {puertaEste.irHacia(bifurcacion);
+                             bifurcacion.configuradorTotal(bifurcacionConfgV3, bifurcacionCESv3)}
 
-const bifurcacionCES_v3   = {puertaSur.irHacia(diapoAmigaMuerta)}
+const bifurcacionCESv3   = {puertaSur.irHacia(diapoAmigaMuerta)}
 
-const bifurcacionCES_v4   = {puertaEste.irHacia(entradaCabaña);
-                             entradaCabaña.configuradorTotal(entradaCabañaC_v3, entradaCabañaCES_v3)}
+const bifurcacionCESv4   = {puertaEste.irHacia(entradaCabaña);
+                             entradaCabaña.configuradorTotal(entradaCabañaConfgV3, entradaCabañaCESv3)}
                                          
-const entradaCabañaCES_v3 = {puertaEntradaCabaña.irHacia(cabaña);
-                             cabaña.configuradorTotal(cabañaC_v2, cabañaCES_v2)}
+const entradaCabañaCESv3 = {puertaEntradaCabaña.irHacia(cabaña);
+                             cabaña.configuradorTotal(cabañaConfgV2, cabañaCESv2)}
 
-const cabañaCES_v2 = {puertaEntradaCabaña.irHacia(entradaCabaña);
-                      entradaCabaña.configuradorTotal(entradaCabañaC_v4, entradaCabañaCES_v4)}
+const cabañaCESv2 = {puertaEntradaCabaña.irHacia(entradaCabaña);
+                      entradaCabaña.configuradorTotal(entradaCabañaConfgV4, entradaCabañaCESv4)}
                                              
-const entradaCabañaCES_v4  = {puertaNorte.irHacia(entradaGranero)}
+const entradaCabañaCESv4  = {puertaNorte.irHacia(entradaGranero)}
 
-const entradaGraneroCES_v1 = {puertaGranero.irHacia(diapoGranero)}
+const entradaGraneroCESv1 = {puertaGranero.irHacia(diapoGranero)}
 
-const graneroCES_v1 = {puertaGranero.irHacia(entradaGranero);
-                       entradaGranero.configuradorTotal(entradaGraneroC_v2, entradaGraneroCES_v2)}
+const graneroCESv1 = {puertaGranero.irHacia(entradaGranero);
+                       entradaGranero.configuradorTotal(entradaGraneroConfgV2, entradaGraneroCESv2)}
                                         
-const entradaGraneroCES_v2 = {puertaSur.irHacia(entradaCabaña);
-                              entradaCabaña.configuradorTotal(entradaCabañaC_v5, entradaCabañaCES_v5)}
+const entradaGraneroCESv2 = {puertaSur.irHacia(entradaCabaña);
+                              entradaCabaña.configuradorTotal(entradaCabañaConfgV5, entradaCabañaCESv5)}
                                                         
-const entradaCabañaCES_v5  = {puertaEntradaCabaña.irHacia(cabaña);
-                              cabaña.configuradorTotal(cabañaC_v3, cabañaCES_v3)}
+const entradaCabañaCESv5  = {puertaEntradaCabaña.irHacia(cabaña);
+                              cabaña.configuradorTotal(cabañaConfgV3, cabañaCESv3)}
                                                       
-const cabañaCES_v3 = {puertaEntradaCabaña.irHacia(entradaCabaña);
-                      entradaCabaña.configuradorTotal(entradaCabañaC_v6, entradaCabañaCES_v6)}
+const cabañaCESv3 = {puertaEntradaCabaña.irHacia(entradaCabaña);
+                      entradaCabaña.configuradorTotal(entradaCabañaConfgV6, entradaCabañaCESv6)}
                                            
-const entradaCabañaCES_v6 = {puertaOeste.irHacia(bifurcacion);
-                             bifurcacion.configuradorTotal(bifurcacionC_v5, bifurcacionCES_v5)}
+const entradaCabañaCESv6 = {puertaOeste.irHacia(bifurcacion);
+                             bifurcacion.configuradorTotal(bifurcacionConfgV5, bifurcacionCESv5)}
                                                
-const bifurcacionCES_v5   = {puertaOeste.irHacia(entradaCueva);
-                             entradaCueva.configuradorTotal(entradaCuevaC_v3, entradaCuevaCES_v3)}
+const bifurcacionCESv5   = {puertaOeste.irHacia(entradaCueva);
+                             entradaCueva.configuradorTotal(entradaCuevaConfgV3, entradaCuevaCESv3)}
 
-const entradaCuevaCES_v3  = {puertaEntradaCueva.irHacia(cueva);
-                             cueva.configuradorTotal(cuevaC_v1, cuevaCES_v6)}
+const entradaCuevaCESv3  = {puertaEntradaCueva.irHacia(cueva);
+                             cueva.configuradorTotal(cuevaConfgV1, cuevaCESv6)}
 
-const cuevaCES_v6 = {puertaEntradaCueva.irHacia(cueva);
-                     cueva.configuradorTotal(cuevaC_v2, cuevaCES_v7)}
+const cuevaCESv6 = {puertaEntradaCueva.irHacia(cueva);
+                     cueva.configuradorTotal(cuevaConfgV2, cuevaCESv7)}
 
-const cuevaCES_v7 = {puertaEntradaCueva.irHacia(cueva);
-                     cueva.configuradorTotal(cuevaC_v3, cuevaCES_v8)}                                     
+const cuevaCESv7 = {puertaEntradaCueva.irHacia(cueva);
+                     cueva.configuradorTotal(cuevaConfgV3, cuevaCESv8)}                                     
 
-const cuevaCES_v8 = {puertaEntradaCueva.irHacia(cueva);
-                     cueva.configuradorTotal(cuevaC_v5, cuevaCES_v9)}
+const cuevaCESv8 = {puertaEntradaCueva.irHacia(cueva);
+                     cueva.configuradorTotal(cuevaConfgV5, cuevaCESv9)}
                                                                        
-const cuevaCES_v9 = {puertaEntradaCueva.irHacia(diapoPeleaFinal)}
+const cuevaCESv9 = {puertaEntradaCueva.irHacia(diapoPeleaFinal)}
 
-const peleaFinalCES_v1   = {puertaEntradaCueva.irHacia(entradaCueva);
-                            entradaCueva.configuradorTotal(entradaCueva_v4, entradaCuevaCES_v4)}         
+const peleaFinalCESv1   = {puertaEntradaCueva.irHacia(entradaCueva);
+                            entradaCueva.configuradorTotal(entradaCuevaConfgV4, entradaCuevaCESv4)}         
 
-const entradaCuevaCES_v4 = {puertaEste.irHacia(bifurcacion);
-                            bifurcacion.configuradorTotal(bifurcacionC_v6, bifurcacionCES_v6)}         
+const entradaCuevaCESv4 = {puertaEste.irHacia(bifurcacion);
+                            bifurcacion.configuradorTotal(bifurcacionConfgV6, bifurcacionCESv6)}         
 
-const bifurcacionCES_v6  = {puertaNorte.irHacia(estacionamiento)}       
+const bifurcacionCESv6  = {puertaNorte.irHacia(estacionamiento)}       
 
 // ########################################################### MUSICA ########################################################## \\
 
-const track_fogata         = game.sound("musica-escenarioInicial-v1.mp3")
+const trackFogata         = game.sound("musica-escenarioInicial-v1.mp3")
 
-const track_ataque_lobos   = game.sound("lobos-atacan.mp3")
+const trackAtaqueLobos   = game.sound("lobos-atacan.mp3")
 
-const track_suspence       = game.sound("suspenso.mp3")
+const trackSuspence       = game.sound("suspenso.mp3")
 
-const track_cueva          = game.sound("cueva.mp3")
+const trackCueva          = game.sound("cueva.mp3")
 
-const track_pelea_final    = game.sound("pelea-final.mp3")
+const trackPeleaFinal    = game.sound("pelea-final.mp3")
 
-const track_cabaña         = game.sound("cabaña.mp3")
+const trackCabaña         = game.sound("cabaña.mp3")
 
-const track_tramo_a_cabaña = game.sound("tramo-a-cabaña.mp3")
+const trackTramoACabaña = game.sound("tramo-a-cabaña.mp3")
 
-const track_pelea_granero  = game.sound("pelea-granero.mp3")
+const trackPeleaGranero  = game.sound("pelea-granero.mp3")
 
-const track_tramo_final    = game.sound("tramo-final.mp3")
+const trackTramoFinal    = game.sound("tramo-final.mp3")
 
 // #################################################### MUSICA DIAPOSITIVAS #################################################### \\
 
-const track_inicio              = game.sound("inicio_v1.mp3")
+const trackInicio              = game.sound("inicio_v1.mp3")
 
-const track_amiga_muerta        = game.sound("terror-amiga-muerta.mp3")
+const trackAmigaMuerta        = game.sound("terror-amiga-muerta.mp3")
 
-const traicion_granero          = game.sound("traicion-guardabosques.mp3")
+const traicionGranero          = game.sound("traicion-guardabosques.mp3")
 
-const track_guardabosques_cueva = game.sound("guardabosques-cueva.mp3")
+const trackGuardabosquesCueva = game.sound("guardabosques-cueva.mp3")
 
 // ######################################################## MUSICA EVENTOS ###################################################### \\
 
-const track_prota_preocupado = "lobos-amiga.mp3"
+const trackProtaPreocupado = "lobos-amiga.mp3"
 
-const track_manada           = "manada-lobo.mp3"
+const trackManada           = "manada-lobo.mp3"
 
-const track_game_over        = "gameover.mp3"
+const trackGameOver        = "gameover.mp3"
 
-const track_win              = "game-win.mp3"
+const trackWin              = "game-win.mp3"
 
-const track_guardabosques_derrotado = "victoria-guardabosques.mp3"
+const trackGuardabosquesDerrotado = "victoria-guardabosques.mp3"
 
-const track_loboJefe_derrotado      = "victoria-lobo.mp3"
+const trackLoboJefeDerrotado      = "victoria-lobo.mp3"
 
 // ####################################################### SONIDOS ENEMIGOS ###################################################### \\ 
 
-const track_guardabosques_muerte = "muerte-guardabosques.mp3"
+const trackGuardabosquesMuerte = "muerte-guardabosques.mp3"
 
-const track_lobo_muerto1         = "muerte-perro-normal.mp3"
+const trackLoboMuerto1         = "muerte-perro-normal.mp3"
 
-const track_lobo_muerto2         = "muerte-perro-normal2.mp3"
+const trackLoboMuerto2         = "muerte-perro-normal2.mp3"
 
-const track_lobo_muerto3         = "muerte-perro-normal3.mp3"
+const trackLoboMuerto3         = "muerte-perro-normal3.mp3"
 
-const track_lobo_muerto4         = "muerte-perro-normal4.mp3"
+const trackLoboMuerto4         = "muerte-perro-normal4.mp3"
 
-const sonidosMuerteLobo          = [track_lobo_muerto1, track_lobo_muerto2, track_lobo_muerto3, track_lobo_muerto4]
+const sonidosMuerteLobo          = [trackLoboMuerto1, trackLoboMuerto2, trackLoboMuerto3, trackLoboMuerto4]
 
-const track_loboEnojado          = "lobo-enojado.mp3"
+const trackLoboEnojado          = "lobo-enojado.mp3"
 
 // ################################################################################################################################ \\

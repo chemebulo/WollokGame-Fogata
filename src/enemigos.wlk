@@ -117,7 +117,7 @@ class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da√
 
     override method sonidoMuerte(){
         // Describe el sonido de muerte del lobo especial.
-        return track_loboJefe_derrotado
+        return trackLoboJefeDerrotado
     }
    
     override method accionesAdicionalesAlMorir(){    
@@ -139,13 +139,13 @@ object guardabosques inherits Enemigo(image = "guardabosques-caba√±a.png", estad
 
     override method accionesAdicionalesAlMorir(){
         self.estadoCombate(pasivoGuardabosques)       
-        game.sound(track_guardabosques_derrotado).play() // por ahora vemos que sucede, esto se va a refactorizar
+        game.sound(trackGuardabosquesDerrotado).play() // por ahora vemos que sucede, esto se va a refactorizar
         bloquePostMuerte.apply(self, puertaEntradaCueva, self.sonidoMuerte())
     }
   
     override method sonidoMuerte(){
         // Describe el sonido de muerte del guardabosques.
-        return track_guardabosques_muerte
+        return trackGuardabosquesMuerte
     }
 
     override method esAtravesable(){

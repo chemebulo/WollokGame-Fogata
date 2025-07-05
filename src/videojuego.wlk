@@ -24,11 +24,11 @@ object videojuego{
     }
 
     method finalizarJuego(){      
-        self.finalizarYMostrar(gameover, track_game_over)
+        self.finalizarYMostrar(gameover, trackGameOver)
     }
 
     method juegoGanado(){      
-        self.finalizarYMostrar(juegoGanado, track_win)
+        self.finalizarYMostrar(juegoGanado, trackWin)
     }
     
     method finalizarYMostrar(visual,sonido){

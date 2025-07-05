@@ -167,7 +167,7 @@ object pq inherits Elemento(visual = puertaGranero){}
 
 // ################################################################################################################# \\
 
-const mapa_comun = // Mapa por defecto, se usa solo en test.
+const mapaComun = // Mapa por defecto, se usa solo en test.
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -182,7 +182,7 @@ const mapa_comun = // Mapa por defecto, se usa solo en test.
 
 // ################################################################################################################# \\
 
-const mapa_escenarioInicial_v1 = 
+const mapaEscenarioInicialV1 = 
     [
         [ p , p , p , p , p , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , p , p , p , _ , _ , _ , p , p , p , p , _ ],
@@ -197,7 +197,7 @@ const mapa_escenarioInicial_v1 =
 
 // ################################################################################################################# \\
 
-const mapa_escenarioBifurcacion_v1 =
+const mapaEscenarioBifurcacionV1 =
     [
         [ p , p , p , p , _ , _ , _ , _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
@@ -212,7 +212,7 @@ const mapa_escenarioBifurcacion_v1 =
 
 // ################################################################################################################# \\
 
-const mapa_escenarioBifurcacion_v2 =     
+const mapaEscenarioBifurcacionV2 =     
     [
         [ p , p , p , p , _ , _ , _ , _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
@@ -227,7 +227,7 @@ const mapa_escenarioBifurcacion_v2 =
 
 // ################################################################################################################# \\
 
-const mapa_escenarioBifurcacion_v3 =
+const mapaEscenarioBifurcacionV3 =
     [
         [ p , p , p , p , _ , _ , _ , _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
@@ -242,7 +242,7 @@ const mapa_escenarioBifurcacion_v3 =
 
 // ################################################################################################################# \\
 
-const mapa_escenarioBifurcacion_v4 = 
+const mapaEscenarioBifurcacionV4 = 
     [
         [ p , p , p , p , _ , _ , _ , _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
@@ -257,7 +257,7 @@ const mapa_escenarioBifurcacion_v4 =
 
 // ################################################################################################################# \\
 
-const mapa_escenarioBifurcacion_v5 =    
+const mapaEscenarioBifurcacionV5 =    
     [
         [ p , p , p , p , _ , _ , _ , _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
@@ -272,7 +272,7 @@ const mapa_escenarioBifurcacion_v5 =
 
 // ################################################################################################################# \\
 
-const mapa_escenarioBifurcacion_v6 =
+const mapaEscenarioBifurcacionV6 =
     [
         [ p , p , p , p , _ , _ , pn, _ , _ , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , _ , p , p , p ],
@@ -287,7 +287,7 @@ const mapa_escenarioBifurcacion_v6 =
 
 // ################################################################################################################# \\
 
-const mapa_entradaCabaña_v1 = 
+const mapaEntradaCabañaV1 = 
     [
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
@@ -302,7 +302,7 @@ const mapa_entradaCabaña_v1 =
 
 // ################################################################################################################# \\
 
-const mapa_entradaCabaña_v2 = 
+const mapaEntradaCabañaV2 = 
     [
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
@@ -317,7 +317,7 @@ const mapa_entradaCabaña_v2 =
 
 // ################################################################################################################# \\
 
-const mapa_EntradaCabaña_v3 = 
+const mapaEntradaCabañaV3 = 
     [
         [ p , p , p , _ , g , _ , _ , _ , p , p , p , p , _ ],
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
@@ -332,7 +332,7 @@ const mapa_EntradaCabaña_v3 =
 
 // ################################################################################################################# \\
 
-const mapa_EntradaCabaña_v4 =   
+const mapaEntradaCabañaV4 =   
     [
         [ p , p , p , _ , _ , _ , z , _ , p , p , p , p , _ ],
         [ p , p , p , _ , _ , _ , _ , _ , p , p , p , p , _ ],
@@ -347,7 +347,7 @@ const mapa_EntradaCabaña_v4 =
 
 // ################################################################################################################# \\
 
-const mapa_cabañaInicial_v1 = 
+const mapaCabañaInicialV1 = 
     [
         [ _ , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -362,7 +362,7 @@ const mapa_cabañaInicial_v1 =
 
 // ################################################################################################################# \\
 
-const mapa_cabañaInicial_v2 = 
+const mapaCabañaInicialV2 = 
     [
         [ _ , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , p , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
@@ -377,7 +377,7 @@ const mapa_cabañaInicial_v2 =
   
 // ################################################################################################################# \\
 
-const mapa_entradaCueva_v1 =
+const mapaEntradaCuevaV1 =
     [
         [ _ , _ , p , p , p , p , p , p , p , p , _ , p , p ],
         [ _ , _ , p , _ , _ , _ , p , _ , _ , _ , p , p , p ],
@@ -392,7 +392,7 @@ const mapa_entradaCueva_v1 =
 
 // ################################################################################################################# \\
 
-const mapa_entradaCueva_v2 = 
+const mapaEntradaCuevaV2 = 
     [
         [ _ , _ , p , p , p , p , p , p , p , p , _ , p , p ],
         [ _ , _ , p , _ , _ , _ , p , _ , _ , _ , p , p , p ],
@@ -407,7 +407,7 @@ const mapa_entradaCueva_v2 =
 
 // ################################################################################################################# \\
 
-const mapa_entradaCueva_v3 =
+const mapaEntradaCuevaV3 =
     [
         [ _ , _ , p , p , p , p , p , p , p , p , _ , p , p ],
         [ _ , _ , p , _ , _ , _ , p , _ , _ , _ , p , p , p ],
@@ -422,7 +422,7 @@ const mapa_entradaCueva_v3 =
 
 // ################################################################################################################# \\
 
-const mapa_cueva_v1 =
+const mapaCuevaV1 =
     [
         [ _ , _ , _ , _ , _ , _ , pc, _ , _ , _ , _ , _ , _ ],
         [ o , o , o , _ , o , _ , o , o , o , o , _ , o , _ ],
@@ -437,7 +437,7 @@ const mapa_cueva_v1 =
 
 // ################################################################################################################# \\
 
-const mapa_cueva_v2 =
+const mapaCuevaV2 =
     [
         [ _ , o , _ , _ , _ , o , _ , _ , _ , _ , _ , o , _ ],
         [ _ , o , l , o , _ , o , _ , o , o , o , _ , o , _ ],
@@ -452,7 +452,7 @@ const mapa_cueva_v2 =
 
 // ################################################################################################################# \\
 
-const mapa_cueva_v3 =
+const mapaCuevaV3 =
     [
         [ z , _ , _ , o , _ , _ , _ , _ , _ , o , _ , _ , _ ],
         [ o , o , _ , o , o , o , o , _ , o , o , _ , o , _ ],
@@ -467,7 +467,7 @@ const mapa_cueva_v3 =
 
 // ################################################################################################################# \\
 
-const mapa_cueva_v4 =
+const mapaCuevaV4 =
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , o , z , _ ],
         [ _ , o , o , o , o , _ , o , _ , o , o , o , _ , _ ],
@@ -482,7 +482,7 @@ const mapa_cueva_v4 =
    
 // ################################################################################################################# \\
 
-const mapa_cueva_v5 =
+const mapaCuevaV5 =
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , o , z , _ ],
         [ _ , o , o , o , o , _ , o , _ , o , o , o , _ , _ ],
@@ -497,7 +497,7 @@ const mapa_cueva_v5 =
 
 // ################################################################################################################# \\
 
-const mapa_entradaGranero_v1 = 
+const mapaEntradaGraneroV1 = 
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ p , p , p , p , p , p , p , p , p , p , p , p , p ],
@@ -512,7 +512,7 @@ const mapa_entradaGranero_v1 =
 
 // ################################################################################################################# \\
 
-const mapa_entradaGranero_v2 =    
+const mapaEntradaGraneroV2 =    
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ p , p , p , p , p , p , p , p , p , p , p , p , p ],
@@ -527,7 +527,7 @@ const mapa_entradaGranero_v2 =
 
 // ################################################################################################################# \\
 
-const mapa_peleaGranero = 
+const mapaPeleaGranero = 
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , tr, _ , _ , m , _ , _ , h , _ , _ , _ ],
@@ -542,7 +542,7 @@ const mapa_peleaGranero =
 
 // ################################################################################################################# \\
 
-const mapa_FinalJuego =
+const mapaFinalJuego =
     [
         [ o , o , o , o , o , o , o , o , o , o , o , o , o ],
         [ o , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , o ],
@@ -557,7 +557,7 @@ const mapa_FinalJuego =
 
 // ################################################################################################################# \\
 
-const mapa_estacionamiento_v1 = 
+const mapaEstacionamientoV1 = 
     [
         [ p , p , p , p , _ , _ , _ , _ , p , p , p , p , p ],
         [ p , p , p , _ , _ , _ , _ , _ , _ , p , p , p , p ],

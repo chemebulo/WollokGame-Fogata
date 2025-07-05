@@ -53,7 +53,7 @@ const inicioJuegoD =         {v, g => g.configurarParaSiguiente(peliculaAmigaMue
                                       v.cambiarEscenario(fogata)}
    
 const despuesDeAmigaMuerta = {v, g => g.configurarParaSiguiente(peliculaGranero, despuesDeGranero);
-                                      bifurcacion.configuradorTotal(bifurcacionC_v4, bifurcacionCES_v4);
+                                      bifurcacion.configuradorTotal(bifurcacionConfgV4, bifurcacionCESv4);
                                       v.cambiarEscenario(bifurcacion)}
 
 const despuesDeGranero =     {v, g => g.configurarParaSiguiente(peliculaPeleaFinal, despuesDePeleaFinal);
