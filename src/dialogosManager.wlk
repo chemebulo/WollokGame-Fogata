@@ -8,7 +8,7 @@ import visualesExtra.*
 object gestorDeDialogo{
     var property esMomentoDeDialogar = false
     var property dialogo = dialogoEscenarioInicial
-    const conversador    = protagonista
+  
   
     // =============================================================================================================================== \\
 
@@ -17,7 +17,8 @@ object gestorDeDialogo{
     }     
 
     method sePuedeConversar(){
-        return esMomentoDeDialogar and conversador.estaAlLadoDelNPC(dialogo.npcDialogo())
+       // return esMomentoDeDialogar and conversador.estaAlLadoDelNPC(dialogo.npcDialogo())
+       return esMomentoDeDialogar and dialogo.conversadorEnPosicion()
     }
 
     method conversar(){
@@ -39,11 +40,11 @@ object gestorDeDialogo{
 class Dialogo{
     var property conversadorActual  = protagonista 
     const bloque           = {} // 
-    const dialogoEscenario = [] // represnta el guion de la conversacion
+    const dialogoEscenario = [] // Cola. Representa el guion del dialogo 
     const dialogoGestor    = gestorDeDialogo
     // Conversadores
     const iniciadorDialogo = protagonista
-    const npcDialogo       = null
+    const npcDialogo       
 
     // =============================================================================================================================== \\
 
@@ -80,6 +81,10 @@ class Dialogo{
 
     method finalizarDialogo(){
         bloque.apply(npcDialogo, dialogoGestor)
+    }
+    
+    method conversadorEnPosicion(){
+        return iniciadorDialogo.estaAlLadoDelNPC(npcDialogo)
     }
 
     // =============================================================================================================================== \\
