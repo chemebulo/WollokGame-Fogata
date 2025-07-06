@@ -164,7 +164,7 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
 }    
 
 // ####################################################################################################################################################### \\
-// ES EL BLOQUE QUE CONTIENE TODAS LAS ACCIONES QUE DEBEN REALIZAR LOS JEFES CUANDO MUERTEN:
+// ES EL BLOQUE QUE CONTIENE TODAS LAS ACCIONES QUE DEBEN REALIZAR LOS JEFES CUANDO MUEREN:
 
 const bloqueAccionesMuerte = {enemigo, salida, ost => enemigo.escenarioActual().bajarVolumen();
                                                       game.sound(ost).play();
