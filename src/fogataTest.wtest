@@ -406,20 +406,6 @@ describe "Comportamiento del guardabosque:"{
     }
 }
 
-// ############################################################################################################################ \\
-
-describe "Fin del juego cuando muere el protagonista:" {
-
-    method initialize() {
-        game.width(7)
-        game.height(7)
-        game.cellSize(100)
-    }
-
-    test"El juego finaliza al morir el protagonista."{
-        assert.equals(0,0)
-    }
-}
 
 // ############################################################################################################################ \\
 // TESTEO DE CONFIGURADOR DE ESCENARIOS 
