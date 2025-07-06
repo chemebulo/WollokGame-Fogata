@@ -82,9 +82,9 @@ class ElementoLoboEspecial inherits ElementoLobo{
 }
 // ################################################################################################################# \\
 
-object _ inherits Elemento(visual = null){
+object _ { //Representa la nada (ausencia de objetos) en un tablero en una posicion dada
     
-    override method construir(position){} // Método conservado solamente por polimorfismo.
+     method construir(position){} // Método conservado solamente por polimorfismo.
 }
 
 // ############################################ ELEMENTOS PARA EL MAPA ############################################# \\
