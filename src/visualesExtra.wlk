@@ -99,7 +99,7 @@ class ParedInvisible inherits Visual(image = "vacio.png"){} // Representa a una 
 
 const leña        = new VisualInteractuable(image = "leña.png", position = game.at(5,5), bloqueInteraccion = interaccionLeña)
 const nota        = new VisualInteractuable(image = "nota.png", position = game.at(5,5), bloqueInteraccion = interaccionNota)
-const auto        = new VisualInteractuable(image = "auto.png", position = game.at(5,5), bloqueInteraccion = interaccionAuto)
+const auto        = new VisualInteractuable(image = "vacio.png", position = game.at(5,5), bloqueInteraccion = interaccionAuto)
 const cabañaOBJ   = new VisualAtravesable(image = "cabaña_entrada.png", position = game.at(5,6))
 const graneroOBJ  = new VisualAtravesable(image = "granero.png",        position = game.at(6,6))
 const fogataOBJ   = new Visual(image = "fogata.png", position = game.at(3,4))

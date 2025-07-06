@@ -70,10 +70,6 @@ object videojuego{
         keyboard.e().onPressDo({gestorDeDialogo.interactuarConNPC()})
         keyboard.f().onPressDo({gestorDeDiapositivas.interactuarDiapositivas()})
         keyboard.k().onPressDo({protagonista.atacar()})
-
-        // Para testear cosas, se borrara antes de entrega.
-        keyboard.m().onPressDo({game.stop()})
-        keyboard.l().onPressDo({game.say(protagonista, game.allVisuals().toString())}) 
     }
 }
 
