@@ -170,6 +170,7 @@ object constructorEscenario{
 // ############################################################################################################################## \\
 
 // ESCENARIOS PARA TODO EL JUEGO:
+//
 //     TEMPLATE escenario:
 //     const nombre_escenario = esc.construir(@param,    //configuracion actual
 //                                            @param,    //configurador para el escenario siguiente:
@@ -179,16 +180,16 @@ object constructorEscenario{
 //                                                         
 //                                            @param     // imagen de 1300px * 900 px
 //                                            )    
+//     TEMPLATE escenarioDiapositivas:
+//     const nombre_escenario = esc.construir(@param, //configurador implementado en confgEscenarios.wlk
+//                                             {}   , // no requiere configuradorEscenario siguiente
+//                                              @param     // imagen de 1300px * 900 px que es la primer diapositiva que se muestra
+//
 // IMPORTANTE!!!
 // Cuando de un escenario se va a otro escenario que ya se visito (donde ocurre una etapa distinta del juego), 
 // se debe settear los dos primeros parametros al escenario al que se ira dentro del configuradorEscenarioSiguiente
 // del escenarioActual
 // 
-// TEMPLATE escenarioDiapositivas:
-//     const nombre_escenario = esc.construir(@param, //configurador implementado en confgEscenarios.wlk
-//                                             {}   , // no requiere configuradorEscenario siguiente
-//                                              @param     // imagen de 1300px * 900 px que es la primer diapositiva que se muestra
-//
 
 // ############################################################################################################################## \\
 
@@ -423,14 +424,13 @@ const diapoGraneroConfgV1 = {e => e.removerSiEsta(protagonista);
 
 // CONFIGURADOR DE ESCENARIOS SIGUIENTE: 
 //    *tipo: bloque
-//    En el bloque se debe escribir
-//    el setter del irHacia de TODAS LAS PUERTAS del escenario actual 
-//    si se vuelve a un escenario anterior...se deben settear tanto el confgEscSiguiente como el confgActual
-//    si un escenario tiene dinstintos configuradores, respetar nomenclatura y escribir al final v1,v2,v3 
+//    En el bloque se debe implementar:
+//    *El setter del irHacia de TODAS LAS PUERTAS del escenario actual 
+//    *Si se vuelve a un escenario anterior...se deben settear tanto el confgEscSiguiente como el confgActual
+//    *Si un escenario tiene dinstintos configuradores, respetar nomenclatura y escribir al final v1,v2,v3 
 //
 //  NOTAS: Los escenarios exclusivos para diapositivas no requieren un configurador de escenario siguiente
-//
-//  nomenclatura = escenarioCES_v*
+
 
 const fogataCESv1 = {puertaNorte.irHacia(bifurcacion)}
 
