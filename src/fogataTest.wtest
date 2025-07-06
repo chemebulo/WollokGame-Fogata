@@ -13,16 +13,16 @@ import eventos.*
 
 // ############################################################################################################################ \\
 
-// VARIABLES PARA TESTEO DE CONFIGURADORES DE ESCENARIOS:
+    // VARIABLES PARA TESTEO DE CONFIGURADORES DE ESCENARIOS:
 	const escenarioX = constructorEscenario.construir({}, {}, "")
-	const eventoX    = new EventoLoopIndividual( sujetoUnico = protagonista, comportamiento = {})
-	const configuradorTEST    = {e => e.actualizarVisuales([protagonista, puertaNorte]); e.actualizarEventos([eventoX])} // Mapa test.
+	const eventoX    = new EventoLoopIndividual(sujetoUnico = protagonista, comportamiento = {})
+	const configuradorTEST    = {escenario => escenario.actualizarVisuales([protagonista, puertaNorte]); escenario.actualizarEventos([eventoX])} // Mapa test.
 	const configuradorSigTEST = {puertaNorte.irHacia(granero)}
 
-//VARIABLES PARA TESTEO DE FUNCIONAMIENTO DE PUERTAS:
-	const configuracionActualTEST    = {e => e.actualizarVisuales([puertaNorte, puertaOeste])}
+    //VARIABLES PARA TESTEO DE FUNCIONAMIENTO DE PUERTAS:
+	const configuracionActualTEST    = {escenario => escenario.actualizarVisuales([puertaNorte, puertaOeste])}
 	const configuracionSiguienteTEST = {puertaNorte.irHacia(bifurcacion); puertaOeste.irHacia(fogata)}
-	const escenarioParaTestear = constructorEscenario.construir(configuracionActualTEST, configuracionSiguienteTEST, "")          
+	const escenarioParaTestear       = constructorEscenario.construir(configuracionActualTEST, configuracionSiguienteTEST, "")          
 
 // ############################################################################################################################ \\
 
@@ -466,4 +466,3 @@ describe "Funcionamiento de los configuradores de escenario:"{
 }
 
 // ############################################################################################################################ \\
-

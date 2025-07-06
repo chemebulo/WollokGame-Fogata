@@ -7,44 +7,16 @@ import puertas.*
 
 // ################################################################################################################# \\
 
-//    USAR ESTAS MEDIDAS PARA TODOS LOS ESCENARIOS:
-//        * 9 listas     -> Formando el alto del escenario.
-//        * 13 elementos -> Formando el ancho del escenario.
-//
-//    IMPORTANTE: 
-//        * Para crear:
-//	        - Las puertas Norte, Sur, Este, Oeste (con ubicaciones),
-//            - Las puertas cerradas Norte, Sur, Este, Oeste (con mensajes),
-//            - Las puertas genéricas.
-//        
-//	      No es necesario crear objetos de tipo Elemento (véase escenarioManager.wlk) para dibujarlas,
-//          solo se agregaran como visuales en los objetos "escenario" con el método agregarVisualesEscena().
-//
-//          Luego de dibujar el escenario reemplazar la N con _ si dibujamos todas las puertas. Si por ejemplo un 
-//          escenario tiene solo puertas Oeste y Este, se puede dibujar algo en las N que simbolizan Norte y Sur.
-//          Es importante sobreescribir el método configurarPuertas() con los requerimientos del escenario actual.
-//
-//    [
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
-//        [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ]
-//    ].reverse() 
-//    
-//    Nombres de variables recomendados: mapa_nombreEscenario
+// Los escenarios mapas sirven para poder dibujar en el tablero a los diferentes visuales en posiciones exactas, esto
+// se determina en la posición que se ubique dicho visual en la "matriz" o "lista de listas".
 
 // ################################################################################################################# \\
 
-// Referencias a los distintos visuales para setter sus posiciones a la matriz o instanciarlos.
 class Elemento{ 
-    const visual = null
+    const visual // Representa al visual que tiene el elemento.
 
     method construir(position){
+        // Construye al visual cargado en el elemento en la posición dada.
         visual.position(position)
     }
 }
@@ -52,15 +24,16 @@ class Elemento{
 // ################################################################################################################# \\
 
 class ElementoAgregado{
-    const gestorAgregador
+    const gestorAgregador // Representa el gestor que agrega los elementos al juego.
 
-    method construir(posicion) {
+    method construir(posicion){
+        // Crea el elemento en la posición dada para que el gestor lo agregue al juego.
         const elemento = self.crearElemento(posicion)
         game.addVisual(elemento)
         gestorAgregador.agregar(elemento)
     }
 
-    method crearElemento(posicion)
+    method crearElemento(posicion) // Crea el elemento en la posición dada.
 }
 
 // ################################################################################################################# \\
@@ -68,6 +41,7 @@ class ElementoAgregado{
 class ElementoLobo inherits ElementoAgregado(gestorAgregador = gestorDeLobos){
 
     override method crearElemento(posicion){
+        // Crea el elemento en la posición dada, en este caso es un lobo.
         return new Lobo(position = posicion)
     }
 }
@@ -77,6 +51,7 @@ class ElementoLobo inherits ElementoAgregado(gestorAgregador = gestorDeLobos){
 class ElementoObstaculo inherits ElementoAgregado(gestorAgregador = gestorDeObstaculos){
 
     override method crearElemento(posicion){
+        // Crea el elemento en la posición dada, en este caso es un obstáculo.
         return new Obstaculo(position = posicion)
     }
 }
@@ -85,6 +60,7 @@ class ElementoObstaculo inherits ElementoAgregado(gestorAgregador = gestorDeObst
 class ElementoPared inherits ElementoObstaculo{
 
     override method crearElemento(posicion){
+        // Crea el elemento en la posición dada, en este caso es una pared.
         return new ParedInvisible(position = posicion)
     }
 }
@@ -93,36 +69,34 @@ class ElementoPared inherits ElementoObstaculo{
 
 class ElementoLoboEspecial inherits ElementoLobo{
 
-    override method crearElemento(posicion){
-        return new LoboEspecial(position = posicion)
-    }
-
     override method construir(posicion){
+        // Crea el elemento en la posición dada para que el gestor lo agregue al juego.
         super(posicion)
         puertaGranero.irHacia(entradaGranero)
     }
+
+    override method crearElemento(posicion){
+        // Crea el elemento en la posición dada, en este caso es un lobo especial.
+        return new LoboEspecial(position = posicion)
+    }
 }
 // ################################################################################################################# \\
 
-object _ inherits Elemento{
+object _ inherits Elemento(visual = null){
     
-    override method construir(position){} // Por polimorfismo.
+    override method construir(position){} // Método conservado solamente por polimorfismo.
 }
 
-// ################################################################################################################# \\
+// ############################################ ELEMENTOS PARA EL MAPA ############################################# \\
 
 object o inherits ElementoObstaculo{}
 
 object p inherits ElementoPared{}
 
-// ################################################################################################################# \\
-
 object l inherits ElementoLobo{}
 
 object j inherits ElementoLoboEspecial{}
    
-// ################################################################################################################# \\
-
 object g inherits Elemento(visual = guardabosques){}
 
 object z inherits Elemento(visual = protagonista){} 
@@ -149,8 +123,6 @@ object s inherits Elemento(visual = auto){}
 
 object tr inherits Elemento(visual = tridente){}
 
-// ################################################################################################################# \\
-
 object po inherits Elemento(visual = puertaOeste){}
 
 object pn inherits Elemento(visual = puertaNorte){}
@@ -167,7 +139,7 @@ object pq inherits Elemento(visual = puertaGranero){}
 
 // ################################################################################################################# \\
 
-const mapaComun = // Mapa por defecto, se usa solo en test.
+const mapa_comun = // Mapa por defecto, se usa solo en los tests.
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],

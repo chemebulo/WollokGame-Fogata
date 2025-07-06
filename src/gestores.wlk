@@ -15,7 +15,7 @@ object gestorDeDirecciones{
     }
   
     method direccionDeBala(positionEnemigo, positionTirador){
-        // Evalua la posicion entre el protagonista y el tirador y retorna la direccion de disparo.
+        // Evalúa la posición entre el protagonista y el tirador, retornando la direccion de disparo.
         const positionXEnemigo = self.xPos(positionEnemigo)
         const positionYEnemigo = self.yPos(positionEnemigo)
         const positionXTirador = self.xPos(positionTirador)
@@ -25,7 +25,7 @@ object gestorDeDirecciones{
     }
 
     method direccionDeDisparoEvaluada(positionXEnemigo, positionYEnemigo, positionXTirador, positionYTirador){
-        // Dados unos pares de valores x,y evalua hacia donde disparar.
+        // Dados unos pares de posiciones "x", "y", evalúa hacia donde disparar.
         return if (self.estaAMiIzquierda(positionXEnemigo, positionXTirador)) { izquierda } else 
                if (self.estaAMiDerecha(positionXEnemigo, positionXTirador))   {  derecha  } else 
                if (self.estaArriba(positionYEnemigo, positionYTirador))       {   arriba  } else 
@@ -33,23 +33,28 @@ object gestorDeDirecciones{
     }
 
     method estaAMiIzquierda(positionXEnemigo, positionXPropio){
+        // Indica si a partir de dos posiciones, un objeto se encuentra a mi izquierda.
         return positionXEnemigo < positionXPropio
     }
 
     method estaAMiDerecha(positionXEnemigo, positionXPropio){
+        // Indica si a partir de dos posiciones, un objeto se encuentra a mi derecha.
         return positionXEnemigo > positionXPropio
     }
 
     method estaArriba(positionYEnemigo, positionYPropio){
+        // Indica si a partir de dos posiciones, un objeto se encuentra arriba de donde estoy.
         return positionYEnemigo > positionYPropio
     }
 
-    method xPos(pos){
-        return pos.x()
+    method xPos(posicion){
+        // Devuelve la coordenada "x" de la posicion dada.
+        return posicion.x()
     }
 
-    method yPos(pos){
-        return pos.y()
+    method yPos(posicion){
+        // Devuelve la coordenada "y" de la posicion dada.
+        return posicion.y()
     }
 }
 
@@ -107,16 +112,18 @@ object gestorDeCeldasTablero{
     // ========================================================================================================================================= \\
 
     method hayLindanteSinObstaculo(posicion, visual){
+        // Indica si hay lindantes sin obstaculo en la posición dada sin tener en cuenta al visual dado.
         return not self.lindantesSinObstaculos(posicion, visual).isEmpty()
     }
 
     method lindanteConvenienteHacia(posicion, visual){
         // Describe la celda lindante que más cerca está del visual dado.
         const lindantesSinObstaculo = self.lindantesSinObstaculos(posicion, visual)
-        return self.lindanteSiHay(lindantesSinObstaculo, posicion, visual)
+        return self.lindanteConvenienteSiHay(lindantesSinObstaculo, posicion, visual)
     }
     
-    method lindanteSiHay(lindantes, posicion, visual){
+    method lindanteConvenienteSiHay(lindantes, posicion, visual){
+        // Describe la posición lindante conveniente si hay en la posición dada y sin incluir al visual dado. Sino, devuelve la misma posición. 
         return lindantes.minIfEmpty({posicionARevisar => posicionARevisar.distance(visual.position())}, {posicion})
     }
 
@@ -187,6 +194,7 @@ object gestorDeMovimiento{
     }
 
     method validarSiPuedeMover(direccion, visual){
+        // Valida si el visual dado se puede mover hacia la dirección dada.
         if(not colisionesGestor.puedeMoverA(direccion, visual)){
             self.error("No me puedo mover en esa dirección")
         }
@@ -201,29 +209,33 @@ object gestorDeMovimiento{
 // ############################################################################################################################################# \\
 
 object gestorFondoEscenario{
-    var property image = "" // La imagen tiene que ser de tamaño 1300px(ancho) x 900px(alto).
-    const position     = game.at(0,0)
+    var property image = "vacio.png"  // Representa la imagen del fondo del gestor. La imagen tiene que ser de tamaño 1300px(ancho) x 900px(alto).
+    const position     = game.at(0,0) // Representa la posición del gestor, aunque se conserva únicamente por polimorfismo.
     
     method visualizarFondo(nuevoFondo){
+        // Se muestra el fondo dado en el ujego.
         self.image(nuevoFondo)
         game.addVisual(self)    
     }
 
     method borrarFondo(){
+        // Borra el fondo del juego. 
         game.removeVisual(self)
     }
 
     method esAtravesable(){
+        // Describe si es atravesable o no, en este caso el gestor es atravesable. Es conservado únicamente por polimorfismo.
         return true
     }
 
-    method interaccion(){}
+    method interaccion(){} // Método conservado únicamente por polimorfismo.
 
-    method atacadoPor(visual){}
+    method atacadoPor(visual){} // Método conservado únicamente por polimorfismo.
 
     // ========================================================================================================================================= \\
 
     method position(){
+        // Describe la posición actual del gestor, aunque en realidad se conserva por polimorfismo.
         return position
     }
 }   
@@ -231,36 +243,42 @@ object gestorFondoEscenario{
 // ############################################################################################################################################# \\
 
 object gestorDeLobos{
-    const lobosEscenario = []
-    const eventosLobos   = []
+    const lobosEscenario = [] // Representa los lobos que administra el gestor.
+    const eventosLobos   = [] // Representa los eventos de lobos que administra el gestor.
     
     method agregar(lobo){
-        self.crearLoboGestionable(lobo)
+        // Agrega el lobo dado a los lobos que estan administrados por el gestor e inicia sus eventos.
+        self.agregarLoboGestionable(lobo)
         self.iniciarCicloAtaque(lobo)
     }
 
-    method iniciarCicloAtaque(lobo){
-        lobo.eventoPersecucion().iniciarEvento()
-        lobo.eventoAtaque().iniciarEvento()
-    }
-
-    method crearLoboGestionable(lobo){
+    method agregarLoboGestionable(lobo){
+        // Agrega el lobo dado por parámetro, agregándolo a la lista de lobos y sus eventos a la lista de eventos del gestor.
         lobosEscenario.add(lobo)
         eventosLobos.add(lobo.eventoPersecucion())
         eventosLobos.add(lobo.eventoAtaque())
     }
+
+    method iniciarCicloAtaque(lobo){
+        // Inicia el ciclo de ataque del lobo dado, iniciando sus eventos respectivos.
+        lobo.eventoPersecucion().iniciarEvento()
+        lobo.eventoAtaque().iniciarEvento()
+    }
     
     method limpiarLobos(){
+        // Limpia todos los lobos y todos los eventos de los mismos del gestor.
         lobosEscenario.forEach({lobo => self.resetearLobo(lobo)})
         eventosLobos.forEach({evento => self.resetearEventoLobo(evento)})
     }
 
     method resetearLobo(lobo){
+        // Resetea el lobo dado, borrandolo del juego y de la lista de lobos del gestor.
         game.removeVisual(lobo)
         lobosEscenario.remove(lobo)
     }
 
     method resetearEventoLobo(evento){
+        // Resetea el evento dado, borrandolo del juego y de la lista de eventos del gestor.
         game.removeTickEvent(evento.nombreEvento())
         eventosLobos.remove(evento)
     }

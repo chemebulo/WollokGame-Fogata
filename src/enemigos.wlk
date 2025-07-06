@@ -10,9 +10,9 @@ import puertas.*
 // ####################################################################################################################################################### \\
 
 class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
-    var property estadoCombate
-    var estado    = new EstadoVivo(visual = self) // Describe el estado del enemigo. Por defecto, está vivo.
-    const enemigo = protagonista  // Describe el enemigo que tiene el enemigo (el protagonista).
+    var property estadoCombate                    // Representa el estado de combate del enemigo. No tiene valor asignado por defecto.
+    var estado    = new EstadoVivo(visual = self) // Representa el estado del enemigo. Por defecto, está vivo.
+    const enemigo = protagonista                  // Representa el enemigo que tiene el enemigo (en este caso, el protagonista).
 
     // ==================================================================================================================================================== \\
 
@@ -30,9 +30,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         // Actualiza el estado del enemigo a muerto, cambiando su imagen y su estado de colisión (sumado a unas cuantas cosas más).
         super()
         estado = new EstadoMuerto()
-        self.image(self.imagenMuerto())
-        self.cambiarAAtravesable()
-        game.sound(self.sonidoMuerte()).play()
+        self.emitirSonidoMuerte()
         self.accionesAdicionalesAlMorir()
     }
 
@@ -51,22 +49,29 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
         return estado.puedeAtacarAlEnemigo()
     }
 
-    method escenarioDondeEstoy(){
-        // Describe el escenario donde actualmente está el enemigo.
+    method escenarioActual(){
+        // Describe el escenario donde actualmente se encuentra el enemigo.
         return videojuego.escenario()
     }
 
-    method accionesAdicionalesAlMorir(){}
+    method emitirSonidoMuerte(){
+        // Ejecuta el sonido de muerte del enemigo.
+        game.sound(self.sonidoMuerte()).play()
+    }
+
+    method accionesAdicionalesAlMorir(){} // Representa las acciones adicionales que se podrían realizar después de que el enemigo muera.
 
     method sonidoMuerte() // Describe el sonido de muerte del enemigo.
 
     // ==================================================================================================================================================== \\
 
     method estado(){
+        // Describe al estado de vida del enemigo (puede que esté vivo o muerto).
         return estado
     }
 
     method enemigo(){
+        // Describe al enemigo del enemigo (en este caso, al protagonista).
         return enemigo
     }
 }
@@ -74,8 +79,8 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 // ####################################################################################################################################################### \\
 
 class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new EstadoAgresivoLobo(imagen = image, visual = self, modoAtaque = new AtaqueEnLugar(atacante = self)), vida = 20, daño = 4){
-    const eventoPersecucion = new EventoEnemigoPersecucion(sujetoUnico = self)
-    const eventoAtaque      = new EventoEnemigoAtaque(sujetoUnico = self)
+    const eventoPersecucion = new EventoEnemigoPersecucion(sujetoUnico = self) // Es el evento que representa la persecución del lobo a su enemigo.
+    const eventoAtaque      = new EventoEnemigoAtaque(sujetoUnico = self)      // Es el evento que representa el ataque del enemigo a su enemigo.
 
     override method imagenNueva(direccion){
         // Describe la imagen nueva del lobo en base a la dirección dada.
@@ -95,10 +100,12 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Esta
     // ==================================================================================================================================================== \\
 
     method eventoPersecucion(){
+        // Describe el evento de persecución que utiliza el lobo.
         return eventoPersecucion
     }
 
     method eventoAtaque(){
+        // Describe el evento de ataque que utiliza el lobo.
         return eventoAtaque
     }
 }
@@ -106,7 +113,7 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Esta
 // ####################################################################################################################################################### \\
 
 class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 8){
-    const bloquePostMuerte = bloqueAccionesMuerte
+    const bloquePostMuerte = bloqueAccionesMuerte // Representa el bloque que contiene las acciones que debe realizar el lobo especial post muerte.
     
     // ==================================================================================================================================================== \\
 
@@ -120,7 +127,8 @@ class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da�
         return trackLoboJefeDerrotado
     }
    
-    override method accionesAdicionalesAlMorir(){    
+    override method accionesAdicionalesAlMorir(){
+        // El lobo especial realiza sus propias acciones adicionales al morir.
         bloquePostMuerte.apply(self, puertaGranero, self.sonidoMuerte())
     }
 }
@@ -128,7 +136,7 @@ class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da�
 // ####################################################################################################################################################### \\
 
 object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = agresivoGuardabosques, vida = 50, daño = 2){
-    const bloquePostMuerte = bloqueAccionesMuerte
+    const bloquePostMuerte = bloqueAccionesMuerte // Representa el bloque que contiene las acciones que debe realizar el guardabosques post muerte.
 
     // ==================================================================================================================================================== \\
 
@@ -138,8 +146,9 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
     }
 
     override method accionesAdicionalesAlMorir(){
+        // El guardabosques realiza sus propias acciones adicionales al morir.
         self.estadoCombate(pasivoGuardabosques)       
-        game.sound(trackGuardabosquesDerrotado).play() // por ahora vemos que sucede, esto se va a refactorizar
+        game.sound(trackGuardabosquesDerrotado).play()
         bloquePostMuerte.apply(self, puertaEntradaCueva, self.sonidoMuerte())
     }
   
@@ -149,14 +158,15 @@ object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estad
     }
 
     override method esAtravesable(){
+        // Describe si es atravesable o no, en este caso no.
         return false
     }
 }    
 
 // ####################################################################################################################################################### \\
-// BLOQUE DE MUERTE PARA JEFES:
+// ES EL BLOQUE QUE CONTIENE TODAS LAS ACCIONES QUE DEBEN REALIZAR LOS JEFES CUANDO MUERTEN:
 
-const bloqueAccionesMuerte = {enemigo, salida, ost => enemigo.escenarioDondeEstoy().bajarVolumen();
+const bloqueAccionesMuerte = {enemigo, salida, ost => enemigo.escenarioActual().bajarVolumen();
                                                       game.sound(ost).play();
                                                       game.addVisual(salida)}
 

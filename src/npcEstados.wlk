@@ -80,7 +80,7 @@ class EstadoCombate{
         return visual
     }
 
-    method daño()
+    method daño() // Describe el daño que realiza el estado de combate.
 }
 
 // ######################################################################################################################################################### \\
@@ -90,6 +90,7 @@ class EstadoPasivo inherits EstadoCombate{
     method atacarEnemigo(){} // En el estado de combate pasivo, no hay un comportamiento definido para atacar a un enemigo.
 
     override method daño(){
+        // Describe el daño que realiza el estado de combate pasivo, en este caso, es 0.
         return 0
     }
 } 
@@ -131,6 +132,7 @@ class EstadoAgresivo inherits EstadoCombate{
     }
 
     override method daño(){
+        // Describe el daño que realiza el estado de combate agresivo, lo cual depende del daño del modo de ataque.
         return modoAtaque.daño()
     }
 }

@@ -7,10 +7,10 @@ import gestores.*
 // ################################################################################################################################## \\
 
 object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100){
-    var property estadoCombate        = pasivoProtagonista
-    var property estadoCombateElegido = null
-    const property vidaGestor         = gestorDeVida
-    const property movimientoGestor   = gestorDeMovimiento
+    var property estadoCombate        = pasivoProtagonista  // Representa el estado de combate actual del protagonista.
+    var property estadoCombateElegido = null                // Representa el estado de combate elegido, se utiliza por una situación particular.
+    const property vidaGestor         = gestorDeVida        // Representa el gestor de vida que utiliza el protagonista.
+    const property movimientoGestor   = gestorDeMovimiento  // Representa el gestor de movimiento que utiliza el protagonista.
    
     // ============================================================================================================================== \\
 
@@ -25,6 +25,7 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     }
 
     override method daño(){
+        // Describe el daño que causa cada ataque del enemigo dependiendo de su estado de combate.
         return estadoCombate.daño()
     }
 
@@ -36,7 +37,7 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     override method actualizarAMuerto(){
         // Actualiza el estado del protagonista a muerto, lo cual implica terminar el juego.
         super()
-        videojuego.finalizarJuego()
+        videojuego.juegoPerdido()
     }
     
     override method imagenNueva(direccion){
@@ -45,6 +46,7 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     }
 
     method estaAlLadoDelNPC(npc){
+        // Indica si el protagonista se encuentra al lado del NPC dado.
         return ejeY.estaEnMismoEje(self, npc) and ejeX.estaAlLado(self, npc)
     }
 

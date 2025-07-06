@@ -5,82 +5,97 @@ import enemigos.*
 import puertas.*
 import videojuego.*
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
 
 class Visual{
-    var property position = game.at(0,0) // Por defecto.
-    var property image    = null         // Por defecto.
-    var esAtravesable     = false
+    var property position = game.at(0,0) // Representa la poisición del visual.
+    var property image    = "vacio.png"  // Representa la imagen del visual.
+    var esAtravesable     = false        // Representa la colisión del visual con otros visual del juego.
     
-    // ====================================================================================================================== \\
+    // ============================================================================================================================ \\
 
-    method interaccion(){}
+    method interaccion(){} // Representa la interacción del visual con cualquier otro visual.
 
     method atacadoPor(visual){} // Representa el comportamiento del visual al ser atacado por otro visual.
 
     method cambiarAAtravesable(){
+        // Cambia el valor del atributo que representa la colisión del visual, en este caso hace que tenga colisión.
         esAtravesable = true
     }
 
-    // ====================================================================================================================== \\
+    // ============================================================================================================================ \\
 
     method esAtravesable(){
+        // Describe si el visual es atravesable o no por otros visual. 
         return esAtravesable
     }
 }
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
 
 class VisualConMovimiento inherits Visual{
-    var property vida       // Describe la vida del visual.
-    const property daño = 1 // Describe el daño del visual.
+    var property vida       // Representa la vida del visual.
+    const property daño = 1 // Representa el daño del visual.
 
     method cambiarImagen(direccion){
-        // Cambia la imagen del visual dependiendo de la dirección dada. 
+        // Cambia la imagen del visual con movimiento dependiendo de la dirección dada. 
         self.image(self.imagenNueva(direccion))
     }
 
+    method cambiarImagenAMuerto(){
+        // Actualiza la imagen del visual con movimiento a su imagen muerto.
+        self.image(self.imagenMuerto())
+    }
+
     method estaVivo(){
-        // Indica si el visual se encuentra vivo o no.
+        // Indica si el visual con movimiento se encuentra vivo o no.
         return self.vida() > 0
     }
 
     method actualizarAMuerto(){
-        // Actualiza la vida del visual a cero.
+        // Actualiza la vida del visual con movimiento a cero, cambia su imagen y su colisión.
         vida = 0
+        self.cambiarImagenAMuerto()
+        self.cambiarAAtravesable()
     }
 
     method imagenMuerto(){
-        // Describe la imagen del enemigo muerto.
+        // Describe la imagen del visual con movimiento muerto.
         return "muerto-"+self.image()
     }
 
     method imagenTemporal(){
+        // Describe la imagen temporal del visual con movimiento.
         return "atacando-"+self.image()
     }
 
-    method imagenNueva(direccion) // Describe la imagen nueva del visual en base a la dirección dada.
+    method imagenNueva(direccion) // Describe la imagen nueva del visual con movimiento en base a la dirección dada.
 }
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
 
-class VisualAtravesable inherits Visual(esAtravesable = true){}
+class VisualAtravesable inherits Visual(esAtravesable = true){} // Representa un visual atravesable, es decir, que no tiene colisión.
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
 
 class VisualInteractuable inherits VisualAtravesable{
-    const bloqueInteraccion
-    
+    const bloqueInteraccion // Representa el bloque que contiene la interacción completa del visual.
+
     override method interaccion(){
+        // Aplica el bloque de interacción cargado actualmente en el visual.
         bloqueInteraccion.apply(self)
     }
 }
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
 
-class VisualObstaculo inherits Visual{}
+class Obstaculo inherits Visual(image = "obstaculo.png"){} // Representa a un obstaculo.
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
+
+class ParedInvisible inherits Visual(image = "vacio.png"){} // Representa a una pared invisible.
+
+// ################################################################################################################################ \\
 
 const leña        = new VisualInteractuable(image = "leña.png", position = game.at(5,5), bloqueInteraccion = interaccionLeña)
 const nota        = new VisualInteractuable(image = "nota.png", position = game.at(5,5), bloqueInteraccion = interaccionNota)
@@ -96,7 +111,7 @@ const hacha       = new Arma(image = "hacha.png",    position = game.at(5,5), nu
 const tridente    = new Arma(image = "tridente.png", position = game.at(6,6), nuevoEstado = agresivoProtagonistaT)
 const manopla     = new Arma(image = "manopla.png",  position = game.at(7,7), nuevoEstado = agresivoProtagonistaM)
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
 
 const interaccionLeña = {v => game.removeVisual(v)
                               game.addVisual(puertaEntradaCabaña)
@@ -111,25 +126,18 @@ const interaccionNota = {v => game.removeVisual(v)
 
 const interaccionAuto = {v => game.removeVisual(v); videojuego.juegoGanado()}
 
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\
 
 class Arma inherits VisualAtravesable{
-    const usuario = protagonista
-    const property nuevoEstado 
+    const usuario = protagonista // Representa el usuario que utiliza el arma.
+    const property nuevoEstado   // Representa el nuevo estado del usuario que utiliza el arma.
 
     override method interaccion(){
+        // Aplica el bloque de acciones del arma cargado actualmente.
         game.say(protagonista, "Pulsa K para atacar")
         videojuego.removerVisualesArmas()
         usuario.agarrarArma(self)
     }
 }
 
-// ########################################################################################################################## \\
-
-class Obstaculo inherits VisualObstaculo(image = "obstaculo.png"){}
-
-// ########################################################################################################################## \\
-
-class ParedInvisible inherits VisualObstaculo(image = null){}
-
-// ########################################################################################################################## \\
+// ################################################################################################################################ \\

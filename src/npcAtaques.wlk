@@ -4,40 +4,27 @@ import visualesExtra.*
 
 // ########################################################################################################################## \\
 
-//  IMPORTANTE: Por favor no refactorizar este archivo, estoy optimizando la memoria
-//  para que solo existan 6 balas y una vez disparadas el cargador de la escopeta
-//  funcione como una Cola (dispara la primer bala del cargador y esta al dispararse 
-//  va al final del cargador para dispararse despues) ; pero tengo que gestionar bien 
-//  las consultas y el manejo de refencias.
-//    
-//  AVISO!!!
-//  *este archivo es provisorio, quizas se mueva a estadosNPC pero se recomienda que 
-//  se mantenga aqui de momento
-//  * El gestorDeDirecciones tiene metodos para indicarle a la bala hacia donde disparar.
-//  * La bala vive hasta que interactue con un objeto o llegue al fin del escenario(rocas).
-//  * La bala tambien daña a los lobos.
-//  * La baja jamas ataca al guardabosques.
-
-// ########################################################################################################################## \\
-
 class Ataque {
-    const atacante
+    const atacante // Representa al atacante que realiza el ataque.
 
     method ataqueArma(){
+        // En todas la posiciones a atacar, se realiza el ataque con su respectivo daño hacia todos los visual que alcance.
         self.posicionesAAtacar().forEach({posicion => self.atacarEnPosicion(posicion)})
     }
   
     method atacarEnPosicion(posicion){
+        // El atacante cargado realiza el ataque en la posición dada.
         self.objetosEnPosicion(posicion).forEach({objeto => objeto.atacadoPor(atacante)})
     }
  
     method objetosEnPosicion(posicion){
+        // Describe todos los objetos que hay en la posición dada.
         return game.getObjectsIn(posicion)
     } 
     
-    method posicionesAAtacar()
+    method posicionesAAtacar() // Describe todas las posiciones a atacar.
 
-    method daño()
+    method daño() // Describe el daño que realiza el ataque.
 }
 
 // ########################################################################################################################## \\
@@ -45,6 +32,7 @@ class Ataque {
 class AtaqueTridente inherits Ataque(){
     
     override method posicionesAAtacar(){
+        // Describe todas las posiciones a atacar.
         return [atacante.position().left(1),
                 atacante.position().left(2),
                 atacante.position().right(1),
@@ -52,6 +40,7 @@ class AtaqueTridente inherits Ataque(){
     }
 
     override method daño(){
+        // Describe el daño que realiza el ataque.
         return 2
     }
 }
@@ -61,6 +50,7 @@ class AtaqueTridente inherits Ataque(){
 class AtaqueHacha inherits Ataque(){
         
     override method posicionesAAtacar(){
+        // Describe todas las posiciones a atacar.
         return [atacante.position().down(1),
                 atacante.position().up(1),
                 atacante.position().left(1),
@@ -68,6 +58,7 @@ class AtaqueHacha inherits Ataque(){
     }
 
     override method daño(){
+        // Describe el daño que realiza el ataque.
         return 4
     }
 }
@@ -77,14 +68,17 @@ class AtaqueHacha inherits Ataque(){
 class AtaqueEnLugar inherits Ataque(){
     
     override method posicionesAAtacar(){
+        // Describe todas las posiciones a atacar.
         return [atacante.position()]
     }
 
     override method objetosEnPosicion(posicion){
+        // Describe todos los objetos que hay en la posición dada sin incluir al visual dado.
         return game.getObjectsIn(posicion).copyWithout(atacante)
     }
 
     override method daño(){
+        // Describe el daño que realiza el ataque.
         return 6
     }
 }
@@ -92,7 +86,7 @@ class AtaqueEnLugar inherits Ataque(){
 // ########################################################################################################################## \\
 
 class AnimacionAtaque{
-    const npc  = null // el visual que ataca
+    const npc  = null // Representa el NPC que realiza el ataque.
 
     method animarAtaque(){
         // Realiza una secuencia de instrucciones que consisten en remover/agregar la imagen de un visual para dar sensación de animación.
@@ -105,9 +99,10 @@ class AnimacionAtaque{
                             game.addVisual(npc)})
     }
 
-    method atacadoPor(visual){}
+    method atacadoPor(visual){} // Método conservado únicamente por polimorfismo.
  
     method esAtravesable(){
+        // Describe que la animación es atravesable, aunque en realidad es conservado únicamente por polimorfismo.
         return true
     }
 }
@@ -115,123 +110,143 @@ class AnimacionAtaque{
 // ################################################ ATAQUES CON ARMA DE FUEGO ############################################### \\
 
 class Escopeta{
-    const direccionesGestor = gestorDeDirecciones
-    const tirador  // Quien dispara la escopeta.
-    const enemigo  // Personaje al que dispara.
-    const cartucho // Una instancia de Cartucho.
-    const cargador = cartucho.misBalas()
+    const direccionesGestor = gestorDeDirecciones // Representa el gestor de direcciones que utiliza la escopeta, el cual indica a la bala hacia donde ir.
+    const tirador                                 // Representa el visual que es el tirador de la escopeta.
+    const enemigo                                 // Representa el enemigo al cual se dispara la escopeta.
+    const cartucho                                // Representa el cartucho que tiene la escopeta.
+    const cargador = cartucho.misBalas()          // Representa el cargador que tiene la escopeta.
 
     // ====================================================================================================================== \\
 
-    method balaADisparar(){
-        return cargador.first()
-    }
-
-    method posicionTirador(){
-        return tirador.position()
-    }
-
-    method posicionEnemigo(){
-        return enemigo.position()
-    }
-
-    method ataqueArma() {
-        const miPosicion = self.posicionTirador()
-        const direccionDestino = self.direccionDisparo(miPosicion)
-        self.dispararEscopetaDesdeA(miPosicion, direccionDestino)
+    method ataqueArma(){
+        // Realiza el ataque de la escopeta desde la posición actual del tirador hacia la dirección hacia donde mire el mismo.
+        const posicionTirador = self.posicionTirador()
+        const direccionDestino = self.direccionDisparo(posicionTirador)
+        self.dispararEscopetaDesdeA(posicionTirador, direccionDestino)
     }
 
     method dispararEscopetaDesdeA(posicion, direccion){
+        // Dispara la escopeta desde la posición dada hacia la dirección dada.
         const balaRecamara = self.balaADisparar()       
         balaRecamara.dispararse(direccion, posicion)       
         self.recargar(balaRecamara)  
     }
 
     method recargar(bala){
-        // Encola la bala al final del cargador para reutilizar 
+        // Recarga el cargador con la bala dada.
         cargador.remove(bala)
         cargador.add(bala)   
     }
 
     method direccionDisparo(posicionTirador){
+        // Describe la dirección de disparo mediante la posición del tirador.
         return self.direccionADisparar(self.posicionEnemigo(), posicionTirador)
     }
     
     method direccionADisparar(posicionEnemigo, posicionTirador){
+        // Describe la dirección a disparar mediante la posicion del enemigo y del tirador.
         return direccionesGestor.direccionDeBala(posicionEnemigo, posicionTirador)
+    }
+
+    // ====================================================================================================================== \\
+
+    method balaADisparar(){
+        // Describe la primera bala en el cargador de la escopeta.
+        return cargador.first()
+    }
+
+    method posicionTirador(){
+        // Describe la posición del tirador de la escopeta.
+        return tirador.position()
+    }
+
+    method posicionEnemigo(){
+        // Describe la posición del enemigo de la escopeta.
+        return enemigo.position()
     }
 }
 
 // ########################################################################################################################## \\
 
 class Bala inherits VisualAtravesable{
-    var property direccion = null
-    var sigoSinHerir       = false
-    const colisionesGestor = gestorDeCeldasTablero
-    const movimientoGestor = gestorDeMovimiento
-    const trayectoriaRecursivaBala = {bala => movimientoGestor.moverHaciaSinCambiarImagen(bala.direccion(), bala);
-                                              game.schedule(bala.velocidad(), {bala.gestionarTrayectoria()})}
+    var property direccion = null                  // Representa la dirección hacia la cual va la bala.
+    var sigoSinHerir       = false                 // Representa 
+    const colisionesGestor = gestorDeCeldasTablero // Representa el gestor de colisiones que utiliza la bala.
+    const movimientoGestor = gestorDeMovimiento    // Representa el gestor de movimiento que utiliza la bala.
+    const trayectoriaBala  = {bala => movimientoGestor.moverHaciaSinCambiarImagen(bala.direccion(), bala); // Representa la trayectoria de la bala.
+                                      game.schedule(bala.velocidad(), {bala.gestionarTrayectoria()})} 
    
     // ====================================================================================================================== \\
 
-    override method image(){
-        return "bala-"+direccion.toString()+".png"
+    method dispararse(nuevaDireccion, posicion){
+        // Se dispara la bala desde la posición dada hacia la dirección dada. 
+        self.prepararDisparo(nuevaDireccion, posicion)
+        movimientoGestor.moverHaciaSinCambiarImagen(direccion, self)
+        game.addVisual(self)
+        self.gestionarTrayectoria()
     }
 
     method prepararDisparo(nuevaDireccion, posicion){
+        // Prepara el disparo de la bala, modificando su dirección y su posición por la dadas por parámetro.
         self.direccion(nuevaDireccion)
         self.position(posicion)
     }
 
-    method dispararse(nuevaDireccion, posicion){
-        self.prepararDisparo(nuevaDireccion, posicion)
-        movimientoGestor.moverHaciaSinCambiarImagen(direccion, self)
-        game.addVisual(self)
-        self.gestionarTrayectoria() // llamado recursivo
-    }
-
     method gestionarTrayectoria(){
-        // La bala se mueve recursivamente hasta que se den las condiciones para terminar su recorrido y morir(borrar visual).
+        // Gestiona la trayectoria de la bala, la cual se mueve recursivamente hasta que se den las condiciones para terminar.
         if(not self.puedeSeguirTrayectoria()) { self.cicloTerminado() } else 
-                                              { self.aplicarTrayectoria() } // Se mueve y vuelve a llamar gestionarTrayectoria(dir).
+                                              { self.aplicarTrayectoria() }
     }
 
-    method aplicarTrayectoria(){
-        trayectoriaRecursivaBala.apply(self)
+    method puedeSeguirTrayectoria(){
+        // Indica si la bala puede seguir su trayecto. 
+        return sigoSinHerir or colisionesGestor.estaDentroDelTablero(self.position())
     }
 
     method cicloTerminado(){
+        // Al haber terimnado el ciclo, se remueve la bala del juego.
         game.removeVisual(self)
     }
 
+    method aplicarTrayectoria(){
+        // Aplica la trayectoria de la bala cargada en la misma.
+        trayectoriaBala.apply(self)
+    }
+
     override method interaccion(){
+        // Representa la interacción de la bala al chocar con un visual.
         self.hacerDaño()
         sigoSinHerir = false   
     }
 
     method hacerDaño(){
-        self.objetosDondePenetre().forEach({objeto => objeto.atacadoPor(self)})
+        // La bala realiza daño a cada visual que haya alcanzado.
+        self.visualAlcanzados().forEach({visual => visual.atacadoPor(self)})
     } 
 
-    method objetosDondePenetre(){
+    method visualAlcanzados(){
+        // Describe todos los visuales que fueron alcanzados por la bala.
         return game.getObjectsIn(position).copyWithout(guardabosques)
     }
 
     // ====================================================================================================================== \\
 
+    override method image(){
+        // Describe la imagen actual de la bala.
+        return "bala-"+direccion.toString()+".png"
+    }
+
     method daño(){
+        // Describe el daño de la bala.
         return 10
     } 
 
     method velocidad(){
+        // Describe la velocidad de la bala.
         return 200
     }
 
-    method puedeSeguirTrayectoria(){       
-        return sigoSinHerir or colisionesGestor.estaDentroDelTablero(self.position())
-    }
+    override method atacadoPor(visual){} // Necesario únicamente por polimorfismo.
 
-    method cambiarImagen(imagen){} // Necesario solamente por polimorfismo.
-
-    override method atacadoPor(visual){} // Necesario solamente por polimorfismo.
+    method cambiarImagen(imagen){} // Necesario únicamente por polimorfismo.
 }

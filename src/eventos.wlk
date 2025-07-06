@@ -5,26 +5,32 @@ import escenariosManager.*
 // ############################################################################################################################ \\
 
 class EventoLoopIndividual{
-    const nombreEvento = self.toString()
-    const tiempo       = 800
-    const sujetoUnico
-    const comportamiento
+    const nombreEvento = self.toString() // Representa nombre del evento.
+    const tiempo       = 800             // Representa el tiempo cada cuanto se va a ejecutar el evento.
+    const sujetoUnico                    // Representa el sujeto único que realiza el evento.
+    const comportamiento                 // Representa el comportamiento que contiene el evento.
 
-    // ====================================================================================================================== \\
+    // ======================================================================================================================= \\
 
     method iniciarEvento(){
+        // Inicia el evento en el juego a partir de los valores cargados actualmente en los atributos del mismo.
         game.onTick(tiempo, nombreEvento, {self.aplicarEventoEn(sujetoUnico)})
     }
 
     method finalizarEvento(){
+        // Finaliza el evento en el juego mediante el nombre del mismo.
         game.removeTickEvent(nombreEvento)
     }
     
     method aplicarEventoEn(visual){
+        // Aplica el comportamiento del evento en el visual dado.
         comportamiento.apply(visual)
     }
 
+    // ======================================================================================================================= \\
+
     method nombreEvento(){
+        // Describe el nombre del evento.
         return nombreEvento
     }
 }
@@ -41,29 +47,31 @@ const ataqueEscopetaGuardabosques = new EventoEnemigoAtaque(sujetoUnico = guarda
 const bloquePersecucion = {npc => npc.perseguirEnemigo()}  
 const bloqueAtaque      = {npc => npc.atacarEnemigo()}
 
-// ####################################### EVENTOS DE DIALOGOS AL INICIO DEL ESCENARIO ####################################### \\
+// ########################################################################################################################### \\
 
 class EventoHablar{
-    const sujetoUnico = protagonista
-    const mensaje 
+    const sujetoUnico = protagonista // Representa el sujeto único que realiza el evento.
+    const mensaje                    // Representa el mensaje del evento.
     
     // ====================================================================================================================== \\
 
     method iniciarEvento(){
-       game.say(sujetoUnico, mensaje)
+        // Inicia el evento en el juego a partir de los valores cargados actualmente en los atributos del mismo.
+        game.say(sujetoUnico, mensaje)
     }
 
-    method finalizarEvento(){}
+    method finalizarEvento(){} // Método conservado únicamente por polimorfismo.
 }
 
 // ########################################################################################################################## \\
 
 class EventoHablarConSonido inherits EventoHablar{
-    const ost
+    const ost // Representa el sonido que tiene el evento.
 
     // ====================================================================================================================== \\
 
     override method iniciarEvento(){
+        // Inicia el evento en el juego a partir de los valores cargados actualmente en los atributos del mismo.
         super()   
         game.sound(ost).play()
     }
