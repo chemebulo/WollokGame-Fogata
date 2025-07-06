@@ -389,15 +389,16 @@ const diapoAmigaMuertaConfgV1 = {e => e.removerSiEsta(protagonista);
                                       gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                       e.ost(trackAmigaMuerta)}
 
-const diapoPeleaFinalConfgV1 = {e => e.removerSiEsta(protagonista);
-                                     gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                     protagonista.estadoCombate(pasivoProtagonista);
-                                     e.ost(trackGuardabosquesCueva)}
+const diapoPeleaFinalConfgV1 =  {e => e.removerSiEsta(protagonista);
+                                      gestorDeDiapositivas.esHoraDeDiapositiva(true);
+                                      protagonista.estadoCombate(pasivoProtagonista);
+                                      e.ost(trackGuardabosquesCueva);
+                                }
 
-const diapoGraneroConfgV1 = {e => e.removerSiEsta(protagonista);
-                                  gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                  game.removeVisual(puertaGranero);
-                                  e.ost(traicionGranero)}
+const diapoGraneroConfgV1 =     {e => e.removerSiEsta(protagonista);
+                                     gestorDeDiapositivas.esHoraDeDiapositiva(true);
+                                     game.removeVisual(puertaGranero);
+                                     e.ost(traicionGranero)}
 
 // ########################################### CONFIGURADORES DE ESCENARIOS SIGUIENTES ########################################### \\
 
