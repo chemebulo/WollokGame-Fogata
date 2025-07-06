@@ -15,7 +15,7 @@ class Escenario{
     var property mapa      = mapaComun           // Representa el mapa que tiene el escenario.
     var property ost       = game.sound("")       // Representa a la música que tiene el escenario.
     var property configuradorActual    = {}       // Representa al configurador actual del escenario. 
-    var property configuradorSiguiente = {}       // Representa las configuraciones de las salidas y del escenario siguiente
+    var property configuradorSiguiente = {}       // Representa las configuraciones de las salidas y del escenario siguiente.
     const visualesEnEscena = []                   // Representa a los visuales que hay en el escenario.
     const fondoEscenario   = ""                   // Representa al fondo que tiene el escenario.
     const eventos          = []                   // Representa a los eventos que tiene el escenario.
