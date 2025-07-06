@@ -112,7 +112,7 @@ class Lobo inherits Enemigo(image = "lobo-derecha.png", estadoCombate = new Esta
 
 // ####################################################################################################################################################### \\
 
-class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, daño = 8){
+class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 40, daño = 8){
     const bloquePostMuerte = bloqueAccionesMuerte // Representa el bloque que contiene las acciones que debe realizar el lobo especial post muerte.
     
     // ==================================================================================================================================================== \\
@@ -135,7 +135,7 @@ class LoboEspecial inherits Lobo(image = "lobo-jefe-derecha.png", vida = 50, da�
 
 // ####################################################################################################################################################### \\
 
-object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = agresivoGuardabosques, vida = 50, daño = 2){
+object guardabosques inherits Enemigo(image = "guardabosques-cabaña.png", estadoCombate = agresivoGuardabosques, vida = 40, daño = 2){
     const bloquePostMuerte = bloqueAccionesMuerte // Representa el bloque que contiene las acciones que debe realizar el guardabosques post muerte.
 
     // ==================================================================================================================================================== \\

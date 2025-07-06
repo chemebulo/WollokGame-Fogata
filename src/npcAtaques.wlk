@@ -41,7 +41,7 @@ class AtaqueTridente inherits Ataque(){
 
     override method daño(){
         // Describe el daño que realiza el ataque.
-        return 2
+        return 3
     }
 }
 
@@ -59,7 +59,7 @@ class AtaqueHacha inherits Ataque(){
 
     override method daño(){
         // Describe el daño que realiza el ataque.
-        return 4
+        return 5
     }
 }
 
@@ -79,7 +79,7 @@ class AtaqueEnLugar inherits Ataque(){
 
     override method daño(){
         // Describe el daño que realiza el ataque.
-        return 6
+        return 7
     }
 }
 

@@ -140,14 +140,14 @@ class Escenario{
             game.removeVisual(visual)
         }
     }
-
+/*
     method esAtravesable(){
         // Describe si el escenario es atravesable o no, aunque en este caso si. Se conserva solamente por polimorfismo.
         return true
     }
 
     method atacadoPor(visual){} // Se conserva solamente por polimorfismo.
-
+*/
     // ========================================================================================================================== \\
 
     method eventos(){

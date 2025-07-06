@@ -176,6 +176,7 @@ describe "Funcionamiento de dialogo inicial:" {
         gestorDeDialogo.interactuarConNPC()
         assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size()) // El tamaño del diálogo no debería cambiar.
     }
+   
 }
 
 // ############################################################################################################################ \\
@@ -408,7 +409,7 @@ describe "Comportamiento del guardabosque:"{
 
 
 // ############################################################################################################################ \\
-// TESTEO DE CONFIGURADOR DE ESCENARIOS 
+// TESTEO  DE ESCENARIOS 
 
 describe "Funcionamiento de los configuradores de escenario:"{
     
@@ -451,4 +452,72 @@ describe "Funcionamiento de los configuradores de escenario:"{
     }
 }
 
+describe "Funcionamiento de Escenarios al agregar visuales"{
+    const esc    = constructorEscenario.construir({}, {}, "")
+    const escConfg = {e => e.actualizarVisuales([protagonista]); e.actualizarEventos([eventoX])}
+
+    test "El escenario cumple su funcion de mostrar los visuales en escena."{
+        esc.configuradorTotal(escConfg,{})
+        esc.puestaEnEscena()
+        assert.that(game.allVisuals().contains(protagonista))
+    }
+
+    test "El escenario cumple su funcion de limpiar los visuales en escena"{
+        esc.configuradorTotal(escConfg,{})
+        esc.puestaEnEscena()
+        assert.that(game.allVisuals().contains(protagonista))
+
+        esc.limpiar()
+        assert.notThat(game.allVisuals().contains(protagonista))
+    }
+   
+}
 // ############################################################################################################################ \\
+
+describe "Funcionamiento de gestorDeCeldasTablero"{
+
+    method initialize(){
+     game.width(20)
+     game.height(20)
+     game.cellSize(100)
+
+     
+     const obstaculoUno = new Obstaculo(position=game.at(6,5))
+     const obstaculoDos = new Obstaculo(position=game.at(4,5))
+
+    
+     game.addVisual(obstaculoUno)
+     game.addVisual(obstaculoDos)
+     
+     }
+     
+     test "El gestor de Celdas confirma que el lobo no puede moverse a sus lados por los obstaculos"{
+        const lobo = new Lobo(position=game.at(5,5))
+        game.addVisual(lobo)
+
+         assert.notThat(gestorDeCeldasTablero.puedeMoverA(derecha,lobo))
+         assert.notThat(gestorDeCeldasTablero.puedeMoverA(izquierda,lobo))
+
+     }
+
+      test "El gestor de Celdas confirma que el lobo esta dentro del tablero"{
+        const lobo = new Lobo(position=game.at(5,5))
+        game.addVisual(lobo)
+
+         assert.that(gestorDeCeldasTablero.estaDentroDelTablero(lobo.position()))
+        
+
+     }
+
+     test "El gestor de celdas confirma que el lobo puede moverse arriba u abajo,entre otros"{
+         const lobo = new Lobo(position=game.at(5,5))
+         game.addVisual(lobo)
+        const lindantesSinObstaculos = gestorDeCeldasTablero.lindantesSinObstaculos(lobo.position(),lobo)
+        const celdaArribaLobo = game.at(5,6)
+        const celdaAbajoLobo = game.at(5,4)
+        assert.that(lindantesSinObstaculos.contains(celdaArribaLobo))
+        assert.that(lindantesSinObstaculos.contains(celdaAbajoLobo))
+
+     }
+
+}

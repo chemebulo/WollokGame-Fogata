@@ -50,9 +50,20 @@ class Dialogo{
     // =============================================================================================================================== \\
 
     method decirDialogoActual(){
+        self.validarGuionDialogo()
         // Hace que el conversador actual diga el diálogo actual.
         game.say(conversadorActual, self.dialogoActual())
         self.actualizarADialogoSiguiente()
+    }
+
+    method validarGuionDialogo(){
+        if(not self.existeDialogo()){
+            self.error("No hay guion para dialogo")
+        }
+    }
+
+    method existeDialogo(){
+        return not dialogoEscenario.isEmpty()
     }
 
     method dialogoActual(){
