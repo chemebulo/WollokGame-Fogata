@@ -243,8 +243,8 @@ object gestorFondoEscenario{
 // ############################################################################################################################################# \\
 
 object gestorDeLobos{
-    const lobosEscenario = [] // Representa los lobos que administra el gestor.
-    const eventosLobos   = [] // Representa los eventos de lobos que administra el gestor.
+    const property lobosEscenario = [] // Representa los lobos que administra el gestor.
+    const property eventosLobos   = [] // Representa los eventos de lobos que administra el gestor.
     
     method agregar(lobo){
         // Agrega el lobo dado a los lobos que estan administrados por el gestor e inicia sus eventos.

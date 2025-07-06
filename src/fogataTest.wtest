@@ -10,6 +10,7 @@ import enemigos.*
 import npcAtaques.*
 import dialogosManager.*
 import eventos.*
+import escenariosMapas.*
 
 // ############################################################################################################################ \\
 
@@ -161,7 +162,7 @@ describe "Funcionamiento de dialogo inicial:" {
         gestorDeDialogo.esMomentoDeDialogar(true)
     }
 
-    test "No se interactua si NO es tiempo de diálogo." {
+    test "No se interactua si NO es tiempo de diálogo."{
         gestorDeDialogo.esMomentoDeDialogar(false)
         const initialSize = gestorDeDialogo.dialogo().dialogoEscenario().size()
 
@@ -169,7 +170,7 @@ describe "Funcionamiento de dialogo inicial:" {
         assert.equals(initialSize, gestorDeDialogo.dialogo().dialogoEscenario().size()) // El tamaño del dialogo no debería cambiar.
     }
 
-    test "No se interactua si el protagonista está lejos." {
+    test "No se interactua si el protagonista está lejos."{
         protagonista.position(game.at(4, 4))
         const initialSize = gestorDeDialogo.dialogo().dialogoEscenario().size()
 
@@ -406,10 +407,28 @@ describe "Comportamiento del guardabosque:"{
         assert.equals(10, lobo.vida()) // Recibe 10 de daño.
     }
 }
+// ############################################################################################################################ \\
 
+describe "El protagonista tiene distinto daño segun el arma que agarre"{
+
+    test "El protagonista se arma con el hacha y su daño es de 5"{
+        assert.equals(0,protagonista.daño())
+        hacha.interaccion()
+        assert.equals(5,protagonista.daño())
+    }
+     test "El protagonista se arma con el tridente y su daño es de 3"{
+        assert.equals(0,protagonista.daño())
+        tridente.interaccion()
+        assert.equals(3,protagonista.daño())
+    }
+     test "El protagonista se arma con la manopla y su daño es de 7"{
+        assert.equals(0,protagonista.daño())
+        manopla.interaccion()
+        assert.equals(7,protagonista.daño())
+    }
+}
 
 // ############################################################################################################################ \\
-// TESTEO  DE ESCENARIOS 
 
 describe "Funcionamiento de los configuradores de escenario:"{
     
@@ -452,6 +471,8 @@ describe "Funcionamiento de los configuradores de escenario:"{
     }
 }
 
+// ############################################################################################################################ \\
+
 describe "Funcionamiento de Escenarios al agregar visuales"{
     const esc    = constructorEscenario.construir({}, {}, "")
     const escConfg = {e => e.actualizarVisuales([protagonista]); e.actualizarEventos([eventoX])}
@@ -472,6 +493,7 @@ describe "Funcionamiento de Escenarios al agregar visuales"{
     }
    
 }
+
 // ############################################################################################################################ \\
 
 describe "Funcionamiento de gestorDeCeldasTablero"{
@@ -480,11 +502,9 @@ describe "Funcionamiento de gestorDeCeldasTablero"{
      game.width(20)
      game.height(20)
      game.cellSize(100)
-
      
      const obstaculoUno = new Obstaculo(position=game.at(6,5))
      const obstaculoDos = new Obstaculo(position=game.at(4,5))
-
     
      game.addVisual(obstaculoUno)
      game.addVisual(obstaculoDos)
@@ -495,29 +515,57 @@ describe "Funcionamiento de gestorDeCeldasTablero"{
         const lobo = new Lobo(position=game.at(5,5))
         game.addVisual(lobo)
 
-         assert.notThat(gestorDeCeldasTablero.puedeMoverA(derecha,lobo))
-         assert.notThat(gestorDeCeldasTablero.puedeMoverA(izquierda,lobo))
+        assert.notThat(gestorDeCeldasTablero.puedeMoverA(derecha,lobo))
+        assert.notThat(gestorDeCeldasTablero.puedeMoverA(izquierda,lobo))
 
      }
 
       test "El gestor de Celdas confirma que el lobo esta dentro del tablero"{
+
         const lobo = new Lobo(position=game.at(5,5))
         game.addVisual(lobo)
 
-         assert.that(gestorDeCeldasTablero.estaDentroDelTablero(lobo.position()))
+        assert.that(gestorDeCeldasTablero.estaDentroDelTablero(lobo.position()))
         
-
      }
 
      test "El gestor de celdas confirma que el lobo puede moverse arriba u abajo,entre otros"{
+
          const lobo = new Lobo(position=game.at(5,5))
          game.addVisual(lobo)
-        const lindantesSinObstaculos = gestorDeCeldasTablero.lindantesSinObstaculos(lobo.position(),lobo)
-        const celdaArribaLobo = game.at(5,6)
-        const celdaAbajoLobo = game.at(5,4)
-        assert.that(lindantesSinObstaculos.contains(celdaArribaLobo))
-        assert.that(lindantesSinObstaculos.contains(celdaAbajoLobo))
+         const lindantesSinObstaculos = gestorDeCeldasTablero.lindantesSinObstaculos(lobo.position(),lobo)
+         const celdaArribaLobo = game.at(5,6)
+         const celdaAbajoLobo = game.at(5,4)
+
+         assert.that(lindantesSinObstaculos.contains(celdaArribaLobo))
+         assert.that(lindantesSinObstaculos.contains(celdaAbajoLobo))
 
      }
 
 }
+
+// ############################################################################################################################ \\
+
+describe "Funcionamiento de gestorDeLobos"{
+     method initialize(){
+        game.width(20)
+        game.height(20)
+        game.cellSize(100)
+     }
+
+     test "El gestor de lobos guarda los lobos en su coleccion para gestionar"{
+        // usamos el objeto l que instancia lobos en la matriz(el tablero)
+        l.construir(game.at(0,0))
+        l.construir(game.at(0,1))
+        l.construir(game.at(0,2))
+
+        assert.equals(3,gestorDeLobos.lobosEscenario().size()) // guarda los lobos en su lista
+        assert.equals(6,gestorDeLobos.eventosLobos().size())// los lobos tienen 2 eventos para perseguir y atacar
+        
+        gestorDeLobos.limpiarLobos()
+        assert.that(gestorDeLobos.lobosEscenario().isEmpty()) // guarda los lobos en su lista
+        assert.that(gestorDeLobos.eventosLobos().isEmpty())
+     }
+}
+
+
