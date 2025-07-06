@@ -202,7 +202,7 @@ describe "Ataque sobre lobo:" {
         assert.equals(agresivoProtagonistaH, protagonista.estadoCombate())
         protagonista.atacar()
         lobo.atacarEnemigo()          
-        assert.equals(16, lobo.vida()) // Vida del lobo despues de ataque.
+        assert.equals(15, lobo.vida()) // Vida del lobo despues de ataque.
         assert.equals(100, protagonista.vida())
     }
 
@@ -230,16 +230,16 @@ describe "Ataque sobre guardabosques:" {
     }
 
     test "El protagonista armado le baja la vida al guardabosques al atacarlo." {
-        assert.equals(50, guardabosques.vida())
+        assert.equals(40, guardabosques.vida())
         protagonista.atacar()
-        assert.equals(46, guardabosques.vida())
+        assert.equals(35, guardabosques.vida())
         assert.equals(100, protagonista.vida()) // El guardabosques no ataca automaticamente.
     }
 
     test "El protagonista desarmado no afecta al guardabosques." {
         protagonista.estadoCombate(pasivoProtagonista)
         protagonista.atacar()
-        assert.equals(50, guardabosques.vida()) // No se reduce la vida.
+        assert.equals(40, guardabosques.vida()) // No se reduce la vida.
     }
 
     test "Si el guardabosques ataca, el protagonista pierde vida."{
@@ -375,7 +375,7 @@ describe "Comportamiento del guardabosque:"{
         game.addVisual(bala1)
         
         bala1.interaccion()
-        assert.equals(50, guardabosques.vida())
+        assert.equals(40, guardabosques.vida())
     }
 
     test "La bala desaparece al salir del tablero." {

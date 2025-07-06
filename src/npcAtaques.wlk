@@ -238,7 +238,7 @@ class Bala inherits VisualAtravesable{
 
     method daño(){
         // Describe el daño de la bala.
-        return 5
+        return 10
     } 
 
     method velocidad(){
