@@ -139,7 +139,7 @@ object pq inherits Elemento(visual = puertaGranero){}
 
 // ################################################################################################################# \\
 
-const mapa_comun = // Mapa por defecto, se usa solo en los tests.
+const mapaComun = // Mapa por defecto, se usa solo en los tests.
     [
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
         [ _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ ],
