@@ -373,6 +373,7 @@ const cuevaConfgV5 = {e => e.mapa(mapaCuevaV5);
 const peleaFinalConfgV1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElegido());      
                                 guardabosques.cambiarAAtravesable();                  
                                 guardabosques.estadoCombate(agresivoGuardabosques);
+                                guardabosques.image("guardabosques-escopeta-derecha.png");
                                 e.mapa(mapaFinalJuego);
                                 e.actualizarVisuales([protagonista, guardabosques]);
                                 e.ost(trackPeleaFinal);
@@ -396,9 +397,9 @@ const diapoPeleaFinalConfgV1 =  {e => e.removerSiEsta(protagonista);
                                 }
 
 const diapoGraneroConfgV1 =     {e => e.removerSiEsta(protagonista);
-                                     gestorDeDiapositivas.esHoraDeDiapositiva(true);
-                                     game.removeVisual(puertaGranero);
-                                     e.ost(traicionGranero)}
+                                      gestorDeDiapositivas.esHoraDeDiapositiva(true);
+                                      game.removeVisual(puertaGranero);
+                                      e.ost(traicionGranero)}
 
 // ########################################### CONFIGURADORES DE ESCENARIOS SIGUIENTES ########################################### \\
 
