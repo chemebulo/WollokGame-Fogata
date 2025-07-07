@@ -13,7 +13,7 @@ object gestorDeDiapositivas{
     method interactuarDiapositivas(){
         // Gestiona el uso de las diapositivas (mostrandolas y finalizando su uso) dependiendo de si es momento o no de mostrarlas. 
         if(self.esHoraDeDiapositiva()){ 
-            self.gestionarDiapositivas()
+           self.gestionarDiapositivas()
         }
     }
 
@@ -41,7 +41,7 @@ object gestorDeDiapositivas{
     }
 
     method culminarDiapositivasYContinuar(){
-        //
+        //Finaliza la escena de diapositivas y se vuelve al gameplay
         bloqueFinalizacion.apply(videojuego, self)
     }
 }
