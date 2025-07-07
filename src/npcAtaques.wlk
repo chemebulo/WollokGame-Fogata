@@ -165,7 +165,7 @@ class Cargador{
 class Bala inherits VisualAtravesable{
     const colisionesGestor = gestorDeCeldasTablero // Representa el gestor de colisiones que utiliza la bala.
     const movimientoGestor = gestorDeMovimiento    // Representa el gestor de movimiento que utiliza la bala.
-    
+    var property impacteConAlgo = false            // Representa un impacto confirmado. Necesario para eficiencia                   
     // ====================================================================================================================== \\
 
     method dispararDesdeHacia(posicion, direccion){
@@ -199,9 +199,10 @@ class Bala inherits VisualAtravesable{
 
     method puedeSeguirTrayectoria(){
         // Indica si la bala puede seguir su trayectoria. 
-        return colisionesGestor.estaDentroDelTablero(self.position())
+        return (not self.impacteConAlgo()) and colisionesGestor.estaDentroDelTablero(self.position())
     }
-
+    
+   
     method continuarTrayectoriaBala(direccion){
         // Continúa la trayectoria de la bala, la cual se mueve recursivamente hacia la dirección dada dependiendo de la velocidad de la misma.
         self.moverHacia(direccion) 
@@ -216,8 +217,11 @@ class Bala inherits VisualAtravesable{
     override method interaccion(){
         // Representa la interacción de la bala al chocar con un visual.
         self.hacerDaño()
+        self.impacteConAlgo(true)
         self.cicloTerminado()
     }
+
+    
 
     method hacerDaño(){
         // La bala realiza daño a cada visual que haya alcanzado.
