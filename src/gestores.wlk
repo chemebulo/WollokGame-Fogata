@@ -13,9 +13,14 @@ object gestorDeDirecciones{
                if (ejeSegundo.seSumoEnEje(posicionAntigua,  posicionNueva)) { ejeSegundo.primeraDir() } else
                                                                             { ejeSegundo.segundaDir() }
     }
+
+    method direccionDeBalaDesde(tirador){
+        // Describe la dirección a la cual debería ir la bala en base a un tirador.
+        return self.direccionDeBala(tirador.enemigo().position(), tirador.position())
+    }
   
     method direccionDeBala(positionEnemigo, positionTirador){
-        // Evalúa la posición entre el protagonista y el tirador, retornando la direccion de disparo.
+        // Describe la dirección a la cual debería ir la bala en base a la posición del enemigo y el tirador.
         const positionXEnemigo = self.xPos(positionEnemigo)
         const positionYEnemigo = self.yPos(positionEnemigo)
         const positionXTirador = self.xPos(positionTirador)
@@ -27,8 +32,8 @@ object gestorDeDirecciones{
     method direccionDeDisparoEvaluada(positionXEnemigo, positionYEnemigo, positionXTirador, positionYTirador){
         // Dados unos pares de posiciones "x", "y", evalúa hacia donde disparar.
         return if (self.estaAMiIzquierda(positionXEnemigo, positionXTirador)) { izquierda } else 
-               if (self.estaAMiDerecha(positionXEnemigo, positionXTirador))   {  derecha  } else 
-               if (self.estaArriba(positionYEnemigo, positionYTirador))       {   arriba  } else 
+               if (self.estaAMiDerecha(positionXEnemigo,   positionXTirador)) {  derecha  } else 
+               if (self.estaArriba(positionYEnemigo,       positionYTirador)) {   arriba  } else 
                                                                               {   abajo   }
     }
 

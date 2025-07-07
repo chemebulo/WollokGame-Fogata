@@ -1,6 +1,5 @@
 
-# Nombre del juego "Fogata"
-
+# Nombre del juego: Fogata
 
 ## Equipo de desarrollo
 
@@ -9,30 +8,37 @@
 - Mamani, Rocio Belen
 - Sanchez, Matias Pablo Jesus
 
+## Trailer
 
+![(agregar)](assets/trailer.gif)
 
-## Capturas
+## Sinopsis
 
+Fogata trata la historia de dos viajeros, Juan y Laura, que se embarcan en una aventura que tiene como lugar en el sur Argentino.
+Sin embargo, una situación casual termina desembocando un sin fin de problemas que Juan debe resolver cuanto antes sea posible.
 
-![(agregar)](https://github.com/obj1unq/2025c1-tp-grupal-grupo1/blob/62493d58b6442c2487891b0fae0b1efc182dd082/assets/inicio-v2.png)
-
+A lo largo de toda la trama surgen momentos inesperados que motivan la necesidad de una respuesta por parte de Juan, la cual es canalizada
+en una venganza hacia una persona que nunca esperó que lo traicionase. 
 
 ## Reglas de Juego / Instrucciones
 
--Controles:
+Controles:
 
--    w : mover Arriba
--    a : mover Izquierda
--    s : mover Abajo
--    d : mover Derecha
--    e : dialogarConNPC
--    f : saltarDiapositiva
--    k : atacar
+-    w : Mover arriba.
+-    a : Mover izquierda.
+-    s : Mover abajo.
+-    d : Mover derecha.
+-    e : Dialogar con un NPC.
+-    f : Saltar diapositiva.
+-    k : Atacar.
 
+## Personajes
+
+![(agregar)](assets/personajes.png)
 
 ## Otros
 
-- Curso    : Programacion con Objetos I 
-- Facultad : Universidad Nacional de Quilmes
-- Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+- Curso: Programacion con Objetos I.
+- Facultad: Universidad Nacional de Quilmes.
+- Versión de wollok: 0.3.1.
+- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado.

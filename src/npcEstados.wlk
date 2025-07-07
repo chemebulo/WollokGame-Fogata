@@ -17,19 +17,15 @@ const agresivoProtagonistaM  = new EstadoAgresivoProtagonista(visual = protagoni
 const ataqueHacha    = new AtaqueHacha(atacante    = protagonista) // Representa al modo de ataque para el hacha. 
 const ataqueTridente = new AtaqueTridente(atacante = protagonista) // Representa al modo de ataque para el tridente. 
 const ataqueManopla  = new AtaqueEnLugar(atacante  = protagonista) // Representa al modo de ataque para la manopla. 
-const ataqueEscopeta = new Escopeta(tirador = guardabosques, enemigo = protagonista, cartucho = cartuchoGuardabosques) // Representa al modo de ataque de escopeta.
+const ataqueEscopeta = new Escopeta(tirador = guardabosques, balasDisponibles = cargadorGuardabosques) // Representa al modo de ataque de escopeta.
 
-const cartuchoGuardabosques = new Cartucho(misBalas = [bala1, bala2, bala3, bala4, bala5, bala6]) // Representa un cartucho que contiene balas.
+const cargadorGuardabosques = new Cargador(balas = [bala1, bala2, bala3, bala4, bala5, bala6]) // Representa un cartucho que contiene balas.
 const bala1 = new Bala() // Representa una bala.
 const bala2 = new Bala() // Representa una bala.
 const bala3 = new Bala() // Representa una bala.
 const bala4 = new Bala() // Representa una bala.
 const bala5 = new Bala() // Representa una bala.
 const bala6 = new Bala() // Representa una bala.
-
-class Cartucho {
-    const property misBalas = [] // Describe las balas que estan en el cartucho. Su funcionamiento es como una Queue.
-}
 
 // ######################################################################################################################################################### \\
 
