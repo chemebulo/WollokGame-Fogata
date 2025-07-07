@@ -510,24 +510,33 @@ describe "Funcionamiento de gestor de celdas del tablero:"{
     test "El gestor de Celdas confirma que el lobo no puede moverse a sus lados por los obstáculos."{
         const lobo = new Lobo(position = game.at(5,5))
         game.addVisual(lobo)
-        assert.notThat(gestorDeCeldasTablero.puedeMoverA(derecha,lobo))
-        assert.notThat(gestorDeCeldasTablero.puedeMoverA(izquierda,lobo))
+        assert.notThat(gestorDeCeldasTablero.puedeMoverA(derecha, lobo))
+        assert.notThat(gestorDeCeldasTablero.puedeMoverA(izquierda, lobo))
     }
 
     test "El gestor de Celdas confirma que el lobo está dentro del tablero."{
-        const lobo = new Lobo(position=game.at(5,5))
+        const lobo = new Lobo(position = game.at(5,5))
         game.addVisual(lobo)
         assert.that(gestorDeCeldasTablero.estaDentroDelTablero(lobo.position()))
     }
 
     test "El gestor de celdas confirma que el lobo puede moverse arriba u abajo, entre otros."{
-        const lobo = new Lobo(position=game.at(5,5))
+        const lobo = new Lobo(position = game.at(5,5))
         game.addVisual(lobo)
-        const lindantesSinObstaculos = gestorDeCeldasTablero.lindantesSinObstaculos(lobo.position(),lobo)
+        const lindantesSinObstaculos = gestorDeCeldasTablero.lindantesSinObstaculos(lobo.position(), lobo)
         const celdaArribaLobo = game.at(5,6)
         const celdaAbajoLobo = game.at(5,4)
         assert.that(lindantesSinObstaculos.contains(celdaArribaLobo))
         assert.that(lindantesSinObstaculos.contains(celdaAbajoLobo))
+    }
+
+    test "Por más que la bala se quite del juego, su posición debería estar dentro del tablero."{
+        game.addVisual(bala1)
+        bala1.position(game.at(2,2))
+        assert.that(gestorDeCeldasTablero.estaDentroDelTablero(bala1.position()))
+
+        game.removeVisual(bala1)
+        assert.that(gestorDeCeldasTablero.estaDentroDelTablero(bala1.position()))
     }
 }
 

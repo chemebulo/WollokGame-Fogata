@@ -3,10 +3,10 @@
 
 ## Equipo de desarrollo
 
-- Maldonado, Benjamin
-- Jerochim, Maximiliano
-- Mamani, Rocio Belen
-- Sanchez, Matias Pablo Jesus
+- Maldonado, Benjamin.
+- Jerochim, Maximiliano.
+- Mamani, Rocio Belen.
+- Sanchez, Matias Pablo Jesus.
 
 ## Trailer
 
@@ -35,6 +35,10 @@ Controles:
 ## Personajes
 
 ![(agregar)](assets/personajes.png)
+
+## Armas
+
+![(agregar)](assets/armas.png)
 
 ## Otros
 

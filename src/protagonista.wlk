@@ -56,6 +56,7 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     }
 
     method agarrarArma(arma){
+        // El protagonista agara el arma dada y cambia su estado de combate en base a la misma.
         self.estadoCombate(arma.nuevoEstado())
         self.estadoCombateElegido(arma.nuevoEstado()) 
     }

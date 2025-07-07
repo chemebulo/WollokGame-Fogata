@@ -218,7 +218,7 @@ object gestorFondoEscenario{
     const position     = game.at(0,0) // Representa la posición del gestor, aunque se conserva únicamente por polimorfismo.
     
     method visualizarFondo(nuevoFondo){
-        // Se muestra el fondo dado en el ujego.
+        // Se muestra el fondo dado en el juego.
         self.image(nuevoFondo)
         game.addVisual(self)    
     }

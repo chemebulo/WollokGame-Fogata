@@ -165,7 +165,7 @@ class Cargador{
 class Bala inherits VisualAtravesable{
     const colisionesGestor = gestorDeCeldasTablero // Representa el gestor de colisiones que utiliza la bala.
     const movimientoGestor = gestorDeMovimiento    // Representa el gestor de movimiento que utiliza la bala.
-    var property impacteConAlgo = false            // Representa un impacto confirmado. Necesario para eficiencia                   
+    var property impacteConAlgo = false            // Representa un impacto confirmado. Necesario para eficiencia de la trayectoria.                  
     // ====================================================================================================================== \\
 
     method dispararDesdeHacia(posicion, direccion){
@@ -220,8 +220,6 @@ class Bala inherits VisualAtravesable{
         self.impacteConAlgo(true)
         self.cicloTerminado()
     }
-
-    
 
     method hacerDaño(){
         // La bala realiza daño a cada visual que haya alcanzado.

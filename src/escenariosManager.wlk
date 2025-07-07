@@ -12,7 +12,7 @@ import npcEstados.*
 // ############################################################################################################################### \\
 
 class Escenario{ 
-    var property mapa      = mapaComun           // Representa el mapa que tiene el escenario.
+    var property mapa      = mapaComun            // Representa el mapa que tiene el escenario.
     var property ost       = game.sound("")       // Representa a la música que tiene el escenario.
     var property configuradorActual    = {}       // Representa al configurador actual del escenario. 
     var property configuradorSiguiente = {}       // Representa las configuraciones de las salidas y del escenario siguiente.
@@ -46,7 +46,7 @@ class Escenario{
     method dibujarTablero(){
         // Dibuja el tablero con el mapa cargado en el escenario.
         (0 .. game.width() - 1).forEach({x =>  
-            (0 .. game.height() - 1).forEach( {y => 
+            (0 .. game.height() - 1).forEach({y => 
                 const constructor = mapa.get(y).get(x)
                 constructor.construir(game.at(x, y))
             })
@@ -116,7 +116,7 @@ class Escenario{
 
     method agregarVisualesEscena(){
         // Agrega al juego cada visual cargado en los visuales del escenario.
-        visualesEnEscena.forEach({v => game.addVisual(v)})
+        visualesEnEscena.forEach({visual => game.addVisual(visual)})
     }
 
     method borrarVisualesEscena(){
@@ -173,9 +173,9 @@ object constructorEscenario{
 
 // ######################################################### ESCENARIOS ######################################################### \\
 
-// Los escenarios representan la escena actual. Estan  compuestos por dos configuradores: uno actual, y el siguiente; 
-// además de los visuales, la música, los eventos, el fondo,
-//  y un mapa que sirve para dibujar en las posiciones dadas en el mismo los diferentes visuales.
+// Los escenarios representan la escena actual. Estan  compuestos por dos configuradores: uno actual, y el siguiente; además de
+// los visuales, la música, los eventos, el fondo, y un mapa que sirve para dibujar en las posiciones dadas en el mismo los
+// diferentes visuales.
 
 // ############################################################################################################################## \\
 
@@ -211,9 +211,8 @@ const diapoPeleaFinal  = constructorEscenario.construir(diapoPeleaFinalConfgV1, 
 
 // ################################################ CONFIGURADORES DE ESCENARIOS ################################################ \\
 
-// Los configuradores de escenarios modifican el estado de distintas variables del escenario de acorde a lo requerido en la escena 
-// actual.
-// Comunican a otros objetos distintas ordenes requeridas para la escena actual
+// Los configuradores de escenarios modifican el estado de distintas variables del escenario de acorde a lo requerido en la escena actual.
+// Comunican a otros objetos distintas ordenes requeridas para la escena actual.
 
 // ############################################################################################################################## \\
 
@@ -388,8 +387,7 @@ const diapoAmigaMuertaConfgV1 = {e => e.removerSiEsta(protagonista);
 const diapoPeleaFinalConfgV1 =  {e => e.removerSiEsta(protagonista);
                                       gestorDeDiapositivas.esHoraDeDiapositiva(true);
                                       protagonista.estadoCombate(pasivoProtagonista);
-                                      e.ost(trackGuardabosquesCueva);
-                                }
+                                      e.ost(trackGuardabosquesCueva)}
 
 const diapoGraneroConfgV1 =     {e => e.removerSiEsta(protagonista);
                                       gestorDeDiapositivas.esHoraDeDiapositiva(true);
@@ -399,7 +397,7 @@ const diapoGraneroConfgV1 =     {e => e.removerSiEsta(protagonista);
 // ########################################### CONFIGURADORES DE ESCENARIOS SIGUIENTES ########################################### \\
 
 // Los configuradores de escenarios siguientes modifican el estado de las puertas y modifican el estado de los escenarios
-// siguientes dependiendo la escena actual.Es decir, los escenarios a los que se va luego de interactuar con dichas puertas
+// siguientes dependiendo la escena actual. Es decir, los escenarios a los que se va luego de interactuar con dichas puertas.
 
 // ############################################################################################################################### \\
 

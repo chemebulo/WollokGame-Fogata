@@ -113,18 +113,19 @@ const manopla     = new Arma(image = "manopla.png",  position = game.at(7,7), nu
 
 // ################################################################################################################################ \\
 
-const interaccionLeña = {v => game.removeVisual(v)
-                              game.addVisual(puertaEntradaCabaña)
-                              puertaEntradaCabaña.irHacia(entradaCabaña)
-                              game.say(protagonista, "Gracias por la leña.")
-                              game.say(guardabosques, "No hay de que, tenga cuidado que hay lobos por la zona.")
-                              entradaCabaña.configuradorTotal(entradaCabañaConfgV2, entradaCabañaCESv2)}
+const interaccionLeña = {visual => game.removeVisual(visual);
+                                   game.addVisual(puertaEntradaCabaña);
+                                   puertaEntradaCabaña.irHacia(entradaCabaña);
+                                   game.say(protagonista, "Gracias por la leña.");
+                                   game.say(guardabosques, "No hay de que, tenga cuidado que hay lobos por la zona.");
+                                   entradaCabaña.configuradorTotal(entradaCabañaConfgV2, entradaCabañaCESv2)}
 
-const interaccionNota = {v => game.removeVisual(v)
-                              game.say(protagonista, "SI SOBREVIVISTE TE ESPERO EN LA CUEVA...")
-                              game.addVisual(puertaEntradaCabaña)}
+const interaccionNota = {visual => game.removeVisual(visual);
+                                   game.say(protagonista, "SI SOBREVIVISTE TE ESPERO EN LA CUEVA...");
+                                   game.addVisual(puertaEntradaCabaña)}
 
-const interaccionAuto = {v => game.removeVisual(v); videojuego.juegoGanado()}
+const interaccionAuto = {visual => game.removeVisual(visual); 
+                                   videojuego.juegoGanado()}
 
 // ################################################################################################################################ \\
 
