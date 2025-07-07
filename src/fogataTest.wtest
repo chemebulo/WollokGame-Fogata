@@ -9,6 +9,7 @@ import puertas.*
 import enemigos.*
 import npcAtaques.*
 import dialogosManager.*
+import diapositivasManager.*
 import eventos.*
 import escenariosMapas.*
 
@@ -146,7 +147,8 @@ describe "Funcionamiento de puertas:"{
 
 // ############################################################################################################################ \\
 
-describe "Funcionamiento de dialogo inicial:" {
+
+describe "Funcionamiento de dialogo inicial entre el protagonista y la amiga" {
     method initialize() {
         game.width(5)
         game.height(5)
@@ -474,6 +476,7 @@ describe "Funcionamiento de los configuradores de escenario:"{
 // ############################################################################################################################ \\
 
 describe "Funcionamiento de Escenarios al agregar visuales"{
+
     const esc    = constructorEscenario.construir({}, {}, "")
     const escConfg = {e => e.actualizarVisuales([protagonista]); e.actualizarEventos([eventoX])}
 
@@ -496,7 +499,7 @@ describe "Funcionamiento de Escenarios al agregar visuales"{
 
 // ############################################################################################################################ \\
 
-describe "Funcionamiento de gestorDeCeldasTablero"{
+describe "Funcionamiento de gestorDeCeldasTablero:"{
 
     method initialize(){
      game.width(20)
@@ -517,7 +520,6 @@ describe "Funcionamiento de gestorDeCeldasTablero"{
 
         assert.notThat(gestorDeCeldasTablero.puedeMoverA(derecha,lobo))
         assert.notThat(gestorDeCeldasTablero.puedeMoverA(izquierda,lobo))
-
      }
 
       test "El gestor de Celdas confirma que el lobo esta dentro del tablero"{
@@ -539,10 +541,89 @@ describe "Funcionamiento de gestorDeCeldasTablero"{
 
          assert.that(lindantesSinObstaculos.contains(celdaArribaLobo))
          assert.that(lindantesSinObstaculos.contains(celdaAbajoLobo))
-
      }
-
 }
+
+describe "Funcionamiento gestorDeDiapositivas:" {
+
+    method initialize() {
+        gestorDeDiapositivas.peliculaAMostrar(new Pelicula(pelicula = [d0, d1, d2]))
+        gestorDeDiapositivas.bloqueFinalizacion({v, g => g.configuracionFinal()})
+        gestorDeDiapositivas.esHoraDeDiapositiva(true)
+    }
+
+    test "procesarDiapositiva avanza el iterador de la película" {
+        const peli = new Pelicula(pelicula = [d0, d1])
+        assert.equals(d0, peli.diapositivaActual())
+        peli.procesarDiapositiva()
+        assert.equals(d1, peli.diapositivaActual())
+    }
+
+    test "Procesa todas las diapositivas y ejecuta el bloque final" {
+        // Ejecutamos varias veces para terminar la película
+        gestorDeDiapositivas.interactuarDiapositivas()
+        gestorDeDiapositivas.interactuarDiapositivas()
+        gestorDeDiapositivas.interactuarDiapositivas()
+        gestorDeDiapositivas.interactuarDiapositivas()
+
+        assert.equals(null, gestorDeDiapositivas.peliculaAMostrar())  // Ya no hay pelicula activa
+        assert.notThat(gestorDeDiapositivas.esHoraDeDiapositiva())    // No es hora de mostrar mas diapositivas
+    }
+
+    test "No procesa si no es hora de diapositiva" {
+        gestorDeDiapositivas.esHoraDeDiapositiva(false)
+        const peliculaAntes = gestorDeDiapositivas.peliculaAMostrar()
+
+        gestorDeDiapositivas.interactuarDiapositivas()
+
+        assert.equals(peliculaAntes, gestorDeDiapositivas.peliculaAMostrar())
+    }
+
+    test "Las diapositivas se eliminan visualmente del juego" {
+        gestorDeDiapositivas.interactuarDiapositivas()
+        gestorDeDiapositivas.interactuarDiapositivas()
+        gestorDeDiapositivas.interactuarDiapositivas()
+        gestorDeDiapositivas.interactuarDiapositivas()
+
+        assert.equals(null, gestorDeDiapositivas.peliculaAMostrar())
+        assert.notThat(game.hasVisual(d0))
+        assert.notThat(game.hasVisual(d1))
+        assert.notThat(game.hasVisual(d2))
+    }
+}
+
+describe "Funcionamiento de gestorDeMovimiento con protagonista:"{
+
+    method initialize() {
+        game.width(5)
+        game.height(5)
+        game.cellSize(100)
+
+        protagonista.position(game.at(2, 2))
+        game.addVisual(protagonista)
+    }
+    test "Se mueve a la derecha si no hay obstaculos" {
+        gestorDeMovimiento.mover(derecha, protagonista)
+
+        assert.equals(game.at(3, 2), protagonista.position())
+    }
+
+    test "La imagen se actualiza correctamente segun la direccion" {
+        gestorDeMovimiento.mover(arriba, protagonista)
+        assert.equals("prota-desarmado-arriba.png", protagonista.imagenActual())
+
+        gestorDeMovimiento.mover(derecha, protagonista)
+        assert.equals("prota-desarmado-derecha.png", protagonista.imagenActual())
+    }
+
+    test "No cambia imagen si se mueve con moverHaciaSinCambiarImagen" {
+        //Por defecto el protagonista mira "abajo"
+        gestorDeMovimiento.moverHaciaSinCambiarImagen(izquierda, protagonista) 
+
+        assert.equals(game.at(1, 2), protagonista.position())
+        assert.equals("prota-desarmado-abajo.png", protagonista.imagenActual())
+    }
+} 
 
 // ############################################################################################################################ \\
 
@@ -567,5 +648,4 @@ describe "Funcionamiento de gestorDeLobos"{
         assert.that(gestorDeLobos.eventosLobos().isEmpty())
      }
 }
-
 

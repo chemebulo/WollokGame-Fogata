@@ -59,6 +59,10 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
         self.estadoCombate(arma.nuevoEstado())
         self.estadoCombateElegido(arma.nuevoEstado()) 
     }
+
+    method imagenActual() {
+    return self.image()
+}
 }
 
 // ################################################################################################################################## \\
