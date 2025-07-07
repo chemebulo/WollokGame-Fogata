@@ -95,7 +95,7 @@ const hablarProta6  = new EventoHablar(mensaje = "¡¡AHHHHH!!")
 
 const hablarProta7  = new EventoHablar(mensaje = "¡¡Lo voy a matar!!")
 
-const hablarProta8  = new EventoHablar(mensaje = "Laura...")
+const hablarProta8  = new EventoHablar(mensaje = "Mi auto azul...debo salir de aqui. Laura...")
 
 const hablarProta9  = new EventoHablar(mensaje = "¡¡¡AHHHHHHHH!!!")
 
