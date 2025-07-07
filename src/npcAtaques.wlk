@@ -165,7 +165,7 @@ class Cargador{
 class Bala inherits VisualAtravesable{
     const colisionesGestor = gestorDeCeldasTablero // Representa el gestor de colisiones que utiliza la bala.
     const movimientoGestor = gestorDeMovimiento    // Representa el gestor de movimiento que utiliza la bala.
-             // Representa un impacto confirmado. Necesario para eficiencia de la trayectoria.                  
+
     // ====================================================================================================================== \\
 
     method dispararDesdeHacia(posicion, direccion){
@@ -201,7 +201,6 @@ class Bala inherits VisualAtravesable{
         // Indica si la bala puede seguir su trayectoria. 
         return colisionesGestor.estaDentroDelTablero(self.position())
     }
-    
    
     method continuarTrayectoriaBala(direccion){
         // Continúa la trayectoria de la bala, la cual se mueve recursivamente hacia la dirección dada dependiendo de la velocidad de la misma.
