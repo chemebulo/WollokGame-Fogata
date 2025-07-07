@@ -173,8 +173,9 @@ object constructorEscenario{
 
 // ######################################################### ESCENARIOS ######################################################### \\
 
-// Los escenarios estan compuestos por dos configuradores: uno actual, y el siguiente; además de los visuales, la música, los 
-// eventos, el fondo, y un mapa que sirve para dibujar en las posiciones dadas en el mismo los diferentes visuales.
+// Los escenarios representan la escena actual. Estan  compuestos por dos configuradores: uno actual, y el siguiente; 
+// además de los visuales, la música, los eventos, el fondo,
+//  y un mapa que sirve para dibujar en las posiciones dadas en el mismo los diferentes visuales.
 
 // ############################################################################################################################## \\
 
@@ -210,8 +211,9 @@ const diapoPeleaFinal  = constructorEscenario.construir(diapoPeleaFinalConfgV1, 
 
 // ################################################ CONFIGURADORES DE ESCENARIOS ################################################ \\
 
-// Los configuradores de escenarios representan toda la configuración necesaria para el funcionamiento correcto de un escenario.
-// En caso de utilizar un mismo escenario repetido en distintos puntos del juego, deberan nombrarse al final con CV1, CV2, CV3, etc. 
+// Los configuradores de escenarios modifican el estado de distintas variables del escenario de acorde a lo requerido en la escena 
+// actual.
+// Comunican a otros objetos distintas ordenes requeridas para la escena actual
 
 // ############################################################################################################################## \\
 
@@ -396,8 +398,8 @@ const diapoGraneroConfgV1 =     {e => e.removerSiEsta(protagonista);
 
 // ########################################### CONFIGURADORES DE ESCENARIOS SIGUIENTES ########################################### \\
 
-// Los configuradores de escenarios siguientes representan lo mismo que un configurador común, aunque varía en el contenido. En caso
-// de utilizar un mismo escenario repetido en distintos puntos del juego, deberan nombrarse al final con CESV1, CESV2, CESV3, etc. 
+// Los configuradores de escenarios siguientes modifican el estado de las puertas y modifican el estado de los escenarios
+// siguientes dependiendo la escena actual.Es decir, los escenarios a los que se va luego de interactuar con dichas puertas
 
 // ############################################################################################################################### \\
 

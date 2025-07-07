@@ -368,7 +368,7 @@ describe "Comportamiento del guardabosque:"{
     test "El guardabosques dispara con la escopeta y daña al protagonista."{
         assert.equals(100, protagonista.vida())
         protagonista.atacadoPor(bala1) // Ejecutamos el daño de forma directa simulando el impacto.
-        assert.equals(90, protagonista.vida())
+        assert.equals(93, protagonista.vida())
     }
 
     test "La bala no daña al guardabosques."{
@@ -388,10 +388,10 @@ describe "Comportamiento del guardabosque:"{
 
     test "Varias balas dañan al protagonista acumulativamente."{
         protagonista.atacadoPor(bala1)
-        assert.equals(90, protagonista.vida())
+        assert.equals(93, protagonista.vida())
 
         protagonista.atacadoPor(bala2)
-        assert.equals(80, protagonista.vida())
+        assert.equals(86, protagonista.vida())
     }
 
     test "La bala daña al lobo si lo alcanza."{
@@ -404,7 +404,7 @@ describe "Comportamiento del guardabosque:"{
         game.addVisual(bala1)
 
         bala1.interaccion() // Simulamos que la bala impacta.
-        assert.equals(10, lobo.vida()) // Recibe 10 de daño.
+        assert.equals(13, lobo.vida()) // Recibe 10 de daño.
     }
 }
 // ############################################################################################################################ \\
