@@ -648,51 +648,51 @@ describe "Funcionamiento del gestor de lobos:"{
     }
 }
 
+// ############################################################################################################################ \\
 
-describe "Funcionamiento de gestorDeDirecciones" {
+describe "Funcionamiento del gestor de direcciones:" {
 
-    test "Devuelve derecha cuando la nueva posición está a la derecha" {
+    test "Devuelve derecha cuando la nueva posición está a la derecha." {
         const desde = game.at(2, 2)
         const hasta = game.at(3, 2)
 
         assert.equals(derecha, gestorDeDirecciones.direccionALaQueSeMovio(desde, hasta))
     }
 
-    test "Devuelve izquierda cuando la nueva posición está a la izquierda" {
+    test "Devuelve izquierda cuando la nueva posición está a la izquierda." {
         const desde = game.at(2, 2)
         const hasta = game.at(1, 2)
 
         assert.equals(izquierda, gestorDeDirecciones.direccionALaQueSeMovio(desde, hasta))
     }
 
-    test "Devuelve arriba cuando la nueva posición está arriba" {
+    test "Devuelve arriba cuando la nueva posición está arriba." {
         const desde = game.at(2, 2)
         const hasta = game.at(2, 3)
 
         assert.equals(arriba, gestorDeDirecciones.direccionALaQueSeMovio(desde, hasta))
     }
 
-    test "Devuelve abajo cuando la nueva posición está abajo" {
+    test "Devuelve abajo cuando la nueva posición está abajo." {
         const desde = game.at(2, 2)
         const hasta = game.at(2, 1)
 
         assert.equals(abajo, gestorDeDirecciones.direccionALaQueSeMovio(desde, hasta))
     }
 
-    test "direccionDeBala devuelve izquierda si el enemigo está a la izquierda" {
+    test "direccionDeBala devuelve izquierda si el enemigo está a la izquierda." {
         const enemigo = game.at(1, 2)
         const tirador = game.at(3, 2)
 
         assert.equals(izquierda, gestorDeDirecciones.direccionDeBala(enemigo, tirador))
     }
 
-    test "direccionDeBala devuelve abajo si el enemigo está abajo" {
+    test "direccionDeBala devuelve abajo si el enemigo está abajo." {
         const enemigo = game.at(2, 1)
         const tirador = game.at(2, 3)
 
         assert.equals(abajo, gestorDeDirecciones.direccionDeBala(enemigo, tirador))
     }
 }
-
 
 // ############################################################################################################################ \\
