@@ -195,7 +195,7 @@ class Bala inherits VisualAtravesable{
     method gestionarTrayectoria(){
         // Gestiona la trayectoria de la bala, la cual se mueve recursivamente hasta que se den las condiciones para terminar.
         if(not self.puedeSeguirTrayectoria()) { self.cicloTerminado() } else 
-                                              { self.aplicarTrayectoria() }
+                                              { self.continuarTrayectoria() }
     }
 
     method puedeSeguirTrayectoria(){
@@ -208,7 +208,7 @@ class Bala inherits VisualAtravesable{
         game.removeVisual(self)
     }
 
-    method aplicarTrayectoria(){
+    method continuarTrayectoria(){
         // Aplica la trayectoria de la bala cargada en la misma.
         trayectoriaBala.apply(self)
     }
@@ -221,10 +221,10 @@ class Bala inherits VisualAtravesable{
 
     method hacerDaño(){
         // La bala realiza daño a cada visual que haya alcanzado.
-        self.visualAlcanzados().forEach({visual => visual.atacadoPor(self)})
+        self.visualesAlcanzados().forEach({visual => visual.atacadoPor(self)})
     } 
 
-    method visualAlcanzados(){
+    method visualesAlcanzados(){
         // Describe todos los visuales que fueron alcanzados por la bala.
         return game.getObjectsIn(position).copyWithout(guardabosques)
     }
