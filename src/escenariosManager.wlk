@@ -364,7 +364,8 @@ const cuevaConfgV5 = {e => e.mapa(mapaCuevaV5);
 
 // ################################################# CONFIGURADORES PELEA FINAL ################################################## \\
 
-const peleaFinalConfgV1 = {e => protagonista.estadoCombate(protagonista.estadoCombateElegido());      
+const peleaFinalConfgV1 = {e => e.removerSiEsta(protagonista);
+                                protagonista.estadoCombate(protagonista.estadoCombateElegido());      
                                 guardabosques.cambiarAAtravesable();                  
                                 guardabosques.estadoCombate(agresivoGuardabosques);
                                 guardabosques.image("guardabosques-escopeta-derecha.png");
