@@ -1,5 +1,5 @@
 
-# Nombre del juego: Fogata
+# Fogata
 
 ## Equipo de desarrollo
 
