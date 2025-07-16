@@ -1,6 +1,6 @@
 import videojuego.*
 import escenariosManager.*
-
+import wollok.game.*
 // ##################################################################################################################################################### \\
 
 object gestorDeDiapositivas{ 
