@@ -45,4 +45,4 @@ Controles:
 - Curso: Programacion con Objetos I.
 - Facultad: Universidad Nacional de Quilmes.
 - Versión de wollok: 0.3.1.
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado.
+- No tenemos problemas en que el repositorio sea público.
