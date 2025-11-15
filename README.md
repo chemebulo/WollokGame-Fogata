@@ -4,7 +4,6 @@
 ## Equipo de desarrollo
 
 - Maldonado, Benjamin.
-- Jerochim, Maximiliano.
 - Mamani, Rocio Belen.
 - Sanchez, Matias Pablo Jesus.
 
