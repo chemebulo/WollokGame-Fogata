@@ -52,7 +52,7 @@ class ElementoObstaculo inherits ElementoAgregado(gestorAgregador = gestorDeObst
 
     override method crearElemento(posicion){
         // Crea el elemento en la posición dada, en este caso es un obstáculo.
-        return new Obstaculo(position = posicion)
+        return new Visual(position = posicion, image = "obstaculo.png")
     }
 }
 // ################################################################################################################# \\
@@ -61,7 +61,7 @@ class ElementoPared inherits ElementoObstaculo{
 
     override method crearElemento(posicion){
         // Crea el elemento en la posición dada, en este caso es una pared.
-        return new ParedInvisible(position = posicion)
+        return new Visual(position = posicion, image = "vacio.png")
     }
 }
 

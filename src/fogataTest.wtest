@@ -112,7 +112,7 @@ describe "Movimiento del personaje con colisiones:"{
     }
 
     test "El personaje no puede atravesar obstáculos."{
-        const obstaculo = new Obstaculo()
+        const obstaculo = new Visual(image = "obstaculo.png")
         obstaculo.position(game.at(0,3))
         game.addVisual(obstaculo)
         protagonista.mover(arriba,2)
@@ -284,7 +284,7 @@ describe "Cambio de estado desarmado a armado:"{ // Mapa test.
 
 describe "Comportamiento del lobo:"{
     const lobo      = new Lobo()
-    const obstaculo = new Obstaculo(position = game.at(4, 3))
+    const obstaculo = new Visual(position = game.at(4, 3), image = "obstaculo.png")
 
     method initialize(){
         game.width(7)
@@ -501,8 +501,8 @@ describe "Funcionamiento de gestor de celdas del tablero:"{
         game.width(20)
         game.height(20)
         game.cellSize(100)
-        const obstaculoUno = new Obstaculo(position = game.at(6,5))
-        const obstaculoDos = new Obstaculo(position = game.at(4,5))
+        const obstaculoUno = new Visual(position = game.at(6,5), image = "obstaculo.png")
+        const obstaculoDos = new Visual(position = game.at(4,5), image = "obstaculo.png")
         game.addVisual(obstaculoUno)
         game.addVisual(obstaculoDos)
     }

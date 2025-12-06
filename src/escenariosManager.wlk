@@ -366,7 +366,7 @@ const cuevaConfgV5 = {e => e.mapa(mapaCuevaV5);
 
 const peleaFinalConfgV1 = {e => e.removerSiEsta(protagonista);
                                 protagonista.estadoCombate(protagonista.estadoCombateElegido());      
-                                guardabosques.cambiarAAtravesable();                  
+                                guardabosques.esAtravesable(true);                  
                                 guardabosques.estadoCombate(agresivoGuardabosques);
                                 guardabosques.image("guardabosques-escopeta-derecha.png");
                                 e.mapa(mapaFinalJuego);

@@ -10,25 +10,13 @@ import videojuego.*
 class Visual{
     var property position = game.at(0,0) // Representa la poisición del visual.
     var property image    = "vacio.png"  // Representa la imagen del visual.
-    var esAtravesable     = false        // Representa la colisión del visual con otros visual del juego.
+    var property esAtravesable = false   // Representa la colisión del visual con otros visual del juego.
     
     // ============================================================================================================================ \\
 
     method interaccion(){} // Representa la interacción del visual con cualquier otro visual.
 
     method atacadoPor(visual){} // Representa el comportamiento del visual al ser atacado por otro visual.
-
-    method cambiarAAtravesable(){
-        // Cambia el valor del atributo que representa la colisión del visual, en este caso hace que tenga colisión.
-        esAtravesable = true
-    }
-
-    // ============================================================================================================================ \\
-
-    method esAtravesable(){
-        // Describe si el visual es atravesable o no por otros visual. 
-        return esAtravesable
-    }
 }
 
 // ################################################################################################################################ \\
@@ -42,11 +30,6 @@ class VisualConMovimiento inherits Visual{
         self.image(self.imagenNueva(direccion))
     }
 
-    method cambiarImagenAMuerto(){
-        // Actualiza la imagen del visual con movimiento a su imagen muerto.
-        self.image(self.imagenMuerto())
-    }
-
     method estaVivo(){
         // Indica si el visual con movimiento se encuentra vivo o no.
         return self.vida() > 0
@@ -55,8 +38,8 @@ class VisualConMovimiento inherits Visual{
     method actualizarAMuerto(){
         // Actualiza la vida del visual con movimiento a cero, cambia su imagen y su colisión.
         vida = 0
-        self.cambiarImagenAMuerto()
-        self.cambiarAAtravesable()
+        self.image(self.imagenMuerto())
+        self.esAtravesable(true)
     }
 
     method imagenMuerto(){
@@ -86,14 +69,6 @@ class VisualInteractuable inherits VisualAtravesable{
         bloqueInteraccion.apply(self)
     }
 }
-
-// ################################################################################################################################ \\
-
-class Obstaculo inherits Visual(image = "obstaculo.png"){} // Representa a un obstaculo.
-
-// ################################################################################################################################ \\
-
-class ParedInvisible inherits Visual(image = "vacio.png"){} // Representa a una pared invisible.
 
 // ################################################################################################################################ \\
 
