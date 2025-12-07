@@ -72,8 +72,22 @@ class VisualInteractuable inherits VisualAtravesable{
 
 // ################################################################################################################################ \\
 
-const leña        = new VisualInteractuable(image = "leña.png", position = game.at(5,5), bloqueInteraccion = interaccionLeña)
-const nota        = new VisualInteractuable(image = "nota.png", position = game.at(5,5), bloqueInteraccion = interaccionNota)
+class Arma inherits VisualAtravesable{
+    const usuario = protagonista // Representa el usuario que utiliza el arma.
+    const property nuevoEstado   // Representa el nuevo estado del usuario que utiliza el arma.
+
+    override method interaccion(){
+        // Aplica el bloque de acciones del arma cargado actualmente.
+        game.say(protagonista, "Pulsa K para atacar")
+        videojuego.removerVisualesArmas()
+        usuario.agarrarArma(self)
+    }
+}
+
+// ################################################################################################################################ \\
+
+const leña        = new VisualInteractuable(image = "leña.png",  position = game.at(5,5), bloqueInteraccion = interaccionLeña)
+const nota        = new VisualInteractuable(image = "nota.png",  position = game.at(5,5), bloqueInteraccion = interaccionNota)
 const auto        = new VisualInteractuable(image = "vacio.png", position = game.at(5,5), bloqueInteraccion = interaccionAuto)
 const cabañaOBJ   = new VisualAtravesable(image = "cabaña_entrada.png", position = game.at(5,6))
 const graneroOBJ  = new VisualAtravesable(image = "granero.png",        position = game.at(6,6))
@@ -101,19 +115,5 @@ const interaccionNota = {visual => game.removeVisual(visual);
 
 const interaccionAuto = {visual => game.removeVisual(visual); 
                                    videojuego.juegoGanado()}
-
-// ################################################################################################################################ \\
-
-class Arma inherits VisualAtravesable{
-    const usuario = protagonista // Representa el usuario que utiliza el arma.
-    const property nuevoEstado   // Representa el nuevo estado del usuario que utiliza el arma.
-
-    override method interaccion(){
-        // Aplica el bloque de acciones del arma cargado actualmente.
-        game.say(protagonista, "Pulsa K para atacar")
-        videojuego.removerVisualesArmas()
-        usuario.agarrarArma(self)
-    }
-}
 
 // ################################################################################################################################ \\
