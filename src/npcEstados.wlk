@@ -29,9 +29,14 @@ const bala6 = new Bala() // Representa una bala.
 // ######################################################################################################################################################### \\
 
 class EstadoVivo{
-    method perseguirEnemigo(visual){
+    method mover(visual, direccion){
+        // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
+        gestorDeMovimiento.mover(direccion, visual)
+    }
+
+    method perseguirEnemigo(visual, enemigo){
         // El visual persigue a su enemigo hasta estar sobre él para poder atacarlo.
-        visual.movimientoNPC().perseguirEnemigo(visual, visual.enemigo())
+        visual.movimientoNPC().perseguirEnemigo(visual, enemigo)
     }
 
     method atacarEnemigo(visual){
@@ -56,11 +61,13 @@ class EstadoVivo{
 // ######################################################################################################################################################### \\
 
 class EstadoMuerto{
-    method perseguirEnemigo(visual){}  // Al estar muerto, no tiene comportamiento asignado.
+    method mover(visual, direccion){}          // Al estar muerto, no tiene comportamiento asignado.
 
-    method atacarEnemigo(visual){}     // Al estar muerto, no tiene comportamiento asignado.
+    method perseguirEnemigo(visual, enemigo){} // Al estar muerto, no tiene comportamiento asignado.
 
-    method atacadoPor(visual, enemigo){} // Al estar muerto, no tiene comportamiento asignado.
+    method atacarEnemigo(visual){}             // Al estar muerto, no tiene comportamiento asignado.
+
+    method atacadoPor(visual, enemigo){}       // Al estar muerto, no tiene comportamiento asignado.
 }
 
 // ######################################################################################################################################################### \\

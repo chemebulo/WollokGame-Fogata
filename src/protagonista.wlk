@@ -17,12 +17,12 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0),
 
     method mover(direccion){
         // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
-        gestorDeMovimiento.mover(direccion, self)
+        self.estadoVida().mover(self, direccion)
     }
 
     method atacar(){
         // Representa el comportamiento del ataque del protagonista hacia su enemigo.   
-        self.estadoCombate().atacarEnemigo()   
+        self.estadoVida().atacarEnemigo(self)   
     }
 
     override method daño(){

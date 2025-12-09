@@ -18,12 +18,12 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5), estadoVida =
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo dependiendo de su estado.
-        self.estadoVida().perseguirEnemigo(enemigo)
+        self.estadoVida().perseguirEnemigo(self, enemigo)
     }
 
     override method atacadoPor(visual){
         // Representa el comportamiento del enemigo cuando un enemigo suyo lo ataca.
-        self.estadoVida().atacadoPor(visual)
+        self.estadoVida().atacadoPor(self, visual)
     }
 
     override method actualizarAMuerto(){
@@ -41,7 +41,7 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5), estadoVida =
 
     method atacarEnemigo(){
         // Representa el comportamiento del ataque del enemigo hacia su enemigo.
-        self.estadoVida().atacarEnemigo()
+        self.estadoVida().atacarEnemigo(self)
     }
 
     method puedeAtacarAlEnemigo(){
