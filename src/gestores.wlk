@@ -160,12 +160,12 @@ object gestorDeObstaculos{
 
 // ############################################################################################################################################# \\
 
-object gestorDeVida{
+/*object gestorDeVida{
 
     method atacadoPor(visual, enemigo){
         // Actualiza la vida del visual dado con el daño del enemigo dado, y además el visual emite un mensaje describiendo su vida actual.
         self.recibirDaño(visual, enemigo.daño())
-        game.say(visual, "Vida: "+visual.vida()+"")
+        game.say(visual, "Vida: " + visual.vida() + "")
     }
 
     method recibirDaño(visual, dañoRecibido){
@@ -179,7 +179,7 @@ object gestorDeVida{
         if(vidaActualizada <= 0){ visual.actualizarAMuerto()   } else 
                                 { visual.vida(vidaActualizada) }
     }
-}
+}*/
 
 // ############################################################################################################################################# \\
 

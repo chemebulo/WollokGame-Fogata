@@ -22,8 +22,10 @@ class Visual{
 // ################################################################################################################################ \\
 
 class VisualConMovimiento inherits Visual{
-    var property vida       // Representa la vida del visual.
-    const property daño = 1 // Representa el daño del visual.
+    var property estadoVida    // Representa el estado del enemigo. Por defecto, está vivo.
+    var property estadoCombate // Representa el estado de combate actual del protagonista. 
+    var property vida          // Representa la vida del visual.
+    const property daño = 1    // Representa el daño del visual.
 
     method cambiarImagen(direccion){
         // Cambia la imagen del visual con movimiento dependiendo de la dirección dada. 

@@ -6,32 +6,33 @@ import gestores.*
 
 // ################################################################################################################################## \\
 
-object protagonista inherits VisualConMovimiento(position = game.at(0,0), image = "prota-desarmado-abajo.png", vida = 100){
-    var property estadoCombate        = pasivoProtagonista  // Representa el estado de combate actual del protagonista.
-    var property estadoCombateElegido = null                // Representa el estado de combate elegido, se utiliza por una situación particular.
-    const property vidaGestor         = gestorDeVida        // Representa el gestor de vida que utiliza el protagonista.
-    const property movimientoGestor   = gestorDeMovimiento  // Representa el gestor de movimiento que utiliza el protagonista.
+object protagonista inherits VisualConMovimiento(position = game.at(0,0), 
+                                                 image = "prota-desarmado-abajo.png", 
+                                                 vida = 100, 
+                                                 estadoVida = new EstadoVivo(),
+                                                 estadoCombate = pasivoProtagonista){
+    var property estadoCombateElegido = null // Representa el estado de combate elegido, se utiliza por una situación particular.
    
     // ============================================================================================================================== \\
 
     method mover(direccion){
         // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
-        movimientoGestor.mover(direccion, self)
+        gestorDeMovimiento.mover(direccion, self)
     }
 
     method atacar(){
         // Representa el comportamiento del ataque del protagonista hacia su enemigo.   
-        estadoCombate.atacarEnemigo()   
+        self.estadoCombate().atacarEnemigo()   
     }
 
     override method daño(){
         // Describe el daño que causa cada ataque del enemigo dependiendo de su estado de combate.
-        return estadoCombate.daño()
+        return self.estadoCombate().daño()
     }
 
     override method atacadoPor(visual){
         // Representa el comportamiento del protagonista cuando un enemigo suyo lo ataca.
-        vidaGestor.atacadoPor(self, visual)
+        self.estadoVida().atacadoPor(self, visual)
     }
 
     override method actualizarAMuerto(){
@@ -42,7 +43,7 @@ object protagonista inherits VisualConMovimiento(position = game.at(0,0), image 
     
     override method imagenNueva(direccion){
         // Describe la imagen nueva del protagonista en base al estado de combate y a la dirección dada.
-        return estadoCombate.actual()+direccion.toString()+".png"
+        return self.estadoCombate().actual() + direccion.toString() + ".png"
     }
 
     method estaAlLadoDelNPC(npc){

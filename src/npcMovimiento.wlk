@@ -6,42 +6,35 @@ import protagonista.*
 class MovimientoNPC {
     const direccionesGestor = gestorDeDirecciones   // Representa el gestor de direcciones que utiliza el movimiento.
     const posicionesGestor  = gestorDeCeldasTablero // Representa el gestor de posiciones que utiliza el movimiento.
-    const npc                                       // Representa al NPC que realiza el movimiento.
-    const enemigo = protagonista                    // Representa al enemigo que tiene el NPC.
 
     // ============================================================================================================= \\
 
-    method perseguirEnemigo(){
+    method perseguirEnemigo(visual, enemigo){
         // Si el NPC no está sobre el enemigo, lo persigue para poder atacarlo.
-        if (not npc.estaSobreEnemigo()){ 
-            self.avanzarHaciaEnemigo() 
+        if (not visual.estaSobreEnemigo()){ 
+            self.avanzarHaciaEnemigo(visual, enemigo) 
         }
     }
 
-    method avanzarHaciaEnemigo(){
+    method avanzarHaciaEnemigo(visual, enemigo){
         // Mueve al NPC hacia la siguiente posición y modifica su imagen en base a la dirección a la que se movió (en caso que asi sea).
-        const positionAntiguo = npc.position()
-        const positionNuevo   = self.siguientePosicion(positionAntiguo)
+        const positionAntiguo = visual.position()
+        const positionNuevo   = self.siguientePosicion(positionAntiguo, enemigo)
         
-        if(self.sonDistintasPosiciones(positionNuevo, positionAntiguo)){ 
-           self.irACeldaCercanaAEnemigo(positionNuevo, positionAntiguo)
+        if(positionNuevo != positionAntiguo){ 
+           self.irACeldaCercanaAEnemigo(visual, positionNuevo, positionAntiguo)
         }
     }
 
-    method siguientePosicion(position){
+    method siguientePosicion(position, enemigo){
         // Describe la siguiente posición conveniente para el NPC en base de donde esté parado.
         return posicionesGestor.lindanteConvenienteHacia(position, enemigo)
     }
 
-    method sonDistintasPosiciones(primeraPosition, segundaPosition){
-        // Indica si primeraPosition es diferente de segundaPosition.
-        return primeraPosition != segundaPosition
-    }
-
-    method irACeldaCercanaAEnemigo(positionNuevo, positionAntiguo){
+    method irACeldaCercanaAEnemigo(visual, positionNuevo, positionAntiguo){
         // Mueve al NPC a la posición nueva, cambiando además, la imagen suya dependiendo a donde se movió.
-        npc.position(positionNuevo) 
-        npc.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
+        visual.position(positionNuevo) 
+        visual.cambiarImagen(direccionesGestor.direccionALaQueSeMovio(positionAntiguo, positionNuevo))
     }
 }
 
