@@ -23,7 +23,7 @@ object gestorDeDialogo{
 
     method conversar(){
         // Se realiza la conversación en caso que sea posible, sino se termina el diálogo.
-        if(not dialogo.esUltimoDialogo()){
+        if(!dialogo.esUltimoDialogo()){
             dialogo.decirDialogoActual()
         } else {
            self.terminarDialogo()
@@ -57,13 +57,13 @@ class Dialogo{
     }
 
     method validarGuionDialogo(){
-        if(not self.existeDialogo()){
+        if(!self.existeDialogo()){
             self.error("No hay guion para dialogo")
         }
     }
 
     method existeDialogo(){
-        return not dialogoEscenario.isEmpty()
+        return !dialogoEscenario.isEmpty()
     }
 
     method dialogoActual(){

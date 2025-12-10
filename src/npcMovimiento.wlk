@@ -11,7 +11,7 @@ class MovimientoNPC {
 
     method perseguirEnemigo(visual, enemigo){
         // Si el NPC no está sobre el enemigo, lo persigue para poder atacarlo.
-        if (not visual.estaSobreEnemigo()){ 
+        if (!visual.estaSobreEnemigo()){ 
             self.avanzarHaciaEnemigo(visual, enemigo) 
         }
     }

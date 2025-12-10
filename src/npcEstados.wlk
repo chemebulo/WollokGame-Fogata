@@ -182,7 +182,7 @@ class EstadoAgresivoProtagonista inherits EstadoAgresivo{ // Representa al estad
 
     override method puedeAtacarAlEnemigo(){
         // Indica si el protagonista en su estado de combate agresivo puede atacar a su enemigo. 
-        return not self.estaAtacando()
+        return !self.estaAtacando()
     }
 
     method actualizarEstadoAtacando(){

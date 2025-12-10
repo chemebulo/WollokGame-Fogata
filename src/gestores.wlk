@@ -70,14 +70,14 @@ object gestorDeCeldasTablero{
     method puedeMoverA(direccion, visual){
         // Indica si el visual dado puede moverse hacia la dirección dada.
         const posicionAMover = direccion.siguientePosicion(visual.position())
-        return self.estaDentroDelTablero(posicionAMover) and not self.hayObstaculoEn(posicionAMover, visual)
+        return self.estaDentroDelTablero(posicionAMover) and !self.hayObstaculoEn(posicionAMover, visual)
     }
 
     // ========================================================================================================================================= \\
 
     method hayObstaculoEn(posicion, visual){
         // Indica si algún obstáculo en la posicion dada sin incluir al visual dado.
-        return not self.objetosEnPosicion(posicion, visual).all({visualARevisar => visualARevisar.esAtravesable()})
+        return !self.objetosEnPosicion(posicion, visual).all({visualARevisar => visualARevisar.esAtravesable()})
     }
 
     method objetosEnPosicion(posicion, visual){
@@ -111,14 +111,14 @@ object gestorDeCeldasTablero{
 
     method lindantesSinObstaculos(posicion, visual){
         // Describe todas las posiciones lindantes (ortogonales y diagonales) que no tienen obstaculos sin incluir al visual dado en las mismas.
-        return self.lindantesDe(posicion).filter({posicionARevisar => not self.hayObstaculoEn(posicionARevisar, visual)})
+        return self.lindantesDe(posicion).filter({posicionARevisar => !self.hayObstaculoEn(posicionARevisar, visual)})
     }
 
     // ========================================================================================================================================= \\
 
     method hayLindanteSinObstaculo(posicion, visual){
         // Indica si hay lindantes sin obstaculo en la posición dada sin tener en cuenta al visual dado.
-        return not self.lindantesSinObstaculos(posicion, visual).isEmpty()
+        return !self.lindantesSinObstaculos(posicion, visual).isEmpty()
     }
 
     method lindanteConvenienteHacia(posicion, visual){
@@ -160,29 +160,6 @@ object gestorDeObstaculos{
 
 // ############################################################################################################################################# \\
 
-/*object gestorDeVida{
-
-    method atacadoPor(visual, enemigo){
-        // Actualiza la vida del visual dado con el daño del enemigo dado, y además el visual emite un mensaje describiendo su vida actual.
-        self.recibirDaño(visual, enemigo.daño())
-        game.say(visual, "Vida: " + visual.vida() + "")
-    }
-
-    method recibirDaño(visual, dañoRecibido){
-        // Actualiza la vida y el estado del visual dado con el daño del enemigo dado.
-        const vidaActualizada = visual.vida() - dañoRecibido
-        self.actualizarVidaYEstado(visual, vidaActualizada)
-    }
-
-    method actualizarVidaYEstado(visual, vidaActualizada){
-        // Actualiza la vida y el estado del visual dado. Si la vida actualizada es menor o igual a cero, el visual muere.
-        if(vidaActualizada <= 0){ visual.actualizarAMuerto()   } else 
-                                { visual.vida(vidaActualizada) }
-    }
-}*/
-
-// ############################################################################################################################################# \\
-
 object gestorDeMovimiento{
     const colisionesGestor = gestorDeCeldasTablero // Representa al gestor de colisiones que se va a tomar de referencia.
 
@@ -200,7 +177,7 @@ object gestorDeMovimiento{
 
     method validarSiPuedeMover(direccion, visual){
         // Valida si el visual dado se puede mover hacia la dirección dada.
-        if(not colisionesGestor.puedeMoverA(direccion, visual)){
+        if(!colisionesGestor.puedeMoverA(direccion, visual)){
             self.error("No me puedo mover en esa dirección")
         }
     }

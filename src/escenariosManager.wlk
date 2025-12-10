@@ -92,14 +92,14 @@ class Escenario{
 
     method gestionarInicioEventos(){
         // Inicia todos los eventos cargados en el escenario, salvo que no haya ningún evento para iniciar.
-        if(not eventos.isEmpty()){
+        if(!eventos.isEmpty()){
             eventos.forEach({evento => evento.iniciarEvento()})
         }
     }
 
     method gestionarFinEventos(){
         // Finaliza todos los eventos cargado en el escenario, salvo que no haya ningún evento para finalizar.
-        if(not eventos.isEmpty()){ 
+        if(!eventos.isEmpty()){ 
             eventos.forEach({evento => evento.finalizarEvento()})
             eventos.clear()
         }
