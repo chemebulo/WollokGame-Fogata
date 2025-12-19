@@ -1,6 +1,5 @@
 import protagonista.*
 import enemigos.*
-import npcMovimiento.*
 import gestores.*
 import npcAtaques.*
 
@@ -30,34 +29,45 @@ const bala6 = new Bala() // Representa una bala.
 // ######################################################################################################################################################### \\
 
 class EstadoVivo{
-    const visual                                          // Describe el visual que se encuentra vivo.
-    const vidaGestor    = gestorDeVida                    // Representa al gestor de vida.
-    const movimientoNPC = new MovimientoNPC(npc = visual) // Representa al movimiento automatizado del visual.
-
-    method perseguirEnemigo(){
-        // El visual persigue a su enemigo hasta estar sobre él para poder atacarlo.
-        movimientoNPC.perseguirEnemigo()
+    method mover(visual, direccion){
+        // Mueve al protagonista una celda hacia la dirección dada si puede mover hacia dicha dirección.
+        gestorDeMovimiento.mover(direccion, visual)
     }
 
-    method atacarEnemigo(){
+    method perseguirEnemigo(visual, enemigo){
+        // El visual persigue a su enemigo hasta estar sobre él para poder atacarlo.
+        visual.movimientoNPC().perseguirEnemigo(visual, enemigo)
+    }
+
+    method atacarEnemigo(visual){
         // El visual ataca a su enemigo dependiendo del comportamiento asignado en su estado de combate. 
         visual.estadoCombate().atacarEnemigo()
     }
 
-    method atacadoPor(enemigo){
-        // Emite un mensaje cuando el visual es atacado por su enemigo, y se le actualiza la vida.
-        vidaGestor.atacadoPor(visual, enemigo)
+    method atacadoPor(visual, enemigo){
+        // Actualiza la vida del visual dado con el daño del enemigo dado, y además el visual emite un mensaje describiendo su vida actual.
+        self.recibirDaño(visual, enemigo.daño())
+        game.say(visual, "Vida: " + visual.vida() + "")
+    }
+
+    method recibirDaño(visual, dañoRecibido){
+        // Actualiza la vida y el estado del visual dado con el daño del enemigo dado.
+        const vidaActualizada = visual.vida() - dañoRecibido
+        if(vidaActualizada <= 0){ visual.actualizarAMuerto()   } else 
+                                { visual.vida(vidaActualizada) }
     }
 }
 
 // ######################################################################################################################################################### \\
 
 class EstadoMuerto{
-    method perseguirEnemigo(){}  // Al estar muerto, no tiene comportamiento asignado.
+    method mover(visual, direccion){}          // Al estar muerto, no tiene comportamiento asignado.
 
-    method atacarEnemigo(){}     // Al estar muerto, no tiene comportamiento asignado.
+    method perseguirEnemigo(visual, enemigo){} // Al estar muerto, no tiene comportamiento asignado.
 
-    method atacadoPor(enemigo){} // Al estar muerto, no tiene comportamiento asignado.
+    method atacarEnemigo(visual){}             // Al estar muerto, no tiene comportamiento asignado.
+
+    method atacadoPor(visual, enemigo){}       // Al estar muerto, no tiene comportamiento asignado.
 }
 
 // ######################################################################################################################################################### \\
@@ -172,7 +182,7 @@ class EstadoAgresivoProtagonista inherits EstadoAgresivo{ // Representa al estad
 
     override method puedeAtacarAlEnemigo(){
         // Indica si el protagonista en su estado de combate agresivo puede atacar a su enemigo. 
-        return not self.estaAtacando()
+        return !self.estaAtacando()
     }
 
     method actualizarEstadoAtacando(){

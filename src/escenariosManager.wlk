@@ -92,14 +92,14 @@ class Escenario{
 
     method gestionarInicioEventos(){
         // Inicia todos los eventos cargados en el escenario, salvo que no haya ningún evento para iniciar.
-        if(not eventos.isEmpty()){
+        if(!eventos.isEmpty()){
             eventos.forEach({evento => evento.iniciarEvento()})
         }
     }
 
     method gestionarFinEventos(){
         // Finaliza todos los eventos cargado en el escenario, salvo que no haya ningún evento para finalizar.
-        if(not eventos.isEmpty()){ 
+        if(!eventos.isEmpty()){ 
             eventos.forEach({evento => evento.finalizarEvento()})
             eventos.clear()
         }
@@ -366,7 +366,7 @@ const cuevaConfgV5 = {e => e.mapa(mapaCuevaV5);
 
 const peleaFinalConfgV1 = {e => e.removerSiEsta(protagonista);
                                 protagonista.estadoCombate(protagonista.estadoCombateElegido());      
-                                guardabosques.cambiarAAtravesable();                  
+                                guardabosques.esAtravesable(true);                  
                                 guardabosques.estadoCombate(agresivoGuardabosques);
                                 guardabosques.image("guardabosques-escopeta-derecha.png");
                                 e.mapa(mapaFinalJuego);

@@ -10,41 +10,26 @@ import videojuego.*
 class Visual{
     var property position = game.at(0,0) // Representa la poisición del visual.
     var property image    = "vacio.png"  // Representa la imagen del visual.
-    var esAtravesable     = false        // Representa la colisión del visual con otros visual del juego.
+    var property esAtravesable = false   // Representa la colisión del visual con otros visual del juego.
     
     // ============================================================================================================================ \\
 
     method interaccion(){} // Representa la interacción del visual con cualquier otro visual.
 
     method atacadoPor(visual){} // Representa el comportamiento del visual al ser atacado por otro visual.
-
-    method cambiarAAtravesable(){
-        // Cambia el valor del atributo que representa la colisión del visual, en este caso hace que tenga colisión.
-        esAtravesable = true
-    }
-
-    // ============================================================================================================================ \\
-
-    method esAtravesable(){
-        // Describe si el visual es atravesable o no por otros visual. 
-        return esAtravesable
-    }
 }
 
 // ################################################################################################################################ \\
 
 class VisualConMovimiento inherits Visual{
-    var property vida       // Representa la vida del visual.
-    const property daño = 1 // Representa el daño del visual.
+    var property estadoVida    // Representa el estado del enemigo. Por defecto, está vivo.
+    var property estadoCombate // Representa el estado de combate actual del visual. 
+    var property vida          // Representa la vida del visual.
+    const property daño = 1    // Representa el daño del visual.
 
     method cambiarImagen(direccion){
         // Cambia la imagen del visual con movimiento dependiendo de la dirección dada. 
         self.image(self.imagenNueva(direccion))
-    }
-
-    method cambiarImagenAMuerto(){
-        // Actualiza la imagen del visual con movimiento a su imagen muerto.
-        self.image(self.imagenMuerto())
     }
 
     method estaVivo(){
@@ -55,8 +40,8 @@ class VisualConMovimiento inherits Visual{
     method actualizarAMuerto(){
         // Actualiza la vida del visual con movimiento a cero, cambia su imagen y su colisión.
         vida = 0
-        self.cambiarImagenAMuerto()
-        self.cambiarAAtravesable()
+        self.image(self.imagenMuerto())
+        self.esAtravesable(true)
     }
 
     method imagenMuerto(){
@@ -89,16 +74,22 @@ class VisualInteractuable inherits VisualAtravesable{
 
 // ################################################################################################################################ \\
 
-class Obstaculo inherits Visual(image = "obstaculo.png"){} // Representa a un obstaculo.
+class Arma inherits VisualAtravesable{
+    const usuario = protagonista // Representa el usuario que utiliza el arma.
+    const property nuevoEstado   // Representa el nuevo estado del usuario que utiliza el arma.
+
+    override method interaccion(){
+        // Aplica el bloque de acciones del arma cargado actualmente.
+        game.say(protagonista, "Pulsa K para atacar")
+        videojuego.removerVisualesArmas()
+        usuario.agarrarArma(self)
+    }
+}
 
 // ################################################################################################################################ \\
 
-class ParedInvisible inherits Visual(image = "vacio.png"){} // Representa a una pared invisible.
-
-// ################################################################################################################################ \\
-
-const leña        = new VisualInteractuable(image = "leña.png", position = game.at(5,5), bloqueInteraccion = interaccionLeña)
-const nota        = new VisualInteractuable(image = "nota.png", position = game.at(5,5), bloqueInteraccion = interaccionNota)
+const leña        = new VisualInteractuable(image = "leña.png",  position = game.at(5,5), bloqueInteraccion = interaccionLeña)
+const nota        = new VisualInteractuable(image = "nota.png",  position = game.at(5,5), bloqueInteraccion = interaccionNota)
 const auto        = new VisualInteractuable(image = "vacio.png", position = game.at(5,5), bloqueInteraccion = interaccionAuto)
 const cabañaOBJ   = new VisualAtravesable(image = "cabaña_entrada.png", position = game.at(5,6))
 const graneroOBJ  = new VisualAtravesable(image = "granero.png",        position = game.at(6,6))
@@ -126,19 +117,5 @@ const interaccionNota = {visual => game.removeVisual(visual);
 
 const interaccionAuto = {visual => game.removeVisual(visual); 
                                    videojuego.juegoGanado()}
-
-// ################################################################################################################################ \\
-
-class Arma inherits VisualAtravesable{
-    const usuario = protagonista // Representa el usuario que utiliza el arma.
-    const property nuevoEstado   // Representa el nuevo estado del usuario que utiliza el arma.
-
-    override method interaccion(){
-        // Aplica el bloque de acciones del arma cargado actualmente.
-        game.say(protagonista, "Pulsa K para atacar")
-        videojuego.removerVisualesArmas()
-        usuario.agarrarArma(self)
-    }
-}
 
 // ################################################################################################################################ \\

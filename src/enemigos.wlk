@@ -6,30 +6,30 @@ import eventos.*
 import videojuego.*
 import escenariosManager.*
 import puertas.*
+import npcMovimiento.*
 
 // ####################################################################################################################################################### \\
 
-class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
-    var property estadoCombate                    // Representa el estado de combate del enemigo. No tiene valor asignado por defecto.
-    var estado    = new EstadoVivo(visual = self) // Representa el estado del enemigo. Por defecto, está vivo.
-    const enemigo = protagonista                  // Representa el enemigo que tiene el enemigo (en este caso, el protagonista).
+class Enemigo inherits VisualConMovimiento(position = game.at(5,5), estadoVida = new EstadoVivo()){
+    const enemigo = protagonista              // Representa el enemigo que tiene el enemigo (en este caso, el protagonista).
+    const movimientoNPC = new MovimientoNPC() // Representa al movimiento automatizado del visual.
 
     // ==================================================================================================================================================== \\
 
     method perseguirEnemigo(){
         // El enemigo persigue a su enemigo hasta estar sobre él para poder atacarlo dependiendo de su estado.
-        estado.perseguirEnemigo()
+        self.estadoVida().perseguirEnemigo(self, enemigo)
     }
 
     override method atacadoPor(visual){
         // Representa el comportamiento del enemigo cuando un enemigo suyo lo ataca.
-        estado.atacadoPor(visual)
+        self.estadoVida().atacadoPor(self, visual)
     }
 
     override method actualizarAMuerto(){
         // Actualiza el estado del enemigo a muerto, cambiando su imagen y su estado de colisión (sumado a unas cuantas cosas más).
         super()
-        estado = new EstadoMuerto()
+        self.estadoVida(new EstadoMuerto())
         self.emitirSonidoMuerte()
         self.accionesAdicionalesAlMorir()
     }
@@ -41,12 +41,12 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 
     method atacarEnemigo(){
         // Representa el comportamiento del ataque del enemigo hacia su enemigo.
-        estado.atacarEnemigo()
+        self.estadoVida().atacarEnemigo(self)
     }
 
     method puedeAtacarAlEnemigo(){
         // Indica si el enemigo puede atacar a su enemigo. 
-        return estado.puedeAtacarAlEnemigo()
+        return self.estadoVida().puedeAtacarAlEnemigo()
     }
 
     method escenarioActual(){
@@ -65,9 +65,8 @@ class Enemigo inherits VisualConMovimiento(position = game.at(5,5)){
 
     // ==================================================================================================================================================== \\
 
-    method estado(){
-        // Describe al estado de vida del enemigo (puede que esté vivo o muerto).
-        return estado
+    method movimientoNPC(){
+        return movimientoNPC
     }
 
     method enemigo(){
